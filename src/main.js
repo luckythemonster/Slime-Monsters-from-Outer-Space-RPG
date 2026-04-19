@@ -1,6 +1,7 @@
 import BootScene     from './scenes/BootScene.js';
 import PreloadScene  from './scenes/PreloadScene.js';
 import TitleScene    from './scenes/TitleScene.js';
+import ExploreScene  from './scenes/ExploreScene.js';
 import TestScene     from './scenes/TestScene.js';
 import BattleScene   from './scenes/BattleScene.js';
 import GameOverScene from './scenes/GameOverScene.js';
@@ -20,11 +21,12 @@ const config = {
     BootScene,
     PreloadScene,
     TitleScene,
-    TestScene,
+    ExploreScene,
     BattleScene,
-    GameOverScene,
     DialogueScene,
+    GameOverScene,
     MenuScene,
+    TestScene,     // kept as debug scene
   ],
   scale: {
     mode: Phaser.Scale.FIT,

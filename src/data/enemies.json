@@ -1,5 +1,45 @@
 [
   {
+    "id": "corporate_drone",
+    "name": "Corporate Drone",
+    "color": "#888888",
+    "stats": { "hp": 28, "atk": 7, "def": 4, "spd": 6 },
+    "abilities": ["corporate_memo"],
+    "ai": "aggressive",
+    "xp": 8, "gold": 5,
+    "drops": []
+  },
+  {
+    "id": "bad_guy_agent",
+    "name": "Bad Guy Agent",
+    "color": "#555588",
+    "stats": { "hp": 55, "atk": 13, "def": 8, "spd": 8 },
+    "abilities": ["enforcement"],
+    "ai": "aggressive",
+    "xp": 20, "gold": 12,
+    "drops": [{ "item": "health_goop", "chance": 0.4 }]
+  },
+  {
+    "id": "undercover_cop",
+    "name": "Undercover Cop",
+    "color": "#888844",
+    "stats": { "hp": 35, "atk": 10, "def": 5, "spd": 10 },
+    "abilities": ["enforcement"],
+    "ai": "aggressive",
+    "xp": 12, "gold": 6,
+    "drops": []
+  },
+  {
+    "id": "vanguard_enforcer",
+    "name": "Vanguard Enforcer",
+    "color": "#332244",
+    "stats": { "hp": 80, "atk": 16, "def": 10, "spd": 9 },
+    "abilities": ["enforcement", "corporate_memo"],
+    "ai": "aggressive",
+    "xp": 35, "gold": 20,
+    "drops": [{ "item": "health_goop", "chance": 0.6 }]
+  },
+  {
     "id": "space_germ",
     "name": "Space Germ",
     "color": "#ff4444",

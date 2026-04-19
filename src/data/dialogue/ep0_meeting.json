@@ -1,0 +1,15 @@
+{
+  "id": "ep0_meeting",
+  "steps": [
+    { "type": "text", "speaker": "Phoenix", "portrait": "phoenix", "text": "My brain thinks you're going to have to pay the city for that pothole." },
+    { "type": "text", "speaker": "Lucky", "portrait": "lucky", "text": "I just escaped from my dad on Planet California. He's a high-ranking executive in The Vanguard. Wanted me to oppress people for a living." },
+    { "type": "text", "speaker": "Phoenix", "portrait": "phoenix", "text": "I came here for college. The economy collapsed. Rent is too high. Now I'm permanently trapped in the Midwest." },
+    { "type": "text", "speaker": "Phoenix", "portrait": "phoenix", "text": "My brain thinks we might be made of the exact same stuff." },
+    { "type": "text", "speaker": "Lucky", "portrait": "lucky", "text": "I want to make the loudest, most obnoxious noise possible until this whole empire gets a migraine." },
+    { "type": "text", "speaker": "Phoenix", "portrait": "phoenix", "text": "...Beats the day job." },
+    { "type": "party_join", "character": "phoenix" },
+    { "type": "text", "speaker": "Phoenix", "portrait": "phoenix", "text": "We need a drummer. We should go to my place and figure this out. Head south through the alley." },
+    { "type": "flag", "set": "ep0_met_phoenix" },
+    { "type": "end" }
+  ]
+}

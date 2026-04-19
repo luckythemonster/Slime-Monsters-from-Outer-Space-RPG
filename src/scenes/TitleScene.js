@@ -1,5 +1,6 @@
-import PartySystem from '../systems/PartySystem.js';
-import SaveSystem  from '../systems/SaveSystem.js';
+import PartySystem  from '../systems/PartySystem.js';
+import EventSystem  from '../systems/EventSystem.js';
+import SaveSystem   from '../systems/SaveSystem.js';
 
 export default class TitleScene extends Phaser.Scene {
   constructor() {
@@ -30,22 +31,21 @@ export default class TitleScene extends Phaser.Scene {
   }
 
   _drawTitle(w, h) {
-    this.add.text(w / 2, 30, 'SLIME MONSTERS', {
+    this.add.text(w / 2, 28, 'SLIME MONSTERS', {
       font: '16px monospace', color: '#00ff88',
     }).setOrigin(0.5);
 
-    this.add.text(w / 2, 50, 'FROM OUTER SPACE', {
+    this.add.text(w / 2, 48, 'FROM OUTER SPACE', {
       font: '16px monospace', color: '#00cc66',
     }).setOrigin(0.5);
 
-    this.add.text(w / 2, 70, 'R P G', {
+    this.add.text(w / 2, 68, 'R P G', {
       font: '10px monospace', color: '#44aaff',
     }).setOrigin(0.5);
 
-    // animated slime decoration
     this._slime = this.add.graphics();
-    this._drawSlime(w / 2, 92, 0x00cc66);
-    this._slimeTween = this.tweens.add({
+    this._drawSlime(w / 2, 90);
+    this.tweens.add({
       targets: this._slime,
       y: 4,
       duration: 600,
@@ -55,9 +55,9 @@ export default class TitleScene extends Phaser.Scene {
     });
   }
 
-  _drawSlime(x, y, color) {
-    this._slime.fillStyle(color);
-    this._slime.fillEllipse(x, y, 20, 14);
+  _drawSlime(x, y) {
+    this._slime.fillStyle(0xff44aa);
+    this._slime.fillEllipse(x, y, 22, 14);
     this._slime.fillStyle(0x000000);
     this._slime.fillRect(x - 5, y - 3, 3, 3);
     this._slime.fillRect(x + 2, y - 3, 3, 3);
@@ -66,17 +66,18 @@ export default class TitleScene extends Phaser.Scene {
   _drawMenu(w, h) {
     this._menuTexts = [];
     this._options.forEach((label, i) => {
-      const my      = 120 + i * 18;
-      const canUse  = i === 0 || this._hasSave;
-      const color   = canUse ? '#ffffff' : '#555555';
-      const txt     = this.add.text(w / 2, my, label, {
+      const my     = 118 + i * 18;
+      const active = i === 0 || this._hasSave;
+      const color  = active ? '#ffffff' : '#444466';
+
+      const txt = this.add.text(w / 2, my, label, {
         font: '8px monospace', color,
       }).setOrigin(0.5);
 
-      if (canUse) {
+      if (active) {
         txt.setInteractive({ useHandCursor: true });
         txt.on('pointerdown', () => this._select(i));
-        txt.on('pointerover',  () => { this._cursor = i; this._refreshCursor(); });
+        txt.on('pointerover', () => { this._cursor = i; this._refreshCursor(); });
       }
       this._menuTexts.push(txt);
     });
@@ -85,23 +86,23 @@ export default class TitleScene extends Phaser.Scene {
     this._refreshCursor();
 
     this.add.text(w / 2, 168, 'arrow keys + Z  |  tap to select', {
-      font: '6px monospace', color: '#446688',
+      font: '6px monospace', color: '#334455',
     }).setOrigin(0.5);
   }
 
   _refreshCursor() {
     this._menuTexts.forEach((t, i) => {
-      const canUse = i === 0 || this._hasSave;
-      if (!canUse) return;
-      const selected = i === this._cursor;
-      t.setColor(selected ? '#00ff88' : '#ffffff');
-      t.setText(selected ? `► ${this._options[i]}` : `  ${this._options[i]}`);
+      const active = i === 0 || this._hasSave;
+      if (!active) return;
+      const sel = i === this._cursor;
+      t.setColor(sel ? '#00ff88' : '#ffffff');
+      t.setText(sel ? `► ${this._options[i]}` : `  ${this._options[i]}`);
     });
   }
 
   _setupInput() {
-    this.cursors = this.input.keyboard.createCursorKeys();
-    this.zKey    = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
+    this.cursors  = this.input.keyboard.createCursorKeys();
+    this.zKey     = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
     this.enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
   }
 
@@ -120,18 +121,18 @@ export default class TitleScene extends Phaser.Scene {
     }
   }
 
-  _select(index) {
-    if (index === 0) {
-      this._newGame();
-    } else if (index === 1 && this._hasSave) {
-      this._continue();
-    }
+  _select(i) {
+    if (i === 0)                   this._newGame();
+    else if (i === 1 && this._hasSave) this._continue();
   }
 
   _newGame() {
     const characters = this.registry.get('characters');
-    this.registry.set('party', new PartySystem(characters));
-    this.scene.start('TestScene', { mapId: 'test', tileX: 2, tileY: 2 });
+    this.registry.set('party',  new PartySystem(characters));
+    this.registry.set('events', new EventSystem());
+    // Start Episode 0 opening cutscene over the title screen
+    this.scene.launch('DialogueScene', { dialogueId: 'ep0_intro', returnScene: 'TitleScene' });
+    this.scene.pause('TitleScene');
   }
 
   _continue() {
@@ -143,10 +144,14 @@ export default class TitleScene extends Phaser.Scene {
     party.deserialize(save.party);
     this.registry.set('party', party);
 
-    this.scene.start('TestScene', {
-      mapId: save.mapId ?? 'test',
-      tileX: save.tileX ?? 2,
-      tileY: save.tileY ?? 2,
+    const events = new EventSystem();
+    if (save.events) events.deserialize(save.events);
+    this.registry.set('events', events);
+
+    this.scene.start('ExploreScene', {
+      mapId: save.mapId ?? 'ep0_alley',
+      tileX: save.tileX ?? 10,
+      tileY: save.tileY ?? 5,
     });
   }
 }

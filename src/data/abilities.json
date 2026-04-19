@@ -1,39 +1,102 @@
 [
   {
-    "id": "slash",
-    "name": "Slash",
+    "id": "power_chord",
+    "name": "Power Chord",
+    "type": "physical",
+    "target": "single_enemy",
+    "mp_cost": 0,
+    "power": 1.1,
+    "description": "A crushing guitar chord."
+  },
+  {
+    "id": "feedback",
+    "name": "Feedback",
+    "type": "magical",
+    "target": "all_enemies",
+    "mp_cost": 10,
+    "power": 0.9,
+    "description": "Ear-splitting amp feedback hits all enemies."
+  },
+  {
+    "id": "static_shield",
+    "name": "Static Shield",
+    "type": "buff",
+    "target": "self",
+    "mp_cost": 6,
+    "power": 1.0,
+    "description": "Wraps Lucky in crackling static. Raises DEF."
+  },
+  {
+    "id": "bass_slam",
+    "name": "Bass Slam",
     "type": "physical",
     "target": "single_enemy",
     "mp_cost": 0,
     "power": 1.0,
-    "description": "A basic melee attack."
+    "description": "A low, thunderous bass hit."
   },
   {
-    "id": "goop_shot",
-    "name": "Goop Shot",
-    "type": "magical",
-    "target": "single_enemy",
-    "mp_cost": 6,
-    "power": 1.5,
-    "description": "Launches a ball of corrosive goop."
-  },
-  {
-    "id": "spark",
-    "name": "Spark",
-    "type": "magical",
-    "target": "single_enemy",
-    "mp_cost": 4,
-    "power": 1.3,
-    "description": "Zaps with cosmic energy."
-  },
-  {
-    "id": "heal",
-    "name": "Heal",
+    "id": "brain_wave",
+    "name": "Brain Wave",
     "type": "heal",
     "target": "single_ally",
     "mp_cost": 8,
     "power": 1.0,
-    "description": "Restores some HP to an ally."
+    "description": "My brain thinks this should heal someone."
+  },
+  {
+    "id": "low_freq",
+    "name": "Low Frequency",
+    "type": "magical",
+    "target": "single_enemy",
+    "mp_cost": 7,
+    "power": 1.2,
+    "description": "A subsonic wave that rattles the target's bones."
+  },
+  {
+    "id": "snare_crack",
+    "name": "Snare Crack",
+    "type": "physical",
+    "target": "single_enemy",
+    "mp_cost": 0,
+    "power": 1.3,
+    "description": "A single devastating snare hit."
+  },
+  {
+    "id": "pocket_rhythm",
+    "name": "Pocket Rhythm",
+    "type": "buff",
+    "target": "all_allies",
+    "mp_cost": 12,
+    "power": 1.0,
+    "description": "A locked-in groove. Raises the whole party's SPD."
+  },
+  {
+    "id": "the_eternity",
+    "name": "The Eternity",
+    "type": "magical",
+    "target": "all_enemies",
+    "mp_cost": 30,
+    "power": 3.0,
+    "description": "Ryan dissolves into pure cosmic rhythm. Devastating."
+  },
+  {
+    "id": "corporate_memo",
+    "name": "Corporate Memo",
+    "type": "magical",
+    "target": "single_enemy",
+    "mp_cost": 0,
+    "power": 0.7,
+    "description": "Buries target in pointless bureaucracy."
+  },
+  {
+    "id": "enforcement",
+    "name": "Enforcement",
+    "type": "physical",
+    "target": "single_enemy",
+    "mp_cost": 0,
+    "power": 1.1,
+    "description": "A heavy-handed crackdown."
   },
   {
     "id": "scratch",

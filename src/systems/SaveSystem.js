@@ -1,9 +1,10 @@
 const KEY = 'smotspace_save_0';
 
 export default class SaveSystem {
-  static save(party, mapId, tileX, tileY) {
+  static save(party, events, mapId, tileX, tileY) {
     const data = {
       party:   party.serialize(),
+      events:  events?.serialize() ?? { flags: {} },
       mapId,
       tileX,
       tileY,

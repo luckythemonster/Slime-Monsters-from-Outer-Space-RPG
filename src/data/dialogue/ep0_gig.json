@@ -1,0 +1,11 @@
+{
+  "id": "ep0_gig",
+  "steps": [
+    { "type": "title", "text": "Palmer's Bar.\nThe stage is barely six inches off the floor.\nThe room smells like impending bad decisions." },
+    { "type": "text", "speaker": "Lucky", "portrait": "lucky", "text": "No Brian to ruin the mix. Just us." },
+    { "type": "text", "speaker": "Phoenix", "portrait": "phoenix", "text": "My brain thinks that guy in the back is a cop." },
+    { "type": "text", "speaker": "Ryan", "portrait": "ryan", "text": "[No obnoxious guitar solos. Just pure unadulterated rhythm. The slime is pulsating in 7/8 time. I can work with this.]" },
+    { "type": "battle", "enemies": ["undercover_cop", "bad_guy_agent"], "canFlee": false, "winDialogue": "ep0_gig_win" },
+    { "type": "end" }
+  ]
+}

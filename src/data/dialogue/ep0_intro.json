@@ -1,0 +1,17 @@
+{
+  "id": "ep0_intro",
+  "steps": [
+    { "type": "title", "text": "SLIME MONSTERS\nFROM OUTER SPACE" },
+    { "type": "title", "text": "Episode 0:\nCOAGULATION" },
+    { "type": "title", "text": "Planet California, orbit.\nA corporate star-cruiser.\nAn escape pod bay." },
+    { "type": "text", "speaker": "Dad (Intercom)", "portrait": "dad", "text": "I just don't understand the whole nonbinary thing. Why can't you pick a tangible demographic to market yourself to?" },
+    { "type": "text", "speaker": "Dad (Intercom)", "portrait": "dad", "text": "If you'd just join The Vanguard, you could be financially successful and oppress people with a dental plan!" },
+    { "type": "title", "text": "*SQUELCH*\n\nLucky slaps a pseudopod over the intercom,\ncutting off the speech mid-sentence." },
+    { "type": "title", "text": "Lucky hits a massive, unnecessarily red\nEJECT button." },
+    { "type": "title", "text": "The pod fires out of the ship.\nIt breaks apart on hitting Earth's atmosphere." },
+    { "type": "title", "text": "Lucky free-falls, flattening out\nlike a cartoon flying squirrel.\nSlime sunglasses form on their face." },
+    { "type": "title", "text": "Minneapolis, Minnesota.\nA gorgeous purple-orange twilight.\nA neon pink-and-green slime contrail\narcs across the sky." },
+    { "type": "title", "text": "KRAATHOOOM!" },
+    { "type": "map_change", "map": "ep0_alley", "x": 10, "y": 5 }
+  ]
+}

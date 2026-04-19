@@ -1,27 +1,30 @@
 [
   {
-    "id": "zeb",
-    "name": "Zeb",
-    "class": "Slime Ranger",
-    "color": "#00cc66",
-    "base_stats": { "hp": 80, "mp": 20, "atk": 14, "def": 8, "spd": 9, "lck": 7 },
+    "id": "lucky",
+    "name": "Lucky",
+    "class": "Cosmic Slime",
+    "color": "#ff44aa",
+    "portrait_color": "#ff44aa",
+    "base_stats": { "hp": 80, "mp": 30, "atk": 14, "def": 7, "spd": 11, "lck": 9 },
     "growth": [
-      { "level": 2, "hp": 10, "mp": 2, "atk": 2, "def": 1, "spd": 1, "lck": 0 },
-      { "level": 3, "hp": 10, "mp": 2, "atk": 2, "def": 1, "spd": 1, "lck": 1 },
-      { "level": 4, "hp": 12, "mp": 3, "atk": 3, "def": 2, "spd": 1, "lck": 0 },
-      { "level": 5, "hp": 14, "mp": 4, "atk": 3, "def": 2, "spd": 2, "lck": 1 }
+      { "level": 2, "hp": 10, "mp": 4, "atk": 2, "def": 1, "spd": 1, "lck": 1 },
+      { "level": 3, "hp": 10, "mp": 4, "atk": 2, "def": 1, "spd": 1, "lck": 1 },
+      { "level": 4, "hp": 12, "mp": 5, "atk": 3, "def": 2, "spd": 2, "lck": 1 },
+      { "level": 5, "hp": 14, "mp": 5, "atk": 3, "def": 2, "spd": 2, "lck": 2 }
     ],
     "abilities_learned": [
-      { "level": 1, "ability": "slash" },
-      { "level": 4, "ability": "goop_shot" }
+      { "level": 1, "ability": "power_chord" },
+      { "level": 3, "ability": "static_shield" },
+      { "level": 5, "ability": "feedback" }
     ]
   },
   {
-    "id": "mira",
-    "name": "Mira",
+    "id": "phoenix",
+    "name": "Phoenix",
     "class": "Slime Mystic",
-    "color": "#cc44ff",
-    "base_stats": { "hp": 60, "mp": 40, "atk": 8, "def": 6, "spd": 12, "lck": 9 },
+    "color": "#44aacc",
+    "portrait_color": "#44aacc",
+    "base_stats": { "hp": 65, "mp": 45, "atk": 9, "def": 6, "spd": 13, "lck": 10 },
     "growth": [
       { "level": 2, "hp": 7,  "mp": 6, "atk": 1, "def": 1, "spd": 1, "lck": 1 },
       { "level": 3, "hp": 7,  "mp": 6, "atk": 1, "def": 1, "spd": 1, "lck": 1 },
@@ -29,8 +32,28 @@
       { "level": 5, "hp": 10, "mp": 9, "atk": 2, "def": 2, "spd": 2, "lck": 2 }
     ],
     "abilities_learned": [
-      { "level": 1, "ability": "spark" },
-      { "level": 3, "ability": "heal" }
+      { "level": 1, "ability": "bass_slam" },
+      { "level": 2, "ability": "brain_wave" },
+      { "level": 4, "ability": "low_freq" }
+    ]
+  },
+  {
+    "id": "ryan",
+    "name": "Ryan",
+    "class": "The Eternity",
+    "color": "#44cc88",
+    "portrait_color": "#44cc88",
+    "base_stats": { "hp": 100, "mp": 20, "atk": 16, "def": 12, "spd": 7, "lck": 5 },
+    "growth": [
+      { "level": 2, "hp": 14, "mp": 3, "atk": 2, "def": 2, "spd": 1, "lck": 0 },
+      { "level": 3, "hp": 14, "mp": 3, "atk": 2, "def": 2, "spd": 1, "lck": 0 },
+      { "level": 4, "hp": 16, "mp": 4, "atk": 3, "def": 3, "spd": 1, "lck": 1 },
+      { "level": 5, "hp": 18, "mp": 4, "atk": 3, "def": 3, "spd": 1, "lck": 1 }
+    ],
+    "abilities_learned": [
+      { "level": 1, "ability": "snare_crack" },
+      { "level": 3, "ability": "pocket_rhythm" },
+      { "level": 6, "ability": "the_eternity" }
     ]
   }
 ]

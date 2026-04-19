@@ -1,0 +1,37 @@
+[
+  {
+    "id": "ep0_phoenix_wait",
+    "steps": [
+      { "type": "text", "speaker": "Phoenix", "portrait": "phoenix", "text": "Head south through the alley. My apartment is this way." },
+      { "type": "end" }
+    ]
+  },
+  {
+    "id": "ep0_amp_done",
+    "steps": [
+      { "type": "text", "speaker": "Phoenix", "portrait": "phoenix", "text": "My brain thinks the signal has already been sent. Let's go find Room 4." },
+      { "type": "end" }
+    ]
+  },
+  {
+    "id": "ep0_ryan_wait",
+    "steps": [
+      { "type": "text", "speaker": "Ryan", "portrait": "ryan", "text": "[Ready when you are.]" },
+      { "type": "end" }
+    ]
+  },
+  {
+    "id": "ep0_encore",
+    "steps": [
+      { "type": "text", "speaker": "Lucky", "portrait": "lucky", "text": "Palmer's Bar. Or what's left of it." },
+      { "type": "end" }
+    ]
+  },
+  {
+    "id": "ep0_bajonka",
+    "steps": [
+      { "type": "text", "speaker": "Bajonka", "portrait": null, "text": "*sneeze*" },
+      { "type": "end" }
+    ]
+  }
+]

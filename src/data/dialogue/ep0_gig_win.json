@@ -1,0 +1,21 @@
+{
+  "id": "ep0_gig_win",
+  "steps": [
+    { "type": "title", "text": "Mid-set. The music is escalating.\nThe panels are vibrating." },
+    { "type": "text", "speaker": "Ryan", "portrait": "ryan", "text": "[I've been fighting the possession. That was a mistake.]" },
+    { "type": "title", "text": "Ryan drops his shoulders.\nHe stops resisting.\nThe slime around him darkens into a deep bruised purple." },
+    { "type": "text", "speaker": "Ryan", "portrait": "ryan", "text": "[I am not trapped in the goo. The goo is trapped in the pocket.]" },
+    { "type": "title", "text": "Ryan completely transcends his human form.\nHe becomes a localized black hole of rhythm.\n\nTHE ETERNITY." },
+    { "type": "title", "text": "DOOM. CRACK. THUD.\n\nThe gravitational force is too much\nfor Palmer's Bar to handle." },
+    { "type": "title", "text": "The roof of Palmer's Bar\npeels back like a sardine can." },
+    { "type": "title", "text": "The brick walls blow outward\nin slow-motion cartoonish perfection.\n\nThe crowd scatters into the Minneapolis night." },
+    { "type": "text", "speaker": "Lucky", "portrait": "lucky", "text": "Okay. THAT is our sound." },
+    { "type": "text", "speaker": "Phoenix", "portrait": "phoenix", "text": "My brain thinks we are officially domestic terrorists." },
+    { "type": "text", "speaker": "Ryan", "portrait": "ryan", "text": "I think I broke the space-time continuum on that snare fill." },
+    { "type": "title", "text": "From beneath a piece of fallen drywall,\nBajonka trots out, completely unfazed.\n\nIn her mouth: the keys to the van.\nUnder her collar: a tour itinerary.\nTOMORROW: THE POTATO BELT. circled in bright red." },
+    { "type": "flag", "set": "ep0_complete" },
+    { "type": "title", "text": "NEXT: THE POTATO BELT." },
+    { "type": "title", "text": "— End of Episode 0 —" },
+    { "type": "map_change", "map": "ep0_alley", "x": 10, "y": 5 }
+  ]
+}
