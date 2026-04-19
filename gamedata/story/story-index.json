@@ -1,0 +1,56 @@
+{ "stories": [
+    {
+      "title": "Episode 0: Coagulation",
+      "file": "Episode.0.Coagulation.pdf",
+      "order": 0,
+      "type": "episode"
+    },
+    {
+      "title": "Issue 1",
+      "file": "Issue.1.page.outline.pdf",
+      "order": 1,
+      "type": "issue"
+    },
+    {
+      "title": "Issue 2",
+      "file": "Issue.2.Outline.pdf",
+      "order": 2,
+      "type": "issue"
+    },
+    {
+      "title": "Issue 3",
+      "file": "Issue.3.Page.Outline.pdf",
+      "order": 3,
+      "type": "issue"
+    },
+    {
+      "title": "Issue 4",
+      "file": "Issue.4.Page.Outline.pdf",
+      "order": 4,
+      "type": "issue"
+    },
+    {
+      "title": "Issue 5",
+      "file": "Issue.5.-.Script.Outline.pdf",
+      "order": 5,
+      "type": "issue"
+    },
+    {
+      "title": "Issue 6",
+      "file": "issue.6.pdf",
+      "order": 6,
+      "type": "issue"
+    },
+    {
+      "title": "Planets Collide",
+      "file": "Planets.Collide.Plot.pdf",
+      "order": 7,
+      "type": "arc"
+    },
+    {
+      "title": "The Grand Finale",
+      "file": "The.Grand.Finale.Plot.Outline.pdf",
+      "order": 8,
+      "type": "arc"
+    }
+  ]}
