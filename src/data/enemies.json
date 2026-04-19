@@ -1,0 +1,32 @@
+[
+  {
+    "id": "space_germ",
+    "name": "Space Germ",
+    "color": "#ff4444",
+    "stats": { "hp": 30, "atk": 8, "def": 3, "spd": 7 },
+    "abilities": ["scratch"],
+    "ai": "aggressive",
+    "xp": 10, "gold": 3,
+    "drops": []
+  },
+  {
+    "id": "void_blob",
+    "name": "Void Blob",
+    "color": "#884488",
+    "stats": { "hp": 50, "atk": 10, "def": 6, "spd": 4 },
+    "abilities": ["slam"],
+    "ai": "aggressive",
+    "xp": 18, "gold": 6,
+    "drops": [{ "item": "goop_drop", "chance": 0.5 }]
+  },
+  {
+    "id": "star_wasp",
+    "name": "Star Wasp",
+    "color": "#ffaa00",
+    "stats": { "hp": 20, "atk": 12, "def": 2, "spd": 15 },
+    "abilities": ["sting"],
+    "ai": "aggressive",
+    "xp": 14, "gold": 4,
+    "drops": []
+  }
+]

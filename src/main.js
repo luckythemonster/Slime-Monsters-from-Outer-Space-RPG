@@ -1,5 +1,11 @@
-import BootScene from './scenes/BootScene.js';
-import TestScene from './scenes/TestScene.js';
+import BootScene     from './scenes/BootScene.js';
+import PreloadScene  from './scenes/PreloadScene.js';
+import TitleScene    from './scenes/TitleScene.js';
+import TestScene     from './scenes/TestScene.js';
+import BattleScene   from './scenes/BattleScene.js';
+import GameOverScene from './scenes/GameOverScene.js';
+import DialogueScene from './scenes/DialogueScene.js';
+import MenuScene     from './scenes/MenuScene.js';
 import { SCREEN_W, SCREEN_H, ZOOM } from './constants.js';
 
 const config = {
@@ -10,7 +16,16 @@ const config = {
   pixelArt: true,
   roundPixels: true,
   backgroundColor: '#000000',
-  scene: [BootScene, TestScene],
+  scene: [
+    BootScene,
+    PreloadScene,
+    TitleScene,
+    TestScene,
+    BattleScene,
+    GameOverScene,
+    DialogueScene,
+    MenuScene,
+  ],
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,

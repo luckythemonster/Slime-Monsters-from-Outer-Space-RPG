@@ -1,0 +1,32 @@
+[
+  {
+    "id": "health_goop",
+    "name": "Health Goop",
+    "type": "consumable",
+    "target": "single_ally",
+    "effect": "heal_hp",
+    "value": 30,
+    "description": "Restores 30 HP.",
+    "price": 15
+  },
+  {
+    "id": "mp_goop",
+    "name": "MP Goop",
+    "type": "consumable",
+    "target": "single_ally",
+    "effect": "heal_mp",
+    "value": 15,
+    "description": "Restores 15 MP.",
+    "price": 20
+  },
+  {
+    "id": "goop_drop",
+    "name": "Goop Drop",
+    "type": "material",
+    "target": null,
+    "effect": null,
+    "value": 0,
+    "description": "A viscous alien droplet.",
+    "price": 5
+  }
+]
