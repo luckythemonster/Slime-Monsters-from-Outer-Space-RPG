@@ -2,7 +2,7 @@ import PartySystem  from '../systems/PartySystem.js';
 import EventSystem  from '../systems/EventSystem.js';
 
 const MAP_IDS = [
-  'ep0_alley', 'ep0_apartment', 'ep0_citysound', 'ep0_palmers',
+  'ep0_alley', 'ep0_apartment', 'ep0_citysound', 'ep0_palmers', 'ep0_minneapolis',
 ];
 
 const DIALOGUE_IDS = [
@@ -18,33 +18,33 @@ export default class PreloadScene extends Phaser.Scene {
   preload() {
     this._drawLoadingBar();
 
-    // core game data
     this.load.json('characters', 'src/data/characters.json');
     this.load.json('enemies',    'src/data/enemies.json');
     this.load.json('abilities',  'src/data/abilities.json');
     this.load.json('items',      'src/data/items.json');
+    this.load.json('equipment',  'src/data/equipment.json');
 
-    // maps
     for (const id of MAP_IDS) {
       this.load.json(`map_${id}`, `src/data/maps/${id}.json`);
     }
 
-    // dialogue — individual files
     for (const id of DIALOGUE_IDS) {
       this.load.json(`dlg_${id}`, `src/data/dialogue/${id}.json`);
     }
 
-    // dialogue — misc array file (multiple dialogues in one JSON)
     this.load.json('dlg_misc', 'src/data/dialogue/ep0_misc.json');
   }
 
   create() {
     // ── core data ──────────────────────────────────────────────────────────
     const characters = this.cache.json.get('characters');
+    const equipDefs  = this.cache.json.get('equipment') ?? [];
+
     this.registry.set('characters', characters);
     this.registry.set('enemies',    this.cache.json.get('enemies'));
     this.registry.set('abilities',  this.cache.json.get('abilities'));
     this.registry.set('items',      this.cache.json.get('items'));
+    this.registry.set('equipment',  equipDefs);
 
     // ── maps ───────────────────────────────────────────────────────────────
     const maps = {};
@@ -60,7 +60,6 @@ export default class PreloadScene extends Phaser.Scene {
       const data = this.cache.json.get(`dlg_${id}`);
       if (data?.id) dialogues[data.id] = data;
     }
-    // misc array file: each element is a dialogue object
     const misc = this.cache.json.get('dlg_misc');
     if (Array.isArray(misc)) {
       misc.forEach(d => { if (d.id) dialogues[d.id] = d; });
@@ -69,7 +68,20 @@ export default class PreloadScene extends Phaser.Scene {
 
     // ── systems ────────────────────────────────────────────────────────────
     this.registry.set('events', new EventSystem());
-    this.registry.set('party',  new PartySystem(characters));
+    const party = new PartySystem(characters);
+
+    // Assign starting equipment to initial party members
+    characters.forEach(charDef => {
+      const member = party.members.find(m => m.id === charDef.id);
+      if (!member || !charDef.startingEquipment) return;
+      for (const slot of ['instrument', 'outfit']) {
+        const id = charDef.startingEquipment[slot];
+        const itemDef = equipDefs.find(e => e.id === id);
+        if (itemDef) party.equip(member, itemDef);
+      }
+    });
+
+    this.registry.set('party', party);
 
     this.scene.start('TitleScene');
   }

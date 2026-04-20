@@ -16,7 +16,8 @@
       { "level": 1, "ability": "power_chord" },
       { "level": 3, "ability": "static_shield" },
       { "level": 5, "ability": "feedback" }
-    ]
+    ],
+    "startingEquipment": { "instrument": "beatup_axe", "outfit": "street_clothes" }
   },
   {
     "id": "phoenix",
@@ -35,7 +36,8 @@
       { "level": 1, "ability": "bass_slam" },
       { "level": 2, "ability": "brain_wave" },
       { "level": 4, "ability": "low_freq" }
-    ]
+    ],
+    "startingEquipment": { "instrument": "starter_bass", "outfit": "street_clothes" }
   },
   {
     "id": "ryan",
@@ -54,6 +56,7 @@
       { "level": 1, "ability": "snare_crack" },
       { "level": 3, "ability": "pocket_rhythm" },
       { "level": 6, "ability": "the_eternity" }
-    ]
+    ],
+    "startingEquipment": { "instrument": "basic_kit", "outfit": "street_clothes" }
   }
 ]

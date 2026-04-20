@@ -57,7 +57,7 @@
     "abilities": ["slam"],
     "ai": "aggressive",
     "xp": 18, "gold": 6,
-    "drops": [{ "item": "goop_drop", "chance": 0.5 }]
+    "drops": [{ "item": "slime_sample", "chance": 0.5 }]
   },
   {
     "id": "star_wasp",

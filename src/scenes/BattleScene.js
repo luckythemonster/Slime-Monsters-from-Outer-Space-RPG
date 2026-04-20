@@ -14,7 +14,7 @@ export default class BattleScene extends Phaser.Scene {
   }
 
   create() {
-    this.battle  = new BattleSystem(this._party.living(), this._enemyDefs, this._abilities);
+    this.battle  = new BattleSystem(this._party.living(), this._enemyDefs, this._abilities, this._party);
     this.log     = [];
     this.busy    = false;
 
@@ -26,7 +26,6 @@ export default class BattleScene extends Phaser.Scene {
     this._addLog(`A ${this.battle.enemies[0].name} appeared!`);
     this._redraw();
 
-    // If first actor is enemy, start their turn after a short pause
     if (this.battle.phase === 'enemy_turn') {
       this.time.delayedCall(800, () => this._runEnemyTurn());
     }
@@ -89,6 +88,30 @@ export default class BattleScene extends Phaser.Scene {
     }
     if (ability?.mp_cost) actor.currentMp = (actor.currentMp ?? actor.mp) - ability.mp_cost;
 
+    // Route buff/debuff abilities to status system instead of damage
+    if (ability && (ability.type === 'buff' || ability.type === 'debuff')) {
+      const targets = ability.target === 'all_allies'
+        ? this.battle.livingParty()
+        : ability.target === 'self'
+          ? [actor]
+          : [this.battle.livingEnemies()[0]];
+      targets.forEach(t => this.battle.applyStatus(t, ability.status, ability.statusDuration ?? 3));
+      this._addLog(`${actor.name} → [${ability.status.toUpperCase()}] applied!`);
+      this._afterPlayerAction();
+      return;
+    }
+
+    // Heal ability
+    if (ability?.type === 'heal') {
+      const healTarget = [...this.battle.party].sort((a, b) =>
+        (a.currentHp / a.maxHp) - (b.currentHp / b.maxHp)
+      )[0];
+      const res = this.battle.applyHeal(actor, healTarget, abilityId);
+      this._addLog(`${actor.name} heals ${healTarget.name} for ${res.amount} HP!`);
+      this._afterPlayerAction();
+      return;
+    }
+
     const res = this.battle.applyAttack(actor, target, abilityId);
     this._addLog(`${actor.name} uses ${ability?.name ?? 'Attack'} on ${target.name} for ${res.amount} dmg!`);
     this._afterPlayerAction();
@@ -102,7 +125,6 @@ export default class BattleScene extends Phaser.Scene {
       this.busy = false;
       return;
     }
-    // Use first healing item on most-hurt party member
     const itemsDefs = this.registry.get('items') ?? [];
     const slot = items.find(s => {
       const def = itemsDefs.find(d => d.id === s.id);
@@ -120,7 +142,7 @@ export default class BattleScene extends Phaser.Scene {
     )[0];
     target.currentHp = Math.min(target.currentHp + itemDef.value, target.maxHp);
     this._party.useItem(slot.id);
-    this._addLog(`Used ${itemDef.name} on ${target.name}. Restored ${itemDef.value} HP!`);
+    this._addLog(`Used ${itemDef.name} on ${target.name}. +${itemDef.value} HP!`);
     this._afterPlayerAction();
   }
 
@@ -146,7 +168,6 @@ export default class BattleScene extends Phaser.Scene {
     if (!action) { this.battle.advanceTurn(); this._nextTurn(); return; }
 
     const res = this.battle.applyAttack(actor, action.target, action.abilityId);
-    // sync damage back to party system
     const pm = this._party.members.find(m => m.id === action.target.id);
     if (pm) pm.hp = action.target.currentHp;
 
@@ -194,10 +215,10 @@ export default class BattleScene extends Phaser.Scene {
   _victory() {
     const xp   = this.battle.totalXp();
     const gold = this.battle.totalGold();
-    this._party.gold += gold;
+    this._party.cash += gold;
     const levelUps = this._party.gainXp(xp);
 
-    this._addLog(`Victory! +${xp} XP  +${gold} gold`);
+    this._addLog(`Victory! +${xp} XP  +$${gold}`);
     levelUps.forEach(lu => this._addLog(`${lu.member.name} is now Lv.${lu.level}!`));
     this._redraw();
 
@@ -228,9 +249,7 @@ export default class BattleScene extends Phaser.Scene {
   }
 
   _drawBackground() {
-    // deep space
     this.add.rectangle(160, 56, 320, 112, 0x000011);
-    // stars
     const gfx = this.add.graphics();
     for (let i = 0; i < 60; i++) {
       const x = Phaser.Math.Between(0, 320);

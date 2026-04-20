@@ -140,8 +140,9 @@ export default class TitleScene extends Phaser.Scene {
     if (!save) { this._newGame(); return; }
 
     const characters = this.registry.get('characters');
+    const equipDefs  = this.registry.get('equipment') ?? [];
     const party      = new PartySystem(characters);
-    party.deserialize(save.party);
+    party.deserialize(save.party, equipDefs);
     this.registry.set('party', party);
 
     const events = new EventSystem();

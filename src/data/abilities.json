@@ -22,9 +22,11 @@
     "name": "Static Shield",
     "type": "buff",
     "target": "self",
+    "status": "shell",
+    "statusDuration": 3,
     "mp_cost": 6,
     "power": 1.0,
-    "description": "Wraps Lucky in crackling static. Raises DEF."
+    "description": "Wraps Lucky in crackling static. DEF x2 for 3 turns."
   },
   {
     "id": "bass_slam",
@@ -67,9 +69,11 @@
     "name": "Pocket Rhythm",
     "type": "buff",
     "target": "all_allies",
+    "status": "in_the_pocket",
+    "statusDuration": 3,
     "mp_cost": 12,
     "power": 1.0,
-    "description": "A locked-in groove. Raises the whole party's SPD."
+    "description": "A locked-in groove. SPD x1.5 for the whole party."
   },
   {
     "id": "the_eternity",
@@ -83,11 +87,13 @@
   {
     "id": "corporate_memo",
     "name": "Corporate Memo",
-    "type": "magical",
+    "type": "debuff",
     "target": "single_enemy",
+    "status": "corporate_memo",
+    "statusDuration": 2,
     "mp_cost": 0,
     "power": 0.7,
-    "description": "Buries target in pointless bureaucracy."
+    "description": "Buries target in pointless bureaucracy. DEF halved."
   },
   {
     "id": "enforcement",

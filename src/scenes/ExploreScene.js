@@ -48,30 +48,52 @@ export default class ExploreScene extends Phaser.Scene {
       }
     }
 
-    // draw map name at top
     this.add.text(2, 1, mapDef.name ?? '', { font: '8px monospace', color: '#446688' });
   }
 
   // ─── entities ────────────────────────────────────────────────────────────
 
   _spawnEntities(mapDef) {
+    const events = this.registry.get('events');
     for (const ent of (mapDef.entities ?? [])) {
-      const events = this.registry.get('events');
-      const gfx    = this.add.graphics();
-      const color  = parseInt((ent.color ?? '#ffffff').replace('#', ''), 16);
-      const px     = ent.x * TILE_SIZE;
-      const py     = ent.y * TILE_SIZE;
+      // Skip if story condition not met
+      if (ent.condition && !events?.check(ent.condition)) continue;
 
-      // colored circle as placeholder sprite
-      gfx.fillStyle(color);
-      gfx.fillEllipse(px + TILE_SIZE / 2, py + TILE_SIZE / 2, TILE_SIZE - 2, TILE_SIZE - 2);
+      const gfx = this.add.graphics();
+      const px  = ent.x * TILE_SIZE;
+      const py  = ent.y * TILE_SIZE;
 
-      // small label
+      this._drawEntityGfx(gfx, ent, px, py, events);
+
       const label = this.add.text(px, py - 8, ent.label ?? '', {
         font: '7px monospace', color: '#aaaaaa',
       });
 
       this._entities.push({ ...ent, gfx, label });
+    }
+  }
+
+  _drawEntityGfx(gfx, ent, px, py, events) {
+    const isDone   = events?.check(`done_${ent.id}`);
+    const rawColor = (isDone && ent.glowColor) ? ent.glowColor : (ent.color ?? '#ffffff');
+    const color    = parseInt(rawColor.replace('#', ''), 16);
+
+    gfx.clear();
+    gfx.fillStyle(color);
+    if (ent.shape === 'rect') {
+      gfx.fillRect(px + 1, py + 1, TILE_SIZE - 2, TILE_SIZE - 2);
+    } else {
+      gfx.fillEllipse(px + TILE_SIZE / 2, py + TILE_SIZE / 2, TILE_SIZE - 2, TILE_SIZE - 2);
+    }
+  }
+
+  _refreshEntities() {
+    const events = this.registry.get('events');
+    for (const ent of this._entities) {
+      if (!ent.glowColor) continue;
+      const px = ent.x * TILE_SIZE;
+      const py = ent.y * TILE_SIZE;
+      this._drawEntityGfx(ent.gfx, ent, px, py, events);
     }
   }
 
@@ -114,7 +136,7 @@ export default class ExploreScene extends Phaser.Scene {
     const party = this.registry.get('party');
     if (!party) return;
     const m = party.members[0];
-    this._hudText.setText(`${m.name} Lv${m.level}  HP:${m.hp}/${m.maxHp}  [Z=talk  S=save]`);
+    this._hudText.setText(`${m.name} Lv${m.level}  HP:${m.hp}/${m.maxHp}  [Z=talk  M=menu  S=save]`);
   }
 
   _showNotice(msg, ms = 2200) {
@@ -136,6 +158,12 @@ export default class ExploreScene extends Phaser.Scene {
     this._zKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
     this.input.keyboard.on('keydown-S',  () => this._manualSave());
     this.input.keyboard.on('keydown-F5', () => this._manualSave());
+    this.input.keyboard.on('keydown-M',  () => {
+      if (this._busy) return;
+      this._busy = true;
+      this.scene.launch('MenuScene', { returnScene: 'ExploreScene' });
+      this.scene.pause('ExploreScene');
+    });
   }
 
   _manualSave() {
@@ -151,7 +179,6 @@ export default class ExploreScene extends Phaser.Scene {
     this._moveTimer -= delta;
     if (this._moveTimer > 0) return;
 
-    // interact
     if (Phaser.Input.Keyboard.JustDown(this._zKey)) {
       this._tryInteract();
       return;
@@ -180,8 +207,8 @@ export default class ExploreScene extends Phaser.Scene {
     if (ty < 0 || ty >= this._map.height || tx < 0 || tx >= this._map.width) return false;
     const tile = grid[ty]?.[tx] ?? 1;
     if (tile === 1 || tile === 3) return false;
-    // check entity collision
-    if (this._entities.some(e => e.x === tx && e.y === ty)) return false;
+    // passable:true entities don't block movement (e.g. city district labels)
+    if (this._entities.some(e => e.x === tx && e.y === ty && !e.passable)) return false;
     return true;
   }
 
@@ -219,7 +246,6 @@ export default class ExploreScene extends Phaser.Scene {
   // ─── NPC interaction ─────────────────────────────────────────────────────
 
   _tryInteract() {
-    // find entity adjacent to or on player tile
     const target = this._entities.find(e =>
       Math.abs(e.x - this._px) <= 1 && Math.abs(e.y - this._py) <= 1
     );
@@ -270,17 +296,18 @@ export default class ExploreScene extends Phaser.Scene {
     this._stepCount = 0;
     this._nextEnc = Phaser.Math.Between(5, 10);
 
-    // check battle result
+    // Refresh entity glow states (e.g. amp after signal sent)
+    this._refreshEntities();
+
     const battleResult = this.registry.get('lastBattle');
     if (battleResult) {
       this.registry.remove('lastBattle');
       if (battleResult.won) {
         SaveSystem.save(this.registry.get('party'), this.registry.get('events'), this._mapId, this._px, this._py);
-        this._showNotice(`+${battleResult.xp} XP  +${battleResult.gold} gold  [saved]`);
+        this._showNotice(`+${battleResult.xp} XP  +$${battleResult.gold}  [saved]`);
       }
     }
 
-    // check pending dialogue-triggered actions
     const action = this.registry.get('pendingSceneAction');
     if (action) {
       this.registry.remove('pendingSceneAction');

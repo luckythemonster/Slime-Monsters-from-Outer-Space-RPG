@@ -42,14 +42,41 @@
       "dialogue": "ep0_rehearsal",
       "dialogueOnce": true,
       "repeatDialogue": "ep0_ryan_wait"
+    },
+    {
+      "type": "prop",
+      "id": "drum_kit",
+      "x": 14, "y": 3,
+      "color": "#44cc88",
+      "glowColor": "#cc44ff",
+      "shape": "rect",
+      "label": "Drum Kit"
+    },
+    {
+      "type": "prop",
+      "id": "door_out",
+      "x": 1, "y": 8,
+      "color": "#554433",
+      "shape": "rect",
+      "label": "Door"
+    },
+    {
+      "type": "object",
+      "id": "gig_flyer",
+      "x": 7, "y": 6,
+      "color": "#ffff44",
+      "shape": "rect",
+      "label": "Flyer",
+      "condition": "ep0_ryan_joined",
+      "dialogue": "ep0_flyer_read",
+      "dialogueOnce": false
     }
   ],
   "exits": [
     {
-      "id": "to_palmers",
+      "id": "to_minneapolis",
       "tiles": [[9,5],[10,5]],
-      "condition": "ep0_ryan_joined",
-      "target": { "map": "ep0_palmers", "x": 10, "y": 9 }
+      "target": { "map": "ep0_minneapolis", "x": 8, "y": 5 }
     }
   ]
 }

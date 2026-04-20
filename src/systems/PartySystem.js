@@ -1,7 +1,7 @@
 export default class PartySystem {
   constructor(characterDefs) {
     this.members = characterDefs.map(def => this._build(def));
-    this.gold = 0;
+    this.cash = 0;
     this.inventory = [];
   }
 
@@ -25,8 +25,21 @@ export default class PartySystem {
       abilities: def.abilities_learned
         .filter(a => a.level <= 1)
         .map(a => a.ability),
+      equipment: { instrument: null, outfit: null },
       _def: def,
     };
+  }
+
+  getEffectiveStat(member, stat) {
+    const base = member.stats?.[stat] ?? member[stat] ?? 0;
+    return base + Object.values(member.equipment ?? {})
+      .filter(Boolean)
+      .reduce((sum, item) => sum + (item.bonus?.[stat] ?? 0), 0);
+  }
+
+  equip(member, itemDef) {
+    if (!member.equipment) member.equipment = { instrument: null, outfit: null };
+    member.equipment[itemDef.slot] = itemDef;
   }
 
   living() {
@@ -100,18 +113,30 @@ export default class PartySystem {
         spd:       m.spd,
         lck:       m.lck,
         abilities: m.abilities,
+        equipment: {
+          instrument: m.equipment?.instrument?.id ?? null,
+          outfit:     m.equipment?.outfit?.id     ?? null,
+        },
       })),
-      gold:      this.gold,
+      cash:      this.cash,
       inventory: this.inventory,
     };
   }
 
-  deserialize(data) {
+  deserialize(data, equipDefs = []) {
     for (const saved of data.members) {
       const m = this.members.find(x => x.id === saved.id);
-      if (m) Object.assign(m, saved);
+      if (!m) continue;
+      Object.assign(m, saved);
+      m.equipment = { instrument: null, outfit: null };
+      if (saved.equipment) {
+        for (const slot of ['instrument', 'outfit']) {
+          const id = saved.equipment[slot];
+          if (id) m.equipment[slot] = equipDefs.find(e => e.id === id) ?? null;
+        }
+      }
     }
-    this.gold      = data.gold      ?? 0;
+    this.cash      = data.cash ?? data.gold ?? 0;
     this.inventory = data.inventory ?? [];
   }
 }

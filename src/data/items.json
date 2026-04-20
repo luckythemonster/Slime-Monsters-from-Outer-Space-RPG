@@ -10,8 +10,8 @@
     "price": 15
   },
   {
-    "id": "mp_goop",
-    "name": "MP Goop",
+    "id": "slime_charge",
+    "name": "Slime Charge",
     "type": "consumable",
     "target": "single_ally",
     "effect": "heal_mp",
@@ -20,13 +20,23 @@
     "price": 20
   },
   {
-    "id": "goop_drop",
-    "name": "Goop Drop",
+    "id": "slime_sample",
+    "name": "Slime Sample",
     "type": "material",
     "target": null,
     "effect": null,
     "value": 0,
     "description": "A viscous alien droplet.",
     "price": 5
+  },
+  {
+    "id": "earplugs",
+    "name": "Earplugs",
+    "type": "consumable",
+    "target": "single_ally",
+    "effect": "heal_hp",
+    "value": 15,
+    "description": "Restores 15 HP. Essential on loud stages.",
+    "price": 10
   }
 ]
