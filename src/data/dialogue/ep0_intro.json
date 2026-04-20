@@ -7,11 +7,21 @@
     { "type": "text", "speaker": "Dad (Intercom)", "portrait": "dad", "text": "I just don't understand the whole nonbinary thing. Why can't you pick a tangible demographic to market yourself to?" },
     { "type": "text", "speaker": "Dad (Intercom)", "portrait": "dad", "text": "If you'd just join The Vanguard, you could be financially successful and oppress people with a dental plan!" },
     { "type": "title", "text": "*SQUELCH*\n\nLucky slaps a pseudopod over the intercom,\ncutting off the speech mid-sentence." },
+    { "type": "shake", "intensity": 0.008, "duration": 280 },
     { "type": "title", "text": "Lucky hits a massive, unnecessarily red\nEJECT button." },
+    { "type": "flash", "color": "#ff2200", "duration": 250 },
+    { "type": "shake", "intensity": 0.025, "duration": 600 },
     { "type": "title", "text": "The pod fires out of the ship.\nIt breaks apart on hitting Earth's atmosphere." },
+    { "type": "shake", "intensity": 0.035, "duration": 700 },
+    { "type": "flash", "color": "#ff8833", "duration": 350 },
     { "type": "title", "text": "Lucky free-falls, flattening out\nlike a cartoon flying squirrel.\nSlime sunglasses form on their face." },
+    { "type": "shake", "intensity": 0.012, "duration": 500 },
+    { "type": "flash", "color": "#4488ff", "duration": 300 },
     { "type": "title", "text": "Minneapolis, Minnesota.\nA gorgeous purple-orange twilight.\nA neon pink-and-green slime contrail\narcs across the sky." },
+    { "type": "flash", "color": "#cc44ff", "duration": 400 },
     { "type": "title", "text": "KRAATHOOOM!" },
+    { "type": "shake", "intensity": 0.055, "duration": 1000 },
+    { "type": "flash", "color": "#ffffff", "duration": 450 },
     { "type": "map_change", "map": "ep0_alley", "x": 10, "y": 5 }
   ]
 }
