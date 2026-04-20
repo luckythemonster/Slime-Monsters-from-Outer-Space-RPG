@@ -24,6 +24,8 @@ export default class DialogueScene extends Phaser.Scene {
     this._choiceIndex  = 0;
     this._choiceTexts  = [];
     this._choiceZones  = [];
+    this._lastPortrait = null;
+    this._prevMode     = null;  // 'text' | 'title'
   }
 
   create() {
@@ -105,29 +107,48 @@ export default class DialogueScene extends Phaser.Scene {
   // ─── step types ──────────────────────────────────────────────────────────
 
   _showText(step) {
+    const fromTitle = this._prevMode === 'title';
+    this._prevMode = 'text';
+
     this._drawBox();
     this._drawPortrait(step.portrait);
     this._speakerText.setText(step.speaker ?? '');
+
+    if (fromTitle) {
+      // Fade box in after a title card
+      this._gfx.setAlpha(0);
+      this._speakerText.setAlpha(0);
+      this._bodyText.setAlpha(0);
+      this.tweens.add({ targets: [this._gfx, this._speakerText, this._bodyText], alpha: 1, duration: 220 });
+    }
+
     this._typewrite(step.text ?? '');
     this._waiting = true;
   }
 
   _showTitle(step) {
+    this._prevMode = 'title';
+    this._lastPortrait = null; // next character will slide in fresh
+
     this._gfx.clear();
     this._portraitGfx.clear();
     this._speakerText.setText('');
     this._promptText.setVisible(false);
 
+    // Fade in the full-screen black overlay
     this._gfx.fillStyle(0x000000, 0.85);
     this._gfx.fillRect(0, 0, 320, 180);
+    this._gfx.setAlpha(0);
+    this.tweens.add({ targets: this._gfx, alpha: 1, duration: 280, ease: 'Quad.easeIn' });
 
-    this._bodyText.setPosition(160, 76);
-    this._bodyText.setOrigin(0.5);
-    this._bodyText.setAlign('center');
-    this._bodyText.setText('');
-    this._typewrite(step.text ?? '', () => {
-      this._promptText.setPosition(308, 170);
-      this._promptText.setVisible(true);
+    // Delay text slightly so the fade completes first
+    this._bodyText.setPosition(160, 76).setOrigin(0.5).setAlign('center').setText('').setAlpha(0);
+    this.time.delayedCall(220, () => {
+      this.tweens.add({ targets: this._bodyText, alpha: 1, duration: 200 });
+      this._typewrite(step.text ?? '', () => {
+        this._promptText.setPosition(308, 170);
+        this._promptText.setVisible(true);
+      });
     });
     this._waiting = true;
   }
@@ -297,6 +318,15 @@ export default class DialogueScene extends Phaser.Scene {
     this._portraitGfx.fillRect(px + 14, py + 8,  3, 3);
     this._portraitGfx.fillRect(px + 9,  py + 16, 7, 2);
     this._speakerText.setX(38);
+
+    // Slide portrait in from left and pop speaker name when speaker changes
+    if (portraitKey !== this._lastPortrait) {
+      this._lastPortrait = portraitKey;
+      this._portraitGfx.x = -24;
+      this.tweens.add({ targets: this._portraitGfx, x: 0, duration: 180, ease: 'Back.easeOut' });
+      this._speakerText.setAlpha(0);
+      this.tweens.add({ targets: this._speakerText, alpha: 1, duration: 150 });
+    }
   }
 
   _clearChoices() {
