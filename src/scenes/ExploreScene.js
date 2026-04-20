@@ -27,6 +27,7 @@ export default class ExploreScene extends Phaser.Scene {
     this._spawnEntities(mapDef);
     this._spawnPlayer(this._startX, this._startY);
     this._drawHUD();
+    this.cameras.main.setBounds(0, 0, mapDef.width * TILE_SIZE, mapDef.height * TILE_SIZE);
     this._setupInput();
 
     this.events.on('resume', () => this._onResume());
@@ -48,7 +49,7 @@ export default class ExploreScene extends Phaser.Scene {
       }
     }
 
-    this.add.text(2, 1, mapDef.name ?? '', { font: '8px monospace', color: '#446688' });
+    this.add.text(2, 1, mapDef.name ?? '', { font: '8px monospace', color: '#446688' }).setScrollFactor(0);
   }
 
   // ─── entities ────────────────────────────────────────────────────────────
@@ -118,6 +119,12 @@ export default class ExploreScene extends Phaser.Scene {
     this._playerGfx.fillStyle(0x000000);
     this._playerGfx.fillRect(px + 3, py + 4, 2, 2);
     this._playerGfx.fillRect(px + 9, py + 4, 2, 2);
+
+    // Keep camera centered on player within map bounds
+    this.cameras.main.centerOn(
+      this._px * TILE_SIZE + TILE_SIZE / 2,
+      this._py * TILE_SIZE + TILE_SIZE / 2,
+    );
   }
 
   // ─── HUD ─────────────────────────────────────────────────────────────────
@@ -125,10 +132,10 @@ export default class ExploreScene extends Phaser.Scene {
   _drawHUD() {
     this._hudText = this.add.text(2, SCREEN_H - 12, '', {
       font: '8px monospace', color: '#446688',
-    });
+    }).setScrollFactor(0);
     this._noticeText = this.add.text(SCREEN_W / 2, SCREEN_H - 22, '', {
       font: '8px monospace', color: '#00ff88',
-    }).setOrigin(0.5);
+    }).setOrigin(0.5).setScrollFactor(0);
     this._refreshHUD();
   }
 
