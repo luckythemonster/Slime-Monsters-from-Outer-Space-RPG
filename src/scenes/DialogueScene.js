@@ -52,15 +52,15 @@ export default class DialogueScene extends Phaser.Scene {
     this._gfx          = this.add.graphics().setDepth(1);
     this._portraitGfx  = this.add.graphics().setDepth(2);
     this._speakerText  = this.add.text(38, BOX_Y + 5, '', {
-      font: '7px monospace', color: '#ffff88',
+      font: '9px monospace', color: '#ffff88',
     }).setDepth(2);
-    this._bodyText     = this.add.text(10, BOX_Y + 17, '', {
-      font: '7px monospace', color: '#ffffff',
+    this._bodyText     = this.add.text(10, BOX_Y + 19, '', {
+      font: '9px monospace', color: '#ffffff',
       wordWrap: { width: 298 },
-      lineSpacing: 2,
+      lineSpacing: 3,
     }).setDepth(2);
     this._promptText   = this.add.text(308, BOX_Y + BOX_H - 9, '▼', {
-      font: '6px monospace', color: '#aaaaff',
+      font: '8px monospace', color: '#aaaaff',
     }).setDepth(2).setVisible(false);
   }
 
@@ -137,7 +137,7 @@ export default class DialogueScene extends Phaser.Scene {
   _showChoice(step) {
     this._drawBox();
     this._speakerText.setText('');
-    this._bodyText.setPosition(10, BOX_Y + 17);
+    this._bodyText.setPosition(10, BOX_Y + 19);
     this._bodyText.setOrigin(0, 0);
     this._bodyText.setAlign('left');
     this._bodyText.setText(step.text ?? '');
@@ -145,11 +145,11 @@ export default class DialogueScene extends Phaser.Scene {
     const options = step.options ?? [];
     this._choiceIndex = 0;
     options.forEach((opt, i) => {
-      const cy   = BOX_Y + 30 + i * 14;
+      const cy   = BOX_Y + 32 + i * 16;
       const txt  = this.add.text(20, cy, `  ${opt.label}`, {
-        font: '7px monospace', color: '#ffffff',
+        font: '9px monospace', color: '#ffffff',
       }).setDepth(2);
-      const zone = this.add.rectangle(160, cy + 5, 300, 12, 0x000000, 0)
+      const zone = this.add.rectangle(160, cy + 6, 300, 14, 0x000000, 0)
         .setDepth(3).setInteractive();
       zone.on('pointerdown', () => this._selectChoice(options, i));
       zone.on('pointerover', () => { this._choiceIndex = i; this._refreshChoices(options); });
@@ -261,7 +261,7 @@ export default class DialogueScene extends Phaser.Scene {
     this._gfx.lineStyle(1, 0x4488cc);
     this._gfx.strokeRect(2, BOX_Y, 316, BOX_H);
 
-    this._bodyText.setPosition(10, BOX_Y + 17);
+    this._bodyText.setPosition(10, BOX_Y + 19);
     this._bodyText.setOrigin(0, 0);
     this._bodyText.setAlign('left');
     this._promptText.setPosition(308, BOX_Y + BOX_H - 9);

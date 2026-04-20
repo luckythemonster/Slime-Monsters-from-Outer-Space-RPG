@@ -9,15 +9,15 @@ export default class GameOverScene extends Phaser.Scene {
     this.add.rectangle(width / 2, height / 2, width, height, 0x000000);
 
     this.add.text(width / 2, height / 2 - 30, 'GAME OVER', {
-      font: '20px monospace', color: '#cc2222',
+      font: '24px monospace', color: '#cc2222',
     }).setOrigin(0.5);
 
     this.add.text(width / 2, height / 2, 'The slimes have fallen...', {
-      font: '7px monospace', color: '#888888',
+      font: '9px monospace', color: '#888888',
     }).setOrigin(0.5);
 
     const retry = this.add.text(width / 2, height / 2 + 25, '► RETRY', {
-      font: '8px monospace', color: '#ffffff',
+      font: '10px monospace', color: '#ffffff',
     }).setOrigin(0.5).setInteractive({ useHandCursor: true });
 
     retry.on('pointerdown', () => this.scene.start('TitleScene'));

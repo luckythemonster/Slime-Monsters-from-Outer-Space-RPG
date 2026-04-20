@@ -6,13 +6,13 @@ export default class DialogueBox {
   constructor(scene) {
     this.scene       = scene;
     this.gfx         = scene.add.graphics();
-    this.speakerText = scene.add.text(8, BOX_Y + 4, '', { font: '7px monospace', color: '#ffff88' });
+    this.speakerText = scene.add.text(8, BOX_Y + 4, '', { font: '9px monospace', color: '#ffff88' });
     this.bodyText    = scene.add.text(8, BOX_Y + 14, '', {
-      font: '7px monospace',
+      font: '9px monospace',
       color: '#ffffff',
       wordWrap: { width: 302 },
     });
-    this.promptText  = scene.add.text(306, BOX_Y + BOX_H - 10, '▼', { font: '6px monospace', color: '#aaaaff' });
+    this.promptText  = scene.add.text(306, BOX_Y + BOX_H - 10, '▼', { font: '8px monospace', color: '#aaaaff' });
     this.hide();
   }
 

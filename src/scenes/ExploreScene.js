@@ -49,7 +49,7 @@ export default class ExploreScene extends Phaser.Scene {
     }
 
     // draw map name at top
-    this.add.text(2, 1, mapDef.name ?? '', { font: '6px monospace', color: '#446688' });
+    this.add.text(2, 1, mapDef.name ?? '', { font: '8px monospace', color: '#446688' });
   }
 
   // ─── entities ────────────────────────────────────────────────────────────
@@ -68,7 +68,7 @@ export default class ExploreScene extends Phaser.Scene {
 
       // small label
       const label = this.add.text(px, py - 8, ent.label ?? '', {
-        font: '5px monospace', color: '#aaaaaa',
+        font: '7px monospace', color: '#aaaaaa',
       });
 
       this._entities.push({ ...ent, gfx, label });
@@ -101,11 +101,11 @@ export default class ExploreScene extends Phaser.Scene {
   // ─── HUD ─────────────────────────────────────────────────────────────────
 
   _drawHUD() {
-    this._hudText = this.add.text(2, SCREEN_H - 10, '', {
-      font: '6px monospace', color: '#446688',
+    this._hudText = this.add.text(2, SCREEN_H - 12, '', {
+      font: '8px monospace', color: '#446688',
     });
-    this._noticeText = this.add.text(SCREEN_W / 2, SCREEN_H - 20, '', {
-      font: '6px monospace', color: '#00ff88',
+    this._noticeText = this.add.text(SCREEN_W / 2, SCREEN_H - 22, '', {
+      font: '8px monospace', color: '#00ff88',
     }).setOrigin(0.5);
     this._refreshHUD();
   }

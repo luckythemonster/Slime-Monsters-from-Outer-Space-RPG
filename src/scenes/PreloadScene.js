@@ -79,7 +79,7 @@ export default class PreloadScene extends Phaser.Scene {
     const cy = this.scale.height / 2;
 
     this.add.text(cx, cy - 20, 'LOADING...', {
-      font: '8px monospace', color: '#ffffff',
+      font: '10px monospace', color: '#ffffff',
     }).setOrigin(0.5);
 
     const bar = this.add.rectangle(cx - 80, cy, 0, 6, 0x4488cc).setOrigin(0, 0.5);

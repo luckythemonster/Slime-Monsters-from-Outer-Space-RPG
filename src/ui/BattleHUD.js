@@ -62,7 +62,7 @@ export default class BattleHUD {
       this.gfx.fillRect(ex + 14, ey + 28, 10, 3);
 
       // name
-      this._text(ex, ey + 52, e.name ?? 'Enemy', '6px monospace', '#ffffff');
+      this._text(ex, ey + 52, e.name ?? 'Enemy', '8px monospace', '#ffffff');
 
       // HP bar
       const maxHp = e.stats?.hp ?? 1;
@@ -79,7 +79,7 @@ export default class BattleHUD {
     const recent = lines.slice(-3);
     recent.forEach((line, i) => {
       const alpha = i === recent.length - 1 ? '#ffffff' : '#999999';
-      this._text(2, 74 + i * 10, line, '6px monospace', alpha);
+      this._text(2, 74 + i * 10, line, '8px monospace', alpha);
     });
   }
 
@@ -99,18 +99,18 @@ export default class BattleHUD {
     party.forEach((m, i) => {
       const py = PANEL_Y + 4 + i * 31;
 
-      this._text(4,   py,      m.name,           '6px monospace', '#ffffff');
-      this._text(80,  py,      `Lv${m.level ?? 1}`, '6px monospace', '#aaaaaa');
+      this._text(4,   py,      m.name,           '8px monospace', '#ffffff');
+      this._text(80,  py,      `Lv${m.level ?? 1}`, '8px monospace', '#aaaaaa');
 
       // HP row
-      this._text(4,  py + 11, 'HP', '6px monospace', '#44ee44');
+      this._text(4,  py + 11, 'HP', '8px monospace', '#44ee44');
       this._bar(20, py + 12, 80, 5, m.currentHp ?? m.hp, m.maxHp, 0x22aa22, 0x222222);
-      this._text(104, py + 11, `${m.currentHp ?? m.hp}`, '6px monospace', '#ccffcc');
+      this._text(104, py + 11, `${m.currentHp ?? m.hp}`, '8px monospace', '#ccffcc');
 
       // MP row
-      this._text(4,  py + 20, 'MP', '6px monospace', '#4466ff');
+      this._text(4,  py + 20, 'MP', '8px monospace', '#4466ff');
       this._bar(20, py + 21, 80, 5, m.currentMp ?? m.mp, m.maxMp, 0x2244cc, 0x222222);
-      this._text(104, py + 20, `${m.currentMp ?? m.mp}`, '6px monospace', '#aaaaff');
+      this._text(104, py + 20, `${m.currentMp ?? m.mp}`, '8px monospace', '#aaaaff');
     });
   }
 
@@ -132,9 +132,9 @@ export default class BattleHUD {
       if (selected) {
         this.gfx.fillStyle(0x1a2a4a);
         this.gfx.fillRect(MENU_X - 2, my - 2, 320 - MENU_X + 2, 13);
-        this._text(MENU_X, my, `► ${label}`, '6px monospace', '#ffffff');
+        this._text(MENU_X, my, `► ${label}`, '8px monospace', '#ffffff');
       } else {
-        this._text(MENU_X + 8, my, label, '6px monospace', '#778899');
+        this._text(MENU_X + 8, my, label, '8px monospace', '#778899');
       }
     });
   }

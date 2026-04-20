@@ -3,7 +3,7 @@
   "name": "Palmer's Bar",
   "width": 20,
   "height": 11,
-  "encounterRate": 5,
+  "encounterRate": 0,
   "encounterPool": ["undercover_cop", "corporate_drone"],
   "tileColors": {
     "0": "#1a1218",

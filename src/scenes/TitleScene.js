@@ -32,19 +32,19 @@ export default class TitleScene extends Phaser.Scene {
 
   _drawTitle(w, h) {
     this.add.text(w / 2, 28, 'SLIME MONSTERS', {
-      font: '16px monospace', color: '#00ff88',
+      font: '18px monospace', color: '#00ff88',
     }).setOrigin(0.5);
 
-    this.add.text(w / 2, 48, 'FROM OUTER SPACE', {
-      font: '16px monospace', color: '#00cc66',
+    this.add.text(w / 2, 50, 'FROM OUTER SPACE', {
+      font: '18px monospace', color: '#00cc66',
     }).setOrigin(0.5);
 
-    this.add.text(w / 2, 68, 'R P G', {
-      font: '10px monospace', color: '#44aaff',
+    this.add.text(w / 2, 72, 'R P G', {
+      font: '13px monospace', color: '#44aaff',
     }).setOrigin(0.5);
 
     this._slime = this.add.graphics();
-    this._drawSlime(w / 2, 90);
+    this._drawSlime(w / 2, 94);
     this.tweens.add({
       targets: this._slime,
       y: 4,
@@ -71,7 +71,7 @@ export default class TitleScene extends Phaser.Scene {
       const color  = active ? '#ffffff' : '#444466';
 
       const txt = this.add.text(w / 2, my, label, {
-        font: '8px monospace', color,
+        font: '10px monospace', color,
       }).setOrigin(0.5);
 
       if (active) {
@@ -86,7 +86,7 @@ export default class TitleScene extends Phaser.Scene {
     this._refreshCursor();
 
     this.add.text(w / 2, 168, 'arrow keys + Z  |  tap to select', {
-      font: '6px monospace', color: '#334455',
+      font: '8px monospace', color: '#334455',
     }).setOrigin(0.5);
   }
 
