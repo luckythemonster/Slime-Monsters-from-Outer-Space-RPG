@@ -1,0 +1,7 @@
+{
+  "name": "slime-monsters-from-outer-space-rpg",
+  "private": true,
+  "scripts": {
+    "dev": "npx --yes serve . -l 8080"
+  }
+}
