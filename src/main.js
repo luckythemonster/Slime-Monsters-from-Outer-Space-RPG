@@ -7,6 +7,7 @@ import BattleScene   from './scenes/BattleScene.js';
 import GameOverScene from './scenes/GameOverScene.js';
 import DialogueScene from './scenes/DialogueScene.js';
 import MenuScene     from './scenes/MenuScene.js';
+import GlideScene    from './scenes/GlideScene.js';
 import { SCREEN_W, SCREEN_H, ZOOM } from './constants.js';
 
 const config = {
@@ -26,7 +27,8 @@ const config = {
     DialogueScene,
     GameOverScene,
     MenuScene,
-    TestScene,     // kept as debug scene
+    GlideScene,
+    TestScene,
   ],
   scale: {
     mode: Phaser.Scale.FIT,

@@ -94,6 +94,7 @@ export default class DialogueScene extends Phaser.Scene {
       case 'map_change': this._doMapChange(step); break;
       case 'shake':      this._doShake(step);     break;
       case 'flash':      this._doFlash(step);     break;
+      case 'minigame':   this._doMinigame(step);  break;
       case 'end':        this._close();           break;
       default:           this._advance();         break;
     }
@@ -246,6 +247,11 @@ export default class DialogueScene extends Phaser.Scene {
     this.scene.start('ExploreScene', { mapId: step.map, tileX: step.x, tileY: step.y });
   }
 
+  _doMinigame(step) {
+    this.scene.launch('GlideScene', { id: step.id ?? 'glide', returnScene: 'DialogueScene' });
+    this.scene.pause('DialogueScene');
+  }
+
   _doShake(step) {
     this.cameras.main.shake(step.duration ?? 400, step.intensity ?? 0.015);
     this.time.delayedCall(step.duration ?? 400, () => this._advance());
@@ -385,6 +391,14 @@ export default class DialogueScene extends Phaser.Scene {
   }
 
   _onResume() {
+    // Minigame finished — just advance past the step
+    const mgResult = this.registry.get('lastMinigame');
+    if (mgResult) {
+      this.registry.remove('lastMinigame');
+      this._advance();
+      return;
+    }
+
     const result = this.registry.get('lastBattle');
     if (!result) return;
     this.registry.remove('lastBattle');
