@@ -7,7 +7,11 @@
     { "type": "text", "speaker": "Ryan", "portrait": "ryan", "text": "[I am not trapped in the goo. The goo is trapped in the pocket.]" },
     { "type": "title", "text": "Ryan completely transcends his human form.\nHe becomes a localized black hole of rhythm.\n\nTHE ETERNITY." },
     { "type": "title", "text": "DOOM. CRACK. THUD.\n\nThe gravitational force is too much\nfor Palmer's Bar to handle." },
+    { "type": "shake", "intensity": 0.03, "duration": 800 },
+    { "type": "flash", "color": "#ffffff", "duration": 350 },
     { "type": "title", "text": "The roof of Palmer's Bar\npeels back like a sardine can." },
+    { "type": "shake", "intensity": 0.02, "duration": 600 },
+    { "type": "flash", "color": "#ff4422", "duration": 300 },
     { "type": "title", "text": "The brick walls blow outward\nin slow-motion cartoonish perfection.\n\nThe crowd scatters into the Minneapolis night." },
     { "type": "text", "speaker": "Lucky", "portrait": "lucky", "text": "Okay. THAT is our sound." },
     { "type": "text", "speaker": "Phoenix", "portrait": "phoenix", "text": "My brain thinks we are officially domestic terrorists." },
@@ -16,6 +20,6 @@
     { "type": "flag", "set": "ep0_complete" },
     { "type": "title", "text": "NEXT: THE POTATO BELT." },
     { "type": "title", "text": "— End of Episode 0 —" },
-    { "type": "map_change", "map": "ep0_alley", "x": 10, "y": 5 }
+    { "type": "map_change", "map": "ep0_minneapolis", "x": 14, "y": 5 }
   ]
 }

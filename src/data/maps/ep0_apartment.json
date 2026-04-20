@@ -29,6 +29,8 @@
       "id": "lucky_amp",
       "x": 2, "y": 6,
       "color": "#ff44aa",
+      "glowColor": "#ffff44",
+      "shape": "rect",
       "label": "Lucky's Amp",
       "dialogue": "ep0_signal",
       "dialogueOnce": true,
@@ -37,10 +39,10 @@
   ],
   "exits": [
     {
-      "id": "to_citysound",
+      "id": "to_minneapolis",
       "tiles": [[10,10],[11,10]],
       "condition": "ep0_signal_sent",
-      "target": { "map": "ep0_citysound", "x": 10, "y": 4 }
+      "target": { "map": "ep0_minneapolis", "x": 6, "y": 4 }
     }
   ]
 }

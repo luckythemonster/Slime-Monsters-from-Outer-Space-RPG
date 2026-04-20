@@ -9,7 +9,7 @@
   {
     "id": "ep0_amp_done",
     "steps": [
-      { "type": "text", "speaker": "Phoenix", "portrait": "phoenix", "text": "My brain thinks the signal has already been sent. Let's go find Room 4." },
+      { "type": "text", "speaker": "Phoenix", "portrait": "phoenix", "text": "My brain thinks the signal has already been sent. Head back through the city to find Room 4." },
       { "type": "end" }
     ]
   },
@@ -31,6 +31,13 @@
     "id": "ep0_bajonka",
     "steps": [
       { "type": "text", "speaker": "Bajonka", "portrait": null, "text": "*sneeze*" },
+      { "type": "end" }
+    ]
+  },
+  {
+    "id": "ep0_flyer_read",
+    "steps": [
+      { "type": "title", "text": "GIG TONIGHT: PALMER'S BAR\nNO GUITAR SOLO NECESSARY" },
       { "type": "end" }
     ]
   }

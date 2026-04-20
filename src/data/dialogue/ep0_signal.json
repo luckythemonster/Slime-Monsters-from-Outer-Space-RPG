@@ -6,13 +6,15 @@
     { "type": "text", "speaker": "Phoenix", "portrait": "phoenix", "text": "My brain thinks that is not how things work." },
     { "type": "title", "text": "Lucky channels pure raw slime energy\ndirectly into the amp's input jack.\nTheir arm glows violently." },
     { "type": "title", "text": "A neon soundwave erupts from the speaker cone.\nSo powerful it physically bends\nthe walls of the apartment outward." },
+    { "type": "shake", "intensity": 0.015, "duration": 500 },
+    { "type": "flash", "color": "#44aaff", "duration": 400 },
     { "type": "title", "text": "The wave rolls over the rooftops of Minneapolis,\ncausing a PRODUCTIVITY IS FREEDOM billboard\nto briefly glitch." },
     { "type": "title", "text": "The wave travels north.\nOver highways and frozen suburbs.\nDeep into the pine forests of Northern Minnesota." },
     { "type": "title", "text": "A detached garage in the dark.\nRyan sits behind a massive drum kit." },
     { "type": "title", "text": "The glowing cosmic wave washes completely over him.\nHe freezes.\nHis drumsticks hover in mid-air.\nHis eyes go wide." },
     { "type": "title", "text": "[He feels the rhythm of the cosmos.]" },
     { "type": "title", "text": "--- End Part 1 ---" },
-    { "type": "text", "speaker": "Phoenix", "portrait": "phoenix", "text": "...My brain thinks that actually worked. City Sound Rehearsal is on the other side of town. The door's downstairs." },
+    { "type": "text", "speaker": "Phoenix", "portrait": "phoenix", "text": "...My brain thinks that actually worked. City Sound Rehearsal is on the other side of town. Head back through the city." },
     { "type": "flag", "set": "ep0_signal_sent" },
     { "type": "end" }
   ]

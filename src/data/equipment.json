@@ -1,0 +1,11 @@
+[
+  { "id": "beatup_axe",       "name": "Beat-up Axe",        "slot": "instrument", "for": "lucky",   "bonus": { "atk": 3 },          "desc": "Lucky's battered first guitar." },
+  { "id": "cosmic_fretboard", "name": "Cosmic Fretboard",   "slot": "instrument", "for": "lucky",   "bonus": { "atk": 7, "spd": 1 }, "desc": "Humming with slime energy." },
+  { "id": "starter_bass",     "name": "Starter Bass",       "slot": "instrument", "for": "phoenix", "bonus": { "atk": 2, "mp": 8 },  "desc": "Phoenix's dependable low-end." },
+  { "id": "deep_signal_bass", "name": "Deep Signal Bass",   "slot": "instrument", "for": "phoenix", "bonus": { "atk": 5, "mp": 15 }, "desc": "Rich, subsonic frequencies." },
+  { "id": "basic_kit",        "name": "Basic Kit",          "slot": "instrument", "for": "ryan",    "bonus": { "atk": 3, "def": 2 }, "desc": "Ryan's reliable drum setup." },
+  { "id": "cosmic_throne",    "name": "Cosmic Drum Throne", "slot": "instrument", "for": "ryan",    "bonus": { "atk": 8, "def": 4 }, "desc": "The throne of The Eternity." },
+  { "id": "street_clothes",   "name": "Street Clothes",     "slot": "outfit",                       "bonus": {},                     "desc": "Whatever you crawled out of the pod in." },
+  { "id": "stage_gear",       "name": "Stage Gear",         "slot": "outfit",                       "bonus": { "def": 3 },           "desc": "Thrift-store perfect." },
+  { "id": "slime_skin",       "name": "Slime Skin",         "slot": "outfit",                       "bonus": { "def": 6, "spd": 2 }, "desc": "Living cosmic armor." }
+]

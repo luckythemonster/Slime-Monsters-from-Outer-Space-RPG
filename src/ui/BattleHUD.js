@@ -52,19 +52,15 @@ export default class BattleHUD {
       const ey = 10;
       const color = e.color ? parseInt(String(e.color).replace('#', ''), 16) : 0xff4444;
 
-      // body
       this.gfx.fillStyle(color);
       this.gfx.fillRoundedRect(ex, ey, 48, 48, 6);
-      // simple face
       this.gfx.fillStyle(0x000000);
       this.gfx.fillRect(ex + 11, ey + 16, 5, 5);
       this.gfx.fillRect(ex + 22, ey + 16, 5, 5);
       this.gfx.fillRect(ex + 14, ey + 28, 10, 3);
 
-      // name
       this._text(ex, ey + 52, e.name ?? 'Enemy', '8px monospace', '#ffffff');
 
-      // HP bar
       const maxHp = e.stats?.hp ?? 1;
       const pct   = Math.max(0, e.currentHp / maxHp);
       this.gfx.fillStyle(0x333333);
@@ -84,33 +80,31 @@ export default class BattleHUD {
   }
 
   _drawPanel() {
-    // background
     this.gfx.fillStyle(0x0a0a1e);
     this.gfx.fillRect(0, PANEL_Y, 320, PANEL_H);
-    // top border
     this.gfx.fillStyle(0x4488cc);
     this.gfx.fillRect(0, PANEL_Y, 320, 1);
-    // vertical divider
     this.gfx.fillStyle(0x334455);
     this.gfx.fillRect(DIVIDER_X, PANEL_Y + 2, 1, PANEL_H - 4);
   }
 
   _drawParty(party) {
     party.forEach((m, i) => {
-      const py = PANEL_Y + 4 + i * 31;
+      const py = PANEL_Y + 4 + i * 34;
 
-      this._text(4,   py,      m.name,           '8px monospace', '#ffffff');
+      this._text(4,   py,      m.name,              '8px monospace', '#ffffff');
       this._text(80,  py,      `Lv${m.level ?? 1}`, '8px monospace', '#aaaaaa');
 
-      // HP row
       this._text(4,  py + 11, 'HP', '8px monospace', '#44ee44');
       this._bar(20, py + 12, 80, 5, m.currentHp ?? m.hp, m.maxHp, 0x22aa22, 0x222222);
       this._text(104, py + 11, `${m.currentHp ?? m.hp}`, '8px monospace', '#ccffcc');
 
-      // MP row
       this._text(4,  py + 20, 'MP', '8px monospace', '#4466ff');
       this._bar(20, py + 21, 80, 5, m.currentMp ?? m.mp, m.maxMp, 0x2244cc, 0x222222);
       this._text(104, py + 20, `${m.currentMp ?? m.mp}`, '8px monospace', '#aaaaff');
+
+      const sts = (m.statuses ?? []).map(s => s.id.substring(0, 2).toUpperCase()).join(' ');
+      if (sts) this._text(4, py + 28, `[${sts}]`, '8px monospace', '#ffff66');
     });
   }
 
@@ -119,7 +113,6 @@ export default class BattleHUD {
       const my      = PANEL_Y + 6 + i * 14;
       const selected = i === this.cursor;
 
-      // tap zone
       const zone = this.scene.add.zone(MENU_X, my - 1, 320 - MENU_X, 13)
         .setOrigin(0, 0)
         .setInteractive();

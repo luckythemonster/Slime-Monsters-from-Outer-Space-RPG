@@ -2,7 +2,6 @@ const BOX_Y   = 110;
 const BOX_H   = 68;
 const TYPE_MS = 28;
 
-// Portrait colors for characters without a full sprite
 const PORTRAIT_COLORS = {
   lucky:   0xff44aa,
   phoenix: 0x44aacc,
@@ -46,7 +45,6 @@ export default class DialogueScene extends Phaser.Scene {
   // ─── UI setup ────────────────────────────────────────────────────────────
 
   _setupUI() {
-    // semi-transparent dim over the game world
     this._dimRect = this.add.rectangle(160, 55, 320, 110, 0x000000, 0.35).setDepth(0);
 
     this._gfx          = this.add.graphics().setDepth(1);
@@ -70,7 +68,6 @@ export default class DialogueScene extends Phaser.Scene {
     this._upKey    = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
     this._downKey  = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
 
-    // tap anywhere on the box to advance
     this._tapZone = this.add.rectangle(160, BOX_Y + BOX_H / 2, 320, BOX_H, 0x000000, 0)
       .setDepth(3)
       .setInteractive();
@@ -86,15 +83,17 @@ export default class DialogueScene extends Phaser.Scene {
     this._promptText.setVisible(false);
 
     switch (step.type) {
-      case 'text':      this._showText(step);    break;
-      case 'title':     this._showTitle(step);   break;
-      case 'choice':    this._showChoice(step);  break;
-      case 'flag':      this._doFlag(step);      break;
+      case 'text':       this._showText(step);    break;
+      case 'title':      this._showTitle(step);   break;
+      case 'choice':     this._showChoice(step);  break;
+      case 'flag':       this._doFlag(step);      break;
       case 'party_join': this._doPartyJoin(step); break;
-      case 'battle':    this._doBattle(step);    break;
+      case 'battle':     this._doBattle(step);    break;
       case 'map_change': this._doMapChange(step); break;
-      case 'end':       this._close();           break;
-      default:          this._advance();         break;
+      case 'shake':      this._doShake(step);     break;
+      case 'flash':      this._doFlash(step);     break;
+      case 'end':        this._close();           break;
+      default:           this._advance();         break;
     }
   }
 
@@ -119,7 +118,6 @@ export default class DialogueScene extends Phaser.Scene {
     this._speakerText.setText('');
     this._promptText.setVisible(false);
 
-    // full-width centered title card
     this._gfx.fillStyle(0x000000, 0.85);
     this._gfx.fillRect(0, 0, 320, 180);
 
@@ -183,13 +181,20 @@ export default class DialogueScene extends Phaser.Scene {
   _doPartyJoin(step) {
     const party      = this.registry.get('party');
     const characters = this.registry.get('characters') ?? [];
+    const equipDefs  = this.registry.get('equipment') ?? [];
     const def        = characters.find(c => c.id === step.character);
     if (!def || !party) { this._advance(); return; }
 
     const alreadyIn = party.members.some(m => m.id === step.character);
     if (!alreadyIn) {
-      // Build a new member from definition and add to party
       const newMember = party._build(def);
+      if (def.startingEquipment) {
+        for (const slot of ['instrument', 'outfit']) {
+          const id = def.startingEquipment[slot];
+          const itemDef = equipDefs.find(e => e.id === id);
+          if (itemDef) party.equip(newMember, itemDef);
+        }
+      }
       party.members.push(newMember);
     }
     this._advance();
@@ -200,7 +205,6 @@ export default class DialogueScene extends Phaser.Scene {
     const enemyDefs  = (step.enemies ?? []).map(id => allEnemies.find(e => e.id === id)).filter(Boolean);
     if (!enemyDefs.length) { this._advance(); return; }
 
-    // Store which dialogue to run after winning
     if (step.winDialogue) this.registry.set('battleWinDialogue', step.winDialogue);
 
     this.scene.launch('BattleScene', {
@@ -219,6 +223,20 @@ export default class DialogueScene extends Phaser.Scene {
     this.scene.stop('DialogueScene');
     this.scene.stop(returnScene);
     this.scene.start('ExploreScene', { mapId: step.map, tileX: step.x, tileY: step.y });
+  }
+
+  _doShake(step) {
+    this.cameras.main.shake(step.duration ?? 400, step.intensity ?? 0.015);
+    this.time.delayedCall(step.duration ?? 400, () => this._advance());
+  }
+
+  _doFlash(step) {
+    const color = parseInt((step.color ?? '#ffffff').replace('#', ''), 16);
+    const rect = this.add.rectangle(160, 90, 320, 180, color, 0.8).setDepth(10);
+    this.tweens.add({
+      targets: rect, alpha: 0, duration: step.duration ?? 400,
+      onComplete: () => { rect.destroy(); this._advance(); },
+    });
   }
 
   // ─── typewriter ──────────────────────────────────────────────────────────
@@ -292,7 +310,7 @@ export default class DialogueScene extends Phaser.Scene {
 
   _onAdvance() {
     const step = this._steps[this._stepIndex];
-    if (step?.type === 'choice') return;  // choices need explicit selection
+    if (step?.type === 'choice') return;
 
     if (this._typing) {
       this._skipTypewriter();
@@ -336,7 +354,6 @@ export default class DialogueScene extends Phaser.Scene {
     }
   }
 
-  // Called when BattleScene resumes this scene after a dialogue-triggered battle
   _onResume() {
     const result = this.registry.get('lastBattle');
     if (!result) return;

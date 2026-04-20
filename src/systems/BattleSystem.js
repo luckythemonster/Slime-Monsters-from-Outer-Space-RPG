@@ -1,12 +1,24 @@
+const STATUS_DEFS = {
+  shell:          { statMod: { def: 2.0 } },
+  in_the_pocket:  { statMod: { spd: 1.5 } },
+  stage_fright:   { statMod: { atk: 0.5 } },
+  corporate_memo: { statMod: { def: 0.5 } },
+};
+
 export default class BattleSystem {
-  constructor(partyMembers, enemyDefs, abilitiesData) {
+  constructor(partyMembers, enemyDefs, abilitiesData, partySystem) {
     this._abilityMap = Object.fromEntries(abilitiesData.map(a => [a.id, a]));
+    this._partySystem = partySystem;
 
     this.party = partyMembers.map(m => ({
       ...m,
-      currentHp: m.hp,
-      currentMp: m.mp,
-      isPlayer:  true,
+      currentHp:  m.hp,
+      currentMp:  m.mp,
+      isPlayer:   true,
+      statuses:   [],
+      atk: partySystem ? partySystem.getEffectiveStat(m, 'atk') : m.atk,
+      def: partySystem ? partySystem.getEffectiveStat(m, 'def') : m.def,
+      spd: partySystem ? partySystem.getEffectiveStat(m, 'spd') : m.spd,
     }));
 
     this.enemies = enemyDefs.map((e, i) => ({
@@ -16,6 +28,7 @@ export default class BattleSystem {
       atk:       e.stats.atk,
       def:       e.stats.def,
       spd:       e.stats.spd,
+      statuses:  [],
       isPlayer:  false,
     }));
 
@@ -27,7 +40,7 @@ export default class BattleSystem {
   _buildQueue() {
     return [...this.party, ...this.enemies]
       .filter(c => c.currentHp > 0)
-      .sort((a, b) => b.spd - a.spd);
+      .sort((a, b) => this.getEffectiveStat(b, 'spd') - this.getEffectiveStat(a, 'spd'));
   }
 
   _alive(c) { return c.currentHp > 0; }
@@ -42,24 +55,50 @@ export default class BattleSystem {
   }
 
   advanceTurn() {
+    const actor = this.getCurrentActor();
+    if (actor) this.tickStatuses(actor);
+
     this._queueIndex++;
     const alive = this._buildQueue();
     if (alive.length === 0) { this.phase = 'defeat'; return; }
-    const actor = alive[this._queueIndex % alive.length];
+    const next = alive[this._queueIndex % alive.length];
     if (this.livingEnemies().length === 0) {
       this.phase = 'victory';
     } else if (this.livingParty().length === 0) {
       this.phase = 'defeat';
     } else {
-      this.phase = actor.isPlayer ? 'player_turn' : 'enemy_turn';
+      this.phase = next.isPlayer ? 'player_turn' : 'enemy_turn';
     }
   }
+
+  // ─── status effects ──────────────────────────────────────────────────────
+
+  applyStatus(target, id, duration) {
+    target.statuses = (target.statuses ?? []).filter(s => s.id !== id);
+    target.statuses.push({ id, turnsLeft: duration });
+  }
+
+  getEffectiveStat(combatant, stat) {
+    const base = combatant[stat] ?? combatant.stats?.[stat] ?? 0;
+    return (combatant.statuses ?? []).reduce((val, s) => {
+      const mod = STATUS_DEFS[s.id]?.statMod?.[stat];
+      return mod ? val * mod : val;
+    }, base);
+  }
+
+  tickStatuses(combatant) {
+    combatant.statuses = (combatant.statuses ?? [])
+      .map(s => ({ ...s, turnsLeft: s.turnsLeft - 1 }))
+      .filter(s => s.turnsLeft > 0);
+  }
+
+  // ─── combat ──────────────────────────────────────────────────────────────
 
   applyAttack(attacker, target, abilityId = null) {
     const ability = abilityId ? this._abilityMap[abilityId] : null;
     const power   = ability?.power ?? 1.0;
-    const atk     = attacker.atk ?? 8;
-    const def     = target.def ?? target.stats?.def ?? 3;
+    const atk     = this.getEffectiveStat(attacker, 'atk');
+    const def     = this.getEffectiveStat(target, 'def');
     const base    = Math.max(1, atk * power - def * 0.5);
     const dmg     = Math.floor(base * (0.9 + Math.random() * 0.2));
     target.currentHp = Math.max(0, target.currentHp - dmg);
