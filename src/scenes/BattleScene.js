@@ -108,12 +108,15 @@ export default class BattleScene extends Phaser.Scene {
       )[0];
       const res = this.battle.applyHeal(actor, healTarget, abilityId);
       this._addLog(`${actor.name} heals ${healTarget.name} for ${res.amount} HP!`);
+      this._spawnDamageNumber(res.amount, true);
       this._afterPlayerAction();
       return;
     }
 
     const res = this.battle.applyAttack(actor, target, abilityId);
     this._addLog(`${actor.name} uses ${ability?.name ?? 'Attack'} on ${target.name} for ${res.amount} dmg!`);
+    this._spawnDamageNumber(res.amount, false);
+    this._flashEnemy();
     this._afterPlayerAction();
   }
 
@@ -172,6 +175,7 @@ export default class BattleScene extends Phaser.Scene {
     if (pm) pm.hp = action.target.currentHp;
 
     this._addLog(`${actor.name} attacks ${action.target.name} for ${res.amount} dmg!`);
+    this._spawnDamageNumber(res.amount, false, true);
     this.battle.advanceTurn();
     this._redraw();
 
@@ -246,6 +250,36 @@ export default class BattleScene extends Phaser.Scene {
 
   _redraw() {
     this.hud.draw(this.battle, this.log);
+  }
+
+  // ─── animations ─────────────────────────────────────────────────────────
+
+  _spawnDamageNumber(amount, isHeal = false, onParty = false) {
+    // Enemies are drawn around x=74; party area is off-screen (HUD panel)
+    const x = onParty ? 130 : 74;
+    const y = onParty ? 130 :  34;
+    const color = isHeal ? '#44ff88' : '#ff4444';
+    const txt = this.add.text(x, y, isHeal ? `+${amount}` : `-${amount}`, {
+      font: '10px monospace', color,
+    }).setOrigin(0.5).setDepth(20);
+    this.tweens.add({
+      targets:  txt,
+      y:        y - 28,
+      alpha:    0,
+      duration: 900,
+      ease:     'Cubic.easeOut',
+      onComplete: () => txt.destroy(),
+    });
+  }
+
+  _flashEnemy() {
+    const flash = this.add.rectangle(74, 34, 50, 50, 0xffffff, 0.75).setDepth(19);
+    this.tweens.add({
+      targets:  flash,
+      alpha:    0,
+      duration: 180,
+      onComplete: () => flash.destroy(),
+    });
   }
 
   _drawBackground() {

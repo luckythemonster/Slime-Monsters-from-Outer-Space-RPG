@@ -66,6 +66,17 @@ export default class ExploreScene extends Phaser.Scene {
 
       this._drawEntityGfx(gfx, ent, px, py, events);
 
+      // Idle pulse — entities breathe gently at random rates
+      this.tweens.add({
+        targets:  gfx,
+        alpha:    { from: 1.0, to: 0.65 },
+        duration: Phaser.Math.Between(700, 1400),
+        delay:    Phaser.Math.Between(0, 600),
+        yoyo:     true,
+        repeat:   -1,
+        ease:     'Sine.easeInOut',
+      });
+
       const label = this.add.text(px, py - 8, ent.label ?? '', {
         font: '7px monospace', color: '#aaaaaa',
       });
@@ -101,15 +112,17 @@ export default class ExploreScene extends Phaser.Scene {
   // ─── player ──────────────────────────────────────────────────────────────
 
   _spawnPlayer(tx, ty) {
-    this._px = tx;
-    this._py = ty;
+    this._px      = tx;
+    this._py      = ty;
+    this._renderPx = tx * TILE_SIZE;
+    this._renderPy = ty * TILE_SIZE;
     this._playerGfx = this.add.graphics();
     this._drawPlayer();
   }
 
   _drawPlayer() {
-    const px = this._px * TILE_SIZE + 1;
-    const py = this._py * TILE_SIZE + 1;
+    const px = Math.round(this._renderPx) + 1;
+    const py = Math.round(this._renderPy) + 1;
     const party = this.registry.get('party');
     const color = party?.members[0]?.color ?? 0xff44aa;
 
@@ -120,11 +133,22 @@ export default class ExploreScene extends Phaser.Scene {
     this._playerGfx.fillRect(px + 3, py + 4, 2, 2);
     this._playerGfx.fillRect(px + 9, py + 4, 2, 2);
 
-    // Keep camera centered on player within map bounds
     this.cameras.main.centerOn(
-      this._px * TILE_SIZE + TILE_SIZE / 2,
-      this._py * TILE_SIZE + TILE_SIZE / 2,
+      Math.round(this._renderPx) + TILE_SIZE / 2,
+      Math.round(this._renderPy) + TILE_SIZE / 2,
     );
+  }
+
+  _slidePlayerTo(nx, ny) {
+    if (this._moveTween) this._moveTween.stop();
+    this._moveTween = this.tweens.add({
+      targets:  this,
+      _renderPx: nx * TILE_SIZE,
+      _renderPy: ny * TILE_SIZE,
+      duration:  110,
+      ease:      'Linear',
+      onUpdate:  () => this._drawPlayer(),
+    });
   }
 
   // ─── HUD ─────────────────────────────────────────────────────────────────
@@ -203,7 +227,7 @@ export default class ExploreScene extends Phaser.Scene {
     if (this._walkable(nx, ny)) {
       this._px = nx;
       this._py = ny;
-      this._drawPlayer();
+      this._slidePlayerTo(nx, ny);
       this._moveTimer = MOVE_DELAY;
       this._onStep();
     }
