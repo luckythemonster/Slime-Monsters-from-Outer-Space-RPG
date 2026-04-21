@@ -97,6 +97,7 @@ export default class BattleScene extends Phaser.Scene {
           : [this.battle.livingEnemies()[0]];
       targets.forEach(t => this.battle.applyStatus(t, ability.status, ability.statusDuration ?? 3));
       this._addLog(`${actor.name} → [${ability.status.toUpperCase()}] applied!`);
+      this._spawnWordProjectile(ability.word, ability.wordColor, 'buff');
       this._afterPlayerAction();
       return;
     }
@@ -109,6 +110,7 @@ export default class BattleScene extends Phaser.Scene {
       const res = this.battle.applyHeal(actor, healTarget, abilityId);
       this._addLog(`${actor.name} heals ${healTarget.name} for ${res.amount} HP!`);
       this._spawnDamageNumber(res.amount, true);
+      this._spawnWordProjectile(ability.word, ability.wordColor, 'buff');
       this._afterPlayerAction();
       return;
     }
@@ -117,6 +119,7 @@ export default class BattleScene extends Phaser.Scene {
     this._addLog(`${actor.name} uses ${ability?.name ?? 'Attack'} on ${target.name} for ${res.amount} dmg!`);
     this._spawnDamageNumber(res.amount, false);
     this._flashEnemy();
+    this._spawnWordProjectile(ability?.word, ability?.wordColor, 'attack');
     this._afterPlayerAction();
   }
 
@@ -176,6 +179,8 @@ export default class BattleScene extends Phaser.Scene {
 
     this._addLog(`${actor.name} attacks ${action.target.name} for ${res.amount} dmg!`);
     this._spawnDamageNumber(res.amount, false, true);
+    const enemyAbility = this._abilities?.find(a => a.id === action.abilityId);
+    this._spawnWordProjectile(enemyAbility?.word, enemyAbility?.wordColor, 'enemy');
     this.battle.advanceTurn();
     this._redraw();
 
@@ -253,6 +258,52 @@ export default class BattleScene extends Phaser.Scene {
   }
 
   // ─── animations ─────────────────────────────────────────────────────────
+
+  _spawnWordProjectile(word, wordColor, mode = 'attack') {
+    if (!word) return;
+    const color = wordColor ?? '#ffffff';
+
+    if (mode === 'buff') {
+      const txt = this.add.text(130, 115, word, {
+        font: 'bold 11px monospace', color,
+        stroke: '#000000', strokeThickness: 3,
+      }).setOrigin(0.5).setDepth(25).setScale(0.1).setAngle(6);
+      this.tweens.add({
+        targets: txt, scale: 1.3, angle: 0, duration: 220, ease: 'Back.easeOut',
+        onComplete: () => {
+          this.tweens.add({ targets: txt, alpha: 0, duration: 400, delay: 350, onComplete: () => txt.destroy() });
+        },
+      });
+      return;
+    }
+
+    const toEnemy = mode !== 'enemy';
+    const startX = toEnemy ? 160 : 74;
+    const startY = toEnemy ? 128 : 34;
+    const endX   = toEnemy ? 74  : 130;
+    const endY   = toEnemy ? 34  : 118;
+
+    const txt = this.add.text(startX, startY, word, {
+      font: 'bold 11px monospace', color,
+      stroke: '#000000', strokeThickness: 3,
+    }).setOrigin(0.5).setDepth(25).setScale(0.4).setAngle(toEnemy ? -12 : 12);
+
+    this.tweens.add({
+      targets: txt, x: endX, y: endY, scaleX: 1.5, scaleY: 1.5, angle: 0,
+      duration: 280, ease: 'Quad.easeIn',
+      onComplete: () => {
+        this.tweens.add({
+          targets: txt, scaleX: 2.4, scaleY: 0.3, duration: 70, yoyo: true,
+          onComplete: () => {
+            this.tweens.add({
+              targets: txt, alpha: 0, y: endY - 18,
+              duration: 300, delay: 80, onComplete: () => txt.destroy(),
+            });
+          },
+        });
+      },
+    });
+  }
 
   _spawnDamageNumber(amount, isHeal = false, onParty = false) {
     // Enemies are drawn around x=74; party area is off-screen (HUD panel)

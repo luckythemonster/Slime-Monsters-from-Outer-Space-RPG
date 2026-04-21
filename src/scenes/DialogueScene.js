@@ -94,6 +94,7 @@ export default class DialogueScene extends Phaser.Scene {
       case 'map_change': this._doMapChange(step); break;
       case 'shake':      this._doShake(step);     break;
       case 'flash':      this._doFlash(step);     break;
+      case 'sound_word': this._doSoundWord(step); break;
       case 'minigame':   this._doMinigame(step);  break;
       case 'end':        this._close();           break;
       default:           this._advance();         break;
@@ -263,6 +264,35 @@ export default class DialogueScene extends Phaser.Scene {
     this.tweens.add({
       targets: rect, alpha: 0, duration: step.duration ?? 400,
       onComplete: () => { rect.destroy(); this._advance(); },
+    });
+  }
+
+  _doSoundWord(step) {
+    const x     = step.x ?? 160;
+    const y     = step.y ?? 80;
+    const angle = step.angle ?? Phaser.Math.Between(-8, 8);
+    const txt = this.add.text(x, y, step.text ?? '', {
+      font: `bold ${step.size ?? 28}px monospace`,
+      color: step.color ?? '#ff4422',
+      stroke: '#000000',
+      strokeThickness: 4,
+      align: 'center',
+    }).setOrigin(0.5).setDepth(30).setScale(0.1).setAngle(angle);
+
+    this._gfx.clear();
+    this._bodyText.setText('');
+    this._speakerText.setText('');
+
+    this.tweens.add({
+      targets: txt, scale: 1, duration: 200, ease: 'Back.easeOut',
+      onComplete: () => {
+        this.time.delayedCall(step.hold ?? 700, () => {
+          this.tweens.add({
+            targets: txt, alpha: 0, y: y - 20, duration: 250,
+            onComplete: () => { txt.destroy(); this._advance(); },
+          });
+        });
+      },
     });
   }
 

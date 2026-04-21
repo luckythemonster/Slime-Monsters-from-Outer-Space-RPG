@@ -18,7 +18,7 @@
     { "type": "minigame", "id": "glide" },
     { "type": "title", "text": "Minneapolis, Minnesota.\nA gorgeous purple-orange twilight.\nA neon pink-and-green slime contrail\narcs across the sky." },
     { "type": "flash", "color": "#cc44ff", "duration": 400 },
-    { "type": "title", "text": "KRAATHOOOM!" },
+    { "type": "sound_word", "text": "KRAATHOOOM!", "color": "#ff8800", "size": 36, "hold": 800, "angle": -6 },
     { "type": "shake", "intensity": 0.055, "duration": 1000 },
     { "type": "flash", "color": "#ffffff", "duration": 450 },
     { "type": "map_change", "map": "ep0_alley", "x": 10, "y": 5 }

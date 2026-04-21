@@ -6,6 +6,8 @@
     "target": "single_enemy",
     "mp_cost": 0,
     "power": 1.1,
+    "word": "RIFF!",
+    "wordColor": "#ffee44",
     "description": "A crushing guitar chord."
   },
   {
@@ -15,6 +17,8 @@
     "target": "all_enemies",
     "mp_cost": 10,
     "power": 0.9,
+    "word": "EEEEE!",
+    "wordColor": "#ff8800",
     "description": "Ear-splitting amp feedback hits all enemies."
   },
   {
@@ -26,6 +30,8 @@
     "statusDuration": 3,
     "mp_cost": 6,
     "power": 1.0,
+    "word": "ZAP!",
+    "wordColor": "#88aaff",
     "description": "Wraps Lucky in crackling static. DEF x2 for 3 turns."
   },
   {
@@ -35,6 +41,8 @@
     "target": "single_enemy",
     "mp_cost": 0,
     "power": 1.0,
+    "word": "THOOM!",
+    "wordColor": "#44ffcc",
     "description": "A low, thunderous bass hit."
   },
   {
@@ -44,6 +52,8 @@
     "target": "single_ally",
     "mp_cost": 8,
     "power": 1.0,
+    "word": "HEAL!",
+    "wordColor": "#44ff88",
     "description": "My brain thinks this should heal someone."
   },
   {
@@ -53,6 +63,8 @@
     "target": "single_enemy",
     "mp_cost": 7,
     "power": 1.2,
+    "word": "WHUMM",
+    "wordColor": "#4488ff",
     "description": "A subsonic wave that rattles the target's bones."
   },
   {
@@ -62,6 +74,8 @@
     "target": "single_enemy",
     "mp_cost": 0,
     "power": 1.3,
+    "word": "CRACK!",
+    "wordColor": "#ffffff",
     "description": "A single devastating snare hit."
   },
   {
@@ -73,6 +87,8 @@
     "statusDuration": 3,
     "mp_cost": 12,
     "power": 1.0,
+    "word": "GROOVE!",
+    "wordColor": "#cc44ff",
     "description": "A locked-in groove. SPD x1.5 for the whole party."
   },
   {
@@ -82,6 +98,8 @@
     "target": "all_enemies",
     "mp_cost": 30,
     "power": 3.0,
+    "word": "THE ETERNITY",
+    "wordColor": "#9944ff",
     "description": "Ryan dissolves into pure cosmic rhythm. Devastating."
   },
   {
@@ -93,6 +111,8 @@
     "statusDuration": 2,
     "mp_cost": 0,
     "power": 0.7,
+    "word": "MEMO!",
+    "wordColor": "#ccbb88",
     "description": "Buries target in pointless bureaucracy. DEF halved."
   },
   {
@@ -102,6 +122,8 @@
     "target": "single_enemy",
     "mp_cost": 0,
     "power": 1.1,
+    "word": "COMPLY!",
+    "wordColor": "#8899aa",
     "description": "A heavy-handed crackdown."
   },
   {
@@ -111,6 +133,8 @@
     "target": "single_enemy",
     "mp_cost": 0,
     "power": 0.8,
+    "word": "SCRATCH!",
+    "wordColor": "#ff4444",
     "description": "A quick scratching attack."
   },
   {
@@ -120,6 +144,8 @@
     "target": "single_enemy",
     "mp_cost": 0,
     "power": 1.1,
+    "word": "SLAM!",
+    "wordColor": "#ff8844",
     "description": "A heavy body slam."
   },
   {
@@ -129,6 +155,8 @@
     "target": "single_enemy",
     "mp_cost": 0,
     "power": 0.9,
+    "word": "STING!",
+    "wordColor": "#cc44cc",
     "description": "A lightning-fast sting."
   }
 ]
