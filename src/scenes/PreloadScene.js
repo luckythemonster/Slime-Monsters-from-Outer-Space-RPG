@@ -18,6 +18,8 @@ export default class PreloadScene extends Phaser.Scene {
   preload() {
     this._drawLoadingBar();
 
+    this.load.spritesheet('cp_city', 'assets/tilesets/cp_city.png', { frameWidth: 32, frameHeight: 32 });
+
     this.load.json('characters', 'src/data/characters.json');
     this.load.json('enemies',    'src/data/enemies.json');
     this.load.json('abilities',  'src/data/abilities.json');

@@ -4,6 +4,8 @@
   "width": 28,
   "height": 15,
   "encounterRate": 0,
+  "tileset": "cp_city",
+  "tileIndices": { "0": 576, "2": 582 },
   "tileColors": {
     "0": "#22222e",
     "1": "#080810",

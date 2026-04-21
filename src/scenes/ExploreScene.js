@@ -36,16 +36,30 @@ export default class ExploreScene extends Phaser.Scene {
   // ─── map rendering ───────────────────────────────────────────────────────
 
   _renderMap(mapDef) {
+    const colors      = mapDef.tileColors ?? { '0': '#2a3a2a', '1': '#111118', '2': '#1a2a1a', '3': '#2a2218' };
+    const tileIndices = mapDef.tileIndices ?? {};
+    const hasTileset  = mapDef.tileset && this.textures.exists(mapDef.tileset);
+
     const gfx = this.add.graphics();
-    const colors = mapDef.tileColors ?? { '0': '#2a3a2a', '1': '#111118', '2': '#1a2a1a', '3': '#2a2218' };
+    const rt  = hasTileset
+      ? this.add.renderTexture(0, 0, mapDef.width * TILE_SIZE, mapDef.height * TILE_SIZE)
+      : null;
 
     for (let row = 0; row < mapDef.height; row++) {
       for (let col = 0; col < mapDef.width; col++) {
         const tile  = mapDef.grid[row]?.[col] ?? 1;
-        const hex   = colors[String(tile)] ?? '#111111';
-        const color = parseInt(hex.replace('#', ''), 16);
-        gfx.fillStyle(color);
-        gfx.fillRect(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE - 1, TILE_SIZE - 1);
+        const frame = hasTileset ? tileIndices[String(tile)] : undefined;
+        const x     = col * TILE_SIZE;
+        const y     = row * TILE_SIZE;
+
+        if (frame != null) {
+          rt.stamp(mapDef.tileset, frame, x, y, { scaleX: 0.5, scaleY: 0.5, originX: 0, originY: 0 });
+        } else {
+          const hex   = colors[String(tile)] ?? '#111111';
+          const color = parseInt(hex.replace('#', ''), 16);
+          gfx.fillStyle(color);
+          gfx.fillRect(x, y, TILE_SIZE - 1, TILE_SIZE - 1);
+        }
       }
     }
 
