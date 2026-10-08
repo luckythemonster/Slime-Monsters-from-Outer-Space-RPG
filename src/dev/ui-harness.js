@@ -16,6 +16,7 @@ export const PIXEL_FONT = '"Press Start 2P"';
 const params = new URLSearchParams(window.location.search);
 const USE_FALLBACK = params.get('fallback') === '1';
 const RUN_DEMO = params.get('demo') === '1';
+const AUTO = params.get('auto') === '1'; // demo without a human: instant text + auto-advance
 const ASSET_BASE = '/assets/generated/';
 
 // ---------------------------------------------------------------------------------------------
@@ -189,7 +190,14 @@ class HarnessScene extends Phaser.Scene {
       state: () => ui.debugState(),
     };
     window.__uih = api;
-    if (RUN_DEMO) this.runDemo(ui);
+    if (AUTO) {
+      ui.setTextInstant(true);
+      ui.setAutoAdvance(true);
+    }
+    if (RUN_DEMO) {
+      api.demoDone = false;
+      this.runDemo(ui).then(() => { api.demoDone = true; }, (e) => { api.demoError = String(e && e.stack ? e.stack : e); api.demoDone = true; });
+    }
   }
 
   async runDemo(ui) {

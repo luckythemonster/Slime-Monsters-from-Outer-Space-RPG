@@ -402,6 +402,19 @@ async function main() {
     await sleep(200);
     await t.shot('14_end');
 
+    // ---- 10. unfold animation mid-frame (visual only) ----
+    await t.start('say', { who: 'narrator', text: 'Unfolding...' });
+    await sleep(55);
+    await t.shot('15_unfold');
+    await t.waitTop(() => __uih.state().top && __uih.state().top.state === 'typing');
+    await t.confirmUntilDone();
+
+    // ---- 11. the ?demo=1 tour runs to completion unattended (?auto=1) ----
+    await page.goto(`${vite.url}?demo=1&auto=1${fallback ? '&fallback=1' : ''}`, { waitUntil: 'load', timeout: READY_TIMEOUT_MS });
+    await page.waitForFunction(() => globalThis.__uih && globalThis.__uih.demoDone === true, null, { timeout: 20_000, polling: 100 });
+    const demo = await page.evaluate(() => ({ error: __uih.demoError || null, busy: __uih.ui.isBusy() }));
+    t.check('?demo=1&auto=1 tour completes without error', !demo.error && demo.busy === false, demo.error || '');
+
     report.tests = t.results;
     report.screenshots = t.shots;
     report.ok = t.results.every((r) => r.ok) && errors.length === 0;

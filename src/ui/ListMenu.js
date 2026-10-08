@@ -87,11 +87,17 @@ export default class ListMenu {
     });
     this.cursor = ui.add.image(0, 0, UI_KEY, 'cursor').setOrigin(0, 0).setDepth(this.depth + 3);
     if (this.hasHints) {
+      // The hint window is at least as wide as the menu, grows to fit the longest hint and is
+      // kept inside the 8 px screen margin (hints longer than that are truncated).
+      const maxHint = Math.max(...this.items.map((i) => (i.hint || '').length));
+      const hw = Math.min(SCREEN_W - 16, Math.max(this.w, maxHint * CHAR_W + PAD * 2));
+      const hx = Math.max(8, Math.min(this.x, SCREEN_W - 8 - hw));
       let hy = this.y + this.h;
       if (hy + HINT_H > SCREEN_H) hy = this.y - HINT_H;
-      this.hintWin = new Window(ui, this.x, hy, this.w, HINT_H, { depth: this.depth });
+      this.hint = { x: hx, y: hy, w: hw };
+      this.hintWin = new Window(ui, hx, hy, hw, HINT_H, { depth: this.depth });
       await this.hintWin.open(true);
-      this.hintText = ui.add.text(this.x + PAD, hy + PAD, '', textStyle(COLORS.text)).setDepth(this.depth + 2);
+      this.hintText = ui.add.text(hx + PAD, hy + PAD, '', textStyle(COLORS.text)).setDepth(this.depth + 2);
     }
     this._placeCursor();
     this.state = 'open';
@@ -110,7 +116,7 @@ export default class ListMenu {
     const r = Math.floor(i / this.cols);
     this.cursor.setPosition(this.x + PAD + c * (this.colW + COL_GAP), this.y + PAD + r * LINE_H + TEXT_DY);
     if (this.hintText) {
-      const maxChars = Math.max(0, Math.floor((this.w - PAD * 2) / CHAR_W));
+      const maxChars = Math.max(0, Math.floor((this.hint.w - PAD * 2) / CHAR_W));
       this.hintText.setText((this.items[i].hint || '').slice(0, maxChars));
     }
   }
