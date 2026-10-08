@@ -200,6 +200,62 @@ try {
   check('realtime sfx: unknown name returns 0 without throwing', sfxRt.unknown === 0);
   check('realtime sfx: voices clean themselves up', sfxRt.active === 0 && sfxRt.ctx === 'running', { active: sfxRt.active });
 
+  // --- tab blur: suspended context freezes the clock, playback resumes in place ---
+  const blur = await page.evaluate(async () => {
+    const h = window.__audioHarness;
+    const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+    h.play('title', { fade: 0 });
+    await wait(600);
+    const before = h.engine.sequencer.position;
+    await h.ctx.suspend();
+    const stateSuspended = h.ctx.state;
+    await wait(500);
+    const during = h.engine.sequencer.position;
+    await h.ctx.resume();
+    await wait(600);
+    const after = h.engine.sequencer.position;
+    const rmsAfter = h.rms();
+    const ticks = h.ticks.slice();
+    h.stop({ fade: 0 });
+    await wait(100);
+    return {
+      stateSuspended, stateAfter: h.ctx.state, rmsAfter, ticks: ticks.length,
+      frozen: during.time - before.time, resumed: after.time - during.time,
+      monotonic: ticks.every((t, i) => i === 0 || t.step > ticks[i - 1].step),
+    };
+  });
+  check('blur: suspend freezes the position, resume continues in place with monotonic ticks',
+    blur.stateSuspended === 'suspended' && blur.stateAfter === 'running' && blur.frozen < 0.1 && blur.resumed > 0.35 && blur.resumed < 0.9 && blur.rmsAfter > 0.01 && blur.monotonic, blur);
+
+  // --- registerSong + non-looping song ---
+  const once = await page.evaluate(async () => {
+    const h = window.__audioHarness;
+    const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+    h.engine.registerSong({
+      id: 'once_test', bpm: 300, beatsPerBar: 4, stepsPerBeat: 4, loop: false,
+      channels: {
+        p: { wave: 'pulse', duty: 0.5, volume: 0.4, patterns: { A: 'C5 . E5 . G5 . C6 . | C5 . E5 . G5 . C6 .' } },
+        n: { wave: 'noise', volume: 0.4, patterns: { A: 'k . h . s . h . | k . h . s . h .' } },
+      },
+      order: [{ p: 'A', n: 'A' }, { p: 'A', n: 'A' }],
+    });
+    let ended = false;
+    const seq = h.engine.playMusic('once_test', { fade: 0 });
+    seq.on('end', () => { ended = true; });
+    await wait(400);
+    const rmsDuring = h.rms();
+    await wait(seq.duration * 1000 + 400);
+    return { ended, duration: seq.duration, current: h.engine.currentMusic, state: seq.state, rmsDuring, rmsAfter: h.rms(), registered: h.engine.hasSong('once_test') };
+  });
+  check('non-loop song: plays once, emits end, clears currentMusic', once.registered && once.ended && once.current === null && once.state === 'ended' && once.rmsDuring > 0.01 && once.rmsAfter < 2e-3, once);
+  const bad = await page.evaluate(() => {
+    try {
+      window.__audioHarness.engine.registerSong({ id: 'bad', bpm: 100, channels: { p: { wave: 'pulse', patterns: { A: 'C4 Z4' } } }, order: [{ p: 'A' }] });
+      return null;
+    } catch (e) { return e.message; }
+  });
+  check('registerSong: throws a helpful message for an invalid song', typeof bad === 'string' && bad.includes('expected 16') && bad.includes('Z4'), { bad });
+
   // --- offline renders (most reliable path) ---
   for (const id of songIds) {
     const r = await page.evaluate((id) => window.__audioHarness.renderSong(id), id);
