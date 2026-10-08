@@ -47,7 +47,7 @@ Full-screen special scene. Lucky flattens like a flying squirrel (`lucky_flat`);
 **CS-04 `ep0_crash`** (`onFirstEnter`)
 1. Black; `ambient wind`; `camera fade in 400` on Phoenix at (12,6), hoodie and trash bag (`phoenix_trash`).
 2. `say phoenix` "{speed:slow}…" (a sigh you can read).
-3. `sfx crash`; `camera shake 900 0.03`; `camera flash 120`; `spawn crater 9,8`; `spawn crash_fx sprite:sfx_crash 10,4` (Toon 2: CRASH is an object); `move crash_fx "RRR" wait`, tipping each dumpster it passes (`sprite dumpster_tipped`, `sfx hit`); `despawn crash_fx`.
+3. `sfx crash`; `camera shake 900 0.03`; `camera flash 120`; `spawn crater 9,8`; `spawn crash_fx sprite:sfx_crash 10,4` (Toon 2: CRASH is an object); `move crash_fx "RRR" wait`, tipping each dumpster it passes (`sprite dumpster_tipped`); `despawn crash_fx`.
 4. `sprite player lucky_puddle`; `wait 900`; `anim phoenix phoenix_push_glasses wait`.
 5. `say phoenix portrait:phoenix_tired` "My brain thinks you're going to have to pay the city for that pothole."
 6. `anim player lucky_coagulate wait` (`sfx slime_pop` ×3); `sprite player lucky`.
@@ -139,7 +139,7 @@ The rail `exit` fades through `caption "TWENTY MINUTES OF LIGHT RAIL LATER"`. Fr
 
 ### S10 — ONE MONTH LATER: Brian (8 min, Toon 0→2→1) — `room4`
 **CS-13 `ep0_month_later`**
-1. `music rehearsal_brian` (the song played straight). Brian at the pedalboard, `anim brian_strum` (only the hand moves).
+1. `music rehearsal_brian` (the song played straight). Brian at the pedalboard, `anim brian_strum`.
 2. `say brian` "Do we really need all the political stickers? We're going to alienate the market."
 3. `face brian left`; `say brian` "Hey, man, can you turn the bass down?" `say phoenix portrait:phoenix_droop` "I'm not a 'man,' Brian. And no."
 4. `say ryan_caption` "[I give this guy three weeks. Tops.]"
@@ -148,7 +148,7 @@ The rail `exit` fades through `caption "TWENTY MINUTES OF LIGHT RAIL LATER"`. Fr
 7. `sfx coffee_spill`; `sprite coffee_cup coffee_cup_spilled`; `sprite pedalboard pedalboard_fried`; `sfx sparks` ×3; `camera flash 60` ×2; `despawn kraaang, g`; `music null`.
 8. `say brian portrait:brian_red` "I can't work like this! I hate this weird, creative shit! Can't we just play normal music?!" `set flags.pedalboardFried`.
 9. `caption "ONE MONTH BEFORE THE POTATO BELT TOUR" style:tape`; `say phoenix` "My brain thinks that caption knows something we don't."
-10. `move brian "LLRRLLRR"` (pacing, no wait); `say brian` "{shake}I'm not here to have fun." / "I'm not into this creative shit." / "You people are wasting my time."
+10. `move brian "LLRRLLRR"` (pacing); `say brian` "{shake}I'm not here to have fun." / "I'm not into this creative shit. You people are wasting my time."
 11. `sfx pop`; `sprite player lucky_bristle`; `say narrator` "Lucky unplugs. The slime on their shoulders stands up like a cat's."
 12. `anim phoenix phoenix_mute`; `move phoenix "L"`.
 13. `move player` adjacent to Brian; `say lucky portrait:lucky_calm` "Listen to me very carefully, Brian."
@@ -159,7 +159,7 @@ The rail `exit` fades through `caption "TWENTY MINUTES OF LIGHT RAIL LATER"`. Fr
 18. `anim drips drips_freeze` (the ceiling drip stops mid-air); `wait 1200`.
 19. `say phoenix portrait:phoenix_baffled` "My brain thinks you might be having a stroke."
 20. `say lucky` "I literally didn't say anything about a house…" `say brian` "I know what you meant! My property values are fine! You're just jealous of my equity!"
-21. `anim brian brian_pack wait`; `move brian` to the door `run`; `sfx door_slam`; `camera shake 300`; `despawn brian`; `party remove brian`; `give fried_pedalboard`; `ui.toast` "Got FRIED PEDALBOARD."
+21. `anim brian brian_pack wait`; `move brian` to the door `run`; `sfx door_slam`; `camera shake 300`; `despawn brian`; `party remove brian`; `give fried_pedalboard`.
 22. `wait 1500`; `say ryan_caption` "[Well. His timing was terrible anyway.]"
 23. `sfx door` (creak); `spawn bajonka 4,11`; `move bajonka` to the mic stand; `anim bajonka_drop`; `spawn gig_flyer sprite:flyer_crumpled 7,7`; `sfx sneeze`; `move bajonka` out; `despawn`; `set flags.brianQuit`; unlock. Phoenix: "My brain thinks she's making a point."
 
@@ -216,11 +216,11 @@ Free roam (crowd, jukebox, pull tabs; Bajonka on a stool behind the bar = last s
 
 ### `pod_bay` — 16×14
 **Layout.** Steel floor, catwalk along the top, three drop pods along the bottom (pod 2 open, Lucky inside at (7,11)). Intercom speaker, 2×2, north wall (7,2). Viewport (12,2) onto Planet California, a planet made of billboards. Vending machine (2,3), plaque (4,2). **Exit:** EJECT only. **NPC:** Dad (the speaker; "Dad has always been a speaker.").
-**Interactables.** Speaker → CS-02. EJECT → CS-03. Laser guitar case in the pod: "The only thing from home worth the fuel." (equips; one-toast Equip tutorial). Pod 3 nameplate "RESERVED — RUBEN, B." → Lucky: "…They're late. They're always late." (`flags.readBillyPod`). Vending: "DENTAL PLAN: SOLD OUT. DEMOGRAPHIC: SOLD OUT. WATER: $40." Plaque: "EMPLOYEE OF THE QUARTER: DAD (41 CONSECUTIVE QUARTERS)." Viewport: "One billboard says WORK IS LOVE. Lucky has never seen it turned off." **Enemies:** none. **Triggers:** four Dad floor bands.
+**Interactables.** Speaker → CS-02. EJECT → CS-03. Laser guitar case in the pod: "The only thing from home worth the fuel." (equips; one-toast Equip tutorial). Pod 3 nameplate "RESERVED — RUBEN, B." → Lucky: "…They're late. They're always late." (`flags.readBillyPod`). Vending: "DENTAL PLAN: SOLD OUT. DEMOGRAPHIC: SOLD OUT. WATER: $40." Plaque: "EMPLOYEE OF THE QUARTER: DAD (41 CONSECUTIVE)." Viewport: "One billboard says WORK IS LOVE. Lucky has never seen it turned off." **Enemies:** none. **Triggers:** four Dad floor bands.
 
 ### `alley` — 24×14
 **Layout.** The bar's brick back wall along the north: lit window (16,3), steel door "PALMER'S — DELIVERIES" (18,4). Snow and slush; four dumpster objects at y=5, x=6..13; crater (9,8) after the crash; chain-link dead end east with a bike frozen to it; west end opens onto Cedar. Bajonka's milk crate (19,6). **Exit:** west edge → `street_cedar` (38,12). **NPCs:** Phoenix (until joined); Bajonka (save).
-**Interactables.** Crater: "Lucky's pothole. It glows faintly. Someone is going to be billed." Tipped dumpster: "Nine Pizza Luce boxes, all empty, all someone's Tuesday." (one Slice). Drone wreck: "RETRIEVAL DRONE (DECEASED). Its little screen still says ASSET LOCATED." Steel door: "EMPLOYEES ONLY. (Phoenix: 'I'm an employee. I'm not going in there.')" Bike: "Someone has been paying for that U-lock since 2019." Window: "It sounds warm in there. It isn't." **Enemies:** the tutorial drone, scripted only. **Trigger:** `onFirstEnter` CS-04.
+**Interactables.** Crater: "Lucky's pothole. It glows faintly. Someone is going to be billed." Tipped dumpster: "Nine Pizza Luce boxes, all empty, all someone's Tuesday." (one Slice). Drone wreck: "RETRIEVAL DRONE (DECEASED). Its little screen still says ASSET LOCATED." Steel door: "EMPLOYEES ONLY. (Phoenix: 'I'm an employee. I'm not going in there.')" Bike: "Someone has been paying for that U-lock since 2019." **Enemies:** the tutorial drone, scripted only. **Trigger:** `onFirstEnter` CS-04.
 
 ### `street_cedar` — 40×24, the hub
 **Layout.** Cedar Ave runs west–east through rows 11–13 (road, parked cars, snowbanks). North sidewalk, west to east: Palmer's (neon, door (6,8)); the Towers — Phoenix's building, colored-panel tiles, door (12,8); Hard Luck Café (20,8); Cedar Pawn & Loan (28,8); bus shelter (33,9) with the Pizza Luce box beside it. South sidewalk: the Cedar-Riverside light-rail platform with its `exit` at (21,16) (`flags.brianCalledRyan`), a hydrant, a bike rack, the alley mouth at the east end. The WORK IS LOVE billboard is an `over`-layer object on the roofline (14..19,2..4); it swaps to `_glitch` while the player is within 3 tiles after `flags.signalSent`.
@@ -267,8 +267,8 @@ Same footprint: walls → `rubble`, north rows → night sky, drywall slabs, a b
 
 - **Verbs.** Grid walk, run (hold), confirm = interact with the faced entity, cancel, menu. Objects return a narrator line; things a party member cares about return a second line on a second press (Phoenix on bills, tickets, pull tabs; Lucky on anything Vanguard).
 - **Discoverables are unmarked.** The player learns to press on everything; the only tell is that NPCs face the player when adjacent.
-- **Lucky's color is the HUD.** The overworld sheet swaps by leader HP (`lucky` ≥70 %, `lucky_tense` 40–69 %, `lucky_deflated` <40 %) and by story lock (`lucky_rage` after `flags.luckyRageLocked`). No HP bar outside menus.
-- **Night.** `flags.gigFlyer` dresses `street_cedar`: a blue overlay rectangle at depth 50 under the `over` layer, lit-window objects, animated neon, a different NPC roster via `condition`.
+- **Lucky's color is the HUD.** The overworld sheet swaps by leader HP (`lucky` ≥70 %, `lucky_tense` 40–69 %, `lucky_deflated` <40 %) and by story lock (`lucky_rage`). No HP bar outside menus.
+- **Night.** `flags.gigFlyer` dresses `street_cedar`: a blue overlay rectangle at depth 50 under the `over` layer, lit-window objects, and a different NPC roster via `condition`.
 - **Toon 2 objects** (CRASH, KRAAANG, G, DOOM/CRACK/THUD) are ordinary `object` entities moved with `move`. No special system.
 
 ## Battle system (brief)
@@ -284,7 +284,7 @@ FF side view: party left, enemies right, commands ATTACK / RIFF / ITEM / HOLD / 
 | Brian | S7, second / S10 | Strat, $2,000 Pedalboard; Sterile Chord (100 % hit, 0 % crit) | Nothing. He does not grow. |
 | Ryan | S9, fourth / S13 | Sticks, Tinny Ride; uncontrollable Fill | — |
 
-Levels 1→6 across the slice from ~10 optional street fights and two bosses. Money: $0 → $4 when Phoenix joins; enemies drop $1–2 "found in the snow"; the party never affords the $40 cymbal.
+Levels 1→6 from ~10 optional street fights and two bosses. Money: $0 → $4 when Phoenix joins; enemies drop $1–2 "found in the snow"; the party never affords the $40 cymbal.
 
 ## Enemies & bosses
 
@@ -301,7 +301,7 @@ Levels 1→6 across the slice from ~10 optional street fights and two bosses. Mo
 
 ## Items, equipment, shops
 
-**Consumables.** Pizza Luce Slice (HP 30; dumpsters, street box, fridge), Gas Station Coffee (AMP 10; café $3), Hand Warmers (cure Frozen; $2), Earplugs (guard vs Sound; $5), Duct Tape (revive 25 %; $4), Cheap Beer (HP 15, 30 % Confuse; $3).
+**Consumables.** Pizza Luce Slice (HP 30; found, never sold), Gas Station Coffee (AMP 10; $3), Hand Warmers (cure Frozen; $2), Earplugs (guard vs Sound; $5), Duct Tape (revive 25 %; $4), Cheap Beer (HP 15, 30 % Confuse; $3).
 **Key items.** Flyer (blank), Drone Core, Band Agreement ({n} pages), Fried Pedalboard, Half-Ounce ("Assets."), Rat Fight Demo Tape ($1; Warner seed), Van Keys, Tour Itinerary.
 **Equipment.** Lucky: Laser Guitar only ("Lucky is the armor"). Phoenix: P-Bass, Hoodie, Trash Bag (+ATK, inflicts Garbage). Brian: Strat, $2,000 Pedalboard (ACC 100 %, CRIT 0 %; removed when fried). Ryan: Sticks, Flannel, Tinny Ride Cymbal (+1 Fill; the gag is that it's bad).
 **Shops.** Cedar Pawn & Loan: the consumables, Used Ride Cymbal $40 (Phoenix: "My brain thinks we could afford it in nine years."), Rat Fight Demo $1; he refuses the Drone Core: "I don't buy Vanguard. They track it." Hard Luck Café: coffee only.
@@ -312,7 +312,7 @@ Levels 1→6 across the slice from ~10 optional street fights and two bosses. Mo
 - Captions: plain (END PART 1), `style: "tape"` (duct-taped, crooked), and a letter-spaced chapter stinger.
 - `ui.insert(sprite)`: a centered window with a flyer/itinerary sprite over a narrator line (used three times).
 - Toon table → engine: 0 nothing; 1 `camera shake`; 2 letter objects + `ui.bulge`; 3 `ui.setFrame('torn')` + jitter; 4 background/HUD swap + input lock.
-- Menu: Items / Riffs / Equip / Status / Save. Status shows Lucky's color swatch, not a mood word. Save is greyed "Bajonka is not here" unless adjacent to her.
+- Menu: Items / Riffs / Equip / Status / Save. Status shows Lucky's color swatch; Save is greyed "Bajonka is not here" unless adjacent to her.
 
 ## Audio (cue list per scene)
 
@@ -369,7 +369,7 @@ Side flags (never gate the spine): readBillyPod, billsRead, pizzaBoxLooted, juke
 cleared_<enemy>, trig_<map>_<id>, vars.saveCount.
 ```
 
-Gating lives only in entity `condition`s and exit conditions, so `__slime.warp` + `setFlag` can jump the playthrough test to any scene.
+Gating lives only in entity and exit `condition`s, so `__slime.warp` + `setFlag` can jump the playthrough test to any scene.
 
 ## Content inventory
 
