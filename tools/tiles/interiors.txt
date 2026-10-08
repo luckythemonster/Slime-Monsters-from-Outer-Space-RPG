@@ -1,0 +1,800 @@
+# Interiors: Phoenix's apartment, the Hard Luck Cafe, City Sound's sticker hallway and Room 4. 16x16.
+# Ground tiles (floors, plaster walls, sticker walls) are opaque and edge-free so they repeat;
+# furniture (couch, table, stool, shelf, fridge, radiator, espresso machine, mic stand, cable,
+# corkboard, hallway light) has transparent surroundings for the deco/over layers.
+# Doors and windows carry their own plaster surround so they drop into a wall row.
+name: interiors
+tile: 16x16
+palette:
+  . = transparent
+  k = #141018     # outline
+  w = #f8f8f8     # white (paper, fridge)
+  L = #c8ccd4     # gray light (linoleum, chrome)
+  m = #9aa0a8     # gray mid (hallway floor, grout)
+  d = #5c6068     # gray dark (carpet, soundproof door)
+  s = #30303c     # shadow (sticker wall base, riser)
+  e = #1c0c2c     # eternity (dark doorway, poster black)
+  a = #142050     # navy (night glass)
+  j = #3c5c9c     # denim (couch)
+  J = #24386c     # denim dark (couch shadow)
+  h = #7c4c2c     # wood
+  H = #48281c     # wood dark
+  t = #c89060     # tan (wood grain, cork)
+  c = #f0dcb0     # cream (plaster, paper)
+  i = #f0c8a0     # plaster shade
+  y = #f8d820     # yellow
+  o = #e88830     # orange (billboard glow)
+  r = #d83030     # red (PAST DUE stamps, stickers)
+  p = #ff5fd2     # pink
+  P = #ff9ae6     # pink light
+  D = #b0308c     # pink dark
+  g = #39ff8a     # green
+  G = #1c8c48     # green dark
+  v = #3c8c40     # mid green
+  b = #a84838     # rug red
+  B = #6c2828     # rug dark
+  n = #e8f0ff     # near white (glints)
+  N = #bcd0ec     # pale blue
+  S = #8ca4cc     # blue mid (couch highlight)
+  u = #6c7890     # gray-blue
+  C = #40e0f0     # cyan glint
+
+tile wood_floor:
+solid: false
+hhhhhhhhhhhhhhhh
+hhthhhhhhhhhhthh
+hhhhhhhhthhhhhhh
+HHHHHHHHHHHHHHHH
+hhhhhHhhhhhhhhhh
+hhhhhHhhhhthhhhh
+hthhhHhhhhhhhhhh
+HHHHHHHHHHHHHHHH
+hhhhhhhhhhhhhHhh
+hhhthhhhhhhhhHhh
+hhhhhhhhthhhhHhh
+HHHHHHHHHHHHHHHH
+hhhhhhhhhHhhhhhh
+hhhhhhhhhHhhhthh
+hthhhhhhhHhhhhhh
+HHHHHHHHHHHHHHHH
+
+tile wood_floor_dark:
+solid: false
+HHHHHHHHHHHHHHHH
+HHhHHHHHHHHHHhHH
+HHHHHHHHhHHHHHHH
+eeeeeeeeeeeeeeee
+HHHHHeHHHHHHHHHH
+HHHHHeHHHHhHHHHH
+HhHHHeHHHHHHHHHH
+eeeeeeeeeeeeeeee
+HHHHHHHHHHHHHeHH
+HHHhHHHHHHHHHeHH
+HHHHHHHHhHHHHeHH
+eeeeeeeeeeeeeeee
+HHHHHHHHHeHHHHHH
+HHHHHHHHHeHHHhHH
+HhHHHHHHHeHHHHHH
+eeeeeeeeeeeeeeee
+
+tile carpet_stained:
+solid: false
+dddddddddddddddd
+ddsdddddddddsddd
+ddddddddsddddddd
+dddddddddddddddd
+dsddddddddddddsd
+ddddddHHdddddddd
+dddddHHHHHdddsdd
+ddddHHHHHHHddddd
+ddddHHHHHHddddds
+dddddHHHHddddddd
+ddsddddHdddddddd
+dddddddddddsdddd
+dddddddddddddddd
+dsdddddddsdddddd
+ddddddddddddddsd
+dddddsdddddddddd
+
+tile tile_floor:
+solid: false
+cccccccmLLLLLLLm
+cccccccmLLLLLLLm
+cccicccmLLLLwLLm
+cccccccmLLLLLLLm
+cccccccmLLLLLLLm
+cccccicmLLwLLLLm
+cccccccmLLLLLLLm
+mmmmmmmmmmmmmmmm
+LLLLLLLmcccccccm
+LLLwLLLmcccccccm
+LLLLLLLmcccciccm
+LLLLLLLmcccccccm
+LLLLLwLmcciccccm
+LLLLLLLmcccccccm
+LLLLLLLmcccccccm
+mmmmmmmmmmmmmmmm
+
+tile linoleum:
+solid: false
+LLLLLLLLLLLLLLLL
+LLmLLLLLLLLLmLLL
+LLLLLLLLwLLLLLLL
+LLLLLmLLLLLLLLLL
+LwLLLLLLLLLLLLLL
+LLLLLLLLLLmLLLLL
+LLLLLLLmLLLLLLLL
+LLLLLLLLLLLLLLwL
+LLLmLLLLLLLLLLLL
+LLLLLLLLLLLLmLLL
+LLLLLLLLLmLLLLLL
+LLLLwLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLmLLLLLLLmLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLwLLLLLmLL
+
+tile wall_plaster:
+solid: true
+cccccccccccccccc
+ccicccccccccccic
+cccccccccicccccc
+cccccccccccccccc
+cicccccccccccccc
+cccccccccccciccc
+cccccciccccccccc
+cccccccccccccccc
+cccccccccccccccc
+ccccicccccccccic
+cccccccccccccccc
+cicccccccciccccc
+cccccccccccccccc
+cccccccicccccccc
+cccccccccccccccc
+cccicccccccccccc
+
+tile wall_plaster_top:
+solid: true
+LLLLLLLLLLLLLLLL
+mmmmmmmmmmmmmmmm
+dddddddddddddddd
+eeeeeeeeeeeeeeee
+cccccccccccccccc
+ccicccccccccccic
+cccccccccicccccc
+cccccccccccccccc
+cicccccccccccccc
+cccccccccccciccc
+cccccciccccccccc
+cccccccccccccccc
+ccccicccccccccic
+cccccccccccccccc
+cicccccccciccccc
+cccccccccccccccc
+
+tile wall_poster_a:
+solid: true
+cccccccccccccccc
+cccckkkkkkkkkccc
+cccckeeeeeeekccc
+cccckewwewwekccc
+cccckeeeeeeekccc
+cccckewewwewkccc
+cccckeeeeeeekccc
+cccckeppppppkccc
+cccckeeeeeeekccc
+cccckewwwwwekccc
+cccckeeeeeeekccc
+cccckeweewwekccc
+cccckkkkkkkkkccc
+cccccccccccccccc
+ccicccccccccccic
+cccccccccccccccc
+
+tile wall_poster_b:
+solid: true
+cccccccccccccccc
+cccckkkkkkkkkkcc
+cccckwwwwwwwwkcc
+cccckwrrrwrrwkcc
+cccckwwwwwwwwkcc
+cccckwkkkkkkwkcc
+cccckwwwwwwwwkcc
+cccckwrrrrrrwkcc
+cccckwrrrrrrwkcc
+cccckwwwwwwwwkcc
+cccckwkkwkkkwkcc
+cccckwwwwwwwwkcc
+cccckkkkkkkkkkcc
+cccccccccccccccc
+cicccccccccccccc
+cccccccccccccccc
+
+tile wall_poster_c:
+solid: true
+cccccccccccccccc
+ccckkkkkkkkkcccc
+ccckyyyyyyykcccc
+ccckykkykkykcccc
+ccckyyyyyyykcccc
+ccckyjjjjjykcccc
+ccckyjjjjjykcccc
+ccckyjjjjjykcccc
+ccckyyyyyyykcccc
+ccckykkkkkykcccc
+ccckyyyyyyykcccc
+ccckkkkkkkkkcccc
+cccccccccccccccc
+cccccccccccciccc
+cccccccccccccccc
+cccicccccccccccc
+
+tile wall_bills_a:
+solid: true
+cccccccccccccccc
+cccccccccccccccc
+cckkkkkkkccccccc
+cckwrwwwkccccccc
+cckwwwwwkccccccc
+cckwddwwkccccccc
+cckwwwwkkkkkkkcc
+cckwdwwkwwwwwkcc
+cckwwwwkwrrrwkcc
+cckkkkkkwrrrwkcc
+cccccccckwdwwkcc
+cccccccckwwdwkcc
+cccccccckkkkkkcc
+cccccccccccccccc
+ccicccccccccccic
+cccccccccccccccc
+
+tile wall_bills_b:
+solid: true
+cccccccccccccccc
+cccccccccccccccc
+cccckkkkkkkkkccc
+cccckwwwywwwkccc
+cccckwddddwwkccc
+cccckwwwwwwwkccc
+cccckwdddwwwkccc
+cccckwwrrrrwkccc
+cccckwwrrrrwkccc
+cccckwwwwwwwkccc
+cccckwddwdwwkccc
+cccckwwwwwwwkccc
+cccckkkkkkkkkccc
+cccccccccccccccc
+cicccccccccccccc
+cccccccccccccccc
+
+tile window_night:
+solid: true
+cccccccccccccccc
+cckkkkkkkkkkkkcc
+cckaaaaHHaaaakcc
+cckwaaaHHaaaakcc
+cckaaaaHHaaaakcc
+cckaaJaHHaaawkcc
+cckaaaaHHaaaakcc
+cckHHHHHHHHHHkcc
+cckaaaaHHaaaakcc
+cckaawaHHaaaakcc
+cckaaaaHHaJaakcc
+cckaaaaHHaaaakcc
+cckaaaaHHaaaakcc
+cckkkkkkkkkkkkcc
+ckttttttttttttkc
+cccccccccccccccc
+
+tile window_billboard:
+solid: true
+cccccccccccccccc
+cckkkkkkkkkkkkcc
+cckooooHHooookcc
+cckykkyHHykkykcc
+cckyyyyHHyyyykcc
+cckkkykHHkkykkcc
+cckyyyyHHyyyykcc
+cckHHHHHHHHHHkcc
+cckyyyyHHyyyykcc
+cckkykkHHykkkkcc
+cckyyyyHHyyyykcc
+cckykkyHHkykykcc
+cckooooHHooookcc
+cckkkkkkkkkkkkcc
+ckttttttttttttkc
+cccccccccccccccc
+
+tile couch_l:
+solid: true
+................
+................
+...kkkkkkkkkkkkk
+..kSSjjjjjjjjjjj
+..kSjjjjjjjjjjjj
+.kkkjjjjjjjjjjjj
+kSSjkJJJJJJJJJJJ
+kSjjkjjjjjjjjjjJ
+kjjjkjjjjjjjjjjJ
+kjjjkjjjjjjjjjjJ
+kjjjkjjjjjjjjjjJ
+kjjjkJJJJJJJJJJJ
+kJJJkJJJJJJJJJJJ
+kkkkkkkkkkkkkkkk
+.kHk............
+................
+
+tile couch_r:
+solid: true
+................
+................
+kkkkkkkkkkkkk...
+jjjjjjjjjjjjjk..
+jjjjjjjjjjjjjk..
+jjjjjjjjjjjjkkk.
+JJJJJJJJJJJkjjjk
+jjjjjjjjjjjkjjjk
+jjjjjjjjjjjkjjjk
+jjjjjjjjjjjkjjjk
+jjjjjjjjjjjkjjjk
+JJJJJJJJJJJkjjjk
+JJJJJJJJJJJkJJJk
+kkkkkkkkkkkkkkkk
+............kHk.
+................
+
+tile table:
+solid: true
+................
+................
+................
+..kkkkkkkkkkkk..
+.kttttttttttttk.
+.kthhhhhhhhhhhk.
+.kthhhhhhhhhhhk.
+.kthhhhhhhhhhhk.
+.kHHHHHHHHHHHHk.
+.kkkkkkkkkkkkkk.
+..kHk......kHk..
+..kHk......kHk..
+..kHk......kHk..
+..kkk......kkk..
+................
+................
+
+tile counter:
+solid: true
+cccccccccccccccc
+cccccccccccccccc
+cccccccciccccccc
+cccccccccccccccc
+iiiiiiiiiiiiiiii
+kkkkkkkkkkkkkkkk
+hhhhhhhhhhhhhhhh
+hHHHHHHhhHHHHHHh
+hHhhhhHhhHhhhhHh
+hHhhhhHhhHhhhhHh
+hHhhhhHhhHhhhhHh
+hHhhhhHhhHhhhhHh
+hHhhhhHhhHhhhhHh
+hHHHHHHhhHHHHHHh
+hhhhhhhhhhhhhhhh
+HHHHHHHHHHHHHHHH
+
+tile counter_corner:
+solid: true
+cccccccccccccik.
+cccccccccccccik.
+cccccccciccccik.
+cccccccccccccik.
+iiiiiiiiiiiiiik.
+kkkkkkkkkkkkkkk.
+hhhhhhhhhhhhhhk.
+hHHHHHHhhHHHHhk.
+hHhhhhHhhHhhhhk.
+hHhhhhHhhHhhhhk.
+hHhhhhHhhHhhhhk.
+hHhhhhHhhHhhhhk.
+hHhhhhHhhHhhhhk.
+hHHHHHHhhHHHHhk.
+hhhhhhhhhhhhhhk.
+HHHHHHHHHHHHHHk.
+
+tile espresso_machine:
+solid: true
+................
+....kkkkkkkk....
+...kLLLLLLLLk...
+...kLmmmmmmmk...
+...kLmrmmmmmk...
+...kmmmmmmmmk...
+...kkkkkkkkkk...
+....kddkkddk....
+....kLdk.kLdk...
+.....kk...kk....
+....kkkkkkkkk...
+....kLLLLLLLk...
+....kkkkkkkkk...
+................
+................
+................
+
+tile stool:
+solid: false
+................
+................
+................
+................
+................
+................
+.....kkkkkk.....
+....kthhhhhk....
+....khhhhhhk....
+....kHHHHHHk....
+....kkkkkkkk....
+.....kd..dk.....
+.....kd..dk.....
+.....kd..dk.....
+.....kk..kk.....
+................
+
+tile shelf:
+solid: true
+................
+................
+..kkkkkkkkkkkk..
+..krrjjggyyppk..
+..krrjjggyyppk..
+..krBjJgGyopDk..
+..krrjjggyyppk..
+..krrjjggyyppk..
+..kkkkkkkkkkkk..
+.khhhhhhhhhhhhk.
+.kHHHHHHHHHHHHk.
+.kkkkkkkkkkkkkk.
+...kHk....kHk...
+...kk......kk...
+................
+................
+
+tile fridge:
+solid: true
+..kkkkkkkkkkkk..
+.kwwwwwwwwwwwwk.
+.kwLLLLLLLLLLwk.
+.kwLLLLLLLLLLwk.
+.kwLLLLLLLLLdwk.
+.kkkkkkkkkkkkkk.
+.kwLLLLLLLLLLwk.
+.kwLLLLLLLLLdwk.
+.kwLLLLLLLLLdwk.
+.kwLLLLLLLLLdwk.
+.kwLLLLLLLLLLwk.
+.kwLLLLLLLLLLwk.
+.kwLLLLLLLLLLwk.
+.kmmmmmmmmmmmmk.
+.kkkkkkkkkkkkkk.
+..kdk......kdk..
+
+tile radiator:
+solid: true
+................
+................
+................
+................
+................
+..kkkkkkkkkkkk..
+.kLmLmLmLmLmLmk.
+.kLmLmLmLmLmLmk.
+.kLmLmLmLmLmLmk.
+.kLmLmLmLmLmLmk.
+.kLmLmLmLmLmLmk.
+.kLmLmLmLmLmLmk.
+.kddddddddddddk.
+.kkkkkkkkkkkkkk.
+..kdk......kdk..
+................
+
+tile door_interior:
+solid: true
+cccccccccccccccc
+ccckkkkkkkkkkccc
+ccckHHHHHHHHkccc
+ccckHhhhhhhHkccc
+ccckHhHHHHhHkccc
+ccckHhHhhHhHkccc
+ccckHhHHHHhHkccc
+ccckHhhhhhhHkccc
+ccckHhhhhhyHkccc
+ccckHhHHHHhHkccc
+ccckHhHhhHhHkccc
+ccckHhHhhHhHkccc
+ccckHhHHHHhHkccc
+ccckHhhhhhhHkccc
+ccckHHHHHHHHkccc
+ccckkkkkkkkkkccc
+
+tile doorway:
+solid: false
+cccccccccccccccc
+ccckkkkkkkkkkccc
+ccckHHHHHHHHkccc
+ccckHeeeeeeHkccc
+ccckHeeeeeeHkccc
+ccckHeeeeeeHkccc
+ccckHeeeeeeHkccc
+ccckHeeeeeeHkccc
+ccckHeeeeeeHkccc
+ccckHeeeeeeHkccc
+ccckHeeeeeeHkccc
+ccckHeeeeeeHkccc
+ccckHeeeeeeHkccc
+ccckHeeeeeeHkccc
+ccckHeeeeeeHkccc
+ccckkeeeeeekkccc
+
+tile sticker_wall_a:
+solid: true
+ssyyyyssswwwwsss
+ssykkyssswkkwsss
+ssyyyysppwwwwsss
+sssssspppsssssrr
+srrrrsppprrrrrrr
+srkrrssssrkkrrrr
+srrrrsggggrrrrrr
+ssssssgkkgssssss
+swwwssggggsjjjjs
+swkwsssssssjkkjs
+swwwsyyyyysjjjjs
+sssssykkkysjjjjs
+sccccyyyyyssssss
+sckkcsssssscccss
+sccccsppppsckkcs
+ssssssppppsccccs
+
+tile sticker_wall_b:
+solid: true
+sssssggggsssssss
+sppppgkkgsscccss
+spkkpggggssckkcs
+sppppsssssscccss
+sppppsyyyyssssss
+ssssssykkysrrrrs
+swwwwsyyyysrkkrs
+swkkwssssssrrrrs
+swwwwsCCCCsrrrrs
+sssssssCkCssssss
+soooosCCCCsggggs
+sokoossssssgkkgs
+soooosjjjjsggggs
+ssssssjkkjssssss
+spppssjjjjswwwws
+spkpssjjjjswkkws
+
+tile sticker_wall_c:
+solid: true
+sssrrrrssssyyyys
+sssrkkrsggsykkys
+sssrrrrsggsyyyys
+ssssssssgkgsssss
+sCCCCsssgggsPPPs
+sCkkCsssssssPkPs
+sCCCCsvvvvvsPPPs
+ssssssvkkkvsssss
+sjjjjsvvvvvsoooo
+sjkkjsssssssokko
+sjjjjsccccssoooo
+sssssscckcssssss
+swwwwsccccsbbbbs
+swkkwsssssssbkbs
+swwwwsyyyyysbbbs
+ssssssykkkysssss
+
+tile sticker_wall_d:
+solid: true
+ssssooooosswwwss
+sgggokkoossswkws
+sgkgooooosswwwss
+sgggssssssssssss
+ssssssrrrrsPPPPs
+spppssrkkrsPkkPs
+spkpssrrrrsPPPPs
+spppssssssssssss
+sssssccccsssjjjs
+syyysckkcsssjkjs
+sykyscccccssjjjs
+syyyssssssssssss
+sssssggggsCCCCss
+swwwsgkkgsCkkCss
+swkwsggggsCCCCss
+swwwssssssssssss
+
+tile soundproof_door:
+solid: true
+ssssssssssssssss
+skkkkkkkkkkkkkks
+skmmmmmmmmmmmmks
+skmddddddddddmks
+skmdddkkkkdddmks
+skmdddkaCakddmks
+skmdddkaaakddmks
+skmdddkkkkdddmks
+skmddddddddddmks
+skmdLLLLLLLLdmks
+skmdkkkkkkkkdmks
+skmddddddddddmks
+skmdsssssssddmks
+skmdsssssssddmks
+skmddddddddddmks
+skkkkkkkkkkkkkks
+
+tile soundproof_door_open:
+solid: false
+ssssssssssssssss
+skkkkkkkkkkkkkks
+skmmmmmmmmmmmmks
+skmddkeeeeeeemks
+skmddkeeeeeeemks
+skmdLkeeeeeeemks
+skmddkeeeeeeemks
+skmddkeeeeeeemks
+skmddkeeeeeeemks
+skmddkeeeeeeemks
+skmddkeeeeeeemks
+skmddkeeeeeeemks
+skmddkeeeeeeemks
+skmddkeeeeeeemks
+skmddkeeeeeeemks
+skkkkkeeeeeeekks
+
+tile room_number_4:
+solid: true
+ssyyyssssssswwws
+ssykyssssssswkws
+ssyyyssssssswwws
+ssssssssssssssss
+sssskkkkkkkkssss
+sssskccckcckssss
+sssskcckkcckssss
+sssskckckcckssss
+sssskkkkkkckssss
+sssskccckcckssss
+sssskccckcckssss
+sssskkkkkkkkssss
+spppssssssssssss
+spkpsssssggggsss
+spppsssssgkkgsss
+sssssssssggggsss
+
+tile hallway_floor:
+solid: false
+mmmmmmmmmmmmmmmm
+mmdmmmmmmmmmdmmm
+mmmmmmmmdmmmmmmm
+mmmmmmmmmmmmmmmm
+mdmmmmmmmmmmmmdm
+mmmmmmdsdmmmmmmm
+mmmmmdsssdmmmmmm
+mmmmmmdsdmmmmmmm
+mmmmmmmmmmmmmmmm
+mmmdmmmmmmmmmmmm
+mmmmmmmmmmmdmmmm
+mmmmmmmmmmmmmmmm
+mdmmmmmmmdmmmmmm
+mmmmmmmmmmmmmmmm
+mmmmmdmmmmmmmdmm
+mmmmmmmmmmmmmmmm
+
+tile hallway_light:
+solid: false
+................
+................
+................
+................
+................
+..kkkkkkkkkkkk..
+.kLwwwwwwwwwwLk.
+.kwyyyyyyyyyywk.
+..kkkkkkkkkkkk..
+................
+................
+................
+................
+................
+................
+................
+
+tile corkboard:
+solid: true
+................
+.kkkkkkkkkkkkkk.
+.khhhhhhhhhhhhk.
+.khtttttttttthk.
+.khtwwwtcccrthk.
+.khtwdwtcddcthk.
+.khtwwwtcccctjk.
+.khtwdwtttttthk.
+.khtwwwtwwwwthk.
+.khtttttwddwthk.
+.khtyyytwwwwthk.
+.khtykytttttthk.
+.khtyyytttttthk.
+.khhhhhhhhhhhhk.
+.kkkkkkkkkkkkkk.
+................
+
+tile mic_tile:
+solid: false
+......kkk.......
+.....kdLdk......
+.....kdddk......
+......kkk.......
+.......Lk.......
+.......Lk.......
+.......Lk.......
+.......Lk.......
+.......Lk.......
+.......Lk.......
+.......Lk.......
+.......Lk.......
+.......Lk.......
+.....kkLkkk.....
+....kddddddk....
+....kkkkkkkk....
+
+tile drum_riser:
+solid: false
+ssssssssssssssss
+ssdssssssssssdss
+ssssssssesssssss
+ssssssssssssssss
+sdssssssssssssds
+sssssdssssssssss
+ssssssssssesssss
+ssssssssssssssss
+ssssssssssssssss
+sssdssssssssssss
+ssssssssssssdsss
+sssssssessssssss
+ssssssssssssssss
+ssssssdsssssssss
+sessssssssssssss
+ssssssssssssssss
+
+tile cable:
+solid: false
+................
+................
+................
+................
+................
+................
+................
+.....kkkk.......
+kkkkkk..kkk..kkk
+..........kkkk..
+................
+................
+................
+................
+................
+................
+
+tile rug:
+solid: false
+bbbbbbbbbbbbbbbb
+bbbBbbbbbbbBbbbb
+bbBcBbbbbbBcBbbb
+bBcccBbbbBcccBbb
+bbBcBbbbbbBcBbbb
+bbbBbbbbbbbBbbbb
+bbbbbbbbbbbbbbbb
+BBBBBBBBBBBBBBBB
+bbbbbbbbbbbbbbbb
+bbbBbbbbbbbBbbbb
+bbBcBbbbbbBcBbbb
+bBcccBbbbBcccBbb
+bbBcBbbbbbBcBbbb
+bbbBbbbbbbbBbbbb
+bbbbbbbbbbbbbbbb
+BBBBBBBBBBBBBBBB

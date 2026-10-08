@@ -114,6 +114,173 @@
       }
     ]
   },
+  "interiors": {
+    "type": "tileset",
+    "tileWidth": 16,
+    "tileHeight": 16,
+    "tiles": {
+      "wood_floor": {
+        "index": 0,
+        "solid": false
+      },
+      "wood_floor_dark": {
+        "index": 1,
+        "solid": false
+      },
+      "carpet_stained": {
+        "index": 2,
+        "solid": false
+      },
+      "tile_floor": {
+        "index": 3,
+        "solid": false
+      },
+      "linoleum": {
+        "index": 4,
+        "solid": false
+      },
+      "wall_plaster": {
+        "index": 5,
+        "solid": true
+      },
+      "wall_plaster_top": {
+        "index": 6,
+        "solid": true
+      },
+      "wall_poster_a": {
+        "index": 7,
+        "solid": true
+      },
+      "wall_poster_b": {
+        "index": 8,
+        "solid": true
+      },
+      "wall_poster_c": {
+        "index": 9,
+        "solid": true
+      },
+      "wall_bills_a": {
+        "index": 10,
+        "solid": true
+      },
+      "wall_bills_b": {
+        "index": 11,
+        "solid": true
+      },
+      "window_night": {
+        "index": 12,
+        "solid": true
+      },
+      "window_billboard": {
+        "index": 13,
+        "solid": true
+      },
+      "couch_l": {
+        "index": 14,
+        "solid": true
+      },
+      "couch_r": {
+        "index": 15,
+        "solid": true
+      },
+      "table": {
+        "index": 16,
+        "solid": true
+      },
+      "counter": {
+        "index": 17,
+        "solid": true
+      },
+      "counter_corner": {
+        "index": 18,
+        "solid": true
+      },
+      "espresso_machine": {
+        "index": 19,
+        "solid": true
+      },
+      "stool": {
+        "index": 20,
+        "solid": false
+      },
+      "shelf": {
+        "index": 21,
+        "solid": true
+      },
+      "fridge": {
+        "index": 22,
+        "solid": true
+      },
+      "radiator": {
+        "index": 23,
+        "solid": true
+      },
+      "door_interior": {
+        "index": 24,
+        "solid": true
+      },
+      "doorway": {
+        "index": 25,
+        "solid": false
+      },
+      "sticker_wall_a": {
+        "index": 26,
+        "solid": true
+      },
+      "sticker_wall_b": {
+        "index": 27,
+        "solid": true
+      },
+      "sticker_wall_c": {
+        "index": 28,
+        "solid": true
+      },
+      "sticker_wall_d": {
+        "index": 29,
+        "solid": true
+      },
+      "soundproof_door": {
+        "index": 30,
+        "solid": true
+      },
+      "soundproof_door_open": {
+        "index": 31,
+        "solid": false
+      },
+      "room_number_4": {
+        "index": 32,
+        "solid": true
+      },
+      "hallway_floor": {
+        "index": 33,
+        "solid": false
+      },
+      "hallway_light": {
+        "index": 34,
+        "solid": false
+      },
+      "corkboard": {
+        "index": 35,
+        "solid": true
+      },
+      "mic_tile": {
+        "index": 36,
+        "solid": false
+      },
+      "drum_riser": {
+        "index": 37,
+        "solid": false
+      },
+      "cable": {
+        "index": 38,
+        "solid": false
+      },
+      "rug": {
+        "index": 39,
+        "solid": false
+      }
+    }
+  },
   "lucky": {
     "type": "spritesheet",
     "frameWidth": 16,
