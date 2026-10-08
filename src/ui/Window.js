@@ -8,10 +8,17 @@ import Phaser from 'phaser';
 import { DEPTH } from './theme.js';
 import { UI_KEY } from './atlas.js';
 
-export const CORNER = 8;
+export const CORNER = 8; // nominal corner size; the real size is read from the win_tl frame
 export const OPEN_MS = 120;
-const MIN_H = CORNER * 2;
-const MIN_W = CORNER * 2;
+
+/** Corner size of the window art in a texture (falls back to 8 when the frame is missing). */
+export function cornerSize(textures, texture = UI_KEY) {
+  if (!textures || !textures.exists(texture)) return CORNER;
+  const tex = textures.get(texture);
+  if (!tex.has('win_tl')) return CORNER;
+  const f = tex.get('win_tl');
+  return Math.max(1, Math.min(f.width | 0, f.height | 0) || CORNER);
+}
 
 export default class Window extends Phaser.GameObjects.Container {
   /**
@@ -25,9 +32,11 @@ export default class Window extends Phaser.GameObjects.Container {
   constructor(scene, x, y, w, h, { depth = DEPTH.WINDOW, texture = UI_KEY } = {}) {
     super(scene, Math.round(x), Math.round(y));
     this.texKey = texture;
+    this.corner = cornerSize(scene.textures, texture);
+    this.minSize = this.corner * 2;
     this.baseY = Math.round(y);
-    this.fullW = Math.max(MIN_W, Math.round(w));
-    this.fullH = Math.max(MIN_H, Math.round(h));
+    this.fullW = Math.max(this.minSize, Math.round(w));
+    this.fullH = Math.max(this.minSize, Math.round(h));
     this.curH = this.fullH;
     this.isOpen = false;
     this._tween = null;
@@ -42,7 +51,7 @@ export default class Window extends Phaser.GameObjects.Container {
     const s = this.scene;
     const k = this.texKey;
     const img = (f) => s.add.image(0, 0, k, f).setOrigin(0, 0);
-    const tile = (f) => s.add.tileSprite(0, 0, CORNER, CORNER, k, f).setOrigin(0, 0);
+    const tile = (f) => s.add.tileSprite(0, 0, this.corner, this.corner, k, f).setOrigin(0, 0);
     this.p = {
       c: tile('win_c'),
       t: tile('win_t'),
@@ -62,7 +71,7 @@ export default class Window extends Phaser.GameObjects.Container {
   /** Position all nine pieces for a w x h frame (local coordinates, integers). */
   _layout(w, h) {
     const p = this.p;
-    const C = CORNER;
+    const C = this.corner;
     w = Math.round(w);
     h = Math.round(h);
     const iw = Math.max(0, w - 2 * C);
@@ -82,8 +91,8 @@ export default class Window extends Phaser.GameObjects.Container {
   /** Resize the window (top-left stays put). */
   setSize(w, h) {
     if (!this.p) return super.setSize(w, h); // called by Container internals before _build
-    this.fullW = Math.max(MIN_W, Math.round(w));
-    this.fullH = Math.max(MIN_H, Math.round(h));
+    this.fullW = Math.max(this.minSize, Math.round(w));
+    this.fullH = Math.max(this.minSize, Math.round(h));
     this._stopTween();
     this.y = this.baseY;
     this._layout(this.fullW, this.fullH);
@@ -162,7 +171,8 @@ export default class Window extends Phaser.GameObjects.Container {
 
   /** Lay out the frame at fraction v of its full height, centred vertically on the full box. */
   _unfold(v) {
-    const h = Math.round(MIN_H + (this.fullH - MIN_H) * Phaser.Math.Clamp(v, 0, 1));
+    const m = this.minSize;
+    const h = Math.round(m + (this.fullH - m) * Phaser.Math.Clamp(v, 0, 1));
     this.y = this.baseY + Math.round((this.fullH - h) / 2);
     this._layout(this.fullW, h);
   }
