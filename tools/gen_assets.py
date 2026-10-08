@@ -80,9 +80,9 @@ def kv_pairs(line):
 class Sheet:
     """One parsed input file.  kind: spritesheet | tileset | atlas."""
 
-    def __init__(self, path, kind):
+    def __init__(self, path, kind, root=ROOT):
         self.path = path
-        self.rel = os.path.relpath(path, ROOT)
+        self.rel = os.path.relpath(path, root)
         self.kind = kind
         self.name = None
         self.frame_size = None          # (w,h) default cell size
@@ -519,7 +519,7 @@ def collect_inputs(root):
 
 
 def build(root, check_only=False, preview=False, quiet=False):
-    sheets = [Sheet(p, k).parse() for p, k in collect_inputs(root)]
+    sheets = [Sheet(p, k, root).parse() for p, k in collect_inputs(root)]
     errors = [e for s in sheets for e in s.errors]
     warnings = [w for s in sheets for w in s.warnings]
     # cross-file checks: unique names, variants resolve

@@ -111,14 +111,14 @@ wwwwwwkk
 kkkkkkk.
 
 region cursor:
-..kkk...
-.kwwwkkk
-kkwwwwwk
-kwwwwwwk
-kwwwwwwk
-kwwwwwk.
-.kwwwwk.
-..kkkk..
+...kkkk.
+..kwwwwk
+kkkwwwwk
+kwwwwkkk
+kwwwwk..
+kwwwwk..
+.kwwk...
+..kk....
 
 region arrow_more:
 ........
