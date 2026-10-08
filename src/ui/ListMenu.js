@@ -15,7 +15,7 @@ const AUTO_MS = 60;
 export default class ListMenu {
   /**
    * @param {import('../scenes/UIScene.js').default} ui
-   * @param {(string|{label:string,disabled?:boolean,hint?:string})[]} items
+   * @param {(string|{label:string,disabled?:boolean,hint?:string}|{text:string})[]} items
    * @param {{x?:number,y?:number,width?:number,columns?:number,cancelable?:boolean,cancelIndex?:number,selected?:number,anchor?:'center'|'bottom-right'}} [opts]
    */
   constructor(ui, items, opts = {}) {
@@ -23,7 +23,7 @@ export default class ListMenu {
     this.items = (items || []).map((it) =>
       typeof it === 'string' || typeof it === 'number'
         ? { label: String(it), disabled: false, hint: null }
-        : { label: String(it?.label ?? ''), disabled: !!it?.disabled, hint: it?.hint ? String(it.hint) : null },
+        : { label: String(it?.label ?? it?.text ?? ''), disabled: !!it?.disabled, hint: it?.hint ? String(it.hint) : null },
     );
     if (this.items.length === 0) this.items.push({ label: '', disabled: false, hint: null });
     this.cols = Math.max(1, (opts.columns | 0) || 1);
