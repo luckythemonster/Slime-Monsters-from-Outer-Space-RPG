@@ -27,7 +27,7 @@ Lucky is a compressed ball of slime (`lucky_ball`, rolls). The hatch is open and
 4. `say dad` "If you'd just join The Vanguard, you could be financially successful and oppress people with a dental plan!"
 5. `emote player …`; unlock.
 
-Four once-only floor `trigger` bands keep Dad going: "Your mother and I paid for the compression. The least you could do is market yourself." / "There's an opening in Demographic Alignment. Entry level. You'd report to me." / "Billy's parents say Billy 'found themself.' In a storage unit." / "…the speaker light's on. I can see the speaker light." Each has `condition: "!flags.podSpeakerSlapped"`; twins with the opposite condition say "mmf. mmmf."
+Four once-only floor `trigger` bands keep Dad going: "Your mother and I paid for the compression. The least you could do is market yourself." / "There's an opening in Demographic Alignment. You'd report to me." / "Billy's parents say Billy 'found themself.' In a storage unit." / "…I can see the speaker light." Twins with `condition: "flags.podSpeakerSlapped"` say "mmf. mmmf."
 
 **CS-02 `ep0_speaker`** (interact)
 1. `face player up`; `anim player lucky_ball_pseudopod wait`; `sfx squelch`; `sprite speaker speaker_slimed`.
@@ -40,7 +40,7 @@ Four once-only floor `trigger` bands keep Dad going: "Your mother and I paid for
 4. On return: `teleport alley 9,8 facing:down` (the crater; `alley.onFirstEnter` runs CS-04).
 
 ### S2 — Freefall (2 min, Toon 3) — `FreefallScene`
-Full-screen special scene. Lucky flattens like a flying squirrel (`lucky_flat`); slime sunglasses pop on (`sfx slime_pop`). Vertical autoscroll from clouds to skyline to rooftops, ~55 s; left/right steers; the contrail is painted into a RenderTexture behind Lucky. Seven WORK IS LOVE billboards scroll past; crossing one glitches it (`sfx glitch`, `vars.billboardsTagged++`). No fail state. Ends on an alley rushing up, cut to black, `sfx crash`.
+Full-screen special scene. Lucky flattens like a flying squirrel (`lucky_flat`); slime sunglasses pop on. Vertical autoscroll from clouds to rooftops, ~55 s; left/right steers; the contrail is painted into a RenderTexture behind Lucky. Seven WORK IS LOVE billboards scroll past; crossing one glitches it (`vars.billboardsTagged++`). No fail state. Ends on an alley rushing up, cut to black, `sfx crash`.
 
 ### S3 — The alley (6 min, Toon 2) — `alley`
 
@@ -64,7 +64,7 @@ Full-screen special scene. Lucky flattens like a flying squirrel (`lucky_flat`);
 **B1 — Tutorial `tutorial_drone`.** Vanguard Retrieval Drone. Round 1: only ATTACK lit; Lucky's battle sheet drops from pastel to magenta as HP falls (swaps at 70/40 %). Round 2: RIFF unlocks (Power Chord). `onRound(3)`: Phoenix walks into frame Chrono-Trigger-style and swings the trash bag (Garbage: −ACC). At 30 % the drone says "RETRIEVAL ABORTED. BILLING ASSET." and dies on the next hit. Drops Drone Core.
 
 ### S4 — Street, first pass (3 min, Toon 1) — `street_cedar` day, `flags.hubOpen` false
-Only the apartment door opens; café, pawnshop, Palmer's and the light rail give one-line refusals (café: "Phoenix: After. I need to lie down in a specific way."). Three NPCs, no enemies, the billboard not yet glitching.
+Only the apartment door opens; the other doors give one-line refusals (café: "Phoenix: After. I need to lie down in a specific way."). Three NPCs, no enemies.
 
 ### S5 — Apartment: the cosmic Craigslist ad (5 min, Toon 2) — `apartment`
 Free roam first. Interacting with the bass amp runs:
@@ -82,7 +82,7 @@ Free roam first. Interacting with the bass amp runs:
 **CS-06 `ep0_week_later`**: Phoenix on the couch. "Nobody came." / Lucky: "The universe is slow." / "The universe is a flyer at the coffee shop. I made one. Hard Luck Café. Corkboard. Go." `give flyer_blank`.
 
 ### S6 — Street, hub open (8 min, Toon 1) — `street_cedar` day
-Café and pawnshop open; light rail locked ("The train is here. The reason to take it isn't."). Enemies spawn: two drones wander the east end, a Market Research Intern chases outside the pawnshop, a Rental Scooter patrols the road. The billboard glitches when Lucky walks under it. The Pizza Luce box is by the bus shelter.
+Café and pawnshop open; light rail locked ("The train is here. The reason to take it isn't."). Enemies spawn (two drones, the Intern, the Scooter). The billboard glitches when Lucky walks under it.
 
 ### S7 — Coffee shop: the flyer (5 min, Toon 0) — `coffee_shop`
 **CS-07 `ep0_flyer`** (corkboard, `inventory.has('flyer_blank')`): `say narrator` "A corkboard. Nine flyers for the same ska band."; `choice` ["DRUMMER WANTED — MUST PLAY FAST", "DRUMMER WANTED — NO COPS", "SEEKING RHYTHMIC VESSEL FOR COSMIC PURPOSE"] → `set vars.flyerText`; `take flyer_blank`; `sprite corkboard corkboard_flyer`; `set flags.flyerPosted`. Barista: "Give it an hour. Or a day. Time's weird in here."
@@ -166,7 +166,7 @@ The rail `exit` fades through `caption "TWENTY MINUTES OF LIGHT RAIL LATER"`. Fr
 **CS-14 `ep0_gig_flyer`** (pick up the flyer): `ui.insert flyer_gig`; `say narrator` "GIG TONIGHT: PALMER'S BAR — NO GUITAR SOLO NECESSARY." `say lucky` "Palmer's. Isn't that—" `say phoenix` "Where I work. Yes. My brain thinks this is fine." `set flags.gigFlyer`. The rail now lands on `street_cedar` at night.
 
 ### S11 — Street at night (5 min, Toon 1) — `street_cedar` night
-Same map, night dressing. Cop duos patrol ("unauthorized gathering" sweep); the Intern is gone; a tall stranger stands outside Palmer's. Pawnshop open late; apartment reachable (nap, save, bills). Palmer's door opens with `flags.gigFlyer`.
+Same map, night dressing. Cop duos patrol; the Intern is gone; a tall stranger stands outside Palmer's. Pawnshop and apartment reachable. Palmer's door opens with `flags.gigFlyer`.
 
 ### S12 — Palmer's: the set (12 min, Toon 1→3→4) — `palmers`
 Free roam (crowd, jukebox, pull tabs; Bajonka on a stool behind the bar = last save). Stepping on stage fires:
@@ -179,7 +179,7 @@ Free roam (crowd, jukebox, pull tabs; Bajonka on a stool behind the bar = last s
 5. `say ryan_caption` "[No obnoxious guitar solos. Just pure, unadulterated rhythm. The slime is pulsating in 7/8 time. I can work with this.]"
 6. `music the_set`; `battle palmers_set` `onWin: run ep0_aftermath`.
 
-**B3 — Boss THE SET AT PALMER'S** (Toon 3→4). Enemies: Undercover Cop + CROWD HOSTILITY (a 48×48 non-attacking "mood" enemy). The cop's first turn is Stand By: RIOT COP ×2 walk in. The shared POCKET gauge fills with every party action, faster when Lucky and Phoenix act back-to-back; Ryan plays every turn, uncontrolled. Milestones: 50 % "[The slime is pulsating in 7/8 time.]"; 75 % "[I've been fighting the possession. That was a mistake.]" → `transform ryan ryan_purple` + "[I am not trapped in the goo. The goo is trapped in the pocket.]"; 100 % → **THE ETERNITY**: inputs lock, background → `bg_cosmic`, HUD → torn frame, Ryan → `eternity` (64×64, purple-black), DOOM / CRACK / THUD letters fall in with a shake each, "[Rhythm achieved.]", every enemy to 0 HP, a letter swings up, background → `bg_palmers_roofless`, `win`. The gauge fills regardless of KOs, so the set cannot be lost; a full-party KO just makes the rest of it a drum solo. ENCORE rating from party HP at 100 %.
+**B3 — Boss THE SET AT PALMER'S** (Toon 3→4). Enemies: Undercover Cop + CROWD HOSTILITY (a 48×48 non-attacking "mood" enemy). The cop's first turn is Stand By: RIOT COP ×2 walk in. The shared POCKET gauge fills with every party action, faster when Lucky and Phoenix act back-to-back; Ryan plays every turn, uncontrolled. Milestones: 50 % "[The slime is pulsating in 7/8 time.]"; 75 % "[I've been fighting the possession. That was a mistake.]" → `transform ryan ryan_purple` + "[I am not trapped in the goo. The goo is trapped in the pocket.]"; 100 % → **THE ETERNITY**: inputs lock, background → `bg_cosmic`, HUD → torn frame, Ryan → `eternity` (64×64, purple-black), DOOM / CRACK / THUD letters fall in with a shake each, "[Rhythm achieved.]", every enemy to 0 HP, a letter swings up, background → `bg_palmers_roofless`, `win`. The gauge fills regardless of KOs, so the set cannot be lost; a full-party KO just makes the rest of it a drum solo.
 
 ### S13 — Aftermath (4 min, Toon 1) — `palmers_rubble`
 **CS-16 `ep0_aftermath`**
@@ -225,20 +225,20 @@ Free roam (crowd, jukebox, pull tabs; Bajonka on a stool behind the bar = last s
 ### `street_cedar` — 40×24, the hub
 **Layout.** Cedar Ave runs west–east through rows 11–13 (road, parked cars, snowbanks). North sidewalk, west to east: Palmer's (neon, door (6,8)); the Towers — Phoenix's building, colored-panel tiles, door (12,8); Hard Luck Café (20,8); Cedar Pawn & Loan (28,8); bus shelter (33,9) with the Pizza Luce box beside it. South sidewalk: the Cedar-Riverside light-rail platform with its `exit` at (21,16) (`flags.brianCalledRyan`), a hydrant, a bike rack, the alley mouth at the east end. The WORK IS LOVE billboard is an `over`-layer object on the roofline (14..19,2..4); it swaps to `_glitch` while the player is within 3 tiles after `flags.signalSent`.
 **Exits.** East (39,11–13) → `alley` (1,9); doors above; rail → `city_sound_hall` (2,6).
-**NPCs (day).** Snow Shoveler: "I've shoveled this square four times today. The city calls it a job. I call it a relationship." Cyclist: "It's not cold if you're angry enough." Busker: "I take requests. I can't play them. But I take them." Shorts Guy: "Twelve degrees. Shorts weather." Crust Punk with dog: "Her name's Also Bajonka. No relation." Office Worker: "Did you see the sky? {var:billboardsTagged} billboards went down. My boss cried." Towers sign: "RENT DUE. ALSO: RENT INCREASE. ALSO: RENT."
-**NPCs (night).** Tall Stranger outside Palmer's: "Whoa, man. The stars are heavy tonight." Smoker: "Palmer's? Tonight? I heard there's a drummer." Shoveler and Cyclist gone.
-**Interactables.** Pizza Luce box: "Still warm? No. Nothing in Minneapolis is still warm." → one Slice. Shelter ad: "WORK IS LOVE. (smaller:) LOVE IS A VANGUARD TRADEMARK." Hydrant flyer: "LOST: CAT. ANSWERS TO 'NO.'" — after the gig: "LOST: MOHAWK. SENTIMENTAL VALUE. NO QUESTIONS." Ticket machine: "$2.00. (Phoenix: 'My brain thinks we are, technically, fare evaders.')"
+**NPCs (day).** Snow Shoveler: "I've shoveled this square four times today. The city calls it a job. I call it a relationship." Cyclist: "It's not cold if you're angry enough." Busker: "I take requests. I can't play them. But I take them." Crust Punk with dog: "Her name's Also Bajonka. No relation." Office Worker: "Did you see the sky? {var:billboardsTagged} billboards went down. My boss cried." Towers sign: "RENT DUE. ALSO: RENT INCREASE. ALSO: RENT."
+**NPCs (night).** Tall Stranger outside Palmer's: "Whoa, man. The stars are heavy tonight." Shoveler and Cyclist gone.
+**Interactables.** Pizza Luce box: "Still warm? No. Nothing in Minneapolis is still warm." → one Slice. Shelter ad: "WORK IS LOVE. (smaller:) LOVE IS A VANGUARD TRADEMARK." Hydrant flyer: "LOST: CAT. ANSWERS TO 'NO.'" — after the gig: "LOST: MOHAWK. SENTIMENTAL VALUE. NO QUESTIONS."
 **Enemies.** Day (`flags.weekLater`): Drone ×2 wander (radius 3) at (34,10), (36,14); Intern chase at (27,10), sight 5; Scooter patrol on row 12. Night (`flags.gigFlyer`): Cop Duo ×2 patrolling the sidewalks; the Scooter stays. All clear via `setOnWin`.
 **Triggers.** Café-door trigger (CS-08); billboard proximity (7×3, repeating).
 
 ### `apartment` — 16×14, home hub
 **Layout.** One room. Door (12,13). Couch west (2..4,6): nap = full heal, and where ONE WEEK LATER lands. Bass amp (3,9). Kitchenette north: fridge (10,2), radiator (14,5). Window (6,1) facing the billboard. Bills on the coffee table (6,7). Four posters: RAT FIGHT — DULUTH; GREAT BIG THING CRAWLING ALL OVER ME; THE DENIM BOYS: A NIGHT OF DENIM; HARD LUCK OPEN MIC (NO MICS). Lucky's bed, a Tupperware bin (13,9). Bathroom (1,2), locked. Bajonka on the couch arm. **Exit:** door → street (12,9). **NPC:** Phoenix.
-**Interactables.** Amp → CS-05; after: "It hums at a frequency Phoenix describes as 'rent.'" Bills cycle five: "RENT: PAST DUE." / "STUDENT LOANS: PAST DUE, FOREVER." / "VANGUARD SPECTRUM INTERNET: PAST DUE. (You do not have internet.)" / "PARKING TICKET. (Phoenix does not own a car.)" / "CITY OF MINNEAPOLIS: POTHOLE, 1 (one). $4,000." — all five read sets `flags.billsRead` (Phoenix: "My brain thinks we should frame that one."). Fridge: "A half-ounce of weed and a Pizza Luce slice. Assets." (Slice once). Window: "WORK IS LOVE. It has never once been turned off." (glitches after the signal). Radiator: "It clanks in 7/8. Phoenix says it's the building settling. It is not." Bin: "It's a bin. It's a big bin. It's yours." Bathroom: "Phoenix: 'There's a mirror in there. I don't recommend it.'" Rat Fight poster: "A Duluth band. The singer screams like he's being evicted." **Enemies:** none.
+**Interactables.** Amp → CS-05; after: "It hums at a frequency Phoenix describes as 'rent.'" Bills cycle five: "RENT: PAST DUE." / "STUDENT LOANS: PAST DUE, FOREVER." / "VANGUARD SPECTRUM INTERNET: PAST DUE. (You do not have internet.)" / "PARKING TICKET. (Phoenix does not own a car.)" / "CITY OF MINNEAPOLIS: POTHOLE, 1 (one). $4,000." — all five read sets `flags.billsRead` (Phoenix: "My brain thinks we should frame that one."). Fridge: "A half-ounce of weed and a Pizza Luce slice. Assets." (Slice once). Window: "WORK IS LOVE. It has never once been turned off." (glitches after the signal). Radiator: "It clanks in 7/8. Phoenix says it's the building settling. It is not." Bin: "It's a bin. It's a big bin. It's yours." Bathroom: "Phoenix: 'There's a mirror in there. I don't recommend it.'" **Enemies:** none.
 
 ### `coffee_shop` — 20×14, Hard Luck Café
 **Layout.** Counter north (barista (4,3)); corkboard (16,2); six tables; bathroom (18,5); door (10,13). **Exit:** door → street (20,9).
-**NPCs.** Barista: "Coffee's $3. Hot water's free. Nobody's happy either way." (`shop cafe`). Screenwriter: "It's about a slime monster who—no. No it isn't. It's about a divorce." Poet: "A piece about snow. It's called 'Snow.' It's finished." Internship Kid: "Question 9: 'Describe your demographic.' I put 'tired.'" Cold Brew Guy: "One cold brew. Six hours. It's a system."
-**Interactables.** Corkboard → CS-07; afterward: "KEYBOARDIST WANTED. Must own keyboard. We do not own a keyboard. We own a dream." / "FREE COUCH. HAUNTED. FIRM." Bathroom sign: "PLEASE DO NOT ASK THE UNIVERSE FOR ANYTHING IN HERE." Tip jar: "$0.75 and a guitar pick." (Phoenix: "My brain thinks that's theft.") Table 5: "A ring on the table. Someone very normal was here." **Enemies:** none.
+**NPCs.** Barista: "Coffee's $3. Hot water's free. Nobody's happy either way." (`shop cafe`). Screenwriter: "It's about a slime monster who—no. No it isn't. It's about a divorce." Poet: "A piece about snow. It's called 'Snow.' It's finished." Internship Kid: "Question 9: 'Describe your demographic.' I put 'tired.'"
+**Interactables.** Corkboard → CS-07; afterward: "KEYBOARDIST WANTED. Must own keyboard. We do not own a keyboard. We own a dream." / "FREE COUCH. HAUNTED. FIRM." Bathroom sign: "PLEASE DO NOT ASK THE UNIVERSE FOR ANYTHING IN HERE." Tip jar: "$0.75 and a guitar pick." (Phoenix: "My brain thinks that's theft.") **Enemies:** none.
 
 ### `rooftops` — 48×14, cutscene strip
 Skyline silhouettes, PRODUCTIVITY IS FREEDOM at x=14, WORK IS LOVE at x=38, highway lights, then pines. Camera pans; no player.
@@ -248,16 +248,16 @@ Open door onto snow and pines; the kit in the middle; a wall phone (3,4); a spac
 
 ### `city_sound_hall` — 28×12
 **Layout.** A two-tile corridor from the stairs (2,6) east to a dead end; Rooms 1–6 along the north wall (Room 4 at (20,5)); night-manager desk (5,4); vending (8,4); bulletin board (12,4); bathroom (26,5). Every wall tile is a sticker tile (four variants). Bajonka outside Room 4 (20,7). **Exits:** stairs → rail → street (21,15); Room 4 door → `room4` (3,10).
-**NPCs.** Night Manager: "Room 4. Cash only. Don't put stickers on the stickers." Ska Band ×3 loading out: "Ska's coming back." / "It never came." / "Checkmate." Noise Guy in Room 2's doorway: "I'm the only member. I'm also the audience. Reviews are mixed." Tuning Guy: "Forty minutes. The E is fine. I'm not."
-**Interactables.** Board: "BASSIST WANTED (NOT YOU, GREG)." / "DRUMMER AVAILABLE: 13/8 ONLY." / "LOST: CLIPBOARD. IF FOUND, YOU HAVE ALREADY SIGNED." Vending: "Everything is $1.25. Everything is sold out." Other doors: a muffled loop each and one line ("Room 6 has been playing the intro to the same song since October"). **Enemies:** none. **Trigger:** Room 3 proximity → CS-09.
+**NPCs.** Night Manager: "Room 4. Cash only. Don't put stickers on the stickers." Ska Band ×3 loading out: "Ska's coming back." / "It never came." / "Checkmate." Noise Guy in Room 2's doorway: "I'm the only member. I'm also the audience. Reviews are mixed."
+**Interactables.** Board: "BASSIST WANTED (NOT YOU, GREG)." / "DRUMMER AVAILABLE: 13/8 ONLY." / "LOST: CLIPBOARD. IF FOUND, YOU HAVE ALREADY SIGNED." Vending: "Everything is $1.25. Everything is sold out." Other doors: a muffled loop and one line each. **Enemies:** none. **Trigger:** Room 3 proximity → CS-09.
 
 ### `room4` — 14×12
 **Layout.** Door (3,10). Kit NE (10..12,2..4). Lucky's stickered amp (2,5); Phoenix's amp (2,7); mic stand (7,6); the Puddle Couch (11..13,9); mini-fridge (13,6); a wall of band tallies north. Conditional dressing: Brian's pedalboard (6,8) and iced coffee (8,8) while `monthLater && !brianQuit`; fried after `pedalboardFried`; the contract on the snare during CS-12. A ceiling-drip object (the Toon 2 freeze gag). **Exit:** door → hall (20,7), gated during cutscenes.
-**Interactables.** Amp: "Forty-one stickers. Nine are political. Brian counted." Kit: "The size of a sedan. The ride cymbal is tinny. Don't tell him." Couch: "Where Phoenix melts between songs." Fridge: "Nobody has ever opened it." Tallies: "RAT FIGHT WAS HERE. (They toured?)" / "THE DENIM BOYS: ROOM 4 FOREVER (crossed out: NOW ROOM 2)." Iced coffee: "Boutique. Nine dollars. It has a name. The name is Brian." Pedalboard: "$2,000 of pristine, never-stepped-on tone." → fried: "It smells like a fuse and oat milk." **Enemies:** B2, scripted. **Trigger:** `onFirstEnter` CS-10.
+**Interactables.** Amp: "Forty-one stickers. Nine are political. Brian counted." Kit: "The size of a sedan. The ride cymbal is tinny. Don't tell him." Fridge: "Nobody has ever opened it." Tallies: "RAT FIGHT WAS HERE. (They toured?)" / "THE DENIM BOYS: ROOM 4 FOREVER (crossed out: NOW ROOM 2)." Iced coffee: "Boutique. Nine dollars. It has a name. The name is Brian." Pedalboard: "$2,000 of pristine, never-stepped-on tone." → fried: "It smells like a fuse and oat milk." **Enemies:** B2, scripted. **Trigger:** `onFirstEnter` CS-10.
 
 ### `palmers` — 26×14
 **Layout.** Door (8,13). The bar along the north (rows 2–3, x 2..16), Bajonka on a stool behind it (10,2). Stage east (20..24,5..10), one tile raised via a `deco` step edge; kit (23,6); mic (21,8). Bathrooms (1..2,8..10). Pull-tab booth (4,10). Jukebox (16,10). Photo wall north. Twelve crowd NPCs in rows 7–11; the cop in the back corner (22,11); the tall stranger (14,11). **Exit:** door → street (8,9), closed once on stage.
-**NPCs.** Bartender: "Phoenix, you're not on tonight." (Phoenix: "My brain thinks I'm on *very* tonight.") Pull-tab Lady: "Minnesota's slot machine. I'm up four dollars." Regular: "Been coming since '06. The place, not me. I'm from Fridley." Punk Kid: "The drummer's from up north? Those guys don't blink." Cop: "Hello, fellow kids. I also enjoy the… moshes." Tall Stranger: "Good vibes in here. Dense." Six more one-liners (a nurse off shift; a guy who "saw the Replacements here" and did not).
+**NPCs.** Bartender: "Phoenix, you're not on tonight." (Phoenix: "My brain thinks I'm on *very* tonight.") Pull-tab Lady: "Minnesota's slot machine. I'm up four dollars." Regular: "Been coming since '06. The place, not me. I'm from Fridley." Cop: "Hello, fellow kids. I also enjoy the… moshes." Tall Stranger: "Good vibes in here. Dense." Seven more one-liners (a nurse off shift; a guy who "saw the Replacements here" and did not).
 **Interactables.** Jukebox: `choice` of four songs that don't exist ("Pothole Blues", "Rent Is a Feeling", "7/8 Shuffle", "Dental Plan"), each a 4-bar jingle; `flags.jukeboxPlayed`. Pull tabs: "$1. (You have $4.) (You do not.)" Sign: "PALMER'S — EST. 1906 — NO SOLOS." Photo wall: "Every band that ever played here. None of them leveled it." **Enemies:** B3, scripted. **Trigger:** stage (20..24,5..10) → CS-15.
 
 ### `palmers_rubble` — 26×14
@@ -267,7 +267,6 @@ Same footprint: walls → `rubble`, north rows → night sky, drywall slabs, a b
 
 - **Verbs.** Grid walk, run (hold), confirm = interact with the faced entity, cancel, menu. Objects return a narrator line; things a party member cares about return a second line on a second press (Phoenix on bills, tickets, pull tabs; Lucky on anything Vanguard).
 - **Discoverables are unmarked.** The player learns to press on everything; the only tell is that NPCs face the player when adjacent.
-- **Party trailer.** Joined characters follow in a snake; cutscenes address them by id.
 - **Lucky's color is the HUD.** The overworld sheet swaps by leader HP (`lucky` ≥70 %, `lucky_tense` 40–69 %, `lucky_deflated` <40 %) and by story lock (`lucky_rage` after `flags.luckyRageLocked`). No HP bar outside menus.
 - **Night.** `flags.gigFlyer` dresses `street_cedar`: a blue overlay rectangle at depth 50 under the `over` layer, lit-window objects, animated neon, a different NPC roster via `condition`.
 - **Toon 2 objects** (CRASH, KRAAANG, G, DOOM/CRACK/THUD) are ordinary `object` entities moved with `move`. No special system.
@@ -291,8 +290,8 @@ Levels 1→6 across the slice from ~10 optional street fights and two bosses. Mo
 
 | Enemy | Where | Flavor | Moves |
 |---|---|---|---|
-| Vanguard Retrieval Drone | B1; street east ×2 (day) | A beige sphere with a customer-service voice. "PLEASE HOLD." | Scan (−DEF), Tractor Beam (−ATK, "toward Beige"), Bill (1 dmg, "for the pothole") |
-| Market Research Intern | street, by the pawnshop (day) | Lanyard, clipboard, no coat. "Quick survey?" | Survey (Confuse), Focus Group (summons one Intern), Exit Interview (flee) |
+| Vanguard Retrieval Drone | B1; street east ×2 (day) | A beige sphere with a customer-service voice. | Scan (−DEF), Tractor Beam (−ATK), Bill (1 dmg, "for the pothole") |
+| Market Research Intern | street, by the pawnshop (day) | Lanyard, clipboard, no coat. | Survey (Confuse), Focus Group (summons one Intern), Exit Interview (flee) |
 | Rental Scooter | street, road patrol | Nobody is riding it. 15 mph in the snow. | Ram, Low Battery (skips a turn) |
 | Undercover Cop | B3; night duos | Price tag on the jacket. Glued mohawk. | Stand By (summon Riot Cop), Pepper Spray (Blind), Hello Fellow Kids (text only) |
 | Riot Cop | B3 summon | A door in a vest. | Kettle (all), Shield |
@@ -309,7 +308,7 @@ Levels 1→6 across the slice from ~10 optional street fights and two bosses. Mo
 
 ## UI & presentation
 
-- Dialogue box per §12.2 with name tag and 32×32 portraits (Lucky calm/tense/rage/deflated/shades/eyes; Phoenix tired/droop/baffled; Brian normal/red/phone; Dad grille; Cop; Barista; Night Manager; Tall Stranger; Bartender). Ryan has **no portrait**: `who: "ryan_caption"` renders a rigidly square box top-right with bracketed text and no tag; spoken `who: "ryan"` uses the plain box and is one word unless scripted otherwise.
+- Dialogue box per §12.2 with name tag and 32×32 portraits (Lucky ×6, Phoenix ×3, Brian ×3, Dad's grille, and six NPCs). Ryan has **no portrait**: `who: "ryan_caption"` renders a rigidly square box top-right with bracketed text and no tag; spoken `who: "ryan"` uses the plain box and is one word unless scripted otherwise.
 - Captions: plain (END PART 1), `style: "tape"` (duct-taped, crooked), and a letter-spaced chapter stinger.
 - `ui.insert(sprite)`: a centered window with a flyer/itinerary sprite over a narrator line (used three times).
 - Toon table → engine: 0 nothing; 1 `camera shake`; 2 letter objects + `ui.bulge`; 3 `ui.setFrame('torn')` + jitter; 4 background/HUD swap + input lock.
@@ -320,9 +319,9 @@ Levels 1→6 across the slice from ~10 optional street fights and two bosses. Mo
 | Scene | Music | SFX / ambient |
 |---|---|---|
 | S0 Title | `title` (160 bpm punk) | `glitch` on confirm |
-| S1 Pod bay | `pod_bay` (corporate muzak, 25 % pulse) | intercom hum; `squelch`, `confirm` |
+| S1 Pod bay | `pod_bay` (corporate muzak) | intercom hum; `squelch` |
 | S2 Freefall | `freefall` (wind + rising saw) | `slime_pop`, `glitch` ×7, `crash` |
-| S3 Alley | silent until step 15, then `snow` (sparse; a 7/8 hat every 8th bar) | `wind`; `crash`, `hit` ×4, `slime_pop` ×3, `feedback`, `drone_whine`; `battle_tutorial` |
+| S3 Alley | silent until step 15, then `snow` (sparse; a 7/8 hat every 8th bar) | `wind`; `crash`, `hit`, `slime_pop`, `feedback`, `drone_whine`; `battle_tutorial` |
 | S4/S6 Street day | `snow` | traffic hiss; `glitch` under the billboard; `battle` |
 | S5 Apartment / montage | `apartment` (lo-fi, fridge-hum triangle) → `signal` (arpeggio climbing an octave per bar) → `garage` (wind, one hat per 2 bars) | `feedback`, `glitch`; captions silent |
 | S7 Café | `coffee` (bossa chiptune) | `item`, `phone_ring` ×2, `click` |
@@ -375,13 +374,13 @@ Gating lives only in entity `condition`s and exit conditions, so `__slime.warp` 
 ## Content inventory
 
 **Overworld sheets (16×24 unless noted).** Lucky ×8 (`lucky`, `_tense`, `_deflated`, `_rage`, `_glow`, `_bristle`, `_dust`, `_puddle` 16×16) + `lucky_ball` 16×16 + `lucky_flat` 32×16; Phoenix ×4 (`phoenix`, `_trash`, `_puddle`, `_dust`); `brian`, `brian_red`; Ryan ×4 (`ryan`, `_loaded` 16×40, `_slimed`, `_purple`) + `eternity` 64×64; Bajonka ×4 (`bajonka`, `_clipboard`, `_contract`, `_keys`); 30 NPC sheets (street 9, café 5, City Sound 6, Palmer's 10 incl. six crowd variants); on-map enemies `drone`, `intern`, `scooter`, `cop`, `cop_nomohawk`.
-**Objects (~55).** Pod bay 6; alley 7; street 7 (incl. `billboard_work` + `_glitch`, `pizza_box`); apartment 10; café 3; Room 4 10 (incl. `pedalboard` + `_fried`, `coffee_cup` + `_spilled`, `contract`, `brain_xray`, `drips`); Palmer's 6; SFX letters `sfx_crash`, `sfx_kraaang`, `sfx_g`, `sfx_doom`, `sfx_crack`, `sfx_thud`; `soundwave`, `shockwave`, `aura_link`, `slime_splat`, `mohawk`, `drywall`.
+**Objects (~55).** Pod bay 6; alley 7; street 7 (incl. `billboard_work` + `_glitch`, `pizza_box`); apartment 10; café 3; Room 4 10 (incl. `pedalboard` + `_fried`, `coffee_cup` + `_spilled`, `contract`, `brain_xray`); Palmer's 6; the six SFX-letter objects; `soundwave`, `shockwave`, `aura_link`, `slime_splat`, `mohawk`, `drywall`.
 **Battle sheets (32×32 unless noted).** Party 4 (+ Lucky's 4 color variants, Ryan's slimed/purple, `eternity_battle` 64×64); enemies `drone_b`, `intern_b`, `scooter_b`, `cop_b`, `riot_cop_b` 48, `whrnnng_b` 48, `thudthud_b`, `crowd_hostility_b` 48. Backgrounds `bg_street`, `bg_alley`, `bg_room4`, `bg_palmers`, `bg_palmers_roofless`, `bg_cosmic`.
 **Portraits.** 18 (listed under UI).
 **Tilesets (9).** `vanguard_ship`, `sky`, `minneapolis` (snow, slush, sidewalk, road, brick ×3, Towers panels ×4, neon, windows, chain-link, platform), `apartment_int`, `coffee_int`, `garage_int`, `city_sound_int` (sticker walls ×4), `palmers_int`, `rubble`.
 **UI.** Window 9-slice, torn 9-slice, caption plain/tape, insert window, cursor, POCKET segments, color swatch, emotes.
 **Songs (20 ids).** `title`, `pod_bay`, `freefall`, `snow`, `snow_night`, `apartment`, `signal`, `garage`, `coffee`, `city_sound_muffled`, `rehearsal`, `rehearsal_brian`, `boss_audition`, `palmers`, `the_set`, `eternity`, `battle`, `battle_tutorial`, `victory`, `gameover` — four are variants of existing patterns.
-**SFX added.** `drone_whine`, `crash`, `pedal`, `stick_click`, `phone_ring`, `click`, `coffee_spill`, `sparks`, `pop`, `gears`, `door_slam`, `thud`, `power_chord`, `splash`, `roof_peel`, `rubble`, `snore`, `glitch`.
+**SFX added (18).** Those named in the audio table beyond §7's list.
 **Scripts.** `ep0.json`: the 16 cutscenes above plus `ep0_dad_1..4`; `npc_*.json` (~90 one-line object/NPC scripts); `shops.json` (`pawnshop`, `cafe`). Battle scripts in code: `tutorial_drone`, `audition`, `palmers_set`.
 
 ## Risks & cuts
@@ -392,9 +391,8 @@ Gating lives only in entity `condition`s and exit conditions, so `__slime.warp` 
 | UI asks beyond §12.2: `ui.setFrame('torn')`, `ui.bulge`, `ui.insert`, `{var:x}` markup. | Torn → shake the UI camera; bulge → `ui.flash`; insert → a narrator line; `{var:}` → fixed text ("a very long band agreement"). |
 | Mid-battle ally entrance (Phoenix, B1) and ally-as-hazard (Ryan, B2/B3) exceed §8's hook list. | Phoenix joins before B1; Ryan's Fill becomes a fixed per-round event via `onRound`. |
 | 64×64 Eternity and 16×40 Ryan-with-hardware break the 16×24 assumption. | Hardware as a separate object that moves in lockstep; Eternity at 48×48. |
-| Night variant of `street_cedar`. | Overlay + second roster is already the cheap plan; if it slips, the gig is at dusk. |
 | Toon 4 rupture (`bg_cosmic`, HUD swap). | Background swap only; the captions still land. |
-| ~45 lines of NPC flavor. | Cut order: Palmer's crowd (keep 6), night extras, the ska band, Cold Brew Guy. Never cut: bills, Pizza Luce box, billboard, Billy's pod, jukebox. |
-| `rooftops` and `garage_north` are cutscene-only maps. | Rooftops → three captions over black; keep the garage (used twice; it is the Ryan hook). |
+| ~40 lines of NPC flavor. | Cut order: Palmer's crowd (keep 6), night extras, the ska band. Never cut: bills, Pizza Luce box, billboard, Billy's pod, jukebox. |
+| `rooftops` is a cutscene-only map. | Three captions over black; keep the garage (used twice; it is the Ryan hook). |
 | Playtime over 75 min. | Day hub to one drone + the Intern; night to one cop duo. |
 | The quit choice (rage/plead/joke) promises branching it does not deliver. | That is the point; `vars.quitResponse` is read once in Chapter 2 — Phoenix remembers which one you picked. |
