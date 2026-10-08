@@ -1,0 +1,27 @@
+{
+  "xpTable": [0, 10, 25, 45, 70, 100, 140, 190, 250, 320, 400, 500, 620, 760, 920, 1100, 1300, 1520, 1760, 2020],
+  "characters": {
+    "lucky": {
+      "name": "Lucky",
+      "sprite": "lucky",
+      "portrait": "lucky",
+      "battleSprite": "lucky_battle",
+      "stats": { "hp": 40, "amp": 12, "atk": 8, "def": 4, "spd": 7 },
+      "growth": { "hp": 6, "amp": 2, "atk": 2, "def": 1, "spd": 1 },
+      "equip": { "instrument": "beatup_guitar", "accessory": null },
+      "riffs": [],
+      "onJoin": null
+    },
+    "phoenix": {
+      "name": "Phoenix",
+      "sprite": "phoenix",
+      "portrait": "phoenix",
+      "battleSprite": "phoenix_battle",
+      "stats": { "hp": 34, "amp": 16, "atk": 6, "def": 5, "spd": 9 },
+      "growth": { "hp": 5, "amp": 3, "atk": 1.5, "def": 1, "spd": 1.5 },
+      "equip": { "instrument": null, "accessory": null },
+      "riffs": [],
+      "onJoin": null
+    }
+  }
+}

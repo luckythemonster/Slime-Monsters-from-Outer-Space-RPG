@@ -1,0 +1,10 @@
+{
+  "map": "dev_alley",
+  "x": 2,
+  "y": 7,
+  "facing": "right",
+  "chapter": 1,
+  "party": ["lucky"],
+  "money": 4,
+  "items": [{ "id": "pizza_slice", "qty": 1 }]
+}

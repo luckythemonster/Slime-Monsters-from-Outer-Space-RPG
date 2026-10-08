@@ -1,0 +1,16 @@
+{
+  "pizza_slice": {
+    "name": "Pizza Slice",
+    "type": "consumable",
+    "effect": { "hp": 30 },
+    "price": 5,
+    "desc": "Cold, folded, perfect. Heals 30 HP."
+  },
+  "coffee": {
+    "name": "Coffee",
+    "type": "consumable",
+    "effect": { "amp": 10 },
+    "price": 3,
+    "desc": "Gas-station drip. Restores 10 AMP."
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "beatup_guitar": {
+    "name": "Beat-up Guitar",
+    "slot": "instrument",
+    "bonus": { "atk": 3 },
+    "price": 40,
+    "desc": "Three strings and a dream."
+  }
+}

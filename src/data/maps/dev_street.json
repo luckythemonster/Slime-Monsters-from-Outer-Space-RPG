@@ -1,0 +1,56 @@
+{
+  "id": "dev_street",
+  "name": "Dev Street",
+  "tileset": "minneapolis",
+  "music": "street",
+  "ambient": null,
+  "battleBackground": "street",
+  "onFirstEnter": "dev_street_intro",
+  "legend": { "#": "brick_wall", ".": "snow", "=": "sidewalk", "D": "dumpster", "W": "window_lit" },
+  "layers": {
+    "ground": [
+      "########################",
+      "########################",
+      "########################",
+      "########################",
+      "#======================#",
+      "#......................#",
+      "#......................#",
+      "=......................#",
+      "#......................#",
+      "#......................#",
+      "#......................#",
+      "#......................#",
+      "#======================#",
+      "########################"
+    ],
+    "deco": [
+      "                        ",
+      "                        ",
+      "   W    W    W    W     ",
+      "                        ",
+      "                        ",
+      "      D             D   ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        "
+    ]
+  },
+  "spawn": { "x": 1, "y": 7, "facing": "right" },
+  "entities": [
+    { "id": "to_alley", "type": "exit", "x": 0, "y": 7, "w": 1, "h": 1,
+      "to": { "map": "dev_alley", "x": 18, "y": 7, "facing": "left" } },
+    { "id": "busker", "type": "npc", "sprite": "phoenix", "x": 10, "y": 10, "facing": "left",
+      "behavior": "wander", "radius": 2, "script": "dev_sign" },
+    { "id": "walker", "type": "npc", "sprite": "lucky", "x": 16, "y": 5, "facing": "right",
+      "behavior": "patrol", "path": "RRRRLLLL", "script": "dev_sign" },
+    { "id": "cop_a", "type": "enemy", "sprite": "cop", "x": 14, "y": 8, "facing": "left",
+      "encounter": "street_cop_duo", "behavior": "chase", "sight": 5,
+      "condition": "!flags.cleared_cop_a", "setOnWin": "flags.cleared_cop_a" }
+  ]
+}
