@@ -82,7 +82,7 @@ Frame 0 is the moment the 16th Pocket segment fills. Song `pocket` is playing (7
 |---|---|---|---|---|
 | 0–19 | Hold. | Beat lamp stays lit. | Pocket gauge segments flash white in sequence 0→15 (1 per frame), then all. | `pocket` continues. |
 | 20–59 | Ryan's caption: [I am not trapped in the goo. The goo is trapped in the pocket.] appears instantly. | Everything else freezes mid-frame (anims paused). | Command window closes (4-frame vertical collapse). | Music drops to triangle + kick only (pulse channels muted via volume 0). |
-| 60–119 | Pan the camera 96 px left and 16 px up over 60 frames (ease: 4 integer steps per frame then 1) so the kit lands at screen center (128, 96). | `ryan_possessed` → `ryan_bruised` already; slime drip particles reverse direction (rise). | Status window slides down off-screen (56 px over 20 frames). | Kick doubles (every eighth). |
+| 60–119 | Pan the camera 100 px left and 24 px up over 60 frames (integer steps: 4 px/frame for the first 20 frames, 1 px/frame after, x and y scheduled separately) so the kit's center (228, 120) lands at screen center (128, 96). | `ryan_possessed` → `ryan_bruised` already; slime drip particles reverse direction (rise). | Status window slides down off-screen (56 px over 20 frames). | Kick doubles (every eighth). |
 | 120–179 | Flash white 6 frames at 120. 2 px shake 120–179. | Swap kit sprite to `ryan_eternity` (64×64) frame 0; background swaps from `palmers_neon` to `black_hole` (concentric rings, palette cycle inward, 12 fps). | Pocket window text replaced by "RHYTHM" (window remains). | Music hard-cuts to `rhythm_achieved` (7/8, 60 BPM doom); first hit is the lowest triangle note with a 400 ms pitch fall. |
 | 180–299 | 4 px shake on every doom downbeat (frames 180, 240) for 8 frames each. | `ryan_eternity` loops 6 frames at 8 fps; every downbeat spawns an SFX word sprite — DOOM (48×16), CRACK (48×16), THUD (40×16) — at a random point on a 48 px ring around Ryan, which drifts 1 px/frame toward him (gravity) and stays. | Window borders switch to the Toon-4 palette (white → #a050c0). | Noise channel open hat on every beat; pulse1 a detuned drone (two voices 8 cents apart) on the root. |
 | 300–359 | Caption at top-left: [Rhythm achieved.] | Party sprites (Lucky, Phoenix) get the `plaster` palette variant (white dusting). | — | Beat 3 of the doom riff. |
@@ -101,6 +101,12 @@ The player has no input from frame 20 to the end of the destruction. `confirm` i
 | 720–779 | **The cymbal crash.** All sprites freeze. `cymbal` at full volume with 2 s decay. 6 px shake for 8 frames, then 4, then 2, then 1 (frames 720–751). The shake is the last thing that moves. |
 | 780–899 | Silence. 2 seconds of nothing moving. Fade to black over 60 frames beginning at 840. |
 | 900 | Fade in on `palmers_rubble` (plaster palette, sky visible). `plaster_dust` begins at frame 960 (one second of silence after fade-in). |
+
+### Aftermath: the quit (Toon 1, then 0)
+
+Ryan's `ryan_eternity` is gone; a 16×24 `ryan_slimed` stands at the kit's tile with the `sit` frame, then the slow 4-frame `reform` played at 2 fps (solidifying). He holds two sticks (the `nod` frame's arms, sticks white). Lucky: "Okay. That is our sound." Phoenix: "My brain thinks we are officially domestic terrorists." Ryan, aloud, with a portrait for the first time in the chapter (`ryan_stoic`): "I think I broke the space-time continuum on that snare fill." Then the caption [I could have killed every person in this room.] — and here the caption window **shakes 1 px for its whole duration**, the only time it ever does: the calmest voice is terrified. Aloud: "I quit." `plaster_dust` stops on that line and does not resume.
+
+Lucky's sheet swaps to `lucky_rage` on the next frame with `slime_pop` and a 2 px shake, and the window inner rule turns magenta `#ff1aa0` — it stays magenta for the rest of the chapter, including the title card. The choice (RAGE / PLEAD / JOKE) is the slice's only three-way branch; every branch ends in "Yep." and Ryan walking north off the map edge at walk speed with no music, 48 tiles of silence while the camera holds. PLEAD alone swaps Lucky to `lucky_deflated` for the walk, then back to rage when Bajonka appears. Bajonka trots out from under a `drywall_chunk` tile (the tile swaps to `rubble` as she emerges), `keys_sit` frame, `sneeze`. Lucky, magenta: "We don't have a drummer." Fade to black; caption card in the flyer style (white card, tape): "NEXT: THE POTATO BELT" / second line after 1 s: "(DRUMMER WANTED)". Hold 3 s. Return to title with CONTINUE enabled.
 
 ## Party & progression (brief)
 
@@ -367,7 +373,7 @@ Saving is Bajonka. She is a `save` entity from City Sound on (and sits outside P
 
 Lucky: neutral, grin, rage, deflated, bristle, sunglasses, calm_scary (7). Phoenix: tired, deadpan, glasses_push, terrified_impressed, melting, my_brain_thinks (6). Brian: normal, pointing, rage_red, stroke_veins, smug (5). Ryan: stoic, slimed, eyes_glow (3). Bajonka: sit, sneeze (2). Dad: grille, grille_talk (2; the portrait is a speaker). Cop: disguise, mohawk_off (2). Barista, Pawnbroker (1 each). Total 29.
 
-### Songs (19) — see cue list. SFX (34) — see SFX list.
+### Songs (19) — see cue list. SFX (35) — see SFX list.
 
 ### UI atlas (`tools/ui/ui.txt`)
 
