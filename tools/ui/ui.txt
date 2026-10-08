@@ -1,0 +1,181 @@
+# UI atlas: FF4-6 style dialogue window (9-slice, 8x8 pieces), cursor hand, "more text"
+# arrow, meter segments (4x8) and 8x8 status icons.
+# Window border, outside -> inside: outline, white, light gray, blue line, navy fill.
+name: ui
+frame: 8x8
+palette:
+  . = transparent
+  k = #141018     # outline
+  w = #f8f8f8     # white
+  L = #c8ccd4     # gray light
+  j = #3c5c9c     # blue inner line
+  J = #24386c     # blue shadow line
+  a = #142050     # navy fill
+  e = #1c0c2c     # empty meter
+  p = #ff5fd2     # meter pink
+  P = #ff9ae6     # meter highlight
+  D = #b0308c     # meter shadow
+  g = #39ff8a     # poison green
+  G = #1c8c48     # poison shade
+  y = #f8d820     # dazed stars
+  d = #5c6068     # skull shading
+
+region win_tl:
+.kkkkkkk
+kkwwwwww
+kwwLLLLL
+kwLjjjjj
+kwLjaaaa
+kwLjaaaa
+kwLjaaaa
+kwLjaaaa
+
+region win_t:
+kkkkkkkk
+wwwwwwww
+LLLLLLLL
+jjjjjjjj
+aaaaaaaa
+aaaaaaaa
+aaaaaaaa
+aaaaaaaa
+
+region win_tr:
+kkkkkkk.
+wwwwwwkk
+LLLLLwwk
+jjjjjLwk
+aaaajLwk
+aaaajLwk
+aaaajLwk
+aaaajLwk
+
+region win_l:
+kwLjaaaa
+kwLjaaaa
+kwLjaaaa
+kwLjaaaa
+kwLjaaaa
+kwLjaaaa
+kwLjaaaa
+kwLjaaaa
+
+region win_c:
+aaaaaaaa
+aaaaaaaa
+aaaaaaaa
+aaaaaaaa
+aaaaaaaa
+aaaaaaaa
+aaaaaaaa
+aaaaaaaa
+
+region win_r:
+aaaajLwk
+aaaajLwk
+aaaajLwk
+aaaajLwk
+aaaajLwk
+aaaajLwk
+aaaajLwk
+aaaajLwk
+
+region win_bl:
+kwLjaaaa
+kwLjaaaa
+kwLjaaaa
+kwLjaaaa
+kwLJJJJJ
+kwLLLLLL
+kkwwwwww
+.kkkkkkk
+
+region win_b:
+aaaaaaaa
+aaaaaaaa
+aaaaaaaa
+aaaaaaaa
+JJJJJJJJ
+LLLLLLLL
+wwwwwwww
+kkkkkkkk
+
+region win_br:
+aaaajLwk
+aaaajLwk
+aaaajLwk
+aaaajLwk
+JJJJJLwk
+LLLLLLwk
+wwwwwwkk
+kkkkkkk.
+
+region cursor:
+...kkkk.
+..kwwwwk
+kkkwwwwk
+kwwwwkkk
+kwwwwk..
+kwwwwk..
+.kwwk...
+..kk....
+
+region arrow_more:
+........
+kkkkkkk.
+kwwwwwk.
+.kwwwk..
+..kwk...
+...k....
+........
+........
+
+region meter_on: 4x8
+kkkk
+kPPk
+kppk
+kppk
+kppk
+kppk
+kDDk
+kkkk
+
+region meter_off: 4x8
+kkkk
+kJJk
+keek
+keek
+keek
+keek
+keek
+kkkk
+
+region icon_ko:
+..kkkk..
+.kwwwwk.
+kwwwwwwk
+kwkwwkwk
+kwkwwkwk
+.kwwwwk.
+.kkwwkk.
+..kkkk..
+
+region icon_poison:
+...k....
+..kgk...
+..kgk...
+.kgggk..
+kggGGgk.
+kgGGGgk.
+kgGGGgk.
+.kkkkk..
+
+region icon_dazed:
+..k.....
+.kyk.k..
+kyyykyk.
+.kyk.k..
+..k.....
+.....k..
+....kyk.
+.....k..

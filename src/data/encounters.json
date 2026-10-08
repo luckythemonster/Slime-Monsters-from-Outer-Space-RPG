@@ -1,0 +1,10 @@
+{
+  "street_cop_duo": {
+    "name": "Two Cops",
+    "enemies": ["cop", "cop"],
+    "background": "street",
+    "music": "battle",
+    "canFlee": true,
+    "script": null
+  }
+}

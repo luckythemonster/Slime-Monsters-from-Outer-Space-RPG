@@ -1,0 +1,12 @@
+{
+  "cop": {
+    "name": "Cop",
+    "sprite": "cop",
+    "battleSprite": "cop_battle",
+    "stats": { "hp": 30, "atk": 6, "def": 3, "spd": 5 },
+    "xp": 12,
+    "money": 4,
+    "ai": "basic",
+    "drops": [{ "item": "coffee", "chance": 0.25 }]
+  }
+}

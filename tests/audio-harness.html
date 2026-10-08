@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>SMFOS audio harness</title>
+    <style>
+      body { font: 14px/1.4 monospace; background: #101018; color: #e8e8f0; margin: 16px; }
+      h1 { font-size: 16px; }
+      button { font: inherit; margin: 2px; padding: 4px 8px; background: #2a2a40; color: #fff; border: 1px solid #555; cursor: pointer; }
+      button:hover { background: #3a3a60; }
+      .row { margin: 8px 0; }
+      #meter { display: inline-block; width: 200px; height: 10px; background: #222; vertical-align: middle; }
+      #meter i { display: block; height: 100%; width: 0; background: #39ff8a; }
+      pre { background: #000; padding: 8px; max-height: 240px; overflow: auto; }
+    </style>
+  </head>
+  <body>
+    <h1>Audio harness</h1>
+    <p>Serve the repo root and open this page. Click <b>Start</b> first (autoplay policy), then play songs and SFX.
+      <code>window.__audioHarness</code> is the API the automated test (<code>tests/audio.mjs</code>) drives.</p>
+    <div class="row"><button id="start">Start</button> <span id="state">(no context)</span> <span id="meter"><i></i></span> <span id="pos"></span></div>
+    <div class="row" id="songs"></div>
+    <div class="row" id="sfx"></div>
+    <div class="row">Volume: music <input id="vmusic" type="range" min="0" max="1" step="0.05" value="0.7" /> sfx <input id="vsfx" type="range" min="0" max="1" step="0.05" value="0.8" /> <button id="mute">Mute</button></div>
+    <pre id="log"></pre>
+    <script type="module">
+      import { AudioEngine, SFX_NAMES, SONGS, bufferRms, bufferPeak } from '/src/audio/AudioEngine.js';
+      import { compileSong } from '/src/audio/Sequencer.js';
+
+      const $ = (id) => document.getElementById(id);
+      const logEl = $('log');
+      const log = (...a) => { logEl.textContent += a.map((x) => (typeof x === 'string' ? x : JSON.stringify(x))).join(' ') + '\n'; logEl.scrollTop = logEl.scrollHeight; };
+
+      const h = {
+        engine: null, ctx: null, analyser: null, ticks: [], errors: [],
+        SONG_IDS: Object.keys(SONGS), SFX_NAMES: Array.from(SFX_NAMES),
+      };
+      window.addEventListener('error', (e) => h.errors.push(String(e.message || e)));
+      window.addEventListener('unhandledrejection', (e) => h.errors.push(String((e.reason && e.reason.message) || e.reason)));
+
+      /** Create the realtime engine behind an AnalyserNode. Resolves with the context state. */
+      h.init = async () => {
+        if (h.engine) return h.ctx.state;
+        const ctx = new AudioContext();
+        const analyser = ctx.createAnalyser();
+        analyser.fftSize = 2048;
+        analyser.connect(ctx.destination);
+        const engine = new AudioEngine({ context: ctx, destination: analyser });
+        Object.assign(h, { ctx, analyser, engine });
+        const state = await engine.resume();
+        $('state').textContent = `context: ${state} @ ${ctx.sampleRate} Hz`;
+        return state;
+      };
+
+      /** Instantaneous RMS of the engine output (≈46 ms window). */
+      h.rms = () => {
+        const buf = new Float32Array(h.analyser.fftSize);
+        h.analyser.getFloatTimeDomainData(buf);
+        let s = 0;
+        for (let i = 0; i < buf.length; i++) s += buf[i] * buf[i];
+        return Math.sqrt(s / buf.length);
+      };
+
+      /** Start a song and record every tick as { step, songStep, bar, ctxTime, wall }. */
+      h.play = (id, opts) => {
+        h.ticks = [];
+        const seq = h.engine.playMusic(id, opts);
+        if (!seq) throw new Error(`playMusic(${id}) returned null`);
+        seq.on('tick', (pos) => h.ticks.push({ step: pos.step, songStep: pos.songStep, bar: pos.bar, beat: pos.beat, stepTime: pos.stepTime, ctxTime: h.ctx.currentTime, wall: performance.now() }));
+        return { bpm: seq.song.bpm, stepsPerBeat: seq.song.stepsPerBeat, stepDur: seq.stepDuration, startTime: seq.startTime };
+      };
+      h.stop = (opts) => { h.engine.stopMusic(opts); };
+      h.sfx = (name, opts) => h.engine.sfx(name, opts);
+      h.state = () => ({
+        ctx: h.ctx.state, currentMusic: h.engine.currentMusic, isMusicPlaying: h.engine.isMusicPlaying,
+        fading: h.engine._fading.size, activeSfxVoices: h.engine.synth.active.size,
+        position: h.engine.sequencer ? h.engine.sequencer.position : null,
+      });
+
+      h.songInfo = (id) => {
+        const c = compileSong(SONGS[id]);
+        return { bpm: c.bpm, stepsPerBeat: c.stepsPerBeat, stepsPerBar: c.stepsPerBar, bars: c.bars, totalSteps: c.totalSteps, stepDur: c.stepDur, duration: c.duration, loop: c.loop, loopStart: c.loopStart, loopStartTime: c.loopStartStep * c.stepDur };
+      };
+
+      /** Offline render of a song across its first loop boundary; returns RMS stats around the seam. */
+      h.renderSong = async (id, { sampleRate = 44100, extra = 0.6, window = 0.1 } = {}) => {
+        const info = h.songInfo(id);
+        const seconds = info.duration + extra;
+        const t0 = performance.now();
+        const { buffer, rms, peak } = await AudioEngine.renderOffline({ music: id, seconds, sampleRate });
+        const loopTime = info.duration;
+        const windows = [];
+        for (let t = loopTime - 0.3; t < loopTime + 0.5; t += window / 2) {
+          windows.push({ t: +t.toFixed(3), rms: bufferRms(buffer, t, t + window) });
+        }
+        return {
+          seconds, rms, peak, rmsFirst2s: bufferRms(buffer, 0, Math.min(2, seconds)),
+          rmsBeforeLoop: bufferRms(buffer, loopTime - 0.1, loopTime), rmsAfterLoop: bufferRms(buffer, loopTime, loopTime + 0.1),
+          minWindowRms: Math.min(...windows.map((w) => w.rms)), windows, renderMs: Math.round(performance.now() - t0),
+        };
+      };
+
+      /** Offline render of one SFX (1.5 s). */
+      h.renderSfx = async (name, { sampleRate = 44100 } = {}) => {
+        const { buffer, rms, peak } = await AudioEngine.renderOffline({ sfx: name, seconds: 1.5, sampleRate });
+        return { rms, peak, tailRms: bufferRms(buffer, 1.3, 1.5), onsetRms: bufferRms(buffer, 0, 0.1) };
+      };
+
+      window.__audioHarness = h;
+
+      // ---- manual controls ---------------------------------------------------
+      $('start').onclick = async () => { log('context:', await h.init()); };
+      for (const id of h.SONG_IDS) {
+        const b = document.createElement('button');
+        b.textContent = `▶ ${id}`;
+        b.onclick = async () => { await h.init(); log('play', id, h.play(id, { fade: 0.4 })); };
+        $('songs').appendChild(b);
+      }
+      const stopBtn = document.createElement('button');
+      stopBtn.textContent = '■ stop';
+      stopBtn.onclick = () => { if (h.engine) h.stop({ fade: 0.5 }); };
+      $('songs').appendChild(stopBtn);
+      for (const name of h.SFX_NAMES) {
+        const b = document.createElement('button');
+        b.textContent = name;
+        b.onclick = async () => { await h.init(); log('sfx', name, h.sfx(name)); };
+        $('sfx').appendChild(b);
+      }
+      $('vmusic').oninput = (e) => h.engine && h.engine.setVolume({ music: +e.target.value });
+      $('vsfx').oninput = (e) => h.engine && h.engine.setVolume({ sfx: +e.target.value });
+      $('mute').onclick = () => { if (h.engine) { h.engine.mute(!h.engine.isMuted); $('mute').textContent = h.engine.isMuted ? 'Unmute' : 'Mute'; } };
+      setInterval(() => {
+        if (!h.engine) return;
+        $('meter').firstElementChild.style.width = `${Math.min(200, h.rms() * 600)}px`;
+        const p = h.engine.sequencer && h.engine.sequencer.position;
+        $('pos').textContent = p ? `${h.engine.currentMusic} bar ${p.bar + 1} beat ${p.beat + 1} step ${p.stepInBar} loop ${p.loops}` : '';
+      }, 50);
+    </script>
+  </body>
+</html>

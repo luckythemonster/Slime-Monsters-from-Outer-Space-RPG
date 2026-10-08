@@ -1,0 +1,258 @@
+# Phoenix — gray slime monster, burnt-out Minneapolis transplant. 16x24, feet on the bottom row.
+# Hood up on a ragged dark hoodie (torn hem, kangaroo pocket), thick round glasses with glare,
+# no neck, slumped shoulders, flat tired mouth, hands hanging out of the sleeves.
+name: phoenix
+frame: 16x24
+palette:
+  . = transparent
+  k = #141018     # outline
+  s = #9aa0a8     # gray slime
+  S = #c8ccd4     # slime highlight / lens
+  z = #5c6068     # slime shadow / hoodie highlight
+  h = #30303c     # hoodie
+  e = #1c0c2c     # hoodie shadow
+  w = #f8f8f8     # lens glint
+  j = #3c5c9c     # jeans
+  J = #24386c     # jeans shadow
+anim: walk_down  frames: 0 1 0 2  fps: 8
+anim: walk_up    frames: 3 4 3 5  fps: 8
+anim: walk_left  frames: 6 7 6 8  fps: 8
+anim: walk_right frames: 6 7 6 8  fps: 8  flipX: true
+anim: idle_down  frames: 0  fps: 1
+anim: idle_up    frames: 3  fps: 1
+anim: idle_left  frames: 6  fps: 1
+anim: idle_right frames: 6  fps: 1  flipX: true
+
+frame 0: down stand
+................
+.....kkkkkk.....
+...kkhhhhhhkk...
+..khhhhhhhhhhk..
+.khzhhhhhhhhhhk.
+.kzheeeeeeeehhk.
+.kzessssssssehk.
+.kzkkkkSSkkkkhk.
+.kzkwSkkkkSwkhk.
+.kzkSSksskSSkhk.
+.kzkkkksskkkkhk.
+.kzessssssssehk.
+.kzesszkkzssehk.
+..khheeeeeehhk..
+..kkhhhhhhhhkk..
+.kzhhhhhhhhhhhk.
+.kzhzhhhhhhzhhk.
+.kzhzeeeeeezhhk.
+.kshzhhhhhhzhsk.
+.kkehkhhhhkhekk.
+...kjjk..kjjk...
+...kjJk..kJjk...
+...keek..keek...
+...kkkk..kkkk...
+
+frame 1: down step a (right foot lifted)
+................
+.....kkkkkk.....
+...kkhhhhhhkk...
+..khhhhhhhhhhk..
+.khzhhhhhhhhhhk.
+.kzheeeeeeeehhk.
+.kzessssssssehk.
+.kzkkkkSSkkkkhk.
+.kzkwSkkkkSwkhk.
+.kzkSSksskSSkhk.
+.kzkkkksskkkkhk.
+.kzessssssssehk.
+.kzesszkkzssehk.
+..khheeeeeehhk..
+..kkhhhhhhhhkk..
+.kzhhhhhhhhhhhk.
+.kzhzhhhhhhzhhk.
+.kshzeeeeeezhhk.
+.kkhzhhhhhhzhsk.
+..kehkhhhhkhekk.
+...kjjk..keek...
+...kjJk..kkkk...
+...keek.........
+...kkkk.........
+
+frame 2: down step b (left foot lifted)
+................
+.....kkkkkk.....
+...kkhhhhhhkk...
+..khhhhhhhhhhk..
+.khzhhhhhhhhhhk.
+.kzheeeeeeeehhk.
+.kzessssssssehk.
+.kzkkkkSSkkkkhk.
+.kzkwSkkkkSwkhk.
+.kzkSSksskSSkhk.
+.kzkkkksskkkkhk.
+.kzessssssssehk.
+.kzesszkkzssehk.
+..khheeeeeehhk..
+..kkhhhhhhhhkk..
+.kzhhhhhhhhhhhk.
+.kzhzhhhhhhzhhk.
+.kzhzeeeeeezhsk.
+.kshzhhhhhhzhkk.
+.kkehkhhhhkhek..
+...keek..kjjk...
+...kkkk..kJjk...
+.........keek...
+.........kkkk...
+
+frame 3: up stand
+................
+.....kkkkkk.....
+...kkhhhhhhkk...
+..khhhhhhhhhhk..
+.khzhhhhhhhhhhk.
+.kzhhhhhhhhhhhk.
+.kzhhhhhhehhhhk.
+.kzhhhhhhehhhhk.
+.kzhhhhhhehhhhk.
+.kzhhhhhhehhhhk.
+.kzhhhhhhehhhhk.
+.kzhhhhhhehhhhk.
+..khhhhhhehhhk..
+..kkhhhhhhhhkk..
+..kkhhhhhhhhkk..
+.kzhhhhhhhhhhhk.
+.kzhzhhhhhhzhhk.
+.kzhzhhhhhhzhhk.
+.kshzhhhhhhzhsk.
+.kkehkhhhhkhekk.
+...kjjk..kjjk...
+...kjJk..kJjk...
+...keek..keek...
+...kkkk..kkkk...
+
+frame 4: up step a
+................
+.....kkkkkk.....
+...kkhhhhhhkk...
+..khhhhhhhhhhk..
+.khzhhhhhhhhhhk.
+.kzhhhhhhhhhhhk.
+.kzhhhhhhehhhhk.
+.kzhhhhhhehhhhk.
+.kzhhhhhhehhhhk.
+.kzhhhhhhehhhhk.
+.kzhhhhhhehhhhk.
+.kzhhhhhhehhhhk.
+..khhhhhhehhhk..
+..kkhhhhhhhhkk..
+..kkhhhhhhhhkk..
+.kzhhhhhhhhhhhk.
+.kzhzhhhhhhzhhk.
+.kshzhhhhhhzhhk.
+.kkhzhhhhhhzhsk.
+..kehkhhhhkhekk.
+...kjjk..keek...
+...kjJk..kkkk...
+...keek.........
+...kkkk.........
+
+frame 5: up step b
+................
+.....kkkkkk.....
+...kkhhhhhhkk...
+..khhhhhhhhhhk..
+.khzhhhhhhhhhhk.
+.kzhhhhhhhhhhhk.
+.kzhhhhhhehhhhk.
+.kzhhhhhhehhhhk.
+.kzhhhhhhehhhhk.
+.kzhhhhhhehhhhk.
+.kzhhhhhhehhhhk.
+.kzhhhhhhehhhhk.
+..khhhhhhehhhk..
+..kkhhhhhhhhkk..
+..kkhhhhhhhhkk..
+.kzhhhhhhhhhhhk.
+.kzhzhhhhhhzhhk.
+.kzhzhhhhhhzhsk.
+.kshzhhhhhhzhkk.
+.kkehkhhhhkhek..
+...keek..kjjk...
+...kkkk..kJjk...
+.........keek...
+.........kkkk...
+
+frame 6: left stand
+................
+......kkkkkk....
+....kkhhhhhhkk..
+...khhhhhhhhhhk.
+..khzhhhhhhhhhk.
+..keeeeehhhhhhk.
+..kesssehhhhhhk.
+.kkkkssehhhhhhk.
+.kwSkkkkhhhhhhk.
+.kSSkssehhhhhhk.
+.kkkkssehhhhhhk.
+..kesssehhhhhhk.
+..keskkehhhhhhk.
+...kheeehhhhhhk.
+....kkhhhhhhhkk.
+...khhhhhhhhhhhk
+..khhzhhhhhhhhhk
+..khhzhheeeeehhk
+..kshzhhhhhhhhhk
+..kkehkhhhhkhekk
+.....kjjkjjk....
+.....kjJkJjk....
+.....keekeek....
+.....kkkkkkk....
+
+frame 7: left step a (near leg forward)
+................
+......kkkkkk....
+....kkhhhhhhkk..
+...khhhhhhhhhhk.
+..khzhhhhhhhhhk.
+..keeeeehhhhhhk.
+..kesssehhhhhhk.
+.kkkkssehhhhhhk.
+.kwSkkkkhhhhhhk.
+.kSSkssehhhhhhk.
+.kkkkssehhhhhhk.
+..kesssehhhhhhk.
+..keskkehhhhhhk.
+...kheeehhhhhhk.
+....kkhhhhhhhkk.
+...khhhhhhhhhhhk
+..khhzhhhhhhhhhk
+..kshzhheeeeehhk
+..kkhzhhhhhhhhhk
+...kehkhhhhkhekk
+.....kjjkjjk....
+....kjjk.kJJk...
+...keek...keek..
+...kkkk...kkkk..
+
+frame 8: left step b (far leg forward)
+................
+......kkkkkk....
+....kkhhhhhhkk..
+...khhhhhhhhhhk.
+..khzhhhhhhhhhk.
+..keeeeehhhhhhk.
+..kesssehhhhhhk.
+.kkkkssehhhhhhk.
+.kwSkkkkhhhhhhk.
+.kSSkssehhhhhhk.
+.kkkkssehhhhhhk.
+..kesssehhhhhhk.
+..keskkehhhhhhk.
+...kheeehhhhhhk.
+....kkhhhhhhhkk.
+...khhhhhhhhhhhk
+...khhzhhhhhhhhk
+...khhzhheeeeehk
+..kshhzhhhhhhhhk
+..kkkehkhhhhkhek
+.....kjjkjjk....
+....kJJk.kjjk...
+...keek...keek..
+...kkkk...kkkk..
