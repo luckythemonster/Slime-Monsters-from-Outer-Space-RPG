@@ -8,7 +8,7 @@
 // Env knobs: PLAYWRIGHT_MODULE, SMOKE_CHROME (see tests/smoke.mjs), UI_PORT (default 5174).
 
 import { spawn, spawnSync } from 'node:child_process';
-import { existsSync, mkdirSync, readdirSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -25,6 +25,18 @@ const LAUNCH_ARGS = ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsa
 const READY_TIMEOUT_MS = 30_000;
 
 const log = (m) => process.stderr.write(`[ui] ${m}\n`);
+
+/** True when the art pipeline has produced ui.png AND a manifest `ui` entry with frames. */
+function generatedAtlasReady() {
+  if (!existsSync(MANIFEST) || !existsSync(UI_PNG)) return false;
+  try {
+    const m = JSON.parse(readFileSync(MANIFEST, 'utf8'));
+    const entry = m.ui ?? m.sheets?.ui ?? m.atlases?.ui;
+    return !!(entry && entry.frames);
+  } catch {
+    return false;
+  }
+}
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // ---------------------------------------------------------------------------------------------
@@ -193,7 +205,7 @@ async function main() {
   const startedAt = Date.now();
   const errors = [];
   const report = { ok: false, atlas: null, renderer: null, phaser: null, fontLoaded: null, tests: [], screenshots: [], errors };
-  const fallback = !(existsSync(MANIFEST) && existsSync(UI_PNG));
+  const fallback = !generatedAtlasReady();
   if (fallback) log('assets/generated/manifest.json or ui.png missing: harness will use its fallback atlas');
 
   mkdirSync(SCREENSHOT_DIR, { recursive: true });

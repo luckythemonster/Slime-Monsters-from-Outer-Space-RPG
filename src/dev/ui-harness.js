@@ -127,6 +127,9 @@ class HarnessScene extends Phaser.Scene {
       if (hasUiFrames(this.textures)) this.atlasSource = 'generated';
     }
     if (this.atlasSource === 'fallback') {
+      // A partially generated manifest can leave a `ui` texture with no named frames; drop it so
+      // the stand-in atlas is built from scratch instead of pointing frames at the wrong picture.
+      if (this.textures.exists(UI_KEY)) this.textures.remove(UI_KEY);
       buildFallbackAtlas(this);
     }
     if (!this.textures.exists(PORTRAIT_KEY)) buildFallbackPortraits(this);

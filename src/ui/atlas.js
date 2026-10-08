@@ -29,15 +29,28 @@ export function findManifestEntry(manifest, key) {
 }
 
 /**
- * Register the named frames of a manifest atlas entry on an already-loaded texture.
- * Frames may be { x, y, w, h } or { x, y, width, height }; an object keyed by name or an array
- * of { name, ... }. Existing frames are kept. Returns the number of frames added.
+ * Register the named frames of a manifest entry on an already-loaded texture.
+ * Atlas entries: `frames` keyed by name -> { x, y, w, h } / { x, y, width, height }, or an array
+ * of { name, ... }. Spritesheet entries (frameWidth/frameHeight): `frames` as name -> index,
+ * an array of names, or a `names` list in frame order. Existing frames are kept.
+ * Returns the number of frames added.
  */
 export function registerAtlasFrames(textures, key, entry) {
-  if (!textures || !textures.exists(key) || !entry || !entry.frames) return 0;
+  if (!textures || !textures.exists(key) || !entry) return 0;
   const tex = textures.get(key);
-  const frames = entry.frames;
-  const list = Array.isArray(frames) ? frames.map((f) => [f.name ?? f.key ?? f.id, f]) : Object.entries(frames);
+  let list = [];
+  const fw = entry.frameWidth | 0;
+  const fh = entry.frameHeight | 0;
+  const perRow = Math.max(1, Math.floor((tex.source[0]?.width || 0) / (fw || 1)));
+  const cell = (index) => ({ x: (index % perRow) * fw, y: Math.floor(index / perRow) * fh, w: fw, h: fh });
+  if (entry.frames && typeof entry.frames === 'object') {
+    list = Array.isArray(entry.frames)
+      ? entry.frames.map((f, i) => (typeof f === 'string' ? [f, cell(i)] : [f?.name ?? f?.key ?? f?.id, f]))
+      : Object.entries(entry.frames).map(([n, f]) => [n, typeof f === 'number' ? cell(f) : f]);
+  } else if (fw > 0 && fh > 0 && Array.isArray(entry.names || entry.ids)) {
+    // Spritesheet-style sheet whose frames are named in order (e.g. portraits).
+    list = (entry.names || entry.ids).map((n, i) => [n, cell(i)]);
+  }
   let added = 0;
   for (const [name, f] of list) {
     if (!name || !f || tex.has(name)) continue;
