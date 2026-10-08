@@ -53,12 +53,13 @@ export class EventRunner {
    * @param {object} [ctx] e.g. { entity } for interactions
    */
   async run(id, ctx = {}) {
-    const cmds = this.scripts[id];
+    const cmds = Array.isArray(id) ? id : this.scripts[id];
     if (!cmds) throw new Error(`EventRunner: unknown script "${id}"`);
+    if (Array.isArray(id)) id = ctx.scriptId || '(inline)';
     this.depth++;
     if (this.depth === 1) this.explore.lockInput(true);
     try {
-      await this.exec(cmds, { ...ctx, scriptId: id });
+      await this.execScript(cmds, { ...ctx, scriptId: id });
     } catch (err) {
       console.error(`[script ${id}]`, err);
     } finally {
@@ -72,7 +73,8 @@ export class EventRunner {
   }
 
   /**
-   * Execute a command list. Returns END if an {"end"} was hit (propagates out of if/choice).
+   * Execute a command list. Returns END if an {"end"} was hit (propagates out of if/choice), or
+   * `{ goto }` when a nested block jumps to a label that belongs to an enclosing list.
    * @param {object[]} cmds
    * @param {object} ctx
    */
@@ -85,16 +87,21 @@ export class EventRunner {
       const cmd = cmds[i];
       const key = commandKey(cmd);
       if (!key) throw new Error(`unknown command ${JSON.stringify(cmd)}`);
-      if (key === 'goto') {
-        if (!labels.has(cmd.goto)) throw new Error(`goto: unknown label "${cmd.goto}"`);
-        if (++guard > 10000) throw new Error('goto: infinite loop');
-        i = labels.get(cmd.goto);
-        continue;
-      }
-      const result = await this[`cmd_${key}`](cmd[key], cmd, ctx);
+      let result = key === 'goto' ? { goto: cmd.goto } : await this[`cmd_${key}`](cmd[key], cmd, ctx);
       if (result === END) return END;
+      if (result && result.goto !== undefined) {
+        if (!labels.has(result.goto)) return result; // label lives in an enclosing list
+        if (++guard > 10000) throw new Error('goto: infinite loop');
+        i = labels.get(result.goto);
+      }
     }
     return undefined;
+  }
+
+  /** Run a whole script body (top level): an escaping goto is an error, END is swallowed. */
+  async execScript(cmds, ctx) {
+    const result = await this.exec(cmds, ctx);
+    if (result && result.goto !== undefined) throw new Error(`goto: unknown label "${result.goto}"`);
   }
 
   // ---- helpers ---------------------------------------------------------------------------------
@@ -270,7 +277,7 @@ export class EventRunner {
   async cmd_run(id, cmd, ctx) {
     const cmds = this.scripts[id];
     if (!cmds) throw new Error(`run: unknown script "${id}"`);
-    await this.exec(cmds, { ...ctx, scriptId: id });
+    await this.execScript(cmds, { ...ctx, scriptId: id });
   }
 
   cmd_label() { /* no-op; labels are indexed by exec() */ }

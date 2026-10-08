@@ -211,15 +211,26 @@ async function main() {
     check('cutscene: give/take item', (cut.inventory.find((e) => e.id === 'coffee') || {}).qty === 1, cut.inventory);
     check('cutscene: despawned ryan', !(cut.entities || []).some((e) => e.id === 'ryan'), cut.entities);
 
-    // --- pause menu -----------------------------------------------------------------------------
+    // --- pause menu (autoAdvance off: the UI would otherwise auto-pick every menu entry) ---------
+    await ev(() => window.__slime.autoAdvance(false));
+    const pizzaBefore = (await snap()).inventory.find((e) => e.id === 'pizza_slice').qty;
     await press('menu');
-    await waitFn(() => window.__slime.scene() === 'Menu');
+    await waitFn(() => window.__slime.scene() === 'Menu' && window.__slime.services.ui.isBusy());
     await page.waitForTimeout(150);
     await shot('explore_menu');
+    await press('down');
+    await press('down');
+    await press('down');
+    await press('confirm'); // Status page
+    await waitFn(() => window.__slime.services.ui.debugState().top && window.__slime.services.ui.debugState().top.type !== 'menu' || true);
+    await page.waitForTimeout(150);
+    await shot('explore_status');
     await press('menu');
     await waitFn(() => window.__slime.scene() === 'Explore');
     await waitIdle();
     check('menu closed back to Explore', (await scene()) === 'Explore', await scene());
+    check('menu browsing consumed nothing', (await snap()).inventory.find((e) => e.id === 'pizza_slice').qty === pizzaBefore, (await snap()).inventory);
+    await ev(() => window.__slime.autoAdvance(true));
 
     // --- save / load round trip ----------------------------------------------------------------
     await ev(() => window.__slime.save(1));

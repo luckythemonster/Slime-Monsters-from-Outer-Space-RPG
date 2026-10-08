@@ -32,7 +32,7 @@ export default class TitleScene extends Phaser.Scene {
     while (!this.closed) {
       const hasSave = state.hasSave(slot);
       const items = [{ label: 'New Game' }, { label: 'Continue', disabled: !hasSave, hint: hasSave ? `Slot ${slot}` : 'No save' }];
-      const idx = await services.ui.menu(items, { x: 128, y: 152, cancelable: false });
+      const idx = await services.ui.menu(items, { x: 72, y: 136, cancelable: false });
       if (this.closed) return;
       if (idx === 0) { state.newGame(); await this.startExplore(); return; }
       if (idx === 1 && hasSave) { state.load(slot); await this.startExplore(); return; }

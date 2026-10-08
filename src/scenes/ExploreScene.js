@@ -65,11 +65,16 @@ export default class ExploreScene extends Phaser.Scene {
     services.ui.fade('in', scaleMs(FADE_MS)).then(() => this.enterMap());
   }
 
+  /** Scene shutdown: Phaser destroys the display list itself, so only drop references here. */
   cleanup() {
     this.runner.destroy();
     this.events.off(Phaser.Scenes.Events.RESUME, this.onResume);
     this.events.off(Phaser.Scenes.Events.WAKE, this.onResume);
-    this.clearMap();
+    this.entities.clear();
+    this.zones = [];
+    this.built = null;
+    this.player = null;
+    this.mapDef = null;
   }
 
   // ---- map lifecycle ---------------------------------------------------------------------------
@@ -223,6 +228,11 @@ export default class ExploreScene extends Phaser.Scene {
       if (e.def.script) { this.runner.run(e.def.script, { entity: e }); return; }
       if (e.type === 'save') { this.runner.run([{ sfx: 'sneeze' }, { save: true }], { entity: e }); return; }
     }
+  }
+
+  /** Called by Entity when it turns without moving (keeps the save position's facing current). */
+  onEntityFace(entity) {
+    if (entity === this.player) this.state.facing = entity.facing;
   }
 
   /** Called by Entity when a tile step completes. */

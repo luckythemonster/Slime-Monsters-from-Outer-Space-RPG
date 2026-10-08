@@ -123,7 +123,7 @@ export class Entity extends Phaser.GameObjects.Sprite {
     const anims = this.scene.anims;
     const manifest = this.scene.manifest && this.scene.manifest[this.sheet];
     const declared = (manifest && manifest.anims) || [];
-    const flipOf = (name) => { const a = declared.find((d) => d.key === name); return !!(a && a.flipX); };
+    const flipOf = (name) => { const a = declared.find((d) => d.key === name || d.key === `${this.sheet}_${name}`); return !!(a && a.flipX); };
     const direct = `${this.sheet}_${kind}_${dir}`;
     if (anims.exists(direct)) return { key: direct, flip: flipOf(`${kind}_${dir}`) };
     const mirror = dir === 'right' ? 'left' : dir === 'left' ? 'right' : null;
@@ -163,6 +163,7 @@ export class Entity extends Phaser.GameObjects.Sprite {
     if (!DIRS.includes(dir)) return;
     this.facing = dir;
     if (!this.moving) this.playIdle();
+    if (this.scene && typeof this.scene.onEntityFace === 'function') this.scene.onEntityFace(this);
   }
 
   /** Face another entity (dominant axis). */
@@ -218,10 +219,10 @@ export class Entity extends Phaser.GameObjects.Sprite {
    */
   step(dir, speed = 'walk') {
     if (!this.scene || !this.active || this.moving) return Promise.resolve(false);
-    this.facing = dir;
     const [dx, dy] = DELTA[dir] || [0, 0];
     const tx = this.tileX + dx, ty = this.tileY + dy;
-    if (this.scene.isBlocked(tx, ty, this)) { this.playIdle(); return Promise.resolve(false); }
+    if (this.scene.isBlocked(tx, ty, this)) { this.face(dir); return Promise.resolve(false); }
+    this.facing = dir;
     this.moving = true;
     this.idlePending = false;
     this.targetX = tx; this.targetY = ty;

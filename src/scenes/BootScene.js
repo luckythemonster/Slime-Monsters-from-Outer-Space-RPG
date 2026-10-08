@@ -67,7 +67,8 @@ export default class BootScene extends Phaser.Scene {
     for (const [key, entry] of Object.entries(manifest)) {
       if (entry.type !== 'spritesheet' || !this.textures.exists(key)) continue;
       for (const a of entry.anims || []) {
-        const animKey = `${key}_${a.key}`;
+        // Manifest keys may be short ("walk_down") or already qualified ("lucky_walk_down").
+        const animKey = a.key.startsWith(`${key}_`) ? a.key : `${key}_${a.key}`;
         if (this.anims.exists(animKey)) continue;
         const frames = Array.isArray(a.frames) ? a.frames : String(a.frames || '0').trim().split(/\s+/).map(Number);
         const loops = a.repeat !== undefined ? a.repeat : (/^(walk|idle)_/.test(a.key) ? -1 : 0);

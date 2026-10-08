@@ -25,7 +25,11 @@ const enemies = readJson(path.join(DATA, 'enemies.json'));
 const encounters = readJson(path.join(DATA, 'encounters.json'));
 const start = readJson(path.join(DATA, 'start.json'));
 const manifestPath = path.join(ROOT, 'assets', 'generated', 'manifest.json');
-const manifest = existsSync(manifestPath) ? readJson(manifestPath) : null;
+const devManifestPath = path.join(ROOT, 'assets', 'generated', '_dev_manifest.json');
+// Same merge as src/engine/Data.js: the art agent's manifest wins; _dev_manifest.json only fills gaps.
+const manifest = existsSync(manifestPath)
+  ? { ...(existsSync(devManifestPath) ? readJson(devManifestPath) : {}), ...readJson(manifestPath) }
+  : null;
 
 const maps = {};
 for (const f of readdirSync(path.join(DATA, 'maps')).filter((n) => n.endsWith('.json'))) {
@@ -191,7 +195,7 @@ group('manifest', (check) => {
   if (!manifest) return;
   for (const [id, c] of Object.entries(characters.characters)) {
     check(!!manifest[c.sprite] && manifest[c.sprite].type === 'spritesheet', `character ${id} sprite "${c.sprite}" in manifest`);
-    const anims = (manifest[c.sprite] && manifest[c.sprite].anims || []).map((a) => a.key);
+    const anims = (manifest[c.sprite] && manifest[c.sprite].anims || []).map((a) => a.key.replace(new RegExp(`^${c.sprite}_`), ''));
     for (const need of ['walk_down', 'walk_up', 'walk_left', 'idle_down']) {
       check(anims.includes(need), `sheet ${c.sprite} has anim ${need}`);
     }
