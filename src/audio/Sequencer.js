@@ -366,7 +366,6 @@ export class Sequencer {
         this._emit('tick', pos);
       }
       if (now >= this.endTime) {
-        this._state = 'playing'; // _finish expects a live state
         this._finish();
         this._state = 'ended';
         this._emit('end', this);

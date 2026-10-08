@@ -220,7 +220,9 @@ function makeHandle(ctx, sources, nodes, gainParam, end) {
   const handle = {
     end,
     done: false,
+    /** User hook, called once the voice has ended (after internal cleanup). */
     onended: null,
+    _enders: [],
     /** Fade out quickly and stop early (default 15 ms fade). */
     stop(at = ctx.currentTime, fade = 0.015) {
       if (handle.done) return;
@@ -240,6 +242,7 @@ function makeHandle(ctx, sources, nodes, gainParam, end) {
     handle.done = true;
     for (const n of sources) if (n) { try { n.disconnect(); } catch (_) { /* noop */ } }
     for (const n of nodes) if (n) { try { n.disconnect(); } catch (_) { /* noop */ } }
+    for (const fn of handle._enders) fn(handle);
     if (handle.onended) handle.onended(handle);
   };
   return handle;
@@ -278,11 +281,7 @@ export class Synth {
 
   _track(handle) {
     this.active.add(handle);
-    const prev = handle.onended;
-    handle.onended = (h) => {
-      this.active.delete(handle);
-      if (prev) prev(h);
-    };
+    handle._enders.push(() => this.active.delete(handle));
     return handle;
   }
 
