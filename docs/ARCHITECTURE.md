@@ -347,3 +347,65 @@ exposes `justPressed(action)`, `isDown(action)`, plus a `scene.input.keyboard` f
 - Transitions: fade (black), flash (white), shake; battle entry = "static burst" (horizontal slices sliding) built from a RenderTexture snapshot; optional pixelate filter when WebGL.
 - Text speed default 1 char / 30 ms, `confirm` to skip to end of page, then to advance; `cancel` does nothing in dialogue.
 - Nothing blocks on `setTimeout`; use `scene.time` and tweens so `?fast=1` can scale time.
+
+## 12. Cross-module interfaces (binding; agents build to these)
+
+### 12.1 Services registry (`src/engine/services.js`)
+
+```js
+export const services = { game: null, state: null, audio: null, ui: null, input: null };
+```
+`BootScene` fills every slot before starting `Title`. Everything else imports `services` instead of
+reaching through `scene.scene.get(...)`. `services.state` is the live `GameState` instance.
+
+### 12.2 UI service (implemented by `UIScene`, registered as `services.ui`)
+
+All methods return Promises that resolve when the interaction finishes. UIScene runs permanently above
+Explore/Battle/Menu (`scene.launch('UI')` once in Boot; `bringToTop('UI')` after launching any scene).
+
+```js
+ui.say({ text, who, portrait, name })      // dialogue box; who → characters.json (name tag + default portrait);
+                                           // who 'narrator' = plain box; who 'ryan_caption' = square caption style; portrait key optional
+ui.choice(options /* string[] */, { cancelIndex = -1, x, y })  // → index (or cancelIndex on cancel)
+ui.menu(items /* {label, disabled?, hint?}[] */, { x, y, width, columns = 1, cancelable = true, selected = 0 }) // → index | -1
+ui.caption(text, ms = 1500)                // centered title card over black
+ui.toast(text, ms = 1200)                  // small top notification ("Got Pizza Slice!")
+ui.fade('out' | 'in', ms = 400, color = 0x000000)
+ui.flash(ms = 150, color = 0xffffff)
+ui.setTextInstant(bool); ui.setAutoAdvance(bool); ui.chooseIndex = 0   // test hooks (Debug API forwards to these)
+ui.isBusy()                                // true while a box/menu/caption is open
+ui.closeAll()                              // used by scene changes / game over
+```
+Dialogue box geometry: bottom of screen, x 8..248, y 160..216 (height 56), 3 text lines of 8 px font with 12 px line height,
+28 chars per line max; portrait (32×32) at the left inside the frame when present (text shifts right 40 px); name tag in a
+small window above the box's top-left. Pages advance on `confirm`; `confirm` during typing completes the page.
+
+### 12.3 Explore scene interface (used by EventRunner and Debug)
+
+```js
+explore.entities            // Map<id, Entity>; 'player' is always present
+entity.walkPath(path, { speed: 'walk' | 'run' })   // → Promise, tile steps 'U','D','L','R','.'
+entity.face(dir); entity.setSheet(sheetName); entity.playAnim(key, { wait })  // → Promise when wait
+entity.tileX, entity.tileY, entity.facing
+explore.spawnEntity(def) / explore.despawnEntity(id)
+explore.changeMap(mapId, x, y, facing)            // → Promise (fade out, load, fade in)
+explore.lockInput(bool)
+explore.startBattle(encounterId)                  // → Promise<'win' | 'lose' | 'flee'>  (launches Battle, sleeps Explore)
+explore.runSpecialScene(key, data)                // → Promise (e.g. 'Freefall')
+explore.camera(effectObj)                         // same object shape as the {"camera": …} script command
+```
+Movement is **grid-locked 4-direction tile stepping** (FF/Pokémon style) with smooth interpolation:
+walk 7 tiles/s, run 11 tiles/s; input is buffered so holding a key chains steps. The player never occupies
+a solid tile or an entity's tile. `Debug.press('up')` therefore moves exactly one tile, which tests rely on.
+Interact = `confirm` while facing an entity that has a `script` (or a `save` entity).
+
+### 12.4 Battle scene interface
+
+`ExploreScene.startBattle(id)` calls `this.scene.launch('Battle', { encounterId: id, onDone })` then sleeps.
+BattleScene must call `onDone('win' | 'lose' | 'flee')` after its own fade-out and stop itself. Until the real
+battle exists, `BattleScene` is a stub that shows the encounter name and auto-resolves `win` after 600 ms.
+
+### 12.5 Audio
+
+`services.audio` is an `AudioEngine` (section 7). Scenes call `services.audio.playMusic(id)` on create and
+`services.audio.sfx(name)` for feedback. Songs are registered in Boot from `src/audio/songs/index.js`.
