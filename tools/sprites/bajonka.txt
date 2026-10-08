@@ -1,0 +1,219 @@
+# Bajonka — Shiba Inu / Korean Jindo mix, band manager and save point. 16x16, feet on the bottom row.
+# Orange coat, cream muzzle and legs, white chest, pointed ears with inner ear showing, curled tail.
+name: bajonka
+frame: 16x16
+palette:
+  . = transparent
+  k = #141018     # outline
+  o = #e88830     # orange coat
+  c = #f0dcb0     # cream muzzle / legs
+  w = #f8f8f8     # white chest / sneeze spray
+  i = #c89060     # inner ear
+  r = #d83030     # tongue
+anim: walk_down  frames: 0 1 0 2  fps: 8
+anim: walk_up    frames: 3 4 3 5  fps: 8
+anim: walk_left  frames: 6 7 6 8  fps: 8
+anim: walk_right frames: 6 7 6 8  fps: 8  flipX: true
+anim: idle_down  frames: 0  fps: 1
+anim: idle_up    frames: 3  fps: 1
+anim: idle_left  frames: 6  fps: 1
+anim: idle_right frames: 6  fps: 1  flipX: true
+anim: sneeze     frames: 9 10  fps: 6  repeat: 0
+
+frame 0: down stand
+................
+....k......k....
+...kok....kok...
+..koiokkkkoiok..
+..kooooooooook..
+..kookooookook..
+..koccccccccok..
+..koccckkcccok..
+..kcccccccccck..
+...kkccccccckk..
+....kwwwwwwk.kk.
+...kowwwwwwokock
+...kowwwwwwokcok
+...kooooooook.kk
+...kcck..kcck...
+...kkkk..kkkk...
+
+frame 1: down step a (right paw lifted)
+....k......k....
+...kok....kok...
+..koiokkkkoiok..
+..kooooooooook..
+..kookooookook..
+..koccccccccok..
+..koccckkcccok..
+..kcccccccccck..
+...kkccccccckk..
+....kwwwwwwk.kk.
+...kowwwwwwokock
+...kowwwwwwokcok
+...kooooooook.kk
+...kcck..kcck...
+...kcck..kkkk...
+...kkkk.........
+
+frame 2: down step b (left paw lifted)
+....k......k....
+...kok....kok...
+..koiokkkkoiok..
+..kooooooooook..
+..kookooookook..
+..koccccccccok..
+..koccckkcccok..
+..kcccccccccck..
+...kkccccccckk..
+....kwwwwwwk.kk.
+...kowwwwwwokock
+...kowwwwwwokcok
+...kooooooook.kk
+...kcck..kcck...
+...kkkk..kcck...
+.........kkkk...
+
+frame 3: up stand
+................
+....k......k....
+...kok....kok...
+..koookkkkoook..
+..kooooooooook..
+..kooooooooook..
+..kooooooooook..
+..kooooooooook..
+..kooooooooook..
+...kkookkoookk..
+...kookcokoook..
+...kookockoook..
+...koookkooook..
+...kooooooook...
+...kcck..kcck...
+...kkkk..kkkk...
+
+frame 4: up step a
+....k......k....
+...kok....kok...
+..koookkkkoook..
+..kooooooooook..
+..kooooooooook..
+..kooooooooook..
+..kooooooooook..
+..kooooooooook..
+...kkookkoookk..
+...kookcokoook..
+...kookockoook..
+...koookkooook..
+...kooooooook...
+...kcck..kcck...
+...kcck..kkkk...
+...kkkk.........
+
+frame 5: up step b
+....k......k....
+...kok....kok...
+..koookkkkoook..
+..kooooooooook..
+..kooooooooook..
+..kooooooooook..
+..kooooooooook..
+..kooooooooook..
+...kkookkoookk..
+...kookcokoook..
+...kookockoook..
+...koookkooook..
+...kooooooook...
+...kcck..kcck...
+...kkkk..kcck...
+.........kkkk...
+
+frame 6: left stand
+................
+....k..k........
+...kokkok.......
+..koiooiook.....
+.kkoooooook..kk.
+kcokoooooookkock
+kcccoooooookkcok
+.kccoooooooookk.
+..kkoooooooooook
+....kwwooooooook
+....kwwooooooook
+....kwoooooooook
+....kcckoookcck.
+....kcck...kcck.
+....kcck...kcck.
+....kkkk...kkkk.
+
+frame 7: left step a (legs spread)
+....k..k........
+...kokkok.......
+..koiooiook.....
+.kkoooooook..kk.
+kcokoooooookkock
+kcccoooooookkcok
+.kccoooooooookk.
+..kkoooooooooook
+....kwwooooooook
+....kwwooooooook
+....kwoooooooook
+....kcckoookcck.
+...kcck.....kcck
+...kcck.....kcck
+...kkkk.....kkkk
+................
+
+frame 8: left step b (legs tucked)
+....k..k........
+...kokkok.......
+..koiooiook.....
+.kkoooooook..kk.
+kcokoooooookkock
+kcccoooooookkcok
+.kccoooooooookk.
+..kkoooooooooook
+....kwwooooooook
+....kwwooooooook
+....kwoooooooook
+....kcckoookcck.
+.....kcck.kcck..
+.....kcck.kcck..
+.....kkkk.kkkk..
+................
+
+frame 9: sneeze a (inhale, eyes shut)
+....k......k....
+...kok....kok...
+..koiokkkkoiok..
+..kooooooooook..
+..kokkooookkok..
+..koccccccccok..
+..koccckkcccok..
+..kccckrrkccck..
+...kkccccccckk..
+....kwwwwwwk.kk.
+...kowwwwwwokock
+...kowwwwwwokcok
+...kooooooook.kk
+...kcck..kcck...
+...kkkk..kkkk...
+................
+
+frame 10: sneeze b (achoo, ears flat, spray)
+................
+................
+...kk......kk...
+..koookkkkooook.
+..kooooooooook..
+..kokkooookkok..
+w.koccccccccok.w
+..koccckkcccok..
+w.kccckrrkccck.w
+...kkccccccckk..
+....kwwwwwwk.kk.
+...kowwwwwwokock
+...kowwwwwwokcok
+...kooooooook.kk
+...kcck..kcck...
+...kkkk..kkkk...

@@ -5,3 +5,4 @@ dist/
 .DS_Store
 tests/screenshots/
 tests/.playwright/
+assets/generated/_preview/

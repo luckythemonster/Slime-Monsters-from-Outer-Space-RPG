@@ -1,0 +1,30 @@
+{
+  "_dev_tiles": {
+    "type": "tileset",
+    "tileWidth": 16,
+    "tileHeight": 16,
+    "file": "_dev_tiles.png",
+    "tiles": {
+      "brick_wall": {
+        "index": 0,
+        "solid": true
+      },
+      "snow": {
+        "index": 1,
+        "solid": false
+      },
+      "sidewalk": {
+        "index": 2,
+        "solid": false
+      },
+      "dumpster": {
+        "index": 3,
+        "solid": true
+      },
+      "window_lit": {
+        "index": 4,
+        "solid": false
+      }
+    }
+  }
+}

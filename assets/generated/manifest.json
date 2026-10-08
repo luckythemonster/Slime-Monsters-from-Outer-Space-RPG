@@ -1,0 +1,730 @@
+{
+  "bajonka": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 16,
+    "frames": 11,
+    "anims": [
+      {
+        "key": "bajonka_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "bajonka_walk_up",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "bajonka_walk_left",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "bajonka_walk_right",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "bajonka_idle_down",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "bajonka_idle_up",
+        "frames": [
+          3
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "bajonka_idle_left",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "bajonka_idle_right",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "bajonka_sneeze",
+        "frames": [
+          9,
+          10
+        ],
+        "fps": 6,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "lucky": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 11,
+    "anims": [
+      {
+        "key": "lucky_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_walk_up",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_walk_left",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_walk_right",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "lucky_idle_down",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_idle_up",
+        "frames": [
+          3
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_idle_left",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_idle_right",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "lucky_melt",
+        "frames": [
+          9,
+          10
+        ],
+        "fps": 4,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "lucky_deflated": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 11,
+    "anims": [
+      {
+        "key": "lucky_deflated_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_deflated_walk_up",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_deflated_walk_left",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_deflated_walk_right",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "lucky_deflated_idle_down",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_deflated_idle_up",
+        "frames": [
+          3
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_deflated_idle_left",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_deflated_idle_right",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "lucky_deflated_melt",
+        "frames": [
+          9,
+          10
+        ],
+        "fps": 4,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "lucky_rage": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 11,
+    "anims": [
+      {
+        "key": "lucky_rage_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_rage_walk_up",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_rage_walk_left",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_rage_walk_right",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "lucky_rage_idle_down",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_rage_idle_up",
+        "frames": [
+          3
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_rage_idle_left",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_rage_idle_right",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "lucky_rage_melt",
+        "frames": [
+          9,
+          10
+        ],
+        "fps": 4,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "minneapolis": {
+    "type": "tileset",
+    "tileWidth": 16,
+    "tileHeight": 16,
+    "tiles": {
+      "snow": {
+        "index": 0,
+        "solid": false
+      },
+      "snow_dirty": {
+        "index": 1,
+        "solid": false
+      },
+      "snow_edge_n": {
+        "index": 2,
+        "solid": false
+      },
+      "snow_edge_s": {
+        "index": 3,
+        "solid": false
+      },
+      "snow_edge_w": {
+        "index": 4,
+        "solid": false
+      },
+      "snow_edge_e": {
+        "index": 5,
+        "solid": false
+      },
+      "sidewalk": {
+        "index": 6,
+        "solid": false
+      },
+      "sidewalk_crack": {
+        "index": 7,
+        "solid": false
+      },
+      "asphalt": {
+        "index": 8,
+        "solid": false
+      },
+      "asphalt_line": {
+        "index": 9,
+        "solid": false
+      },
+      "curb_n": {
+        "index": 10,
+        "solid": false
+      },
+      "curb_s": {
+        "index": 11,
+        "solid": false
+      },
+      "brick_wall": {
+        "index": 12,
+        "solid": true
+      },
+      "brick_wall_top": {
+        "index": 13,
+        "solid": true
+      },
+      "brick_window_dark": {
+        "index": 14,
+        "solid": true
+      },
+      "brick_window_lit": {
+        "index": 15,
+        "solid": true
+      },
+      "door_bar": {
+        "index": 16,
+        "solid": true
+      },
+      "dumpster": {
+        "index": 17,
+        "solid": true
+      },
+      "dumpster_lid": {
+        "index": 18,
+        "solid": true
+      },
+      "trash_bag": {
+        "index": 19,
+        "solid": false
+      },
+      "pothole": {
+        "index": 20,
+        "solid": false
+      },
+      "lamp_post": {
+        "index": 21,
+        "solid": true
+      },
+      "lamp_post_top": {
+        "index": 22,
+        "solid": false
+      },
+      "fence": {
+        "index": 23,
+        "solid": true
+      },
+      "slush_puddle": {
+        "index": 24,
+        "solid": false
+      },
+      "grate": {
+        "index": 25,
+        "solid": false
+      },
+      "billboard_a": {
+        "index": 26,
+        "solid": true
+      },
+      "billboard_b": {
+        "index": 27,
+        "solid": true
+      },
+      "billboard_c": {
+        "index": 28,
+        "solid": true
+      },
+      "sign_pole": {
+        "index": 29,
+        "solid": true
+      }
+    }
+  },
+  "phoenix": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 9,
+    "anims": [
+      {
+        "key": "phoenix_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "phoenix_walk_up",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "phoenix_walk_left",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "phoenix_walk_right",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "phoenix_idle_down",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "phoenix_idle_up",
+        "frames": [
+          3
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "phoenix_idle_left",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "phoenix_idle_right",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": true
+      }
+    ]
+  },
+  "ui": {
+    "type": "atlas",
+    "frames": {
+      "win_tl": {
+        "x": 0,
+        "y": 0,
+        "w": 8,
+        "h": 8
+      },
+      "win_t": {
+        "x": 8,
+        "y": 0,
+        "w": 8,
+        "h": 8
+      },
+      "win_tr": {
+        "x": 16,
+        "y": 0,
+        "w": 8,
+        "h": 8
+      },
+      "win_l": {
+        "x": 24,
+        "y": 0,
+        "w": 8,
+        "h": 8
+      },
+      "win_c": {
+        "x": 32,
+        "y": 0,
+        "w": 8,
+        "h": 8
+      },
+      "win_r": {
+        "x": 40,
+        "y": 0,
+        "w": 8,
+        "h": 8
+      },
+      "win_bl": {
+        "x": 48,
+        "y": 0,
+        "w": 8,
+        "h": 8
+      },
+      "win_b": {
+        "x": 56,
+        "y": 0,
+        "w": 8,
+        "h": 8
+      },
+      "win_br": {
+        "x": 64,
+        "y": 0,
+        "w": 8,
+        "h": 8
+      },
+      "cursor": {
+        "x": 72,
+        "y": 0,
+        "w": 8,
+        "h": 8
+      },
+      "arrow_more": {
+        "x": 80,
+        "y": 0,
+        "w": 8,
+        "h": 8
+      },
+      "meter_on": {
+        "x": 88,
+        "y": 0,
+        "w": 4,
+        "h": 8
+      },
+      "meter_off": {
+        "x": 92,
+        "y": 0,
+        "w": 4,
+        "h": 8
+      },
+      "icon_ko": {
+        "x": 96,
+        "y": 0,
+        "w": 8,
+        "h": 8
+      },
+      "icon_poison": {
+        "x": 104,
+        "y": 0,
+        "w": 8,
+        "h": 8
+      },
+      "icon_dazed": {
+        "x": 112,
+        "y": 0,
+        "w": 8,
+        "h": 8
+      }
+    }
+  }
+}
