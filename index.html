@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Slime Monsters from Outer Space</title>
+    <style>
+      /* Press Start 2P (OFL) - the SNES-style pixel font used by every Text object in the game.
+         The URL is project-root-relative; Vite rewrites it to a hashed asset at build time. */
+      @font-face {
+        font-family: 'Press Start 2P';
+        src: url('/assets/fonts/PressStart2P-Regular.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+        font-display: block;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        overflow: hidden;
+      }
+
+      /* Phaser's ScaleManager measures this element to size and center the canvas. */
+      #game {
+        width: 100%;
+        height: 100%;
+      }
+
+      #game canvas {
+        display: block;
+        image-rendering: pixelated;
+        image-rendering: crisp-edges;
+      }
+
+      /* Off-screen element that uses the font so the browser fetches it before Phaser draws text. */
+      .font-preload {
+        position: absolute;
+        left: -9999px;
+        top: -9999px;
+        font-family: 'Press Start 2P', monospace;
+        font-size: 8px;
+        visibility: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="game"></div>
+    <span class="font-preload" aria-hidden="true">SLIME</span>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
