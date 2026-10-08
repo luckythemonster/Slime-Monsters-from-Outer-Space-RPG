@@ -192,7 +192,7 @@ A SNES-style JRPG (early FF / Chrono Trigger / Earthbound) in twelve chapters on
 
 ## Ending variants
 
-All three keep the direction (staged suicide, golden toilet, paywall, tweet-birds, fourth-wall break, still broke) and end on the elephant head bungeed to the hood, the gold cockpit, and *"My brain thinks... my brain thinks it's a hundred thousand credits per gallon."* / *"We better sell some merch at this next one, man."*
+All three keep the direction (staged suicide, golden toilet, paywall, tweet-birds, fourth-wall break, still broke) and end on the elephant head bungeed to the hood, the gold cockpit, Phoenix finding that the hyper-yacht runs only on **Artisanal Anti-Matter**, and *"My brain thinks... my brain thinks it's a hundred thousand credits per gallon."* / *"We better sell some merch at this next one, man."*
 
 **A — Roll Him Up (faithful).** Lucky drops the hubcap guitar. *"An orange elephant? Really? We lost our apartment for a first-year improv level allegory? This is embarrassing for everyone involved."* Game-native collage: the pixel art breaks — Trunk's sprite becomes a JPEG-artifacted photo cutout at the wrong resolution, the command menu becomes a gray OS dialog with one button: **ROLL.** Mash to roll the collage into a joint; Lucky lights it off the plasma strings; pink smoke. Last beat: Diego unplugs the yacht's right-wing talk radio, Lucky plugs in, coordinates set for the next gig to pay for gas.
 
