@@ -114,6 +114,444 @@
       }
     ]
   },
+  "brian": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 16,
+    "names": [
+      "down stand",
+      "down step a (right foot lifted)",
+      "down step b (left foot lifted)",
+      "up stand",
+      "up step a (right foot lifted)",
+      "up step b (left foot lifted)",
+      "left stand",
+      "left step a (near leg forward)",
+      "left step b (far leg forward)",
+      "pace a",
+      "pace b",
+      "point",
+      "rage a (red face, veins, arms up)",
+      "rage b (shaking)",
+      "stuff_cables a",
+      "stuff_cables b"
+    ],
+    "anims": [
+      {
+        "key": "brian_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "brian_walk_up",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "brian_walk_left",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "brian_walk_right",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "brian_idle_down",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "brian_idle_up",
+        "frames": [
+          3
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "brian_idle_left",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "brian_idle_right",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "brian_pace",
+        "frames": [
+          9,
+          10
+        ],
+        "fps": 6,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "brian_point",
+        "frames": [
+          11
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "brian_rage",
+        "frames": [
+          12,
+          13
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "brian_stuff_cables",
+        "frames": [
+          14,
+          15
+        ],
+        "fps": 6,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "brian_red": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 16,
+    "names": [
+      "down stand",
+      "down step a (right foot lifted)",
+      "down step b (left foot lifted)",
+      "up stand",
+      "up step a (right foot lifted)",
+      "up step b (left foot lifted)",
+      "left stand",
+      "left step a (near leg forward)",
+      "left step b (far leg forward)",
+      "pace a",
+      "pace b",
+      "point",
+      "rage a (red face, veins, arms up)",
+      "rage b (shaking)",
+      "stuff_cables a",
+      "stuff_cables b"
+    ],
+    "anims": [
+      {
+        "key": "brian_red_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "brian_red_walk_up",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "brian_red_walk_left",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "brian_red_walk_right",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "brian_red_idle_down",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "brian_red_idle_up",
+        "frames": [
+          3
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "brian_red_idle_left",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "brian_red_idle_right",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "brian_red_pace",
+        "frames": [
+          9,
+          10
+        ],
+        "fps": 6,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "brian_red_point",
+        "frames": [
+          11
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "brian_red_rage",
+        "frames": [
+          12,
+          13
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "brian_red_stuff_cables",
+        "frames": [
+          14,
+          15
+        ],
+        "fps": 6,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "cop": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 15,
+    "names": [
+      "down stand",
+      "down step a (right foot lifted)",
+      "down step b (left foot lifted)",
+      "up stand",
+      "up step a (right foot lifted)",
+      "up step b (left foot lifted)",
+      "left stand",
+      "left step a (near leg forward)",
+      "left step b (far leg forward)",
+      "collar_tap a",
+      "collar_tap b (talking)",
+      "mohawk_off (bald, glue line)",
+      "run_holding_mohawk a",
+      "run_holding_mohawk b",
+      "run_holding_mohawk c"
+    ],
+    "anims": [
+      {
+        "key": "cop_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "cop_walk_up",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "cop_walk_left",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "cop_walk_right",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "cop_idle_down",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "cop_idle_up",
+        "frames": [
+          3
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "cop_idle_left",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "cop_idle_right",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "cop_collar_tap",
+        "frames": [
+          9,
+          10
+        ],
+        "fps": 4,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "cop_mohawk_off",
+        "frames": [
+          11
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "cop_run_holding_mohawk",
+        "frames": [
+          12,
+          13,
+          14,
+          13
+        ],
+        "fps": 10,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
   "interiors": {
     "type": "tileset",
     "tileWidth": 16,
@@ -1609,6 +2047,630 @@
       }
     ]
   },
+  "ryan": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 19,
+    "names": [
+      "down stand",
+      "down step a (right foot lifted)",
+      "down step b (left foot lifted)",
+      "up stand",
+      "up step a (right foot lifted)",
+      "up step b (left foot lifted)",
+      "left stand",
+      "left step a (near leg forward)",
+      "left step b (far leg forward)",
+      "carry_hardware a",
+      "carry_hardware b",
+      "carry_hardware c",
+      "sit",
+      "drum a (left stick up)",
+      "drum b",
+      "drum c (right stick up)",
+      "drum d",
+      "nod a",
+      "nod b (head down, eyes shut)"
+    ],
+    "anims": [
+      {
+        "key": "ryan_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_walk_up",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_walk_left",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_walk_right",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "ryan_idle_down",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_idle_up",
+        "frames": [
+          3
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_idle_left",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_idle_right",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "ryan_carry_hardware",
+        "frames": [
+          9,
+          10,
+          9,
+          11
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_sit",
+        "frames": [
+          12
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_drum",
+        "frames": [
+          13,
+          14,
+          15,
+          16
+        ],
+        "fps": 10,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_nod",
+        "frames": [
+          17,
+          18
+        ],
+        "fps": 4,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "ryan_bruised": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 19,
+    "names": [
+      "down stand",
+      "down step a (right foot lifted)",
+      "down step b (left foot lifted)",
+      "up stand",
+      "up step a (right foot lifted)",
+      "up step b (left foot lifted)",
+      "left stand",
+      "left step a (near leg forward)",
+      "left step b (far leg forward)",
+      "carry_hardware a",
+      "carry_hardware b",
+      "carry_hardware c",
+      "sit",
+      "drum a (left stick up)",
+      "drum b",
+      "drum c (right stick up)",
+      "drum d",
+      "nod a",
+      "nod b (head down, eyes shut)"
+    ],
+    "anims": [
+      {
+        "key": "ryan_bruised_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_bruised_walk_up",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_bruised_walk_left",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_bruised_walk_right",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "ryan_bruised_idle_down",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_bruised_idle_up",
+        "frames": [
+          3
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_bruised_idle_left",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_bruised_idle_right",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "ryan_bruised_carry_hardware",
+        "frames": [
+          9,
+          10,
+          9,
+          11
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_bruised_sit",
+        "frames": [
+          12
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_bruised_drum",
+        "frames": [
+          13,
+          14,
+          15,
+          16
+        ],
+        "fps": 10,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_bruised_nod",
+        "frames": [
+          17,
+          18
+        ],
+        "fps": 4,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "ryan_plaster": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 19,
+    "names": [
+      "down stand",
+      "down step a (right foot lifted)",
+      "down step b (left foot lifted)",
+      "up stand",
+      "up step a (right foot lifted)",
+      "up step b (left foot lifted)",
+      "left stand",
+      "left step a (near leg forward)",
+      "left step b (far leg forward)",
+      "carry_hardware a",
+      "carry_hardware b",
+      "carry_hardware c",
+      "sit",
+      "drum a (left stick up)",
+      "drum b",
+      "drum c (right stick up)",
+      "drum d",
+      "nod a",
+      "nod b (head down, eyes shut)"
+    ],
+    "anims": [
+      {
+        "key": "ryan_plaster_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_plaster_walk_up",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_plaster_walk_left",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_plaster_walk_right",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "ryan_plaster_idle_down",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_plaster_idle_up",
+        "frames": [
+          3
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_plaster_idle_left",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_plaster_idle_right",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "ryan_plaster_carry_hardware",
+        "frames": [
+          9,
+          10,
+          9,
+          11
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_plaster_sit",
+        "frames": [
+          12
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_plaster_drum",
+        "frames": [
+          13,
+          14,
+          15,
+          16
+        ],
+        "fps": 10,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_plaster_nod",
+        "frames": [
+          17,
+          18
+        ],
+        "fps": 4,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "ryan_slimed": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 19,
+    "names": [
+      "down stand",
+      "down step a (right foot lifted)",
+      "down step b (left foot lifted)",
+      "up stand",
+      "up step a (right foot lifted)",
+      "up step b (left foot lifted)",
+      "left stand",
+      "left step a (near leg forward)",
+      "left step b (far leg forward)",
+      "carry_hardware a",
+      "carry_hardware b",
+      "carry_hardware c",
+      "sit",
+      "drum a (left stick up)",
+      "drum b",
+      "drum c (right stick up)",
+      "drum d",
+      "nod a",
+      "nod b (head down, eyes shut)"
+    ],
+    "anims": [
+      {
+        "key": "ryan_slimed_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_slimed_walk_up",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_slimed_walk_left",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_slimed_walk_right",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "ryan_slimed_idle_down",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_slimed_idle_up",
+        "frames": [
+          3
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_slimed_idle_left",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_slimed_idle_right",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "ryan_slimed_carry_hardware",
+        "frames": [
+          9,
+          10,
+          9,
+          11
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_slimed_sit",
+        "frames": [
+          12
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_slimed_drum",
+        "frames": [
+          13,
+          14,
+          15,
+          16
+        ],
+        "fps": 10,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_slimed_nod",
+        "frames": [
+          17,
+          18
+        ],
+        "fps": 4,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
   "ui": {
     "type": "atlas",
     "frames": {
@@ -1707,6 +2769,93 @@
         "y": 0,
         "w": 8,
         "h": 8
+      }
+    }
+  },
+  "vanguard": {
+    "type": "tileset",
+    "tileWidth": 16,
+    "tileHeight": 16,
+    "tiles": {
+      "hull_floor": {
+        "index": 0,
+        "solid": false
+      },
+      "hull_floor_stripe": {
+        "index": 1,
+        "solid": false
+      },
+      "hull_wall": {
+        "index": 2,
+        "solid": true
+      },
+      "hull_wall_panel": {
+        "index": 3,
+        "solid": true
+      },
+      "hull_wall_top": {
+        "index": 4,
+        "solid": true
+      },
+      "pod_glass": {
+        "index": 5,
+        "solid": true
+      },
+      "pod_seat": {
+        "index": 6,
+        "solid": false
+      },
+      "pod_frame_l": {
+        "index": 7,
+        "solid": true
+      },
+      "pod_frame_r": {
+        "index": 8,
+        "solid": true
+      },
+      "conduit": {
+        "index": 9,
+        "solid": true
+      },
+      "vent": {
+        "index": 10,
+        "solid": false
+      },
+      "warning_stripe": {
+        "index": 11,
+        "solid": false
+      },
+      "window_stars_a": {
+        "index": 12,
+        "solid": true
+      },
+      "window_stars_b": {
+        "index": 13,
+        "solid": true
+      },
+      "intercom_mount": {
+        "index": 14,
+        "solid": true
+      },
+      "eject_mount": {
+        "index": 15,
+        "solid": true
+      },
+      "vending_corp": {
+        "index": 16,
+        "solid": true
+      },
+      "plaque": {
+        "index": 17,
+        "solid": true
+      },
+      "catwalk": {
+        "index": 18,
+        "solid": false
+      },
+      "catwalk_rail": {
+        "index": 19,
+        "solid": true
       }
     }
   }
