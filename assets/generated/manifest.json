@@ -1208,6 +1208,133 @@
       }
     }
   },
+  "palmers": {
+    "type": "tileset",
+    "tileWidth": 16,
+    "tileHeight": 16,
+    "tiles": {
+      "bar_wood_floor": {
+        "index": 0,
+        "solid": false
+      },
+      "stage_floor": {
+        "index": 1,
+        "solid": false
+      },
+      "stage_edge_n": {
+        "index": 2,
+        "solid": false
+      },
+      "bar_counter": {
+        "index": 3,
+        "solid": true
+      },
+      "bar_counter_end": {
+        "index": 4,
+        "solid": true
+      },
+      "bottles_shelf": {
+        "index": 5,
+        "solid": true
+      },
+      "beer_sign_a": {
+        "index": 6,
+        "solid": true
+      },
+      "beer_sign_b": {
+        "index": 7,
+        "solid": true
+      },
+      "jukebox": {
+        "index": 8,
+        "solid": true
+      },
+      "pulltab_booth": {
+        "index": 9,
+        "solid": true
+      },
+      "bathroom_door": {
+        "index": 10,
+        "solid": true
+      },
+      "photo_wall": {
+        "index": 11,
+        "solid": true
+      },
+      "neon_palmers_1": {
+        "index": 12,
+        "solid": true
+      },
+      "neon_palmers_2": {
+        "index": 13,
+        "solid": true
+      },
+      "neon_palmers_3": {
+        "index": 14,
+        "solid": true
+      },
+      "neon_palmers_4": {
+        "index": 15,
+        "solid": true
+      },
+      "bar_wall": {
+        "index": 16,
+        "solid": true
+      },
+      "bar_wall_top": {
+        "index": 17,
+        "solid": true
+      },
+      "window_bar": {
+        "index": 18,
+        "solid": true
+      },
+      "rubble_a": {
+        "index": 19,
+        "solid": false
+      },
+      "rubble_b": {
+        "index": 20,
+        "solid": false
+      },
+      "rubble_c": {
+        "index": 21,
+        "solid": false
+      },
+      "drywall_chunk_a": {
+        "index": 22,
+        "solid": true
+      },
+      "drywall_chunk_b": {
+        "index": 23,
+        "solid": true
+      },
+      "ceiling_cracked_a": {
+        "index": 24,
+        "solid": false
+      },
+      "ceiling_cracked_b": {
+        "index": 25,
+        "solid": false
+      },
+      "sky_hole_a": {
+        "index": 26,
+        "solid": false
+      },
+      "sky_hole_b": {
+        "index": 27,
+        "solid": false
+      },
+      "plaster_floor": {
+        "index": 28,
+        "solid": false
+      },
+      "bent_mic": {
+        "index": 29,
+        "solid": false
+      }
+    }
+  },
   "phoenix": {
     "type": "spritesheet",
     "frameWidth": 16,
