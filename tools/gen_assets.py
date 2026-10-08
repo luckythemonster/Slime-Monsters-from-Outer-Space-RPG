@@ -635,8 +635,12 @@ def spritesheet_entry(sheet, key_prefix):
     for a in sheet.anims:
         anims.append(OrderedDict([('key', '%s_%s' % (key_prefix, a['key'])), ('frames', list(a['frames'])),
                                   ('fps', a['fps']), ('repeat', a['repeat']), ('flipX', a['flipX'])]))
+    # frame labels in order (`frame N: label`), so sheets like `portraits` can be addressed by name;
+    # an unlabelled frame is "frame<N>"
+    names = [(c.get('label') or '').strip() or 'frame%d' % i for i, c in enumerate(sheet.cells)]
     return OrderedDict([('type', 'spritesheet'), ('frameWidth', sheet.frame_size[0]),
-                        ('frameHeight', sheet.frame_size[1]), ('frames', len(sheet.cells)), ('anims', anims)])
+                        ('frameHeight', sheet.frame_size[1]), ('frames', len(sheet.cells)),
+                        ('names', names), ('anims', anims)])
 
 
 def main(argv=None):
