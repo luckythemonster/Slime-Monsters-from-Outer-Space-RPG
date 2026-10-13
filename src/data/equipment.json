@@ -1,9 +1,18 @@
 {
-  "beatup_guitar": {
-    "name": "Beat-up Guitar",
-    "slot": "instrument",
-    "bonus": { "atk": 3 },
-    "price": 40,
-    "desc": "Three strings and a dream."
-  }
+  "beatup_guitar": { "name": "Beat-Up Guitar", "slot": "instrument", "who": ["lucky"], "freq": "HIGH", "bonus": { "atk": 3 }, "price": 0, "sell": 0, "desc": "Three strings and a dream. ATK +3, HIGH." },
+  "thrift_telecaster": { "name": "Thrift Telecaster", "slot": "instrument", "who": ["lucky"], "freq": "HIGH", "bonus": { "atk": 6, "lck": 2 }, "price": 26, "desc": "Someone's divorce. ATK +6, LCK +2, HIGH." },
+  "trash_bag": { "name": "Trash Bag", "slot": "instrument", "who": ["phoenix"], "freq": "PHYS", "bonus": { "atk": 2 }, "onHit": { "status": "SLIMED", "chance": 10, "turns": 4 }, "price": 0, "desc": "Heavy. ATK +2, PHYS, 10% SLIMED." },
+  "beatup_bass": { "name": "Beat-Up Bass", "slot": "instrument", "who": ["phoenix"], "freq": "LOW", "bonus": { "atk": 4 }, "price": 0, "desc": "Four strings, three frets. ATK +4, LOW." },
+  "pbass_copy": { "name": "P-Bass Copy", "slot": "instrument", "who": ["phoenix"], "freq": "LOW", "bonus": { "atk": 7, "def": 1 }, "price": 24, "desc": "Not a Fender. ATK +7, DEF +1, LOW." },
+  "drumsticks": { "name": "Drumsticks", "slot": "instrument", "who": ["ryan"], "freq": "PHYS", "bonus": { "atk": 3 }, "locked": true, "price": 0, "desc": "They hover. ATK +3, PHYS." },
+  "brians_strat": { "name": "Brian's Strat", "slot": "instrument", "who": ["brian"], "freq": "HIGH", "bonus": { "atk": 5 }, "locked": true, "price": 0, "desc": "Pristine. ATK +5, HIGH." },
+
+  "slime_sunglasses": { "name": "Spiky Slime Sunglasses", "slot": "accessory", "who": ["lucky"], "bonus": { "lck": 2 }, "immune": ["DAZED"], "price": 0, "desc": "Formed at 5 s of freefall. LCK +2, immune DAZED." },
+  "hoodie": { "name": "Hoodie", "slot": "accessory", "who": ["phoenix"], "bonus": { "def": 1 }, "price": 0, "desc": "DEF +1." },
+  "earplugs": { "name": "Earplugs", "slot": "accessory", "bonus": {}, "immune": ["DEAF"], "price": 10, "desc": "Immune DEAF." },
+  "band_sticker": { "name": "Band Sticker", "slot": "accessory", "bonus": {}, "toonPerAction": 1, "price": 6, "desc": "+1 Toon per action." },
+  "price_tag_jacket": { "name": "Price-Tag Leather Jacket", "slot": "accessory", "bonus": { "def": 4 }, "price": 0, "sell": 20, "desc": "Tag still on. DEF +4. Sells for $20." },
+  "flannel": { "name": "Flannel", "slot": "accessory", "who": ["ryan"], "bonus": { "def": 3 }, "locked": true, "price": 0, "desc": "DEF +3." },
+  "pedalboard_2000": { "name": "$2,000 Pedalboard", "slot": "accessory", "who": ["brian"], "bonus": {}, "hit100": true, "noCrit": true, "locked": true, "price": 0, "desc": "Hit 100. Crit 0." },
+  "fried_pedalboard": { "name": "Fried Pedalboard", "slot": "accessory", "bonus": { "atk": 4 }, "selfOutOfTune": 15, "price": 0, "sell": 11, "desc": "ATK +4. 15% self OUT OF TUNE per RIFF. Sells for $11." }
 }

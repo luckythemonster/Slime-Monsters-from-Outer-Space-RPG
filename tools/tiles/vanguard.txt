@@ -1,0 +1,416 @@
+# The Vanguard star-cruiser's drop-pod bay: beige deck plates, corporate-blue bulkheads, chrome
+# trim, one red LED per panel. 16x16. Floors/walls are opaque and edge-free; pod parts, conduit,
+# catwalk rail, vending machine and the eject pedestal have transparent surroundings for deco.
+# window_stars_a/b are a 2-frame twinkle (same window, stars swapped).
+name: vanguard
+tile: 16x16
+palette:
+  . = transparent
+  k = #141018     # outline
+  w = #f8f8f8     # white
+  W = #e8e8f0     # chrome light
+  L = #c8ccd4     # chrome
+  m = #9aa0a8     # gray mid
+  d = #5c6068     # gray dark
+  s = #30303c     # shadow
+  e = #1c0c2c     # eternity (space)
+  a = #142050     # corporate blue dark
+  A = #2a3fa0     # corporate blue
+  j = #3c5c9c     # blue highlight
+  b = #d8c8a8     # beige
+  c = #f0dcb0     # beige light
+  t = #c89060     # beige shadow
+  y = #f8d820     # yellow (warning stripe)
+  o = #e88830     # orange (planet billboard)
+  r = #d83030     # red LED
+  R = #6c2828     # red dark
+  p = #ff5fd2     # pink (billboard planet glow)
+  g = #39ff8a     # green
+  G = #1c8c48     # green dark
+  C = #40e0f0     # cyan glass
+  S = #8ca4cc     # glass mid
+  u = #6c7890     # glass dark
+  n = #e8f0ff     # star white
+  N = #bcd0ec     # star dim
+  h = #7c4c2c     # plaque wood
+  H = #48281c     # plaque wood dark
+
+tile hull_floor:
+solid: false
+bbbbbbbmbbbbbbbm
+bcbbbbbmbbbbbbbm
+bbbbbbbmbbbcbbbm
+bbbbbbbmbbbbbbbm
+bbbcbbbmbbbbbbbm
+bbbbbbbmbbbbbbbm
+bbbbbbbmbbbbbcbm
+mmmmmmmmmmmmmmmm
+bbbbbbbmbbbbbbbm
+bbbbcbbmbbbbbbbm
+bbbbbbbmbcbbbbbm
+bbbbbbbmbbbbbbbm
+bcbbbbbmbbbbbbbm
+bbbbbbbmbbbbbcbm
+bbbbbbbmbbbbbbbm
+mmmmmmmmmmmmmmmm
+
+tile hull_floor_stripe:
+solid: false
+bbbbbbbmbbbbbbbm
+bcbbbbbmbbbbbbbm
+bbbbbbbmbbbcbbbm
+bbbbbbbmbbbbbbbm
+bbbcbbbmbbbbbbbm
+bbbbbbbmbbbbbbbm
+jjjjjjjjjjjjjjjj
+AAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAA
+aaaaaaaaaaaaaaaa
+bbbbbbbmbcbbbbbm
+bbbbbbbmbbbbbbbm
+bcbbbbbmbbbbbbbm
+bbbbbbbmbbbbbcbm
+bbbbbbbmbbbbbbbm
+mmmmmmmmmmmmmmmm
+
+tile hull_wall:
+solid: true
+AAAAAAAaAAAAAAAa
+ALAAAAAaALAAAAAa
+AAAAAAAaAAAAAAAa
+AAAAAAAaAAAAAAAa
+AAAAAAAaAAAAAAAa
+AAAAAAAaAAAAAAAa
+AAAAAAAaAAAAAAAa
+AAAAAAAaAAAAAAAa
+AAAAAAAaAAAAAAAa
+AAAAAAAaAAAAAAAa
+AAAAAAAaAAAAAAAa
+AAAAAAAaAAAAAAAa
+AAAAAAAaAAAAAAAa
+AAAAAAAaAAAAAAAa
+ALAAAAAaALAAAAAa
+aaaaaaaaaaaaaaaa
+
+tile hull_wall_panel:
+solid: true
+AAAAAAAaAAAAAAAa
+ALAAAAAaALAAAAAa
+AAAAAAAAAAAAAAAa
+AAkkkkkkkkkkkkAa
+AAkWWWWWWWWWWkAa
+AAkWLLLLLLLLmkAa
+AAkWLrLLLLLLmkAa
+AAkWLLLLLLLLmkAa
+AAkWLkkkkkkLmkAa
+AAkWLLLLLLLLmkAa
+AAkWLkkkkLLLmkAa
+AAkWLLLLLLLLmkAa
+AAkWmmmmmmmmmkAa
+AAkkkkkkkkkkkkAa
+ALAAAAAaALAAAAAa
+aaaaaaaaaaaaaaaa
+
+tile hull_wall_top:
+solid: true
+WWWWWWWWWWWWWWWW
+LLLLLLLLLLLLLLLL
+mmmmmmmmmmmmmmmm
+ssssssssssssssss
+AAAAAAAaAAAAAAAa
+ALAAAAAaALAAAAAa
+AAAAAAAaAAAAAAAa
+AAAAAAAaAAAAAAAa
+AAAAAAAaAAAAAAAa
+AAAAAAAaAAAAAAAa
+AAAAAAAaAAAAAAAa
+AAAAAAAaAAAAAAAa
+AAAAAAAaAAAAAAAa
+AAAAAAAaAAAAAAAa
+AAAAAAAaAAAAAAAa
+AAAAAAAaAAAAAAAa
+
+tile pod_glass:
+solid: true
+.....kkkkkk.....
+...kkLWWWWLkk...
+..kLCCCCCCCCLk..
+.kLCwCCCCCCCCLk.
+.kCwCCCCCCCCCCk.
+kCCCCCCCCCCCCSSk
+kCCCCCCCCCCCSSSk
+kCCCCCCCCCCSSSSk
+kCCCCCCCCCSSSSSk
+kCCCCCCCCSSSSSuk
+kCCCCCCCSSSSSuuk
+kCCCCCCSSSSSuuuk
+kSCCCSSSSSSuuuuk
+kSSSSSSSSSuuuuuk
+kLLLLLLLLLLLLLLk
+kkkkkkkkkkkkkkkk
+
+tile pod_seat:
+solid: false
+kkkkkkkkkkkkkkkk
+kLddddddddddddLk
+kLdmmmmmmmmmmdLk
+kLdmsssssssssdLk
+kLdmsssssssssdLk
+kLdmsssssssssdLk
+kLdmsssssssssdLk
+kLdmsssssssssdLk
+kLdmsssssssssdLk
+kLdmsssssssssdLk
+kLdmsssssssssdLk
+kLddddddddddddLk
+kLLLLLLLLLLLLLLk
+kmmmmmmmmmmmmmmk
+kkkkkkkkkkkkkkkk
+.kkkkkkkkkkkkkk.
+
+tile pod_frame_l:
+solid: true
+..........kkkkkk
+........kkWWWLmk
+.......kWWLLLLmk
+......kWLLLLLLmk
+.....kWLLLLkkkmk
+....kWLLLLkmmmmk
+....kWLLLkmmmmmk
+...kWLLLkmmmmmmk
+...kWLLLkmmmmmmk
+...kWLLLkmmmmmmk
+...kWLLLkmmmmmmk
+...kWLLLkmmmmmmk
+...kWLLLkmmmmmmk
+...kLLLLkmmmmmmk
+...kmmmmkkkkkkkk
+...kkkkk........
+
+tile pod_frame_r:
+solid: true
+kkkkkk..........
+kmLWWWkk........
+kmLLLLWWk.......
+kmLLLLLLWk......
+kmkkkLLLLLk.....
+kmmmmkLLLLWk....
+kmmmmmkLLLWk....
+kmmmmmmkLLLWk...
+kmmmmmmkLLLWk...
+kmmmmmmkLLLWk...
+kmmmmmmkLLLWk...
+kmmmmmmkLLLWk...
+kmmmmmmkLLLWk...
+kmmmmmmkLLLLk...
+kkkkkkkkmmmmk...
+........kkkkk...
+
+tile conduit:
+solid: true
+.....kkkkkk.....
+.....kLmdLk.....
+.....kLmdLk.....
+....kkkkkkkk....
+....kddddddk....
+....kkkkkkkk....
+.....kLmdLk.....
+.....kLmdLk.....
+.....kLmdLk.....
+.....kLmdLk.....
+.....kLmdLk.....
+....kkkkkkkk....
+....kddddddk....
+....kkkkkkkk....
+.....kLmdLk.....
+.....kLmdLk.....
+
+tile vent:
+solid: false
+bbbbbbbmbbbbbbbm
+bcbbbbbmbbbbbbbm
+bbbbbbbmbbbcbbbm
+bbbkkkkkkkkkkbbm
+bbbkLLLLLLLLkbbm
+bbbkLsssssssLkbm
+bbbkLLLLLLLLLkbm
+bbbkLsssssssLkbm
+bbbkLLLLLLLLLkbm
+bbbkLsssssssLkbm
+bbbkLLLLLLLLLkbm
+bbbkLsssssssLkbm
+bbbkkkkkkkkkkbbm
+bbbbbbbmbbbbbcbm
+bbbbbbbmbbbbbbbm
+mmmmmmmmmmmmmmmm
+
+tile warning_stripe:
+solid: false
+yyyykkkkyyyykkkk
+kyyyykkkkyyyykkk
+kkyyyykkkkyyyykk
+kkkyyyykkkkyyyyk
+kkkkyyyykkkkyyyy
+ykkkkyyyykkkkyyy
+yykkkkyyyykkkkyy
+yyykkkkyyyykkkky
+yyyykkkkyyyykkkk
+kyyyykkkkyyyykkk
+kkyyyykkkkyyyykk
+kkkyyyykkkkyyyyk
+kkkkyyyykkkkyyyy
+ykkkkyyyykkkkyyy
+yykkkkyyyykkkkyy
+yyykkkkyyyykkkky
+
+tile window_stars_a:
+solid: true
+AAAAAAAaAAAAAAAa
+AkkkkkkkkkkkkkkA
+AkWWWWWWWWWWWWkA
+AkWeeeeeeeeeeLkA
+AkWeeNeeeeeneLkA
+AkWeeeeeeeeeeLkA
+AkWeeeeeneeeeLkA
+AkWneeeeeeeeNLkA
+AkWeeeeeeeeeeLkA
+AkWeeeeneeeeeLkA
+AkWeeeeeeeoooLkA
+AkWeNeeeeoppoLkA
+AkWmmmmmmmmmmmkA
+AkkkkkkkkkkkkkkA
+ALAAAAAaALAAAAAa
+aaaaaaaaaaaaaaaa
+
+tile window_stars_b:
+solid: true
+AAAAAAAaAAAAAAAa
+AkkkkkkkkkkkkkkA
+AkWWWWWWWWWWWWkA
+AkWeeeeeeeeeeLkA
+AkWeeneeeeeNeLkA
+AkWeeeeeeeeeeLkA
+AkWeeeeeNeeeeLkA
+AkWNeeeeeeeenLkA
+AkWeeeeeeeeeeLkA
+AkWeeeeNeeeeeLkA
+AkWeeeeeeeoooLkA
+AkWenneeeoppoLkA
+AkWmmmmmmmmmmmkA
+AkkkkkkkkkkkkkkA
+ALAAAAAaALAAAAAa
+aaaaaaaaaaaaaaaa
+
+tile intercom_mount:
+solid: true
+AAAAAAAaAAAAAAAa
+ALAAAAAaALAAAAAa
+AAkkkkkkkkkkkkAa
+AAkWWWWWWWWWWkAa
+AAkWkLLLLLLkLkAa
+AAkWLLLLLLLLLkAa
+AAkWLLLLLLLLLkAa
+AAkWLLLLLLLLLkAa
+AAkWLLLLLLLLLkAa
+AAkWLLLLLLLLLkAa
+AAkWLLLLLLLLLkAa
+AAkWkLLLLLLkmkAa
+AAkWmmmmmmmmmkAa
+AAkkkkkkkkkkkkAa
+ALAAAAAakAAAAAAa
+aaaaaaaakaaaaaaa
+
+tile eject_mount:
+solid: true
+................
+................
+....kkkkkkkk....
+...kWWWWWWWWk...
+...kWLLLLLLLmk..
+...kWLkkkkkLmk..
+...kWLkRRRkLmk..
+...kWLkkkkkLmk..
+...kWLLLLLLLmk..
+...kmmmmmmmmmk..
+...kkkkkkkkkkk..
+....kyykkkyyk...
+....kkyyykkyk...
+....kyykkkyyk...
+....kmmmmmmmk...
+....kkkkkkkkk...
+
+tile vending_corp:
+solid: true
+.kkkkkkkkkkkkkk.
+.kbcccccccccccbk
+.kbAAAAAAAAAAAbk
+.kbAjjAAjjjAjAbk
+.kbAAAAAAAAAAAbk
+.kbkkkkkkkkkkkbk
+.kbkaaaaaaaaakbk
+.kbkawwaRRawakbk
+.kbkaaaaaaaaakbk
+.kbkaRRawwaRRkbk
+.kbkaaaaaaaaakbk
+.kbkkkkkkkkkkkbk
+.kbbbbbbbbbkrkbk
+.kbbbbkkkbbkkkbk
+.ktttttttttttttk
+.kkkkkkkkkkkkkk.
+
+tile plaque:
+solid: true
+AAAAAAAaAAAAAAAa
+ALAAAAAaALAAAAAa
+AAAAAAAaAAAAAAAa
+AAkkkkkkkkkkkkAa
+AAkhhhhhhhhhhkAa
+AAkhyyyyyyyyHkAa
+AAkhykkkkkkyHkAa
+AAkhyyyyyyyyHkAa
+AAkhykkykkkyHkAa
+AAkhyyyyyyyyHkAa
+AAkhyykkkkyyHkAa
+AAkhHHHHHHHHHkAa
+AAkkkkkkkkkkkkAa
+AAAAAAAaAAAAAAAa
+ALAAAAAaALAAAAAa
+aaaaaaaaaaaaaaaa
+
+tile catwalk:
+solid: false
+dddddddddddddddd
+dssddssddssddssd
+dssddssddssddssd
+dddddddddddddddd
+dssddssddssddssd
+dssddssddssddssd
+dddddddddddddddd
+dssddssddssddssd
+dssddssddssddssd
+dddddddddddddddd
+dssddssddssddssd
+dssddssddssddssd
+dddddddddddddddd
+dssddssddssddssd
+dssddssddssddssd
+dddddddddddddddd
+
+tile catwalk_rail:
+solid: true
+................
+kkkkkkkkkkkkkkkk
+LLLLLLLLLLLLLLLL
+kkkkkkkkkkkkkkkk
+..kLk.......kLk.
+..kLk.......kLk.
+..kLk.......kLk.
+kkkkkkkkkkkkkkkk
+mmmmmmmmmmmmmmmm
+kkkkkkkkkkkkkkkk
+..kLk.......kLk.
+..kLk.......kLk.
+..kLk.......kLk.
+..kdk.......kdk.
+.kkkkk.....kkkkk
+................

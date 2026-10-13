@@ -18,7 +18,7 @@
 import { Sequencer, validateSong } from './Sequencer.js';
 import { Synth, isOfflineContext } from './Synth.js';
 import { SFX, SFX_NAMES } from './sfx.js';
-import SONGS from './songs/index.js';
+import SONGS, { ALIASES } from './songs/index.js';
 
 export const DEFAULT_VOLUMES = Object.freeze({ music: 0.7, sfx: 0.8 });
 const UNLOCK_EVENTS = ['keydown', 'pointerdown', 'touchstart', 'mousedown', 'click'];
@@ -71,12 +71,13 @@ export class AudioEngine {
    * @param {BaseAudioContext} [o.context]   Phaser's `sound.context`; created (and gesture-unlocked) if omitted
    * @param {AudioNode} [o.destination]      Phaser's `sound.destination`; default context.destination
    * @param {object} [o.songs]               id → song map (default: src/audio/songs/index.js)
+   * @param {object} [o.aliases]             alias → song id map (default: ALIASES from songs/index.js); aliases whose song is missing are skipped
    * @param {number} [o.music=0.7]           music bus gain
    * @param {number} [o.sfx=0.8]             sfx bus gain
    * @param {boolean} [o.limiter=true]       DynamicsCompressor safety limiter on the master
    * @param {boolean} [o.unlock=true]        when the engine owns the context, resume it on first key/pointer
    */
-  constructor({ context = null, destination = null, songs = SONGS, music = DEFAULT_VOLUMES.music, sfx = DEFAULT_VOLUMES.sfx, limiter = true, unlock = true } = {}) {
+  constructor({ context = null, destination = null, songs = SONGS, aliases = ALIASES, music = DEFAULT_VOLUMES.music, sfx = DEFAULT_VOLUMES.sfx, limiter = true, unlock = true } = {}) {
     let ownsContext = false;
     if (!context) { context = createAudioContext(); ownsContext = true; }
     this.context = context;
@@ -106,7 +107,9 @@ export class AudioEngine {
     this.synth = new Synth(context, this.sfxBus);
 
     this.songs = new Map();
+    this.aliases = new Map();
     for (const song of Object.values(songs || {})) this.registerSong(song);
+    for (const [alias, id] of Object.entries(aliases || {})) if (this.songs.has(id)) this.registerAlias(alias, id);
 
     this._volumes = { music: clamp01(music), sfx: clamp01(sfx) };
     this._muted = false;
@@ -137,8 +140,19 @@ export class AudioEngine {
     return song;
   }
 
-  hasSong(id) { return this.songs.has(id); }
+  /** Make `alias` another name for registered song `id` (no copy; playMusic/hasSong resolve it). */
+  registerAlias(alias, id) {
+    if (!this.songs.has(id)) throw new Error(`AudioEngine.registerAlias(${alias}): unknown song "${id}"`);
+    this.aliases.set(alias, id);
+    return id;
+  }
+
+  /** Canonical song id for `id` (an alias resolves to its song; unknown ids come back unchanged). */
+  resolveSongId(id) { return this.songs.has(id) ? id : (this.aliases.get(id) ?? id); }
+
+  hasSong(id) { return this.songs.has(this.resolveSongId(id)); }
   get songIds() { return Array.from(this.songs.keys()); }
+  get songAliases() { return Object.fromEntries(this.aliases); }
   get sfxNames() { return SFX_NAMES; }
 
   // --- music -----------------------------------------------------------------
@@ -149,12 +163,13 @@ export class AudioEngine {
   get sequencer() { return this.current ? this.current.seq : null; }
 
   /**
-   * Play a registered song, crossfading from whatever is playing.
+   * Play a registered song (or an alias of one), crossfading from whatever is playing.
    * Same song already playing → no-op unless `restart`. `playMusic(null)` = stopMusic.
    * @returns {Sequencer|null}
    */
   playMusic(id, { fade = 0.5, restart = false, volume = 1 } = {}) {
     if (id == null) { this.stopMusic({ fade }); return null; }
+    id = this.resolveSongId(id);
     const song = this.songs.get(id);
     if (!song) { this._warn(`unknown song "${id}"`); return null; }
     if (this.current && this.current.id === id && this.current.seq.isPlaying && !restart) return this.current.seq;
@@ -299,5 +314,5 @@ export class AudioEngine {
   }
 }
 
-export { SFX_NAMES, SONGS };
+export { SFX_NAMES, SONGS, ALIASES };
 export default AudioEngine;

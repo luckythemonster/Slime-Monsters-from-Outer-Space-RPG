@@ -6,5 +6,105 @@
     "music": "battle",
     "canFlee": true,
     "script": null
+  },
+  "alley_drone": {
+    "name": "Retrieval Drone",
+    "enemies": ["drone"],
+    "background": "alley",
+    "music": "battle",
+    "noFlee": true,
+    "toonStart": 0,
+    "script": "ep0_drone"
+  },
+  "hub_slush": {
+    "name": "Slush Pile",
+    "enemies": ["slush_pile"],
+    "background": "street",
+    "music": "battle",
+    "canFlee": true,
+    "script": null
+  },
+  "hub_goose": {
+    "name": "Canada Goose",
+    "enemies": ["goose"],
+    "background": "street",
+    "music": "battle",
+    "canFlee": true,
+    "script": null
+  },
+  "hub_scooters": {
+    "name": "Scooter Pack",
+    "enemies": [{ "id": "scooter", "xp": 4 }, "scooter", "scooter"],
+    "background": "street",
+    "music": "battle",
+    "canFlee": true,
+    "script": null
+  },
+  "hub_analyst": {
+    "name": "Demographic Analyst",
+    "enemies": ["analyst"],
+    "background": "street",
+    "music": "battle",
+    "canFlee": true,
+    "script": null
+  },
+  "hub_billboard": {
+    "name": "WORK IS LOVE",
+    "enemies": ["billboard"],
+    "background": "vanguard_grid",
+    "music": "battle",
+    "canFlee": true,
+    "script": null
+  },
+  "hub_analyst_duo": {
+    "name": "Analyst Duo",
+    "enemies": ["analyst_duo", "analyst_duo"],
+    "background": "street",
+    "music": "battle",
+    "canFlee": true,
+    "script": null
+  },
+  "hub_goose_pair": {
+    "name": "Goose Pair",
+    "enemies": ["goose_pair", "goose_pair"],
+    "background": "street",
+    "music": "battle",
+    "canFlee": true,
+    "script": null
+  },
+  "ep0_audition": {
+    "name": "AUDITION",
+    "enemies": ["whrnnng", "thud_thud"],
+    "background": "sticker_wall",
+    "music": "audition",
+    "noFlee": true,
+    "toonStart": 0,
+    "fixedXp": 50,
+    "fixedMoney": 0,
+    "script": "ep0_audition",
+    "countIn": "lucky"
+  },
+  "ep0_rehearsal": {
+    "name": "The Chorus",
+    "enemies": ["chorus"],
+    "background": "sticker_wall",
+    "music": "rehearsal_brian",
+    "noFlee": true,
+    "toonStart": 0,
+    "fixedXp": 30,
+    "fixedMoney": 0,
+    "script": "ep0_rehearsal"
+  },
+  "ep0_palmers_set": {
+    "name": "THE SET",
+    "enemies": ["undercover_cop"],
+    "background": "palmers_neon",
+    "music": "palmers_set",
+    "noFlee": true,
+    "toonStart": 25,
+    "fixedXp": 100,
+    "fixedMoney": 0,
+    "script": "ep0_palmers_set",
+    "countIn": "lucky"
   }
 }
