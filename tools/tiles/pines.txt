@@ -1,0 +1,258 @@
+# Northern Minnesota: Ryan's detached garage in the pines (cutscene only). 16x16.
+# Snow and concrete are opaque and edge-free; the pine (trunk + over-layer top), lamp, heater,
+# wall phone and workbench have transparent surroundings. `dark` is opaque outline-black for the
+# unlit parts of the garage map.
+name: pines
+tile: 16x16
+palette:
+  . = transparent
+  k = #141018     # outline
+  w = #f8f8f8     # white
+  L = #c8ccd4     # gray light
+  m = #9aa0a8     # gray mid (cinder block)
+  d = #5c6068     # gray dark (concrete, mortar)
+  s = #30303c     # shadow
+  e = #1c0c2c     # eternity
+  n = #e8f0ff     # snow light
+  N = #bcd0ec     # snow
+  S = #8ca4cc     # snow shadow
+  u = #6c7890     # slush
+  G = #1c8c48     # pine dark
+  v = #3c8c40     # pine
+  h = #7c4c2c     # wood
+  H = #48281c     # wood dark
+  t = #c89060     # tan (bench top)
+  c = #f0dcb0     # cream (phone)
+  y = #f8d820     # lamp yellow
+  o = #e88830     # heater glow
+  r = #d83030     # heater coil
+  a = #142050     # navy
+  j = #3c5c9c     # blue
+
+tile pine_trunk:
+solid: true
+......kHhk......
+......kHhk......
+......kHhk......
+......kHhk......
+......kHhk......
+......kHhk......
+......kHhk......
+......kHhk......
+......kHhk......
+.....kHHhhk.....
+.....kHHhhk.....
+....kHHHhhhk....
+...kkkkkkkkkk...
+..kNNnnnnnnNNk..
+.kSNNNNNNNNNNSk.
+..kkkkkkkkkkkk..
+
+tile pine_top:
+solid: false
+.......kk.......
+......kvGk......
+......kvGk......
+.....kvvGGk.....
+....kvvvGGGk....
+...kvnnvGGGGk...
+...kkkvvGGkkk...
+....kvvvGGGk....
+...kvvvvGGGGk...
+..kvnnvvGGGNNk..
+.kvvvvvvGGGGGGk.
+.kkkkvvvGGGkkkk.
+...kvvvvGGGGGk..
+..kvvvnvvGGGGGk.
+.kvvvvvvvGGGGGGk
+.kkkkkkkkkkkkkkk
+
+tile snow_deep:
+solid: false
+nnnnnnnnnnnnnnnn
+nnnNNnnnnnnnnnnn
+nnNnnNnnnnnNNnnn
+nnnnnnnnnnNnnNnn
+nnnnnnnnnnnnnnnn
+nnnnnnnnnnnnnnnn
+nnnnnnNNnnnnnnnn
+nnnnnNnnNnnnnnnn
+nnnnnnnnnnnnnnnn
+nNNnnnnnnnnnnnnn
+NnnNnnnnnnnnNnnn
+nnnnnnnnnnnNnNnn
+nnnnnnnnnnnnnnnn
+nnnnnnnnNnnnnnnn
+nnnnnnnNnNnnnnnn
+nnnnnnnnnnnnnnnn
+
+tile garage_wall:
+solid: true
+mmmmmmmdmmmmmmmd
+mmLmmmmdmmmmmmmd
+mmmmmmmdmmmLmmmd
+dddddddddddddddd
+mmmdmmmmmmmdmmmm
+mmmdmmLmmmmdmmmm
+mLmdmmmmmmmdmmmm
+dddddddddddddddd
+mmmmmmmdmmmmmmmd
+mmmmmmmdmmLmmmmd
+mmmmLmmdmmmmmmmd
+dddddddddddddddd
+mmmdmmmmmmmdmmmm
+mmmdmmmmmmmdmLmm
+mmmdmLmmmmmdmmmm
+dddddddddddddddd
+
+tile garage_wall_top:
+solid: true
+LLLLLLLLLLLLLLLL
+mmmmmmmmmmmmmmmm
+dddddddddddddddd
+ssssssssssssssss
+mmmdmmmmmmmdmmmm
+mmmdmmLmmmmdmmmm
+mLmdmmmmmmmdmmmm
+dddddddddddddddd
+mmmmmmmdmmmmmmmd
+mmmmmmmdmmLmmmmd
+mmmmLmmdmmmmmmmd
+dddddddddddddddd
+mmmdmmmmmmmdmmmm
+mmmdmmmmmmmdmLmm
+mmmdmLmmmmmdmmmm
+dddddddddddddddd
+
+tile garage_door_open:
+solid: false
+dkkkkkkkkkkkkkkd
+dkLLLLLLLLLLLLkd
+dkmmmmmmmmmmmmkd
+dkkkkkkkkkkkkkkd
+dnnnnnnnnnnnnnnd
+dnnnNnnnnnnnnnnd
+dnnnnnnnnnnNnnnd
+dnnnnnnnnnnnnnnd
+dnnnnnnNnnnnnnnd
+dnnnnnnnnnnnnnnd
+dnNnnnnnnnnnnnnd
+dnnnnnnnnnnnnNnd
+dnnnnnnnnnnnnnnd
+dnnnnnNnnnnnnnnd
+dnnnnnnnnnnnnnnd
+dnnnnnnnnnnnnnnd
+
+tile garage_floor_concrete:
+solid: false
+dddddddddddddddd
+ddsddddddddddsdd
+ddddddddsddddddd
+dddddddddddddddd
+dsdddddddddddddd
+ddddddddddddsddd
+dddddsdddsdddddd
+ddddddddsddddddd
+dddddddsdddddddd
+ddddddsddddddddd
+ddddddddddddddsd
+ddsddddddddddddd
+dddddddddddsdddd
+dddddddddddddddd
+dddddsdddddddddd
+dddddddddddddddd
+
+tile lamp_garage:
+solid: true
+.......k........
+.......k........
+.......k........
+......kkk.......
+.....kdddk......
+....kdddddk.....
+...kkkkkkkkk....
+...kyyyyyyyk....
+...kywwwwyyk....
+...kkyyyyykk....
+....kkyyykk.....
+.....kkkkk......
+................
+................
+................
+................
+
+tile dark:
+solid: true
+kkkkkkkkkkkkkkkk
+kkkkkkkkkkkkkkkk
+kkkkkkkkkkkkkkkk
+kkkkkkkkkkkkkkkk
+kkkkkkkkkkkkkkkk
+kkkkkkkkkkkkkkkk
+kkkkkkkkkkkkkkkk
+kkkkkkkkkkkkkkkk
+kkkkkkkkkkkkkkkk
+kkkkkkkkkkkkkkkk
+kkkkkkkkkkkkkkkk
+kkkkkkkkkkkkkkkk
+kkkkkkkkkkkkkkkk
+kkkkkkkkkkkkkkkk
+kkkkkkkkkkkkkkkk
+kkkkkkkkkkkkkkkk
+
+tile space_heater:
+solid: true
+................
+................
+................
+................
+................
+...kkkkkkkkkk...
+..kLLLLLLLLLLk..
+..kLkkkkkkkkLk..
+..kLkrorororkLk.
+..kLkorororokLk.
+..kLkrorororkLk.
+..kLkorororokLk.
+..kLkkkkkkkkLk..
+..kmmmmmmmmmmk..
+..kkkkkkkkkkkk..
+...kk......kk...
+
+tile landline_phone:
+solid: true
+................
+.....kkkkkk.....
+....kccccccck...
+....kcLLLLLck...
+....kckkkkkck...
+....kcccccccck..
+....kckkkkkck...
+....kcccccccck..
+....kckkkkkck...
+....kcckkkcck...
+....kkkkkkkkk...
+.......k........
+......k.........
+.......k........
+......k.........
+................
+
+tile workbench:
+solid: true
+................
+................
+................
+................
+.kkkkkkkkkkkkkk.
+kttttttttttttttk
+khhLLLhhhhhhrhhk
+khhhhhhhhyyhhhhk
+kHHHHHHHHHHHHHHk
+kkkkkkkkkkkkkkkk
+.kHkhhhhhhhhkHk.
+.kHkhHHHHHHhkHk.
+.kHkhhhhhhhhkHk.
+.kHkkkkkkkkkkHk.
+.kHk........kHk.
+.kkk........kkk.

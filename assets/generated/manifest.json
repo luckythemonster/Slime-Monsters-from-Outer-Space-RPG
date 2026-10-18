@@ -796,6 +796,130 @@
       "rug": {
         "index": 39,
         "solid": false
+      },
+      "bar_wood_floor": {
+        "index": 40,
+        "solid": false
+      },
+      "stage_floor": {
+        "index": 41,
+        "solid": false
+      },
+      "stage_edge_n": {
+        "index": 42,
+        "solid": false
+      },
+      "bar_counter": {
+        "index": 43,
+        "solid": true
+      },
+      "bar_counter_end": {
+        "index": 44,
+        "solid": true
+      },
+      "bottles_shelf": {
+        "index": 45,
+        "solid": true
+      },
+      "beer_sign_a": {
+        "index": 46,
+        "solid": true
+      },
+      "beer_sign_b": {
+        "index": 47,
+        "solid": true
+      },
+      "jukebox": {
+        "index": 48,
+        "solid": true
+      },
+      "pulltab_booth": {
+        "index": 49,
+        "solid": true
+      },
+      "bathroom_door": {
+        "index": 50,
+        "solid": true
+      },
+      "photo_wall": {
+        "index": 51,
+        "solid": true
+      },
+      "neon_palmers_1": {
+        "index": 52,
+        "solid": true
+      },
+      "neon_palmers_2": {
+        "index": 53,
+        "solid": true
+      },
+      "neon_palmers_3": {
+        "index": 54,
+        "solid": true
+      },
+      "neon_palmers_4": {
+        "index": 55,
+        "solid": true
+      },
+      "bar_wall": {
+        "index": 56,
+        "solid": true
+      },
+      "bar_wall_top": {
+        "index": 57,
+        "solid": true
+      },
+      "window_bar": {
+        "index": 58,
+        "solid": true
+      },
+      "rubble_a": {
+        "index": 59,
+        "solid": false
+      },
+      "rubble_b": {
+        "index": 60,
+        "solid": false
+      },
+      "rubble_c": {
+        "index": 61,
+        "solid": false
+      },
+      "drywall_chunk_a": {
+        "index": 62,
+        "solid": true
+      },
+      "drywall_chunk_b": {
+        "index": 63,
+        "solid": true
+      },
+      "ceiling_cracked_a": {
+        "index": 64,
+        "solid": false
+      },
+      "ceiling_cracked_b": {
+        "index": 65,
+        "solid": false
+      },
+      "sky_hole_a": {
+        "index": 66,
+        "solid": false
+      },
+      "sky_hole_b": {
+        "index": 67,
+        "solid": false
+      },
+      "plaster_floor": {
+        "index": 68,
+        "solid": false
+      },
+      "bent_mic": {
+        "index": 69,
+        "solid": false
+      },
+      "cymbal": {
+        "index": 70,
+        "solid": true
       }
     }
   },
@@ -2203,6 +2327,142 @@
       "sign_pole": {
         "index": 29,
         "solid": true
+      },
+      "snowbank": {
+        "index": 30,
+        "solid": true
+      },
+      "street_line_dashed": {
+        "index": 31,
+        "solid": false
+      },
+      "bus_shelter_l": {
+        "index": 32,
+        "solid": true
+      },
+      "bus_shelter_r": {
+        "index": 33,
+        "solid": true
+      },
+      "bus_shelter_top": {
+        "index": 34,
+        "solid": false
+      },
+      "awning": {
+        "index": 35,
+        "solid": false
+      },
+      "bare_tree_trunk": {
+        "index": 36,
+        "solid": true
+      },
+      "bare_tree_top": {
+        "index": 37,
+        "solid": false
+      },
+      "van_tl": {
+        "index": 38,
+        "solid": true
+      },
+      "van_tr": {
+        "index": 39,
+        "solid": true
+      },
+      "van_bl": {
+        "index": 40,
+        "solid": true
+      },
+      "van_br": {
+        "index": 41,
+        "solid": true
+      },
+      "coffee_front_l": {
+        "index": 42,
+        "solid": true
+      },
+      "coffee_front_r": {
+        "index": 43,
+        "solid": true
+      },
+      "pawn_front_l": {
+        "index": 44,
+        "solid": true
+      },
+      "pawn_front_r": {
+        "index": 45,
+        "solid": true
+      },
+      "rail_platform": {
+        "index": 46,
+        "solid": false
+      },
+      "rail_edge": {
+        "index": 47,
+        "solid": false
+      },
+      "hydrant": {
+        "index": 48,
+        "solid": true
+      },
+      "bike_rack": {
+        "index": 49,
+        "solid": true
+      },
+      "neon_bar_a": {
+        "index": 50,
+        "solid": true
+      },
+      "neon_bar_b": {
+        "index": 51,
+        "solid": true
+      },
+      "door_shop": {
+        "index": 52,
+        "solid": true
+      },
+      "billboard_glitch_a": {
+        "index": 53,
+        "solid": true
+      },
+      "billboard_glitch_b": {
+        "index": 54,
+        "solid": true
+      },
+      "billboard_glitch_c": {
+        "index": 55,
+        "solid": true
+      },
+      "towers_panel_a": {
+        "index": 56,
+        "solid": true
+      },
+      "towers_panel_b": {
+        "index": 57,
+        "solid": true
+      },
+      "towers_panel_c": {
+        "index": 58,
+        "solid": true
+      },
+      "towers_panel_d": {
+        "index": 59,
+        "solid": true
+      },
+      "neon_palmers_1": {
+        "index": 60,
+        "solid": true
+      },
+      "neon_palmers_2": {
+        "index": 61,
+        "solid": true
+      },
+      "neon_palmers_3": {
+        "index": 62,
+        "solid": true
+      },
+      "neon_palmers_4": {
+        "index": 63,
+        "solid": true
       }
     }
   },
@@ -2766,6 +3026,61 @@
         "flipX": false
       }
     ]
+  },
+  "pines": {
+    "type": "tileset",
+    "tileWidth": 16,
+    "tileHeight": 16,
+    "tiles": {
+      "pine_trunk": {
+        "index": 0,
+        "solid": true
+      },
+      "pine_top": {
+        "index": 1,
+        "solid": false
+      },
+      "snow_deep": {
+        "index": 2,
+        "solid": false
+      },
+      "garage_wall": {
+        "index": 3,
+        "solid": true
+      },
+      "garage_wall_top": {
+        "index": 4,
+        "solid": true
+      },
+      "garage_door_open": {
+        "index": 5,
+        "solid": false
+      },
+      "garage_floor_concrete": {
+        "index": 6,
+        "solid": false
+      },
+      "lamp_garage": {
+        "index": 7,
+        "solid": true
+      },
+      "dark": {
+        "index": 8,
+        "solid": true
+      },
+      "space_heater": {
+        "index": 9,
+        "solid": true
+      },
+      "landline_phone": {
+        "index": 10,
+        "solid": true
+      },
+      "workbench": {
+        "index": 11,
+        "solid": true
+      }
+    }
   },
   "ryan": {
     "type": "spritesheet",

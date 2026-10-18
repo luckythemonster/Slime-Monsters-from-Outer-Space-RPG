@@ -798,3 +798,596 @@ bbBcBbbbbbBcBbbb
 bbbBbbbbbbbBbbbb
 bbbbbbbbbbbbbbbb
 BBBBBBBBBBBBBBBB
+
+# --- Palmer's (DESIGN.md maps `palmers`/`palmers_rubble` on the interiors tileset) ---
+
+tile bar_wood_floor:
+solid: false
+HHHeHHHeHHHeHHHe
+HhHeHHHeHHheHHHe
+HHHeHHHeHHHeHHHe
+HHHeeeeeHHHeHHHe
+HHHeHHHeHHHeeeee
+HHHeHhHeHHHeHHHe
+HHHeHHHeHHHeHHHe
+eeeeHHHeHHHeHHHe
+HHHeHHHeeeeeHHHe
+HHHeHHHeHHHeHhHe
+HHheHHHeHHHeHHHe
+HHHeHHHeHHHeHHHe
+HHHeeeeeHHHeeeee
+HHHeHHHeHHHeHHHe
+HHHeHHHeHhHeHHHe
+eeeeHHHeHHHeHHHe
+
+tile stage_floor:
+solid: false
+eeeeeeeeeeeeeeee
+eeseeeeeeeeeesee
+eeeeeeeeseeeeeee
+eeeeeeeeeeeeeeee
+eseeeeeeeeeeeese
+eeeeeeseeeeeeeee
+eeeeeeeeeeeseeee
+eeeeeeeeeeeeeeee
+eeeeseeeeeeeeeee
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeesee
+eeseeeeeeseeeeee
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+eeeeeeseeeeeeeee
+eeeeeeeeeeeeeeee
+
+tile stage_edge_n:
+solid: false
+tttttttttttttttt
+hhhhhhhhhhhhhhhh
+HHHHHHHHHHHHHHHH
+kkkkkkkkkkkkkkkk
+................
+................
+................
+................
+................
+................
+................
+................
+................
+................
+................
+................
+
+tile bar_counter:
+solid: true
+tttttttttttttttt
+hhhhhhhhhhhhhhhh
+hhhhhhhhhhhhhhhh
+hhthhhhhhhhhhhhh
+HHHHHHHHHHHHHHHH
+kkkkkkkkkkkkkkkk
+HHHHHHHHHHHHHHHH
+HhhhhhhHHhhhhhhH
+HhHHHHhHHhHHHHhH
+HhHHHHhHHhHHHHhH
+HhHHHHhHHhHHHHhH
+HhHHHHhHHhHHHHhH
+HhhhhhhHHhhhhhhH
+HHHHHHHHHHHHHHHH
+yyyyyyyyyyyyyyyy
+kkkkkkkkkkkkkkkk
+
+tile bar_counter_end:
+solid: true
+tttttttttttttk..
+hhhhhhhhhhhhhhk.
+hhhhhhhhhhhhhhk.
+hhthhhhhhhhhhhk.
+HHHHHHHHHHHHHHk.
+kkkkkkkkkkkkkkk.
+HHHHHHHHHHHHHHk.
+HhhhhhhHHhhhhhk.
+HhHHHHhHHhHHHhk.
+HhHHHHhHHhHHHhk.
+HhHHHHhHHhHHHhk.
+HhHHHHhHHhHHHhk.
+HhhhhhhHHhhhhhk.
+HHHHHHHHHHHHHHk.
+yyyyyyyyyyyyyyk.
+kkkkkkkkkkkkkkk.
+
+tile bottles_shelf:
+solid: true
+HHeHHHeHHHeHHHeH
+HHeHHHeHHHeHHHeH
+HHkvHHHkrHHHkyHH
+HHkvHHHkrHHHkyHH
+HkkkkHkkkkHkkkkH
+HkvvkHkrrkHkyykH
+HkvvkHkrrkHkyykH
+HkvwkHkrwkHkywkH
+HkGGkHkBBkHkookH
+HkGGkHkBBkHkookH
+HkkkkHkkkkHkkkkH
+hhhhhhhhhhhhhhhh
+HHHHHHHHHHHHHHHH
+eeeeeeeeeeeeeeee
+HHeHHHeHHHeHHHeH
+HHeHHHeHHHeHHHeH
+
+tile beer_sign_a:
+solid: true
+HHeHHHeHHHeHHHeH
+HHeHHHeHHHeHHHeH
+HHeHHHeHHHeHHHeH
+HHkkkkkkkkkkkkeH
+HHkppppppppppkeH
+HHkpkkkkkkkkpkeH
+HHkpkggkgggkpkeH
+HHkpkgkkkgkkpkeH
+HHkpkggkgggkpkeH
+HHkpkkkkkkkkpkeH
+HHkppppppppppkeH
+HHkkkkkkkkkkkkeH
+HHeHHHeHHHeHHHeH
+HHeHHHeHHHeHHHeH
+HHeHHHeHHHeHHHeH
+HHeHHHeHHHeHHHeH
+
+tile beer_sign_b:
+solid: true
+HHeHHHeHHHeHHHeH
+HHeHHHeHHHeHHHeH
+HHeHHHeHHHeHHHeH
+HHkkkkkkkkkkkkeH
+HHkDDDDppppDDkeH
+HHkDkkkkkkkkpkeH
+HHkDkGGkgggkpkeH
+HHkDkGkkkgkkDkeH
+HHkDkGGkgggkDkeH
+HHkDkkkkkkkkDkeH
+HHkDDDDDDDDDDkeH
+HHkkkkkkkkkkkkeH
+HHeHHHeHHHeHHHeH
+HHeHHHeHHHeHHHeH
+HHeHHHeHHHeHHHeH
+HHeHHHeHHHeHHHeH
+
+tile jukebox:
+solid: true
+....kkkkkkkk....
+...kyyyyyyyyk...
+..kyrrrrrrrryk..
+.khyggggggggyhk.
+.khyaaaaaaaayhk.
+.khyaCaaaaCayhk.
+.khyaaaaaaaayhk.
+.khyyyyyyyyyyhk.
+.khhhhhhhhhhhhk.
+.khrkkkkkkkkrhk.
+.khrkwkwkwkwrhk.
+.khrkkkkkkkkrhk.
+.khhhhhhhhhhhhk.
+.kHHHHHHHHHHHHk.
+.kkkkkkkkkkkkkk.
+..kdk......kdk..
+
+tile pulltab_booth:
+solid: true
+................
+.kkkkkkkkkkkkkk.
+.khhhhhhhhhhhhk.
+.khwywrwwgwwyhk.
+.khkkkkkkkkkkhk.
+.khywgwrwwywwhk.
+.khkkkkkkkkkkhk.
+.khwrwwywgwwrhk.
+.khhhhhhhhhhhhk.
+.khyyyyyyyyyyhk.
+.khykkykkkykyhk.
+.khyyyyyyyyyyhk.
+.khhhhhhhhhhhhk.
+.kHHHHHHHHHHHHk.
+.kkkkkkkkkkkkkk.
+..kdk......kdk..
+
+tile bathroom_door:
+solid: true
+HHeHHHeHHHeHHHeH
+HHekkkkkkkkkkeeH
+HHekhhhhhhhhkeeH
+HHekhwwwwwwhkeeH
+HHekhwkwkwwhkeeH
+HHekhwwwwwwhkeeH
+HHekhhhhhhhhkeeH
+HHekhHHHHHHhkeeH
+HHekhHhhhhHhkeeH
+HHekhHhhhhHhkeeH
+HHekhHhhhyHhkeeH
+HHekhHhhhhHhkeeH
+HHekhHHHHHHhkeeH
+HHekhhhhhhhhkeeH
+HHekhhhhhhhhkeeH
+HHekkkkkkkkkkeeH
+
+tile photo_wall:
+solid: true
+HHeHHHeHHHeHHHeH
+HkkkkkeHHkkkkkeH
+HkLLLkeHHkmmmkeH
+HkLdLkeHHkmwmkeH
+HkLLLkeHHkmmmkeH
+HkkkkkeHHkkkkkeH
+HHeHHHeHHHeHHHeH
+HHeHHHeHHHeHHHeH
+HHekkkkkeHHkkkkk
+HHekwwwkeHHkLLLk
+HHekwdwkeHHkLdLk
+HHekwwwkeHHkLLLk
+HHekkkkkeHHkkkkk
+HHeHHHeHHHeHHHeH
+HHeHHHeHHHeHHHeH
+HHeHHHeHHHeHHHeH
+
+tile neon_palmers_1:
+solid: true
+................
+.kkkkkkkkkkkkkkk
+keeeeeeeeeeeeeee
+kePppppeeePppeee
+kepeeepeepeeepee
+kepeeepeepeeepee
+kepppppeepppppee
+kepeeeeeepeeepee
+kepeeeeeepeeepee
+kepeeeeeepeeepee
+keeeeeeeeeeeeeee
+kegggggggggggggg
+keeeeeeeeeeeeeee
+keeeeeeeeeeeeeee
+.kkkkkkkkkkkkkkk
+................
+
+tile neon_palmers_2:
+solid: true
+................
+kkkkkkkkkkkkkkkk
+eeeeeeeeeeeeeeee
+ePeeeeeeePeeePee
+epeeeeeeeppeppee
+epeeeeeeepepepee
+epeeeeeeepeeepee
+epeeeeeeepeeepee
+epeeeeeeepeeepee
+epppppeeepeeepee
+eeeeeeeeeeeeeeee
+gggggggggggggggg
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+kkkkkkkkkkkkkkkk
+................
+
+tile neon_palmers_3:
+solid: true
+................
+kkkkkkkkkkkkkkkk
+eeeeeeeeeeeeeeee
+ePppppeeePpppeee
+epeeeeeeepeeepee
+epeeeeeeepeeepee
+eppppeeeeppppeee
+epeeeeeeepepeeee
+epeeeeeeepeepeee
+epppppeeepeeepee
+eeeeeeeeeeeeeeee
+gggggggggggggggg
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+kkkkkkkkkkkkkkkk
+................
+
+tile neon_palmers_4:
+solid: true
+................
+kkkkkkkkkkkkkkk.
+eeeeeeeeeeeeeek.
+eePeeeeePpppeeek
+eepeeeepeeeeeeek
+eeeeeeepeeeeeeek
+eeeeeeeepppeeeek
+eeeeeeeeeeepeeek
+eeeeeeeeeeepeeek
+eeeeeeeppppeeeek
+eeeeeeeeeeeeeeek
+ggggggggggggggek
+eeeeeeeeeeeeeeek
+eeeeeeeeeeeeeeek
+kkkkkkkkkkkkkkk.
+................
+
+tile bar_wall:
+solid: true
+HHeHHHeHHHeHHHeH
+HHehHHeHHHeHHHeH
+HHeHHHeHHHeHHHeH
+HHeHHHehHHeHHHeH
+HHeHHHeHHHeHHHeH
+HHeHHHeHHHeHHHeh
+HHeHHHeHHHeHHHeH
+HHehHHeHHHeHHHeH
+HHeHHHeHHHehHHeH
+HHeHHHeHHHeHHHeH
+HHeHHHeHHHeHHHeH
+HHeHHHehHHeHHHeH
+HHeHHHeHHHeHHHeH
+HHeHHHeHHHeHHHeh
+HHehHHeHHHeHHHeH
+HHeHHHeHHHeHHHeH
+
+tile bar_wall_top:
+solid: true
+LLLLLLLLLLLLLLLL
+mmmmmmmmmmmmmmmm
+dddddddddddddddd
+eeeeeeeeeeeeeeee
+HHeHHHeHHHeHHHeH
+HHeHHHeHHHeHHHeH
+HHehHHeHHHeHHHeH
+HHeHHHeHHHeHHHeH
+HHeHHHehHHeHHHeH
+HHeHHHeHHHeHHHeH
+HHeHHHeHHHeHHHeh
+HHeHHHeHHHeHHHeH
+HHehHHeHHHeHHHeH
+HHeHHHeHHHehHHeH
+HHeHHHeHHHeHHHeH
+HHeHHHeHHHeHHHeH
+
+tile window_bar:
+solid: true
+HHeHHHeHHHeHHHeH
+HHeHHHeHHHeHHHeH
+HHkkkkkkkkkkkkeH
+HHkaaaaaaaaaakeH
+HHkaaaaaaaaaakeH
+HHkaapppppaaakeH
+HHkaapapapaaakeH
+HHkaapppppaaakeH
+HHkaaaaaaaaaakeH
+HHkaJaaaaaaJakeH
+HHkaaaaaaaaaakeH
+HHkkkkkkkkkkkkeH
+HHhhhhhhhhhhhheH
+HHeHHHeHHHeHHHeH
+HHeHHHeHHHeHHHeH
+HHeHHHeHHHeHHHeH
+
+tile rubble_a:
+solid: false
+ccccwccccccccicc
+cccccccccbbccccc
+ciccccccbbBbcccc
+ccccccccbBBccccc
+cccccccccccccccc
+ccwcccccccccccwc
+cccccccbbccccccc
+ccccccbbbBcccccc
+cccccbbBBcccccic
+ccccccBBcccccccc
+cccccccccccccccc
+ccccccccccccwccc
+ciccccccbbcccccc
+ccccccccbBcccccc
+cccwcccccccccccc
+cccccccccccciccc
+
+tile rubble_b:
+solid: false
+cccccccccccwcccc
+cccLLLccccccccic
+ccLLmmLccccccccc
+cccmmmccccccbbcc
+cccccccccccbBBcc
+cicccccccccccccc
+cccccccccccccccc
+ccccccLLLLcccccc
+ccccccLmmmLccccc
+cccccccmddcccccc
+cccccccccccccccc
+cwcccccccccccccc
+ccccccccccccLLcc
+cccccbbccccLmmcc
+ccccbBBcccccccic
+cccccccccccccccc
+
+tile rubble_c:
+solid: false
+cccccccccccccccc
+ccccccsssccccccc
+ccicsssdsssccccc
+ccccssssssscccwc
+ccccccsssccccccc
+cccccccccccccccc
+cccccccccccccccc
+cwcccccbbccccicc
+ccccccbBBbcccccc
+cccccccBBccccccc
+cccccccccccccccc
+ccccccccccccsscc
+cccccccccccssdsc
+cciccccccccssssc
+cccccccccccccccc
+cccccccwcccccccc
+
+tile drywall_chunk_a:
+solid: true
+................
+................
+...kkkkkkkkkk...
+..kLLLLLLLLLLk..
+..kLwwwwwkwwwLk.
+..kLwwwwkwwwwLk.
+..kLwwwwkwwwwLk.
+..kLwwwkwwwwwLk.
+..kLwwwkwwwwwLk.
+..kLwwwwkwwwwLk.
+..kLLLLLLLLLLLk.
+..kddddddddddk..
+..kkkkkkkkkkkk..
+................
+................
+................
+
+tile drywall_chunk_b:
+solid: true
+................
+................
+................
+................
+......kkkkkk....
+.....kLLLLLLk...
+....kLwwwwwwLk..
+....kLwwkwwwLk..
+....kLwwkwwwLk..
+....kLLLLLLLLk..
+...kkddddddddk..
+..kbbkkkkkkkkk..
+..kbBbk.........
+..kBBBk.........
+...kkkk.........
+................
+
+tile ceiling_cracked_a:
+solid: false
+LLLLLLLLLLLLLLLL
+LLLLLLLLLmLLLLLL
+LLmLLLLLLLLLLLLL
+LLLLLLLkLLLLLLLL
+LLLLLLkLLLLLLmLL
+LLLLLkkLLLLLLLLL
+LLLLkLLLLLLLLLLL
+LLLLkLLLLLLLLLLL
+LLLkLLLLLmLLLLLL
+LLLkLLLLLLLLLLLL
+LLLLkkLLLLLLLLLL
+LLmLLLkLLLLLLLLL
+LLLLLLkLLLLLLLLL
+LLLLLLLkLLLLLmLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+
+tile ceiling_cracked_b:
+solid: false
+LLLLLLLLLLLLLLLL
+LLLLLLkLLLLLLmLL
+LLLLLkLLLLLLLLLL
+LLLLkkLLLLLLLLLL
+LLLkkkkkLLLLLLLL
+LLkkeeeekkLLLLLL
+LLkeeeeeeekLLLLL
+LLkeeeeeeekLLLLL
+LLLkeeeeeekkLLLL
+LLLLkeeeeeeekLLL
+LLLLkkeeeeekLLLL
+LLLLLLkkkkkLLLLL
+LLmLLLLLLLkLLLLL
+LLLLLLLLLLLkLLLL
+LLLLLLLLLLLLkLLL
+LLLLLLLLLLLLLLLL
+
+tile sky_hole_a:
+solid: false
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeNeeee
+eeeneeeeeeeeeeee
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeNe
+eeeeeeeeneeeeeee
+eeeeeeeeeeeeeeee
+eNeeeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeneeee
+eeeeeNeeeeeeeeee
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeNe
+eeneeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+
+tile sky_hole_b:
+solid: false
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeneeee
+eeeNeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeene
+eeeeeeeeNeeeeeee
+eeeeeeeeeeeeeeee
+eneeeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeNeeee
+eeeeeneeeeeeeeee
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeene
+eeNeeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+
+tile plaster_floor:
+solid: false
+cccccccccccccccc
+ccwcccccccccccwc
+cccccccccicccccc
+cccccccccccccccc
+ciccccccccccLccc
+cccccccwcccccccc
+cccccccccccccccc
+cccccLcccccccccc
+cccccccccccccwcc
+ccccccccccccccci
+cccwcccccccccccc
+cccccccccicccccc
+cccccccccccccccc
+ccccccLcccccwccc
+cciccccccccccccc
+cccccccccccccccc
+
+tile bent_mic:
+solid: false
+................
+...........kkk..
+..........kdLdk.
+..........kdddk.
+........kkkkkk..
+.......kLk......
+......kLk.......
+......kLk.......
+......kLk.......
+......kLk.......
+......kLk.......
+......kLk.......
+......kLk.......
+....kkkLkkk.....
+...kddddddddk...
+...kkkkkkkkkk...
+
+# Room 4 kit cymbal (DESIGN.md: "a 32x32 object plus a cymbal tile")
+
+tile cymbal:
+solid: true
+................
+................
+......kkkkk.....
+....kkttttkk....
+..kkttttytttkk..
+.kttttttttttttk.
+.kkkkkkkkkkkkkk.
+.......Lk.......
+.......Lk.......
+.......Lk.......
+.......Lk.......
+.......Lk.......
+.......Lk.......
+.....kkLkkk.....
+....kddddddk....
+....kkkkkkkk....

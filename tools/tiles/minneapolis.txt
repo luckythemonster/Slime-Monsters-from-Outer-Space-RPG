@@ -34,6 +34,7 @@ palette:
   j = #3c5c9c     # glass blue
   J = #24386c     # glass blue dark
   a = #142050     # navy glass
+  C = #f0dcb0     # cream (cafe sign)
 
 tile snow:
 solid: false
@@ -604,3 +605,651 @@ solid: true
 ......kkdkk.....
 .....kdddddk....
 .....kkkkkkk....
+
+# --- Chapter 1 extension (appended; original tile order above is unchanged) ---
+
+tile snowbank:
+solid: true
+................
+................
+......nnnn......
+....nnnnnnnn....
+..nnnnnnnnnnnn..
+.nnnnNnnnnnnnnn.
+nnnnnnnnnnnNnnnn
+nnnNnnnnnnnnnnnn
+nnnnnnnnnnnnnnnn
+NnnnnnnnnNnnnnnN
+NNnnnnnnnnnnnnNN
+SNNnnnNnnnnnnNNS
+SSNNNNNNNNNNNNSS
+uSSSSSSSSSSSSSSu
+.uuuuuuuuuuuuuu.
+................
+
+tile street_line_dashed:
+solid: false
+ssssssssssssssss
+ssdsssssssssdsss
+sssssssssessssss
+ssssssdsssssssss
+ssssssssssssssss
+sesssssssssdssss
+ssssssssssssssss
+sssyyyyyyyysssss
+sssyyyyyyyysssss
+ssssssssssssssss
+ssssssssssdsssss
+sssssessssssssss
+ssssssssssssssds
+ssdsssssssssssss
+sssssssssssssess
+sssssssdssssssss
+
+tile bus_shelter_l:
+solid: true
+kkkkkkkkkkkkkkkk
+kdkaaaaaaaaaakdk
+kdkawwwwwwwwakdk
+kdkawkkwkkwwakdk
+kdkawwwwwwwwakdk
+kdkawkkkwkkwakdk
+kdkawwwwwwwwakdk
+kdkawwrrwrrwakdk
+kdkawwrrrrrwakdk
+kdkawwwrrrwwakdk
+kdkawwwwrwwwakdk
+kdkawwwwwwwwakdk
+kdkaaaaaaaaaakdk
+kdkaaaaaaaaaakdk
+kdkkkkkkkkkkkkdk
+kkkkkkkkkkkkkkkk
+
+tile bus_shelter_r:
+solid: true
+kkkkkkkkkkkkkkkk
+kdkaaaaaaaaaakdk
+kdkajaaaaaaaakdk
+kdkaaaaaaaaaakdk
+kdkaaaaaaawaakdk
+kdkaaaaaaaaaakdk
+kdkaaaaaaaaaakdk
+kdkaaaaaaaaaakdk
+kdkahhhhhhhhakdk
+kdkaHHHHHHHHakdk
+kdkaaHaaaaHaakdk
+kdkaaHaaaaHaakdk
+kdkaaaaaaaaaakdk
+kdkaaaaaaaaaakdk
+kdkkkkkkkkkkkkdk
+kkkkkkkkkkkkkkkk
+
+tile bus_shelter_top:
+solid: false
+kkkkkkkkkkkkkkkk
+kLLLLLLLLLLLLLLk
+kLmmmmmmmmmmmmLk
+kmmmmmmmmmmmmmmk
+kddddddddddddddk
+kkkkkkkkkkkkkkkk
+.kdk........kdk.
+.kdk........kdk.
+................
+................
+................
+................
+................
+................
+................
+................
+
+tile awning:
+solid: false
+kkkkkkkkkkkkkkkk
+rrwwrrwwrrwwrrww
+rrwwrrwwrrwwrrww
+rrwwrrwwrrwwrrww
+rrwwrrwwrrwwrrww
+BBLLBBLLBBLLBBLL
+rrwwrrwwrrwwrrww
+rrwwrrwwrrwwrrww
+kkkkkkkkkkkkkkkk
+................
+................
+................
+................
+................
+................
+................
+
+tile bare_tree_trunk:
+solid: true
+......kHhk......
+......kHhk......
+......kHhk......
+......kHhk......
+......kHhk......
+......kHhk......
+......kHhk......
+......kHhk......
+......kHhk......
+.....kHHhhk.....
+.....kHHhhk.....
+....kHHHhhhk....
+...kkkkkkkkkk...
+..kNNnnnnnnNNk..
+.kSNNNNNNNNNNSk.
+..kkkkkkkkkkkk..
+
+tile bare_tree_top:
+solid: false
+...k........k...
+...kk......kk...
+....kk....kk....
+.k...kk..kk..k..
+..kk..kkkk..kk..
+...kkkkHHkkkk...
+.....kkHHkk.....
+..kk..kHHk..kk..
+...kkkkHHkkkk...
+.....kkHHkk.....
+......kHHk......
+......kHhk......
+......kHhk......
+......kHhk......
+......kHhk......
+......kHhk......
+
+tile van_tl:
+solid: true
+................
+................
+..........kkkkkk
+........kkLLLLLL
+.......kLuuuuuuu
+......kLukkkkkkk
+.....kLuukajaaaa
+....kLuuukaaaaaa
+....kLuuukaaaaaa
+....kLuuukaaaaaa
+....kuuuukaaaaaa
+....kuuuukkkkkkk
+....kuuuuuuuuuuu
+....kyuuuuuuuuuu
+....kyuuuuuuuuuu
+....kuuuuuuuuuuu
+
+tile van_tr:
+solid: true
+................
+................
+kkkkkkkkkkkkkkk.
+LLLLLLLLLLLLLLk.
+uuuuuuuuuuuuuuk.
+kkkukkkkkkkkkkk.
+aakukaaaaaaaakk.
+aakukaaaaaaaakk.
+aakukaaawaaaakk.
+aakukaaaaaaaakk.
+aakukaaaaaaaakk.
+kkkukkkkkkkkkkk.
+uuuuuuuuuuuuuuk.
+uuuuupppppuuuuk.
+uuuupuuuuupuuuk.
+uuupuupppuupuuk.
+
+tile van_bl:
+solid: true
+....kuuuuuuuuuuu
+....kuuuuuuuuuuu
+....kuuuuuuuuuuu
+....kuuuuuuuuuuu
+....kuuuuuuuuuuu
+....kuuuuuuuuuuu
+....kuuuuBbuuuuu
+....kuuuBbbuuuuu
+....kLLLLLLLLLLL
+....kkkkkkkkkkkk
+......kddddk....
+......kdLLdk....
+......kdLLdk....
+......kddddk....
+.......kkkk.....
+................
+
+tile van_br:
+solid: true
+uuupupuuupupuuk.
+uuupupupupupuuk.
+uuupupuuupupuuk.
+uuupuuppuuupuuk.
+uuuupuuuuuupuuk.
+uuuuuppppuuuuuk.
+uuuuuuuuuuuuuuk.
+uuuuuuuuuBbuuuk.
+LLLLLLLLLLLLLLk.
+kkkkkkkkkkkkkkk.
+......kddddk....
+......kdLLdk....
+......kdLLdk....
+......kddddk....
+.......kkkk.....
+................
+
+tile coffee_front_l:
+solid: true
+lbbbbbbBlbbbbbbB
+bbbkkkkkkkkkkkkk
+bbBkCCCCCCCCCCCC
+BBBkCkkCkkkCCkkk
+bbbkCCCCCCCCCCCC
+bbbkkkkkkkkkkkkk
+bbBkyyyyyyyyyyyy
+BBBkyyyyyyyykkkk
+lbbkyyyyyyyykwww
+bbbkyyyyyyyykwkk
+bbbkyyyyyyyykwkk
+BBBkyyyyyyyykwwk
+bbbkyyyyyyyykkkk
+bbbkoooooooooooo
+bbBkkkkkkkkkkkkk
+BBBBBBBBBBBBBBBB
+
+tile coffee_front_r:
+solid: true
+lbbbbbbBlbbbbbbB
+kkkkkkkkkkkkkbbB
+CCCCCCCCCCCCkbBB
+CCkkkCkkCkkkkBBB
+CCCCCCCCCCCCkbbb
+kkkkkkkkkkkkkbbb
+yyyyyyyyyyyykbbb
+kkkkyyyyyyyykBBB
+wwwkyyyyyyyykbbB
+kwwkyyyyyyyykbbB
+kkwkyyyyyyyykbbB
+kwwkyyyyyyyykBBB
+kkkkyyyyyyyykbbb
+ooooooooooookbbb
+kkkkkkkkkkkkkbBB
+BBBBBBBBBBBBBBBB
+
+tile pawn_front_l:
+solid: true
+lbbbbbbBlbbbbbbB
+bbbbbbbBbbkkbbbk
+bbbbbbBBbkyykbky
+BBBBBBBBBkyokBky
+bbbBlbbbbbkkbbbk
+bbbkkkkkkkkkkkkk
+bbBkaaaaaaaaaaaa
+BBBkajaaaahaaaaa
+lbbkaaaaahaaaaaa
+bbbkaaaaahaaaaaa
+bbbkaaaahhhaaaaa
+BBBkaaaahyhaaaaa
+bbbkaaaahhhaaaaa
+bbbkaaaaaaaaaaaa
+bbBkkkkkkkkkkkkk
+BBBBBBBBBBBBBBBB
+
+tile pawn_front_r:
+solid: true
+lbbbbbbBlbbbbbbB
+kbbbkkbbbbbbbbbB
+ykbkyykbbbbbbbBB
+okBkyokBBBBBBBBB
+kbbbkkbbbbBlbbbb
+kkkkkkkkkkkkkbbb
+aaaaaaaaaaaakbBB
+aaaaaaaaaaaakBBB
+aaakkkaaaaaakbbB
+aaakLkaaaaaakbbB
+aaakkkaaaaaakbbB
+aaaaaaaaaaaakBBB
+aaaaaaaaaaaakbbb
+aaaaaaaaaaaakbbb
+kkkkkkkkkkkkkbBB
+BBBBBBBBBBBBBBBB
+
+tile rail_platform:
+solid: false
+LLLLLLLLLLLLLLLL
+LLLmLLLLLLLLmLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLmLLLLLLLL
+LmLLLLLLLLLLLLLL
+LLLLLLLLLLLLLmLL
+LLLLLLLLLLLLLLLL
+LLLLLmLLLLLLLLLL
+LLLLLLLLLLmLLLLL
+LLLLLLLLLLLLLLLL
+LLmLLLLLLLLLLLLL
+LLLLLLLLLLLLLLmL
+LLLLLLLmLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLmLLLLLLmLLLL
+LLLLLLLLLLLLLLLL
+
+tile rail_edge:
+solid: false
+LLLLLLLLLLLLLLLL
+LLLmLLLLLLLLmLLL
+yyyyyyyyyyyyyyyy
+yoyoyoyoyoyoyoyo
+yyyyyyyyyyyyyyyy
+mmmmmmmmmmmmmmmm
+dddddddddddddddd
+kkkkkkkkkkkkkkkk
+ssssssssssssssss
+ssssssssssssssss
+LLLLLLLLLLLLLLLL
+sHHssHHssHHssHHs
+sHHssHHssHHssHHs
+LLLLLLLLLLLLLLLL
+ssssssssssssssss
+ssdsssssssssdsss
+
+tile hydrant:
+solid: true
+................
+................
+................
+................
+......kkkk......
+.....kyyyyk.....
+......krrk......
+....kkkrrkkk....
+...kdkrrrrkdk...
+....kkrrrrkk....
+.....krrrrk.....
+.....krrrrk.....
+.....krBBrk.....
+....kkBBBBkk....
+....kddddddk....
+....kkkkkkkk....
+
+tile bike_rack:
+solid: true
+................
+................
+................
+................
+................
+................
+....kkkkkkkk....
+...kNNNNNNNNk...
+..kLddddddddLk..
+..kdk......kdk..
+..kdk......kdk..
+..kdk......kdk..
+..kdk......kdk..
+..kdk......kdk..
+.kkkkk....kkkkk.
+................
+
+tile neon_bar_a:
+solid: true
+lbbbbbbBlbbbbbbB
+bbbbbbbBbbbbbbbB
+bkkkkkkkkkkkkkkB
+bkeeeeeeeeeeeekB
+bkepppepppepppkB
+bkepepepepepepkB
+bkepppepppepppkB
+bkepepepepeppekB
+bkepppepepepepkB
+bkeeeeeeeeeeeekB
+bkeggggggggggekB
+bkkkkkkkkkkkkkkB
+bbbBlbbbbbbBlbbb
+bbbBbbbbbbbBbbbb
+bbBBbbbbbbBBbbbb
+BBBBBBBBBBBBBBBB
+
+tile neon_bar_b:
+solid: true
+lbbbbbbBlbbbbbbB
+bbbbbbbBbbbbbbbB
+bkkkkkkkkkkkkkkB
+bkeeeeeeeeeeeekB
+bkepppeDDDepppkB
+bkepepeDeDepepkB
+bkepppeDDDepppkB
+bkepepeDeDeppekB
+bkepppeDeDepepkB
+bkeeeeeeeeeeeekB
+bkeGGGGGGGGGGekB
+bkkkkkkkkkkkkkkB
+bbbBlbbbbbbBlbbb
+bbbBbbbbbbbBbbbb
+bbBBbbbbbbBBbbbb
+BBBBBBBBBBBBBBBB
+
+tile door_shop:
+solid: true
+lbbkkkkkkkkkkbbB
+bbbkddddddddkbbB
+bbBkdkkkkkkdkbBB
+BBBkdkaaaakdkBBB
+bbbkdkajaakdkbbb
+bbbkdkaaaakdkbbb
+bbBkdkaaaakdkbbb
+BBBkdkLLLLkdkBBB
+lbbkdkaaaakdkbbB
+bbbkdkaaaakdkbbB
+bbbkdkyyaakdkbBB
+BBBkdkaaaakdkBBB
+bbbkdkaaaakdkbbb
+bbbkdkkkkkkdkbbb
+bbBkddddddddkbbb
+BBBkkkkkkkkkkBBB
+
+tile billboard_glitch_a:
+solid: true
+kkkkkkkkkkkkkkkk
+kLLLLLLLLLLLLLLL
+kLkkkkkkkkkkkkkk
+kLkwwwkkwwwkkwwk
+kLggkwkwkkwkwkkw
+kLkwwwkkwwwkkwkk
+kLkkkkkkkkkkkkkk
+kLkwwwwwkkwwwwwk
+kLpppppppppppppp
+kLkkkkkkkkkkkkkk
+kLLLLLLLLLLLLLLL
+kkkkkkkkkkkkkkkk
+......kddk......
+......kddk......
+......kddk......
+......kddk......
+
+tile billboard_glitch_b:
+solid: true
+kkkkkkkkkkkkkkkk
+LLLLLLLLLLLLLLLL
+kkkkkkkkkkkkkkkk
+kkkkkcckkcckkkkk
+kkkkcccccccckkkk
+pppkkkkcccccccck
+kkkkkcccccckkkkk
+kkkcccckkkkkkggg
+kkkkkkkcckkkkkkk
+kkkkkkkkkkkkkkkk
+LLLLLLLLLLLLLLLL
+kkkkkkkkkkkkkkkk
+................
+................
+................
+................
+
+tile billboard_glitch_c:
+solid: true
+kkkkkkkkkkkkkkkk
+LLLLLLLLLLLLLLLk
+kkkkkkkkkkkkkkLk
+kkwwkkwwwkkwwwLk
+wwkkwkwkkwkkccLk
+kkwwkkwwwkkwwwLk
+kkkkkkkkkkkkkkLk
+kkwwwwkkwwwwwkLk
+ggggggggggggggLk
+kkkkkkkkkkkkkkLk
+LLLLLLLLLLLLLLLk
+kkkkkkkkkkkkkkkk
+......kddk......
+......kddk......
+......kddk......
+......kddk......
+
+tile towers_panel_a:
+solid: true
+mmmmmmmmmmmmmmmm
+dddddddddddddddd
+mdjjjjjjjjjjjjjj
+mdjjjjjjjjjjjjjj
+mdjjjkkkkkkkkjjj
+mdjjjkaaaaaakjjj
+mdjjjkajaaaakjjj
+mdjjjkaaaaaakjjj
+mdjjjkaaaaaakjjj
+mdjjjkaaaaaakjjj
+mdjjjkaaaaaakjjj
+mdjjjkkkkkkkkjjj
+mdjjjjjjjjjjjjjj
+mdjjjjjjjjjjjjjj
+mdJJJJJJJJJJJJJJ
+mdJJJJJJJJJJJJJJ
+
+tile towers_panel_b:
+solid: true
+mmmmmmmmmmmmmmmm
+dddddddddddddddd
+mdrrrrrrrrrrrrrr
+mdrrrrrrrrrrrrrr
+mdrrrkkkkkkkkrrr
+mdrrrkaaaaaakrrr
+mdrrrkajaaaakrrr
+mdrrrkaaaaaakrrr
+mdrrrkaaaaaakrrr
+mdrrrkaaaaaakrrr
+mdrrrkaaaaaakrrr
+mdrrrkkkkkkkkrrr
+mdrrrrrrrrrrrrrr
+mdrrrrrrrrrrrrrr
+mdBBBBBBBBBBBBBB
+mdBBBBBBBBBBBBBB
+
+tile towers_panel_c:
+solid: true
+mmmmmmmmmmmmmmmm
+dddddddddddddddd
+mdyyyyyyyyyyyyyy
+mdyyyyyyyyyyyyyy
+mdyyykkkkkkkkyyy
+mdyyykaaaaaakyyy
+mdyyykajaaaakyyy
+mdyyykaaaaaakyyy
+mdyyykaaaaaakyyy
+mdyyykaaaaaakyyy
+mdyyykaaaaaakyyy
+mdyyykkkkkkkkyyy
+mdyyyyyyyyyyyyyy
+mdyyyyyyyyyyyyyy
+mdoooooooooooooo
+mdoooooooooooooo
+
+tile towers_panel_d:
+solid: true
+mmmmmmmmmmmmmmmm
+dddddddddddddddd
+mdwwwwwwwwwwwwww
+mdwwwwwwwwwwwwww
+mdwwwkkkkkkkkwww
+mdwwwkaaaaaakwww
+mdwwwkajaaaakwww
+mdwwwkaaaaaakwww
+mdwwwkaaaaaakwww
+mdwwwkaaaaaakwww
+mdwwwkaaaaaakwww
+mdwwwkkkkkkkkwww
+mdwwwwwwwwwwwwww
+mdwwwwwwwwwwwwww
+mdLLLLLLLLLLLLLL
+mdLLLLLLLLLLLLLL
+
+tile neon_palmers_1:
+solid: true
+................
+.kkkkkkkkkkkkkkk
+keeeeeeeeeeeeeee
+kePppppeeePppeee
+kepeeepeepeeepee
+kepeeepeepeeepee
+kepppppeepppppee
+kepeeeeeepeeepee
+kepeeeeeepeeepee
+kepeeeeeepeeepee
+keeeeeeeeeeeeeee
+kegggggggggggggg
+keeeeeeeeeeeeeee
+keeeeeeeeeeeeeee
+.kkkkkkkkkkkkkkk
+................
+
+tile neon_palmers_2:
+solid: true
+................
+kkkkkkkkkkkkkkkk
+eeeeeeeeeeeeeeee
+ePeeeeeeePeeePee
+epeeeeeeeppeppee
+epeeeeeeepepepee
+epeeeeeeepeeepee
+epeeeeeeepeeepee
+epeeeeeeepeeepee
+epppppeeepeeepee
+eeeeeeeeeeeeeeee
+gggggggggggggggg
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+kkkkkkkkkkkkkkkk
+................
+
+tile neon_palmers_3:
+solid: true
+................
+kkkkkkkkkkkkkkkk
+eeeeeeeeeeeeeeee
+ePppppeeePpppeee
+epeeeeeeepeeepee
+epeeeeeeepeeepee
+eppppeeeeppppeee
+epeeeeeeepepeeee
+epeeeeeeepeepeee
+epppppeeepeeepee
+eeeeeeeeeeeeeeee
+gggggggggggggggg
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+kkkkkkkkkkkkkkkk
+................
+
+tile neon_palmers_4:
+solid: true
+................
+kkkkkkkkkkkkkkk.
+eeeeeeeeeeeeeek.
+eePeeeeePpppeeek
+eepeeeepeeeeeeek
+eeeeeeepeeeeeeek
+eeeeeeeepppeeeek
+eeeeeeeeeeepeeek
+eeeeeeeeeeepeeek
+eeeeeeeppppeeeek
+eeeeeeeeeeeeeeek
+ggggggggggggggek
+eeeeeeeeeeeeeeek
+eeeeeeeeeeeeeeek
+kkkkkkkkkkkkkkk.
+................
