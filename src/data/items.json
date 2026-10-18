@@ -2,38 +2,92 @@
   "pizza_slice": {
     "name": "Pizza Slice",
     "type": "consumable",
-    "effect": { "hp": 20 },
+    "effect": {
+      "hp": 20
+    },
     "price": 3,
     "desc": "Cold, folded, perfect. Heals 20 HP."
   },
   "coffee": {
     "name": "Coffee",
     "type": "consumable",
-    "effect": { "amp": 6 },
+    "effect": {
+      "amp": 6
+    },
     "price": 4,
     "desc": "Gas-station drip. +6 AMP."
   },
   "hand_warmer": {
     "name": "Hand Warmer",
     "type": "consumable",
-    "effect": { "hp": 8, "cure": ["DEAF", "TEMPO_DOWN"] },
+    "effect": {
+      "hp": 8,
+      "cure": [
+        "DEAF",
+        "TEMPO_DOWN"
+      ]
+    },
     "price": 5,
     "desc": "Cures DEAF and TEMPO DOWN. Heals 8."
   },
   "hotdish": {
     "name": "Tater Tot Hotdish",
     "type": "consumable",
-    "effect": { "revive": 50 },
+    "effect": {
+      "revive": 50
+    },
     "price": 15,
     "desc": "Revive at 50% HP. Church-basement grade."
   },
   "half_ounce": {
     "name": "Half-Ounce",
     "type": "consumable",
-    "effect": { "ampAll": "max", "statusAll": { "id": "BAKED", "turns": 3 } },
+    "effect": {
+      "ampAll": "max",
+      "statusAll": {
+        "id": "BAKED",
+        "turns": 3
+      }
+    },
     "price": 0,
     "sell": 20,
     "mapUsable": true,
     "desc": "Session: party AMP to max, BAKED 3. The pawn guy pays $20."
+  },
+  "tinny_ride_cymbal": {
+    "name": "Tinny Ride Cymbal",
+    "type": "key",
+    "price": 0,
+    "desc": "Sounds a bit tinny. Should probably buy a new one."
+  },
+  "flyer_blank": {
+    "name": "Flyer",
+    "type": "key",
+    "price": 0,
+    "desc": "DRUMMER WANTED. Blank until posted."
+  },
+  "band_agreement": {
+    "name": "Band Agreement",
+    "type": "key",
+    "price": 0,
+    "desc": "Legally binding. Initialed by a dog."
+  },
+  "palmers_flyer": {
+    "name": "Palmer's Flyer",
+    "type": "key",
+    "price": 0,
+    "desc": "GIG TONIGHT: PALMER'S BAR. NO GUITAR SOLO NECESSARY."
+  },
+  "van_keys": {
+    "name": "Van Keys",
+    "type": "key",
+    "price": 0,
+    "desc": "To a van you have never seen."
+  },
+  "tour_itinerary": {
+    "name": "Tour Itinerary",
+    "type": "key",
+    "price": 0,
+    "desc": "POTATO BELT: TOMORROW, circled in red."
   }
 }

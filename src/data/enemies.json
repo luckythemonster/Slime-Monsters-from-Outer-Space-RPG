@@ -1,22 +1,40 @@
 {
-  "cop": {
+  "dev_cop": {
     "name": "Cop",
     "sprite": "cop",
     "battleSprite": "cop_b",
     "size": 32,
-    "stats": { "hp": 16, "atk": 4, "def": 2, "spd": 4 },
+    "stats": {
+      "hp": 16,
+      "atk": 4,
+      "def": 2,
+      "spd": 4
+    },
     "xp": 3,
     "money": 2,
     "weak": [],
     "resist": [],
     "scan": "My brain thinks it's a dev-map cop.",
     "skills": {
-      "baton": { "name": "Baton", "freq": "PHYS", "pow": 100 }
+      "baton": {
+        "name": "Baton",
+        "freq": "PHYS",
+        "pow": 100
+      }
     },
     "ai": [
-      { "do": "baton", "target": "random", "weight": 1 }
+      {
+        "do": "baton",
+        "target": "random",
+        "weight": 1
+      }
     ],
-    "drops": [{ "item": "coffee", "chance": 0.25 }]
+    "drops": [
+      {
+        "item": "coffee",
+        "chance": 0.25
+      }
+    ]
   },
   "drone": {
     "name": "Retrieval Drone",
@@ -24,84 +42,221 @@
     "sprite": "drone",
     "battleSprite": "drone_b",
     "size": 32,
-    "stats": { "hp": 40, "atk": 6, "def": 3, "spd": 6 },
+    "stats": {
+      "hp": 40,
+      "atk": 6,
+      "def": 3,
+      "spd": 6
+    },
     "xp": 8,
     "money": 2,
-    "weak": ["NOISE"],
+    "weak": [
+      "NOISE"
+    ],
     "resist": [],
     "scan": "My brain thinks it's here to offer you a dental plan.",
     "skills": {
-      "taser_prod": { "name": "Taser Prod", "freq": "PHYS", "pow": 100 },
-      "retrieval_beam": { "name": "Retrieval Beam", "freq": "PHYS", "pow": 80, "status": { "id": "TEMPO_DOWN", "chance": 30, "turns": 3 } }
+      "taser_prod": {
+        "name": "Taser Prod",
+        "freq": "PHYS",
+        "pow": 100
+      },
+      "retrieval_beam": {
+        "name": "Retrieval Beam",
+        "freq": "PHYS",
+        "pow": 80,
+        "status": {
+          "id": "TEMPO_DOWN",
+          "chance": 30,
+          "turns": 3
+        }
+      }
     },
     "ai": [
-      { "if": "round == 1", "do": "taser_prod", "target": "random", "weight": 10 },
-      { "if": "round > 1", "do": "taser_prod", "target": "random", "weight": 1 },
-      { "if": "round > 1", "do": "retrieval_beam", "target": "random", "weight": 1 }
+      {
+        "if": "round == 1",
+        "do": "taser_prod",
+        "target": "random",
+        "weight": 10
+      },
+      {
+        "if": "round > 1",
+        "do": "taser_prod",
+        "target": "random",
+        "weight": 1
+      },
+      {
+        "if": "round > 1",
+        "do": "retrieval_beam",
+        "target": "random",
+        "weight": 1
+      }
     ],
     "drops": []
   },
-  "slush_pile": {
+  "slush": {
     "name": "Slush Pile",
-    "sprite": "slush_pile",
-    "battleSprite": "slush_pile_b",
+    "sprite": "slush",
+    "battleSprite": "slush_b",
     "size": 32,
-    "stats": { "hp": 80, "atk": 9, "def": 4, "spd": 3 },
+    "stats": {
+      "hp": 80,
+      "atk": 9,
+      "def": 4,
+      "spd": 3
+    },
     "xp": 8,
     "money": 3,
-    "weak": ["HIGH"],
-    "resist": ["PHYS"],
+    "weak": [
+      "HIGH"
+    ],
+    "resist": [
+      "PHYS"
+    ],
     "scan": "My brain thinks it's mostly road salt and regret.",
     "skills": {
-      "splash": { "name": "Splash", "freq": "PHYS", "pow": 100 },
-      "freeze": { "name": "Freeze", "freq": "NOISE", "pow": 60, "target": "all", "status": { "id": "TEMPO_DOWN", "chance": 30, "turns": 3 } }
+      "splash": {
+        "name": "Splash",
+        "freq": "PHYS",
+        "pow": 100
+      },
+      "freeze": {
+        "name": "Freeze",
+        "freq": "NOISE",
+        "pow": 60,
+        "target": "all",
+        "status": {
+          "id": "TEMPO_DOWN",
+          "chance": 30,
+          "turns": 3
+        }
+      }
     },
     "ai": [
-      { "if": "every(3)", "do": "freeze", "target": "all", "weight": 10 },
-      { "do": "splash", "target": "random", "weight": 1 }
+      {
+        "if": "every(3)",
+        "do": "freeze",
+        "target": "all",
+        "weight": 10
+      },
+      {
+        "do": "splash",
+        "target": "random",
+        "weight": 1
+      }
     ],
-    "drops": [{ "item": "hand_warmer", "chance": 0.2 }]
+    "drops": [
+      {
+        "item": "hand_warmer",
+        "chance": 0.2
+      }
+    ]
   },
   "goose": {
     "name": "Canada Goose",
     "sprite": "goose",
     "battleSprite": "goose_b",
     "size": 32,
-    "stats": { "hp": 70, "atk": 10, "def": 4, "spd": 9 },
+    "stats": {
+      "hp": 70,
+      "atk": 10,
+      "def": 4,
+      "spd": 9
+    },
     "xp": 9,
     "money": 4,
-    "weak": ["LOW"],
+    "weak": [
+      "LOW"
+    ],
     "resist": [],
     "scan": "My brain thinks it has a lawyer.",
     "skills": {
-      "hiss": { "name": "Hiss", "freq": "NOISE", "pow": 60, "status": { "id": "DAZED", "chance": 30, "turns": 1 } },
-      "peck": { "name": "Peck", "freq": "PHYS", "pow": 110 }
+      "hiss": {
+        "name": "Hiss",
+        "freq": "NOISE",
+        "pow": 60,
+        "status": {
+          "id": "DAZED",
+          "chance": 30,
+          "turns": 1
+        }
+      },
+      "peck": {
+        "name": "Peck",
+        "freq": "PHYS",
+        "pow": 110
+      }
     },
     "ai": [
-      { "if": "round == 1", "do": "hiss", "target": "random", "weight": 6 },
-      { "if": "hpPct < 30 && allies == 0", "do": "flee", "weight": 3 },
-      { "do": "peck", "target": "lowestHp", "weight": 4 }
+      {
+        "if": "round == 1",
+        "do": "hiss",
+        "target": "random",
+        "weight": 6
+      },
+      {
+        "if": "hpPct < 30 && allies == 0",
+        "do": "flee",
+        "weight": 3
+      },
+      {
+        "do": "peck",
+        "target": "lowestHp",
+        "weight": 4
+      }
     ],
-    "drops": [{ "item": "pizza_slice", "chance": 0.3 }]
+    "drops": [
+      {
+        "item": "pizza_slice",
+        "chance": 0.3
+      }
+    ]
   },
   "scooter": {
     "name": "Feral Scooter",
     "sprite": "scooter",
     "battleSprite": "scooter_b",
     "size": 32,
-    "stats": { "hp": 36, "atk": 8, "def": 5, "spd": 10 },
+    "stats": {
+      "hp": 36,
+      "atk": 8,
+      "def": 5,
+      "spd": 10
+    },
     "xp": 3,
     "money": 2,
-    "weak": ["PHYS"],
-    "resist": ["NOISE"],
+    "weak": [
+      "PHYS"
+    ],
+    "resist": [
+      "NOISE"
+    ],
     "scan": "My brain thinks someone left these unlocked on purpose.",
     "skills": {
-      "zip": { "name": "Zip", "freq": "PHYS", "pow": 90 },
-      "swarm": { "name": "Swarm", "freq": "PHYS", "pow": 60, "target": "all" }
+      "zip": {
+        "name": "Zip",
+        "freq": "PHYS",
+        "pow": 90
+      },
+      "swarm": {
+        "name": "Swarm",
+        "freq": "PHYS",
+        "pow": 60,
+        "target": "all"
+      }
     },
     "ai": [
-      { "if": "allies == 2", "do": "swarm", "target": "all", "weight": 5 },
-      { "do": "zip", "target": "random", "weight": 4 }
+      {
+        "if": "allies == 2",
+        "do": "swarm",
+        "target": "all",
+        "weight": 5
+      },
+      {
+        "do": "zip",
+        "target": "random",
+        "weight": 4
+      }
     ],
     "drops": []
   },
@@ -111,23 +266,71 @@
     "sprite": "analyst",
     "battleSprite": "analyst_b",
     "size": 48,
-    "stats": { "hp": 130, "atk": 11, "def": 7, "spd": 7 },
+    "stats": {
+      "hp": 130,
+      "atk": 11,
+      "def": 7,
+      "spd": 7
+    },
     "xp": 16,
     "money": 8,
-    "weak": ["NOISE"],
-    "resist": ["HIGH"],
+    "weak": [
+      "NOISE"
+    ],
+    "resist": [
+      "HIGH"
+    ],
     "scan": "My brain thinks it has already segmented us.",
     "skills": {
-      "pick_a_demographic": { "name": "Pick a Demographic", "freq": "NOISE", "pow": 80, "status": { "id": "OUT_OF_TUNE", "chance": 50, "turns": 3 } },
-      "dental_plan": { "name": "Dental Plan", "target": "self", "heal": 20 },
-      "onboarding": { "name": "Onboarding", "target": "all", "status": { "id": "TEMPO_DOWN", "chance": 40, "turns": 3 } }
+      "pick_a_demographic": {
+        "name": "Pick a Demographic",
+        "freq": "NOISE",
+        "pow": 80,
+        "status": {
+          "id": "OUT_OF_TUNE",
+          "chance": 50,
+          "turns": 3
+        }
+      },
+      "dental_plan": {
+        "name": "Dental Plan",
+        "target": "self",
+        "heal": 20
+      },
+      "onboarding": {
+        "name": "Onboarding",
+        "target": "all",
+        "status": {
+          "id": "TEMPO_DOWN",
+          "chance": 40,
+          "turns": 3
+        }
+      }
     },
     "ai": [
-      { "do": "pick_a_demographic", "target": "random", "weight": 4 },
-      { "if": "hpPct < 50", "do": "dental_plan", "target": "self", "weight": 3 },
-      { "do": "onboarding", "target": "all", "weight": 2 }
+      {
+        "do": "pick_a_demographic",
+        "target": "random",
+        "weight": 4
+      },
+      {
+        "if": "hpPct < 50",
+        "do": "dental_plan",
+        "target": "self",
+        "weight": 3
+      },
+      {
+        "do": "onboarding",
+        "target": "all",
+        "weight": 2
+      }
     ],
-    "drops": [{ "item": "coffee", "chance": 0.3 }]
+    "drops": [
+      {
+        "item": "coffee",
+        "chance": 0.3
+      }
+    ]
   },
   "billboard": {
     "name": "Billboard",
@@ -135,85 +338,94 @@
     "sprite": "billboard",
     "battleSprite": "billboard_b",
     "size": 64,
-    "stats": { "hp": 240, "atk": 12, "def": 9, "spd": 2 },
+    "stats": {
+      "hp": 240,
+      "atk": 12,
+      "def": 9,
+      "spd": 2
+    },
     "xp": 30,
     "money": 12,
-    "weak": ["NOISE"],
+    "weak": [
+      "NOISE"
+    ],
     "weakMult": 2,
-    "resist": ["PHYS", "LOW"],
+    "resist": [
+      "PHYS",
+      "LOW"
+    ],
     "scan": "My brain thinks it's humming in a key that doesn't exist.",
     "skills": {
-      "slogan": { "name": "Slogan", "freq": "NOISE", "pow": 70, "target": "all" },
-      "glitch": { "name": "Glitch", "target": "self", "selfStatus": { "id": "DAZED", "turns": 1 }, "text": "The sign reads WORK IS L0VE." }
+      "slogan": {
+        "name": "Slogan",
+        "freq": "NOISE",
+        "pow": 70,
+        "target": "all"
+      },
+      "glitch": {
+        "name": "Glitch",
+        "target": "self",
+        "selfStatus": {
+          "id": "DAZED",
+          "turns": 1
+        },
+        "text": "The sign reads WORK IS L0VE."
+      }
     },
     "ai": [
-      { "if": "every(3)", "do": "glitch", "target": "self", "weight": 10 },
-      { "do": "slogan", "target": "all", "weight": 1 }
+      {
+        "if": "every(3)",
+        "do": "glitch",
+        "target": "self",
+        "weight": 10
+      },
+      {
+        "do": "slogan",
+        "target": "all",
+        "weight": 1
+      }
     ],
-    "drops": [{ "item": "hotdish", "chance": 0.5 }]
-  },
-  "analyst_duo": {
-    "name": "Analyst",
-    "fullName": "Demographic Analyst",
-    "sprite": "analyst",
-    "battleSprite": "analyst_b",
-    "size": 48,
-    "stats": { "hp": 130, "atk": 11, "def": 7, "spd": 7 },
-    "xp": 16,
-    "money": 8,
-    "weak": ["NOISE"],
-    "resist": ["HIGH"],
-    "scan": "My brain thinks they bill in fifteen-minute increments.",
-    "skills": {
-      "pick_a_demographic": { "name": "Pick a Demographic", "freq": "NOISE", "pow": 80, "status": { "id": "OUT_OF_TUNE", "chance": 50, "turns": 3 } },
-      "dental_plan": { "name": "Dental Plan", "target": "self", "heal": 20 },
-      "onboarding": { "name": "Onboarding", "target": "all", "status": { "id": "TEMPO_DOWN", "chance": 40, "turns": 3 } }
-    },
-    "ai": [
-      { "do": "pick_a_demographic", "target": "random", "weight": 4 },
-      { "if": "hpPct < 50", "do": "dental_plan", "target": "self", "weight": 3 },
-      { "do": "onboarding", "target": "all", "weight": 2 }
-    ],
-    "drops": [{ "item": "coffee", "chance": 0.3 }]
-  },
-  "goose_pair": {
-    "name": "Canada Goose",
-    "sprite": "goose",
-    "battleSprite": "goose_b",
-    "size": 32,
-    "stats": { "hp": 70, "atk": 10, "def": 4, "spd": 9 },
-    "xp": 9,
-    "money": 4,
-    "weak": ["LOW"],
-    "resist": [],
-    "scan": "My brain thinks they're married.",
-    "skills": {
-      "hiss": { "name": "Hiss", "freq": "NOISE", "pow": 60, "status": { "id": "DAZED", "chance": 30, "turns": 1 } },
-      "peck": { "name": "Peck", "freq": "PHYS", "pow": 110 }
-    },
-    "ai": [
-      { "if": "round == 1", "do": "hiss", "target": "random", "weight": 6 },
-      { "if": "hpPct < 30 && allies == 0", "do": "flee", "weight": 3 },
-      { "do": "peck", "target": "lowestHp", "weight": 4 }
-    ],
-    "drops": [{ "item": "pizza_slice", "chance": 0.3 }]
+    "drops": [
+      {
+        "item": "hotdish",
+        "chance": 0.5
+      }
+    ]
   },
   "whrnnng": {
     "name": "WHRNNNG",
     "sprite": "whrnnng",
     "battleSprite": "whrnnng_b",
     "size": 64,
-    "stats": { "hp": 280, "atk": 8, "def": 5, "spd": 8 },
+    "stats": {
+      "hp": 280,
+      "atk": 8,
+      "def": 5,
+      "spd": 8
+    },
     "xp": 0,
     "money": 0,
-    "weak": ["LOW"],
-    "resist": ["NOISE"],
+    "weak": [
+      "LOW"
+    ],
+    "resist": [
+      "NOISE"
+    ],
     "scan": "My brain thinks it's the guitar's fault.",
     "skills": {
-      "sustain": { "name": "Sustain", "freq": "NOISE", "pow": 60, "target": "all" }
+      "sustain": {
+        "name": "Sustain",
+        "freq": "NOISE",
+        "pow": 60,
+        "target": "all"
+      }
     },
     "ai": [
-      { "do": "sustain", "target": "all", "weight": 1 }
+      {
+        "do": "sustain",
+        "target": "all",
+        "weight": 1
+      }
     ],
     "drops": []
   },
@@ -222,19 +434,46 @@
     "sprite": "thud_thud",
     "battleSprite": "thud_thud_b",
     "size": 48,
-    "stats": { "hp": 220, "atk": 11, "def": 4, "spd": 12 },
+    "stats": {
+      "hp": 220,
+      "atk": 11,
+      "def": 4,
+      "spd": 12
+    },
     "xp": 0,
     "money": 0,
-    "weak": ["HIGH"],
-    "resist": ["NOISE"],
+    "weak": [
+      "HIGH"
+    ],
+    "resist": [
+      "NOISE"
+    ],
     "scan": "My brain thinks it's the drummer's fault.",
     "skills": {
-      "downbeat": { "name": "Downbeat", "freq": "PHYS", "pow": 110 },
-      "double": { "name": "Double", "freq": "PHYS", "pow": 60, "hits": 2 }
+      "downbeat": {
+        "name": "Downbeat",
+        "freq": "PHYS",
+        "pow": 110
+      },
+      "double": {
+        "name": "Double",
+        "freq": "PHYS",
+        "pow": 60,
+        "hits": 2
+      }
     },
     "ai": [
-      { "if": "every(2)", "do": "double", "target": "random", "weight": 10 },
-      { "do": "downbeat", "target": "random", "weight": 1 }
+      {
+        "if": "every(2)",
+        "do": "double",
+        "target": "random",
+        "weight": 10
+      },
+      {
+        "do": "downbeat",
+        "target": "random",
+        "weight": 1
+      }
     ],
     "drops": []
   },
@@ -243,7 +482,12 @@
     "sprite": "chorus",
     "battleSprite": "chorus_b",
     "size": 48,
-    "stats": { "hp": 400, "atk": 5, "def": 5, "spd": 5 },
+    "stats": {
+      "hp": 400,
+      "atk": 5,
+      "def": 5,
+      "spd": 5
+    },
     "minHp": 1,
     "xp": 0,
     "money": 0,
@@ -251,57 +495,153 @@
     "resist": [],
     "scan": "My brain thinks it's catchy. Brian hates it.",
     "skills": {
-      "hook": { "name": "Hook", "freq": "PHYS", "pow": 40 },
-      "earworm": { "name": "Earworm", "freq": "NOISE", "pow": 30, "status": { "id": "DEAF", "chance": 20, "turns": 3 } }
+      "hook": {
+        "name": "Hook",
+        "freq": "PHYS",
+        "pow": 40
+      },
+      "earworm": {
+        "name": "Earworm",
+        "freq": "NOISE",
+        "pow": 30,
+        "status": {
+          "id": "DEAF",
+          "chance": 20,
+          "turns": 3
+        }
+      }
     },
     "ai": [
-      { "do": "hook", "target": "random", "weight": 3 },
-      { "do": "earworm", "target": "random", "weight": 2 }
+      {
+        "do": "hook",
+        "target": "random",
+        "weight": 3
+      },
+      {
+        "do": "earworm",
+        "target": "random",
+        "weight": 2
+      }
     ],
     "drops": []
   },
-  "undercover_cop": {
+  "cop": {
     "name": "Undercover Cop",
     "sprite": "cop",
-    "battleSprite": "undercover_cop_b",
-    "altSheets": { "nomohawk": "undercover_cop_nomohawk_b" },
+    "battleSprite": "cop_b",
+    "altSheets": {
+      "nomohawk": "cop_nomohawk_b"
+    },
     "size": 48,
-    "stats": { "hp": 400, "atk": 11, "def": 10, "spd": 8 },
+    "stats": {
+      "hp": 400,
+      "atk": 11,
+      "def": 10,
+      "spd": 8
+    },
     "xp": 0,
     "money": 0,
     "weak": [],
-    "resist": ["PHYS"],
+    "resist": [
+      "PHYS"
+    ],
     "scan": "My brain thinks the price tag is still on.",
     "skills": {
-      "baton": { "name": "Baton", "freq": "PHYS", "pow": 100 },
-      "pepper_spray": { "name": "Pepper Spray", "freq": "NOISE", "pow": 60, "target": "all", "status": { "id": "OUT_OF_TUNE", "chance": 40, "turns": 3 } },
-      "hello_fellow_kids": { "name": "Hello Fellow Kids", "target": "self", "selfStatus": { "id": "TEMPO_UP", "turns": 3 }, "text": "He tries to blend in." }
+      "baton": {
+        "name": "Baton",
+        "freq": "PHYS",
+        "pow": 100
+      },
+      "pepper_spray": {
+        "name": "Pepper Spray",
+        "freq": "NOISE",
+        "pow": 60,
+        "target": "all",
+        "status": {
+          "id": "OUT_OF_TUNE",
+          "chance": 40,
+          "turns": 3
+        }
+      },
+      "hello_fellow_kids": {
+        "name": "Hello Fellow Kids",
+        "target": "self",
+        "selfStatus": {
+          "id": "TEMPO_UP",
+          "turns": 3
+        },
+        "text": "He tries to blend in."
+      }
     },
     "ai": [
-      { "if": "round >= 2", "do": "hello_fellow_kids", "target": "self", "weight": 3, "once": true },
-      { "do": "baton", "target": "notRyan", "weight": 4 },
-      { "do": "pepper_spray", "target": "all", "weight": 2 }
+      {
+        "if": "round >= 2",
+        "do": "hello_fellow_kids",
+        "target": "self",
+        "weight": 3,
+        "once": true
+      },
+      {
+        "do": "baton",
+        "target": "notRyan",
+        "weight": 4
+      },
+      {
+        "do": "pepper_spray",
+        "target": "all",
+        "weight": 2
+      }
     ],
-    "drops": [{ "item": "price_tag_jacket", "chance": 1 }]
+    "drops": []
   },
   "backup_cop": {
     "name": "Backup Cop",
     "sprite": "cop",
     "battleSprite": "backup_cop_b",
     "size": 32,
-    "stats": { "hp": 110, "atk": 8, "def": 7, "spd": 7 },
+    "stats": {
+      "hp": 110,
+      "atk": 8,
+      "def": 7,
+      "spd": 7
+    },
     "xp": 0,
     "money": 0,
-    "weak": ["NOISE"],
-    "resist": ["PHYS"],
+    "weak": [
+      "NOISE"
+    ],
+    "resist": [
+      "PHYS"
+    ],
     "scan": "My brain thinks they carpooled.",
     "skills": {
-      "baton": { "name": "Baton", "freq": "PHYS", "pow": 100 },
-      "cuff": { "name": "Cuff", "freq": "PHYS", "pow": 70, "status": { "id": "DAZED", "chance": 40, "turns": 1 } }
+      "baton": {
+        "name": "Baton",
+        "freq": "PHYS",
+        "pow": 100
+      },
+      "cuff": {
+        "name": "Cuff",
+        "freq": "PHYS",
+        "pow": 70,
+        "status": {
+          "id": "DAZED",
+          "chance": 40,
+          "turns": 1
+        }
+      }
     },
     "ai": [
-      { "do": "baton", "target": "notRyan", "weight": 3 },
-      { "do": "cuff", "target": "notRyan", "weight": 2 }
+      {
+        "do": "baton",
+        "target": "notRyan",
+        "weight": 3
+      },
+      {
+        "do": "cuff",
+        "target": "notRyan",
+        "weight": 2
+      }
     ],
     "drops": []
   }

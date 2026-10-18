@@ -1,36 +1,399 @@
 {
-  "power_chord": { "name": "Power Chord", "kind": "riff", "who": "lucky", "level": 1, "amp": 3, "freq": "HIGH", "pow": 140, "target": "enemy", "desc": "Single. Loud." },
-  "feedback_squeal": { "name": "Feedback Squeal", "kind": "riff", "who": "lucky", "level": 2, "amp": 4, "freq": "NOISE", "pow": 70, "target": "allEnemies", "acc": -10, "status": { "id": "DEAF", "chance": 50, "turns": 3 }, "desc": "All enemies. 50% DEAF." },
-  "pseudopod_slap": { "name": "Pseudopod Slap", "kind": "riff", "who": "lucky", "level": 3, "amp": 3, "freq": "PHYS", "pow": 110, "target": "enemy", "status": { "id": "DAZED", "chance": 60, "turns": 1 }, "desc": "Single. 60% DAZED." },
-  "migraine": { "name": "Migraine", "kind": "riff", "who": "lucky", "level": 5, "amp": 7, "freq": "NOISE", "pow": 150, "target": "allEnemies", "status": { "id": "OUT_OF_TUNE", "chance": 30, "turns": 3 }, "desc": "All enemies. 30% OUT OF TUNE." },
-  "bristle": { "name": "Bristle", "kind": "riff", "who": "lucky", "level": 7, "amp": 4, "target": "self", "selfStatus": { "id": "BRISTLING", "turns": 3 }, "desc": "Self BRISTLING 3." },
-
-  "root_note": { "name": "Root Note", "kind": "riff", "who": "phoenix", "level": 1, "amp": 3, "freq": "LOW", "pow": 130, "target": "enemy", "status": { "id": "TEMPO_DOWN", "chance": 30, "turns": 3 }, "desc": "Single. 30% TEMPO DOWN." },
-  "my_brain_thinks": { "name": "My Brain Thinks", "kind": "riff", "who": "phoenix", "level": 2, "amp": 2, "target": "enemy", "scan": true, "toon": 5, "desc": "Scan an enemy. +5 Toon." },
-  "deadpan": { "name": "Deadpan", "kind": "riff", "who": "phoenix", "level": 3, "amp": 4, "target": "ally", "allyStatus": { "id": "DEADPAN", "turns": 3 }, "cure": ["DAZED"], "desc": "Ally DEF +50% for 3. Cures DAZED." },
-  "drone_note": { "name": "Drone Note", "kind": "riff", "who": "phoenix", "level": 4, "amp": 5, "freq": "LOW", "pow": 90, "target": "allEnemies", "status": { "id": "TEMPO_DOWN", "chance": 40, "turns": 3 }, "desc": "All enemies. 40% TEMPO DOWN." },
-  "rent_is_due": { "name": "Rent Is Due", "kind": "riff", "who": "phoenix", "level": 6, "amp": 6, "money": 1, "freq": "LOW", "pow": 200, "target": "enemy", "desc": "Single. Also costs $1." },
-
-  "sterile_chord": { "name": "Sterile Chord", "kind": "riff", "who": "brian", "level": 1, "amp": 0, "freq": "HIGH", "pow": 120, "target": "enemy", "alwaysHit": true, "noCrit": true, "desc": "Single. Always hits. Never crits." },
-  "turn_the_bass_down": { "name": "Turn the Bass Down", "kind": "riff", "who": "brian", "level": 1, "amp": 2, "target": "self", "selfStatus": { "id": "BASS_UP", "turns": 3 }, "otherStatus": { "who": "phoenix", "id": "BASS_DOWN", "turns": 3 }, "desc": "Phoenix ATK -25%. Brian ATK +25%." },
-  "tube_screamer": { "name": "Tube Screamer", "kind": "riff", "who": "brian", "level": 1, "amp": 5, "freq": "HIGH", "pow": 170, "target": "enemy", "groundHum": 30, "desc": "Single. 30% ground hum hits an ally." },
-  "normal_music": { "name": "Normal Music", "kind": "riff", "who": "brian", "level": 1, "amp": 0, "target": "self", "meterTo": 0, "healPct": 50, "desc": "Toon to 0. Heals Brian 50%." },
-
-  "blast_beat": { "name": "Blast Beat", "kind": "auto", "who": "ryan", "freq": "NOISE", "pow": 130, "target": "allEnemies", "desc": "All enemies." },
-  "fill": { "name": "Fill", "kind": "auto", "who": "ryan", "freq": "PHYS", "pow": 140, "target": "randomAny", "friendlyChance": 20, "desc": "Random target. 20% a party member." },
-  "tinny_ride": { "name": "Tinny Ride", "kind": "auto", "who": "ryan", "freq": "NOISE", "pow": 90, "target": "enemy", "status": { "id": "DEAF", "chance": 50, "turns": 3 }, "desc": "Single. 50% DEAF." },
-  "seven_eight": { "name": "Seven-Eight", "kind": "auto", "who": "ryan", "freq": "NOISE", "pow": 150, "target": "allEnemies", "desc": "All enemies." },
-  "kick": { "name": "Kick", "kind": "auto", "who": "ryan", "freq": "PHYS", "pow": 160, "target": "highestAtk", "desc": "Highest-ATK enemy." },
-
-  "shared_aura": { "name": "Shared Aura", "kind": "sync", "pair": ["lucky", "phoenix"], "level": 1, "amp": 4, "target": "party", "healPct": 25, "cureAll": true, "toon": 10, "desc": "Both heal 25%, cured. +10 Toon." },
-  "low_end_theory": { "name": "Low-End Theory", "kind": "sync", "pair": ["lucky", "phoenix"], "level": 3, "amp": 5, "freq": ["LOW", "HIGH"], "pow": 160, "target": "allEnemies", "status": { "id": "TEMPO_DOWN", "chance": 50, "turns": 3 }, "desc": "All enemies. 50% TEMPO DOWN." },
-  "wall_of_sound": { "name": "Wall of Sound", "kind": "sync", "pair": ["lucky", "phoenix"], "level": 5, "amp": 8, "freq": "NOISE", "pow": 220, "target": "allEnemies", "toon": 15, "desc": "All enemies. +15 Toon." },
-  "pocket": { "name": "Pocket", "kind": "sync", "pair": ["ryan", "lucky"], "level": 1, "amp": 0, "aiOnly": true, "minToon": 50, "freq": "NOISE", "pow": 200, "target": "allEnemies", "toon": 12, "desc": "Ryan's sync with Lucky." },
-
-  "pop": { "name": "POP!", "kind": "noise", "level": 1, "cost": 25, "freq": "NOISE", "pow": 150, "target": "enemy", "removeBuff": true, "word": "pop", "desc": "Single. Removes one buff." },
-  "kraaang": { "name": "KRAAANG", "kind": "noise", "level": 2, "cost": 50, "freq": "NOISE", "pow": 180, "target": "allEnemies", "status": { "id": "DAZED", "chance": 40, "turns": 1 }, "knockOff": { "size": 32, "chance": 25 }, "word": "kraaang", "desc": "All. 40% DAZED. The G swings." },
-  "krathoom": { "name": "KRATHOOM", "kind": "noise", "level": 3, "cost": 75, "freq": "NOISE", "pow": 260, "target": "allEnemies", "ignoreDef": true, "selfStatus": { "id": "BRISTLING", "turns": 2 }, "uiTear": 1, "word": "krathoom", "desc": "All. Ignores DEF. You bristle." },
-  "doom": { "name": "DOOM", "kind": "noise", "level": 4, "cost": 100, "scripted": true, "freq": "NOISE", "pow": 999, "target": "allEnemies", "word": "doom", "desc": "???" },
-  "crack": { "name": "CRACK", "kind": "noise", "level": 4, "cost": 100, "scripted": true, "word": "crack", "desc": "???" },
-  "thud": { "name": "THUD", "kind": "noise", "level": 4, "cost": 100, "scripted": true, "word": "thud", "desc": "???" }
+  "power_chord": {
+    "name": "Power Chord",
+    "kind": "riff",
+    "who": "lucky",
+    "level": 1,
+    "amp": 3,
+    "freq": "HIGH",
+    "pow": 140,
+    "target": "enemy",
+    "desc": "Single. Loud."
+  },
+  "feedback_squeal": {
+    "name": "Feedback Squeal",
+    "kind": "riff",
+    "who": "lucky",
+    "level": 2,
+    "amp": 4,
+    "freq": "NOISE",
+    "pow": 70,
+    "target": "allEnemies",
+    "acc": -10,
+    "status": {
+      "id": "DEAF",
+      "chance": 50,
+      "turns": 3
+    },
+    "desc": "All enemies. 50% DEAF."
+  },
+  "pseudopod_slap": {
+    "name": "Pseudopod Slap",
+    "kind": "riff",
+    "who": "lucky",
+    "level": 3,
+    "amp": 3,
+    "freq": "PHYS",
+    "pow": 110,
+    "target": "enemy",
+    "status": {
+      "id": "DAZED",
+      "chance": 60,
+      "turns": 1
+    },
+    "desc": "Single. 60% DAZED."
+  },
+  "migraine": {
+    "name": "Migraine",
+    "kind": "riff",
+    "who": "lucky",
+    "level": 5,
+    "amp": 7,
+    "freq": "NOISE",
+    "pow": 150,
+    "target": "allEnemies",
+    "status": {
+      "id": "OUT_OF_TUNE",
+      "chance": 30,
+      "turns": 3
+    },
+    "desc": "All enemies. 30% OUT OF TUNE."
+  },
+  "bristle": {
+    "name": "Bristle",
+    "kind": "riff",
+    "who": "lucky",
+    "level": 7,
+    "amp": 4,
+    "target": "self",
+    "selfStatus": {
+      "id": "BRISTLING",
+      "turns": 3
+    },
+    "desc": "Self BRISTLING 3."
+  },
+  "root_note": {
+    "name": "Root Note",
+    "kind": "riff",
+    "who": "phoenix",
+    "level": 1,
+    "amp": 3,
+    "freq": "LOW",
+    "pow": 130,
+    "target": "enemy",
+    "status": {
+      "id": "TEMPO_DOWN",
+      "chance": 30,
+      "turns": 3
+    },
+    "desc": "Single. 30% TEMPO DOWN."
+  },
+  "my_brain_thinks": {
+    "name": "My Brain Thinks",
+    "kind": "riff",
+    "who": "phoenix",
+    "level": 2,
+    "amp": 2,
+    "target": "enemy",
+    "scan": true,
+    "toon": 5,
+    "desc": "Scan an enemy. +5 Toon."
+  },
+  "deadpan": {
+    "name": "Deadpan",
+    "kind": "riff",
+    "who": "phoenix",
+    "level": 3,
+    "amp": 4,
+    "target": "ally",
+    "allyStatus": {
+      "id": "DEADPAN",
+      "turns": 3
+    },
+    "cure": [
+      "DAZED"
+    ],
+    "desc": "Ally DEF +50% for 3. Cures DAZED."
+  },
+  "drone_note": {
+    "name": "Drone Note",
+    "kind": "riff",
+    "who": "phoenix",
+    "level": 4,
+    "amp": 5,
+    "freq": "LOW",
+    "pow": 90,
+    "target": "allEnemies",
+    "status": {
+      "id": "TEMPO_DOWN",
+      "chance": 40,
+      "turns": 3
+    },
+    "desc": "All enemies. 40% TEMPO DOWN."
+  },
+  "rent_is_due": {
+    "name": "Rent Is Due",
+    "kind": "riff",
+    "who": "phoenix",
+    "level": 6,
+    "amp": 6,
+    "money": 1,
+    "freq": "LOW",
+    "pow": 200,
+    "target": "enemy",
+    "desc": "Single. Also costs $1."
+  },
+  "sterile_chord": {
+    "name": "Sterile Chord",
+    "kind": "riff",
+    "who": "brian",
+    "level": 1,
+    "amp": 0,
+    "freq": "HIGH",
+    "pow": 120,
+    "target": "enemy",
+    "alwaysHit": true,
+    "noCrit": true,
+    "desc": "Single. Always hits. Never crits."
+  },
+  "turn_the_bass_down": {
+    "name": "Turn the Bass Down",
+    "kind": "riff",
+    "who": "brian",
+    "level": 1,
+    "amp": 2,
+    "target": "self",
+    "selfStatus": {
+      "id": "BASS_UP",
+      "turns": 3
+    },
+    "otherStatus": {
+      "who": "phoenix",
+      "id": "BASS_DOWN",
+      "turns": 3
+    },
+    "desc": "Phoenix ATK -25%. Brian ATK +25%."
+  },
+  "tube_screamer": {
+    "name": "Tube Screamer",
+    "kind": "riff",
+    "who": "brian",
+    "level": 1,
+    "amp": 5,
+    "freq": "HIGH",
+    "pow": 170,
+    "target": "enemy",
+    "groundHum": 30,
+    "desc": "Single. 30% ground hum hits an ally."
+  },
+  "normal_music": {
+    "name": "Normal Music",
+    "kind": "riff",
+    "who": "brian",
+    "level": 1,
+    "amp": 0,
+    "target": "self",
+    "meterTo": 0,
+    "healPct": 50,
+    "desc": "Toon to 0. Heals Brian 50%."
+  },
+  "blast_beat": {
+    "name": "Blast Beat",
+    "kind": "auto",
+    "who": "ryan",
+    "freq": "NOISE",
+    "pow": 130,
+    "target": "allEnemies",
+    "desc": "All enemies."
+  },
+  "fill": {
+    "name": "Fill",
+    "kind": "auto",
+    "who": "ryan",
+    "freq": "PHYS",
+    "pow": 140,
+    "target": "randomAny",
+    "friendlyChance": 20,
+    "desc": "Random target. 20% a party member."
+  },
+  "tinny_ride": {
+    "name": "Tinny Ride",
+    "kind": "auto",
+    "who": "ryan",
+    "freq": "NOISE",
+    "pow": 90,
+    "target": "enemy",
+    "status": {
+      "id": "DEAF",
+      "chance": 50,
+      "turns": 3
+    },
+    "desc": "Single. 50% DEAF."
+  },
+  "seven_eight": {
+    "name": "Seven-Eight",
+    "kind": "auto",
+    "who": "ryan",
+    "freq": "NOISE",
+    "pow": 150,
+    "target": "allEnemies",
+    "desc": "All enemies."
+  },
+  "kick": {
+    "name": "Kick",
+    "kind": "auto",
+    "who": "ryan",
+    "freq": "PHYS",
+    "pow": 160,
+    "target": "highestAtk",
+    "desc": "Highest-ATK enemy."
+  },
+  "shared_aura": {
+    "name": "Shared Aura",
+    "kind": "sync",
+    "level": 1,
+    "amp": 4,
+    "target": "party",
+    "healPct": 25,
+    "cureAll": true,
+    "toon": 10,
+    "desc": "Both heal 25%, cured. +10 Toon.",
+    "sync": [
+      "lucky",
+      "phoenix"
+    ]
+  },
+  "low_end_theory": {
+    "name": "Low-End Theory",
+    "kind": "sync",
+    "level": 3,
+    "amp": 5,
+    "freq": [
+      "LOW",
+      "HIGH"
+    ],
+    "pow": 160,
+    "target": "allEnemies",
+    "status": {
+      "id": "TEMPO_DOWN",
+      "chance": 50,
+      "turns": 3
+    },
+    "desc": "All enemies. 50% TEMPO DOWN.",
+    "sync": [
+      "lucky",
+      "phoenix"
+    ]
+  },
+  "wall_of_sound": {
+    "name": "Wall of Sound",
+    "kind": "sync",
+    "level": 5,
+    "amp": 8,
+    "freq": "NOISE",
+    "pow": 220,
+    "target": "allEnemies",
+    "toon": 15,
+    "desc": "All enemies. +15 Toon.",
+    "sync": [
+      "lucky",
+      "phoenix"
+    ]
+  },
+  "pocket": {
+    "name": "Pocket",
+    "kind": "sync",
+    "level": 1,
+    "amp": 0,
+    "aiOnly": true,
+    "minToon": 50,
+    "freq": "NOISE",
+    "pow": 200,
+    "target": "allEnemies",
+    "toon": 12,
+    "desc": "Ryan's sync with Lucky.",
+    "sync": [
+      "ryan",
+      "lucky"
+    ]
+  },
+  "pop": {
+    "name": "POP!",
+    "kind": "noise",
+    "level": 1,
+    "freq": "NOISE",
+    "pow": 150,
+    "target": "enemy",
+    "removeBuff": true,
+    "word": "pop",
+    "desc": "Single. Removes one buff.",
+    "toonCost": 25
+  },
+  "kraaang": {
+    "name": "KRAAANG",
+    "kind": "noise",
+    "level": 2,
+    "freq": "NOISE",
+    "pow": 180,
+    "target": "allEnemies",
+    "status": {
+      "id": "DAZED",
+      "chance": 40,
+      "turns": 1
+    },
+    "knockOff": {
+      "size": 32,
+      "chance": 25
+    },
+    "word": "kraaang",
+    "desc": "All. 40% DAZED. The G swings.",
+    "toonCost": 50
+  },
+  "krathoom": {
+    "name": "KRATHOOM",
+    "kind": "noise",
+    "level": 3,
+    "freq": "NOISE",
+    "pow": 260,
+    "target": "allEnemies",
+    "ignoreDef": true,
+    "selfStatus": {
+      "id": "BRISTLING",
+      "turns": 2
+    },
+    "uiTear": 1,
+    "word": "krathoom",
+    "desc": "All. Ignores DEF. You bristle.",
+    "toonCost": 75
+  },
+  "doom": {
+    "name": "DOOM",
+    "kind": "noise",
+    "level": 4,
+    "scripted": true,
+    "freq": "NOISE",
+    "pow": 999,
+    "target": "allEnemies",
+    "word": "doom",
+    "desc": "???",
+    "toonCost": 100
+  },
+  "crack": {
+    "name": "CRACK",
+    "kind": "noise",
+    "level": 4,
+    "scripted": true,
+    "word": "crack",
+    "desc": "???",
+    "toonCost": 100
+  },
+  "thud": {
+    "name": "THUD",
+    "kind": "noise",
+    "level": 4,
+    "scripted": true,
+    "word": "thud",
+    "desc": "???",
+    "toonCost": 100
+  }
 }

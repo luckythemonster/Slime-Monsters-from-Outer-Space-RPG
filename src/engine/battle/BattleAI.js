@@ -132,7 +132,7 @@ export function decide(model, actor, rng = model.rng) {
   const move = model.moveFor(actor, row.do);
   if (!move) { model.warn(`ai: unknown move "${row.do}" for ${actor.uid}`); return { cmd: 'wait' }; }
   if (move.kind === 'sync') {
-    const partnerId = (move.pair || []).find((id) => id !== actor.id);
+    const partnerId = (move.sync || move.pair || []).find((id) => id !== actor.id);
     return { cmd: 'sync', sync: row.do, partner: partnerId, row };
   }
   const mode = row.target || move.target || 'random';

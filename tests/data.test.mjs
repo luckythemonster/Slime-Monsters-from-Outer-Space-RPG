@@ -115,9 +115,9 @@ group('party', (check) => {
   check(up && up.from === 1 && up.to === 2, `level up to 2: ${JSON.stringify(up)}`);
   check(party.level('lucky') === 2, 'level() reflects');
   check(party.stats('lucky').hp === s1.hp + characters.characters.lucky.growth.hp, 'hp growth');
-  const big = party.addXp('lucky', 60); // total 70 → level 5
+  const big = party.addXp('lucky', 75); // total 85 → level 5 (DESIGN.md XP table: 0 10 24 48 85 …)
   check(big && big.to === 5, `multi level-up: ${JSON.stringify(big)}`);
-  check(party.xpToNext('lucky') === characters.xpTable[5] - 70, 'xpToNext');
+  check(party.xpToNext('lucky') === characters.xpTable[5] - 85, 'xpToNext');
   m.hp = 1;
   party.healAll();
   check(m.hp === party.stats('lucky').maxHp, 'healAll');

@@ -65,6 +65,12 @@ export class BattleModel {
     this.inputLocked = false;
     this.invincible = false;
     this.noFlee = !!encounter.noFlee || encounter.canFlee === false;
+    this.bailReason = encounter.bailReason || 'the dog has the contract';
+    this.noLose = !!encounter.noLose;
+    this.wipeFired = false;
+    this.ambush = !!encounter.ambush;
+    /** Script-imposed command whitelist (tutorial round 1); null = everything. @type {string[]|null} */
+    this.allowedCommands = null;
     this.hpBelowFired = new Set();
     this.toonFired = 0;
     this.itemsUsed = [];
@@ -76,8 +82,9 @@ export class BattleModel {
     /** @type {object[]} */
     this.combatants = [];
     party.forEach((seed, i) => this.combatants.push(this.makePartyCombatant(seed, i)));
+    // Enemy entries are ids; `encounter.overrides[i]` (parallel array) and `encounter.scan` tweak them.
     const list = enemies || encounter.enemies || [];
-    list.forEach((e, i) => this.combatants.push(this.makeEnemyCombatant(e, i)));
+    list.forEach((e, i) => this.combatants.push(this.makeEnemyCombatant(e, i, { scan: encounter.scan, ...((encounter.overrides || [])[i] || {}) })));
   }
 
   // ---- construction -------------------------------------------------------------------------
@@ -97,16 +104,16 @@ export class BattleModel {
       status, ko: (seed.hp ?? 1) <= 0 || status.some((s) => s.id === 'KO'), fled: false, offPanel: false,
       acted: false, tuning: false, usedRows: new Set(), hit100: !!seed.hit100, noCrit: !!seed.noCrit,
       onHit: seed.onHit || null, toonPerAction: seed.toonPerAction || 0, selfOutOfTune: seed.selfOutOfTune || 0,
-      present: true,
+      present: true, guest: !!seed.guest,
     };
     if (c.ko) { c.hp = 0; c.status = c.status.filter((s) => s.id !== 'KO'); }
     if (c.form && c.forms && c.forms[c.form]) { c.sprite = c.forms[c.form].sheet || c.sprite; c.size = c.forms[c.form].size || c.size; }
     return c;
   }
 
-  makeEnemyCombatant(entry, slot) {
+  makeEnemyCombatant(entry, slot, extra = {}) {
     const id = typeof entry === 'string' ? entry : entry.id;
-    const over = typeof entry === 'string' ? {} : entry;
+    const over = { ...extra, ...(typeof entry === 'string' ? {} : entry) };
     const def = (this.data.enemies || {})[id];
     if (!def) throw new Error(`BattleModel: unknown enemy "${id}"`);
     const stats = { ...(def.stats || {}), ...(over.stats || {}) };
@@ -119,7 +126,7 @@ export class BattleModel {
       xp: over.xp ?? def.xp ?? 0, money: over.money ?? def.money ?? 0, drops: over.drops || def.drops || [],
       weak: def.weak || [], resist: def.resist || [], weakMult: def.weakMult || 1.5,
       size: def.size || 32, sprite: def.battleSprite || def.sprite || id, altSheets: def.altSheets || null,
-      ai: over.ai || def.ai || [], skills: def.skills || {}, scan: def.scan || '',
+      ai: over.ai || def.ai || [], skills: def.skills || {}, scan: over.scan || def.scan || '',
       minHp: over.minHp ?? def.minHp ?? 0, immune: [...(def.immune || [])],
       status: [], ko: false, fled: false, offPanel: false, acted: false, tuning: false, usedRows: new Set(),
       auto: false, controllable: false, present: true, traits: {},
@@ -182,14 +189,23 @@ export class BattleModel {
     const c = this.find(uid);
     const deaf = hasStatus(c, 'DEAF');
     const items = this.usableItems();
-    return [
+    const list = [
       { id: 'strum', label: 'STRUM', disabled: false },
       { id: 'riff', label: 'RIFF', disabled: deaf || this.knownRiffs(c).length + this.syncMenu(uid).length === 0, reason: deaf ? 'DEAF' : 'no riffs yet' },
       { id: 'noise', label: 'NOISE', disabled: !!c.traits.noNoise || deaf || this.toonLevel < 1, reason: c.traits.noNoise || (deaf ? 'DEAF' : 'needs Toon 1') },
       { id: 'item', label: 'ITEM', disabled: items.length === 0, reason: 'no items' },
       { id: 'tune', label: 'TUNE', disabled: false },
-      { id: 'bail', label: 'BAIL', disabled: this.noFlee, reason: 'the dog has the contract' },
+      { id: 'bail', label: 'BAIL', disabled: this.noFlee, reason: this.bailReason },
     ];
+    if (this.allowedCommands) {
+      for (const e of list) if (!this.allowedCommands.includes(e.id) && !e.disabled) { e.disabled = true; e.reason = 'Not yet.'; }
+    }
+    return list;
+  }
+
+  /** Scripts restrict the command window (tutorial round 1); pass null to lift it. */
+  allowCommands(ids) {
+    this.allowedCommands = ids ? [...ids] : null;
   }
 
   /** RIFF submenu: single riffs. */
@@ -215,7 +231,7 @@ export class BattleModel {
     for (const id of c.syncs || []) {
       const s = riffs[id];
       if (!s || s.kind !== 'sync' || s.aiOnly) continue;
-      const partnerId = (s.pair || []).find((p) => p !== c.id);
+      const partnerId = (s.sync || s.pair || []).find((p) => p !== c.id);
       const partner = this.find(partnerId);
       const pname = partner ? partner.name : (this.data.characters && this.data.characters[partnerId] ? this.data.characters[partnerId].name : partnerId);
       let reason = null;
@@ -244,7 +260,7 @@ export class BattleModel {
       else if (c.traits.noNoise) reason = c.traits.noNoise;
       else if (hasStatus(c, 'DEAF')) reason = 'DEAF';
       else if (lvl < n.level) reason = `needs Toon ${n.level}`;
-      return { id: w, kind: 'noise', label: n.name, cost: n.cost, level: n.level, disabled: !!reason, reason, desc: n.desc || '', target: n.target || 'enemy' };
+      return { id: w, kind: 'noise', label: n.name, cost: n.toonCost ?? n.cost ?? n.level * 25, level: n.level, disabled: !!reason, reason, desc: n.desc || '', target: n.target || 'enemy' };
     });
   }
 
@@ -326,6 +342,8 @@ export class BattleModel {
     const roster = (c) => (c.side === 'party' ? ROSTER_ORDER.indexOf(c.id) : 100 + c.slot);
     const rolled = this.living().map((c) => ({ c, init: F.initiative(this.eff(c).spd, this.rng.int(0, 3)) }));
     rolled.sort((a, b) => (b.init - a.init) || ((a.c.side === 'party' ? 0 : 1) - (b.c.side === 'party' ? 0 : 1)) || (roster(a.c) - roster(b.c)));
+    // Touched from behind: the enemy gets round 1 first (DESIGN "Exploration & interaction").
+    if (this.ambush && this.round === 1) rolled.sort((a, b) => (a.c.side === 'enemy' ? 0 : 1) - (b.c.side === 'enemy' ? 0 : 1));
     return rolled.map((r) => r.c.uid);
   }
 
@@ -490,7 +508,7 @@ export class BattleModel {
   doSync(actor, a) {
     const s = this.moveFor(actor, a.sync);
     if (!s || s.kind !== 'sync') { this.warn(`sync: unknown ${a.sync}`); return false; }
-    const partnerId = a.partner || (s.pair || []).find((p) => p !== actor.id);
+    const partnerId = a.partner || (s.sync || s.pair || []).find((p) => p !== actor.id);
     const partner = this.find(partnerId);
     if (!partner || !this.isAlive(partner) || partner.acted || hasStatus(partner, 'DEAF') || hasStatus(actor, 'DEAF')) return false;
     if (!s.aiOnly && (actor.amp < (s.amp || 0) || partner.amp < (s.amp || 0))) return false;
@@ -514,7 +532,7 @@ export class BattleModel {
     if (n.scripted && !a.scripted) return false;
     if (actor.traits.noNoise || hasStatus(actor, 'DEAF')) return false;
     if (!a.scripted && this.toonLevel < n.level) return false;
-    if (!a.scripted) this.setMeter(this.meter - n.cost, { source: 'noise' });
+    if (!a.scripted) this.setMeter(this.meter - (n.toonCost ?? n.cost ?? n.level * 25), { source: 'noise' });
     this.emit({ type: 'anim', who: actor.uid, key: 'riff' });
     this.emit({ type: 'word', word: n.word || n.id, who: actor.uid, level: n.level });
     this.text(`${actor.name}: ${n.name}!`);
@@ -571,7 +589,7 @@ export class BattleModel {
   }
 
   doBail(actor) {
-    if (this.noFlee) { this.text('The dog has the contract.'); return false; }
+    if (this.noFlee) { this.text(this.bailReason); return false; }
     const party = this.living('party');
     const avg = Math.floor(party.reduce((s, c) => s + this.eff(c).spd, 0) / Math.max(1, party.length));
     const maxE = Math.max(0, ...this.living('enemy').map((c) => this.eff(c).spd));
@@ -739,6 +757,7 @@ export class BattleModel {
       this.emit({ type: 'sfx', name: 'ko' });
       this.text(`${target.name} is done.`);
       this.addToon(F.TOON_FILL.enemyKo, 'ko');
+      this.checkEnd();
       return true;
     }
     target.ko = true;
@@ -749,6 +768,7 @@ export class BattleModel {
     this.text(`${target.name} is down!`);
     this.updateMood(target);
     this.hook('onDefeat', target.uid);
+    this.checkEnd();
     return true;
   }
 
@@ -797,7 +817,7 @@ export class BattleModel {
 
   /** Add Toon points (party-only fills). Brian halves; player cap 99. */
   addToon(points, source = '') {
-    if (points <= 0) return 0;
+    if (points <= 0 || this.meter >= this.meterCap) return 0;
     const gain = F.toonGain(points, { halved: this.hasBrian() });
     if (gain <= 0) return 0;
     this.setMeter(this.meter + gain, { source });
@@ -806,7 +826,8 @@ export class BattleModel {
 
   /** Set the meter; `force` lets scripts reach 100. Fires onToon for every new level reached. */
   setMeter(value, { force = false, source = '' } = {}) {
-    const cap = force ? F.METER_MAX : this.meterCap;
+    // Players never rise past 99; a scripted 100 is kept (never pulled back down by the cap).
+    const cap = force ? F.METER_MAX : Math.max(this.meterCap, Math.min(this.meter, F.METER_MAX));
     const before = this.meter;
     this.meter = Math.max(0, Math.min(cap, Math.floor(value)));
     if (this.meter === before) return;
@@ -825,7 +846,7 @@ export class BattleModel {
 
   /** An enemy leaves the fight (flee / knocked off-panel). No XP, no money. */
   leave(c, how = 'flee') {
-    if (!c || !this.isAlive(c)) return;
+    if (!c || !c.present || c.ko || c.fled || c.offPanel) return;
     if (how === 'offPanel') c.offPanel = true; else c.fled = true;
     this.emit({ type: 'leave', who: c.uid, how });
     this.emit({ type: 'sfx', name: how === 'offPanel' ? 'kraaang' : 'flee' });
@@ -837,6 +858,7 @@ export class BattleModel {
   join(seed) {
     const c = this.makePartyCombatant(seed, this.party().length);
     c.acted = true; // joins after the current action; plays next round
+    c.joined = true; // setup.applyResults adds them to the real party
     this.combatants.push(c);
     this.emit({ type: 'join', who: c.uid, name: c.name, sprite: c.sprite, slot: c.slot });
     this.text(`${c.name} jumps in!`);
@@ -871,13 +893,44 @@ export class BattleModel {
     this.emit({ type: 'lockInput', on: this.inputLocked });
   }
 
+  /** Presentation pause (scripts: the three Eternity words 900 ms apart). */
+  wait(ms) { return this.emit({ type: 'wait', ms }); }
+
+  /**
+   * Scripted NOISE word fired on someone's behalf regardless of meter, turn or KO (the forced
+   * KRAAANG, DOOM). Damage uses `who`'s stats; `pow` overrides the word's power (DOOM = 999 flat).
+   */
+  forceNoise(word, who, { pow = null, flat = null } = {}) {
+    const actor = this.find(who) || this.party()[0];
+    const n = this.moveFor(actor, word) || { id: word, kind: 'noise', name: String(word).toUpperCase(), word, target: 'allEnemies', level: 4 };
+    this.emit({ type: 'anim', who: actor.uid, key: 'riff' });
+    this.emit({ type: 'word', word: n.word || word, who: actor.uid, level: n.level || 4, scripted: true });
+    this.text(`${n.name}!`);
+    const targets = this.living('enemy');
+    if (flat !== null) {
+      for (const t of targets) this.damage(t, flat, { source: 'noise', by: actor.uid, scripted: true, freq: 'NOISE' });
+    } else if (n.pow || pow) {
+      this.applyMove(actor, { ...n, pow: pow || n.pow, scripted: true }, targets, 'noise');
+    }
+    if (n.uiTear) this.emit({ type: 'uiTear', level: n.uiTear });
+    this.hook('onAction', actor, { cmd: 'noise', word, scripted: true });
+    return n;
+  }
+
   // ---- end of battle --------------------------------------------------------------------------
 
   checkEnd() {
     if (this.ended) return this.result;
+    if (this.suspendEnd) return null; // a script is mid-sequence (The Eternity) and will finish itself
     if (this.living('enemy').length === 0) return this.finish('win');
     const controllable = this.party().filter((c) => c.controllable && !c.auto);
-    if (controllable.length && controllable.every((c) => c.ko)) return this.finish('lose');
+    if (controllable.length && controllable.every((c) => c.ko)) {
+      if (this.noLose) {
+        if (!this.wipeFired) { this.wipeFired = true; this.hook('onWipe'); }
+        return this.result;
+      }
+      return this.finish('lose');
+    }
     return null;
   }
 
