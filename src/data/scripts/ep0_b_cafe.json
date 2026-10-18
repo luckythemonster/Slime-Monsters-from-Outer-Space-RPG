@@ -64,7 +64,7 @@
     { "sfx": "phone_ring" },
     { "wait": 900 },
     { "anim": { "who": "ryan", "key": "ryan_unfreeze", "wait": true } },
-    { "move": { "who": "ryan", "path": "LLLLU", "wait": true } },
+    { "move": { "who": "ryan", "path": "LLLLLUU", "wait": true } },
     { "face": { "who": "ryan", "dir": "up" } },
     { "wait": 300 },
     { "say": "Ryan. It's Brian. From the Zappa cover band. I've got a thing.", "who": "brian", "portrait": "brian_phone" },
