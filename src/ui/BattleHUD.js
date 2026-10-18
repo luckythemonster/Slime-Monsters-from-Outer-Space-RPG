@@ -11,17 +11,21 @@ import { UI_KEY } from './atlas.js';
 import { services } from '../engine/services.js';
 import { scaleMs } from '../config.js';
 
+// DESIGN.md "Battle HUD pixel map". The RIFF/ITEM/NOISE submenu is wider than the map's x 8..160
+// (riff names are 15 characters plus a right-aligned cost) and sits at y 84..144 so the hover hint in
+// the message strip (y 144) stays visible — a documented deviation.
 export const LAYOUT = {
   setlistY: 4,
-  meter: { x: 8, y: 16, w: 96, h: 8, segments: 4 },
-  enemyName: { x: 8, y: 26, w: 128, h: 24 },
+  meter: { x: 152, y: 14, w: 96, h: 8, segments: 4, labelX: 152, labelY: 4 },
+  enemyName: { x: 8, y: 14, w: 128, h: 20 },
   scan: { x: 8, y: 26, w: 168, h: 48 },
-  message: { x: 8, y: 146, w: 240, h: 12 },
-  command: { x: 8, y: 160, w: 112, h: 56, cols: 2, rowH: 12, pad: 8 },
-  status: { x: 120, y: 160, w: 128, h: 56, rowH: 12 },
+  message: { x: 8, y: 144, w: 240, h: 14 },
+  command: { x: 8, y: 160, w: 104, h: 56, cols: 2, rowH: 16, pad: 8, colW: 48 },
+  status: { x: 112, y: 160, w: 136, h: 56, rowH: 12, nameX: 116, iconX: 170, hpX: 220, ampX: 244 }, // icon 170 (map says 174) keeps 2 px clear of a 5-char HP
   submenu: { x: 8, y: 84, w: 176, h: 60, rows: 4 },
   rewards: { x: 40, y: 52, w: 176, h: 120 },
 };
+const METER_FRAMES = ['meter_seg_pink', 'meter_seg_green', 'meter_seg_purple', 'meter_seg_black'];
 
 const DEPTH = { base: 400, text: 402, cursor: 403, strip: 404, message: 405, menu: 410, rewards: 420 };
 const MOOD = { pink: '#ff5fd2', magenta: '#ff1aa0', purple: '#a050c0', beige: '#e8c890' };
@@ -33,14 +37,16 @@ const hasFrame = (scene, frame) => scene.textures.exists(UI_KEY) && scene.textur
 
 /** A cursor-driven menu: grid (cols) or scrolling list; items { label, right?, disabled?, reason?, divider? }. */
 class CursorMenu {
-  constructor(hud, { x, y, w, h, items, cols = 1, rows = null, selected = 0, cancelable = true, win = null, depth = DEPTH.menu, onHover = null }) {
+  constructor(hud, { x, y, w, h, items, cols = 1, rows = null, selected = 0, cancelable = true, win = null, depth = DEPTH.menu, onHover = null, rowH = LINE_H, colW = null, textDy = 2 }) {
     this.hud = hud;
     this.scene = hud.scene;
     this.x = x; this.y = y; this.w = w; this.h = h;
     this.items = items;
     this.cols = cols;
     this.rows = rows || Math.ceil(items.length / cols);
-    this.rowH = LAYOUT.command.rowH;
+    this.rowH = rowH;
+    this.fixedColW = colW;
+    this.textDy = textDy;
     this.pad = 8;
     this.cancelable = cancelable;
     this.depth = depth;
@@ -79,7 +85,7 @@ class CursorMenu {
     return new Promise((resolve) => { this.resolve = resolve; });
   }
 
-  colW() { return Math.floor((this.w - this.pad * 2) / this.cols); }
+  colW() { return this.fixedColW || Math.floor((this.w - this.pad * 2) / this.cols); }
 
   render() {
     for (const l of this.labels) l.destroy();
@@ -97,7 +103,7 @@ class CursorMenu {
       const r = Math.floor(i / this.cols) - this.offset;
       if (r < 0 || r >= visibleRows) return;
       const lx = this.x + this.pad + c * cw + 10;
-      const ly = this.y + this.pad + r * this.rowH + 2;
+      const ly = this.y + this.pad + r * this.rowH + this.textDy;
       const color = it.divider ? COLORS.disabled : (it.disabled ? COLORS.disabled : COLORS.text);
       const label = it.divider ? `-${String(it.label || 'SYNC').padEnd(cw / CHAR_W - 3, '-')}` : it.label;
       this.labels.push(this.scene.add.text(lx, ly, label, textStyle(color)).setDepth(this.depth + 2));
@@ -114,7 +120,7 @@ class CursorMenu {
     const i = this.selected;
     const c = i % this.cols;
     const r = Math.floor(i / this.cols) - this.offset;
-    this.cursor.setPosition(this.x + this.pad + c * this.colW(), this.y + this.pad + r * this.rowH + 2);
+    this.cursor.setPosition(this.x + this.pad + c * this.colW(), this.y + this.pad + r * this.rowH + this.textDy);
     if (this.onHover) this.onHover(this.items[i], i);
   }
 
@@ -276,19 +282,25 @@ export default class BattleHUD {
     this.commandWin = new Window(s, L.command.x, L.command.y, L.command.w, L.command.h, { depth: DEPTH.base });
     this.statusWin = new Window(s, L.status.x, L.status.y, L.status.w, L.status.h, { depth: DEPTH.base });
     this.windows.push(this.commandWin, this.statusWin);
-    // TOON meter
+    // TOON meter: 24 tiles of 4×8 from the ui atlas (meter_seg_* / meter_off) when present, else Graphics.
     this.meterG = s.add.graphics().setDepth(DEPTH.strip);
-    this.meterLabel = s.add.text(L.meter.x + L.meter.w + 4, L.meter.y, 'TOON 0', textStyle(COLORS.text)).setDepth(DEPTH.strip);
+    this.meterTiles = [];
+    if (hasFrame(s, 'meter_off') && METER_FRAMES.every((f) => hasFrame(s, f))) {
+      for (let i = 0; i < L.meter.w / 4; i++) this.meterTiles.push(s.add.image(L.meter.x + i * 4, L.meter.y, UI_KEY, 'meter_off').setOrigin(0, 0).setDepth(DEPTH.strip));
+    }
+    this.meterLabel = s.add.text(L.meter.labelX, L.meter.labelY, 'TOON 0', textStyle(COLORS.text)).setDepth(DEPTH.strip);
     // message strip
     this.msgBack = s.add.rectangle(L.message.x, L.message.y, L.message.w, L.message.h, 0x10101c, 0.9).setOrigin(0, 0).setDepth(DEPTH.message).setVisible(false);
-    this.msgText = s.add.text(L.message.x + 4, L.message.y + 2, '', textStyle(COLORS.text)).setDepth(DEPTH.message + 1).setVisible(false);
-    // status rows
+    this.msgText = s.add.text(L.message.x + 4, L.message.y + 3, '', textStyle(COLORS.text)).setDepth(DEPTH.message + 1).setVisible(false);
+    // status rows: NAME x116, status icon x174, HP right-aligned at x220, AMP at x244
     for (let i = 0; i < 4; i++) {
       const y = L.status.y + 6 + i * L.status.rowH;
       this.statusRows.push({
-        name: s.add.text(L.status.x + 4, y, '', textStyle(COLORS.text)).setDepth(DEPTH.text).setVisible(false),
-        hp: s.add.text(L.status.x + 104, y, '', textStyle(COLORS.text)).setOrigin(1, 0).setDepth(DEPTH.text).setVisible(false),
-        amp: s.add.text(L.status.x + 124, y, '', textStyle(COLORS.text)).setOrigin(1, 0).setDepth(DEPTH.text).setVisible(false),
+        y,
+        name: s.add.text(L.status.nameX, y, '', textStyle(COLORS.text)).setDepth(DEPTH.text).setVisible(false),
+        hp: s.add.text(L.status.hpX, y, '', textStyle(COLORS.text)).setOrigin(1, 0).setDepth(DEPTH.text).setVisible(false),
+        amp: s.add.text(L.status.ampX, y, '', textStyle(COLORS.text)).setOrigin(1, 0).setDepth(DEPTH.text).setVisible(false),
+        icon: null,
       });
     }
     this.setMeter(this.model.meter, this.model.toonLevel);
@@ -298,7 +310,8 @@ export default class BattleHUD {
   setVisible(v) {
     for (const w of this.windows) w.setVisible(v);
     this.meterG.setVisible(v); this.meterLabel.setVisible(v);
-    for (const r of this.statusRows) { r.name.setVisible(v && r.name.text !== ''); r.hp.setVisible(v && r.hp.text !== ''); r.amp.setVisible(v && r.amp.text !== ''); }
+    for (const t of this.meterTiles) t.setVisible(v);
+    for (const r of this.statusRows) { r.name.setVisible(v && r.name.text !== ''); r.hp.setVisible(v && r.hp.text !== ''); r.amp.setVisible(v && r.amp.text !== ''); if (r.icon) r.icon.setVisible(v); }
     for (const c of this.setlistCells) { c.rect.setVisible(v); c.letter.setVisible(v); c.cross.setVisible(v && c.consumed); }
   }
 
@@ -380,17 +393,23 @@ export default class BattleHUD {
 
   setMeter(value, level, { beige = this.beige } = {}) {
     const L = LAYOUT.meter;
-    const g = this.meterG;
-    g.clear();
-    const segW = L.w / L.segments;
-    for (let i = 0; i < L.segments; i++) {
-      const x = L.x + i * segW;
-      g.fillStyle(0x10101c, 1); g.fillRect(x, L.y, segW - 2, L.h);
-      g.lineStyle(1, 0xf4f4f4, 1); g.strokeRect(x + 0.5, L.y + 0.5, segW - 3, L.h - 1);
-      const segMin = i * 25;
-      const frac = Math.max(0, Math.min(1, (value - segMin) / 25));
-      const fw = Math.round((segW - 4) * frac);
-      if (fw > 0) { g.fillStyle(LEVEL_COLORS[i], 1); g.fillRect(x + 1, L.y + 1, fw, L.h - 2); }
+    if (this.meterTiles.length) {
+      // 24 tiles; a full segment is 6 tiles (24 px); 100 lights every tile, 99 leaves the last dark.
+      const lit = Math.floor((Math.max(0, Math.min(100, value)) / 100) * this.meterTiles.length);
+      this.meterTiles.forEach((t, i) => t.setFrame(i < lit ? METER_FRAMES[Math.min(3, Math.floor(i / 6))] : 'meter_off'));
+    } else {
+      const g = this.meterG;
+      g.clear();
+      const segW = L.w / L.segments;
+      for (let i = 0; i < L.segments; i++) {
+        const x = L.x + i * segW;
+        g.fillStyle(0x10101c, 1); g.fillRect(x, L.y, segW - 2, L.h);
+        g.lineStyle(1, 0xf4f4f4, 1); g.strokeRect(x + 0.5, L.y + 0.5, segW - 3, L.h - 1);
+        const segMin = i * 25;
+        const frac = Math.max(0, Math.min(1, (value - segMin) / 25));
+        const fw = Math.round((segW - 4) * frac);
+        if (fw > 0) { g.fillStyle(LEVEL_COLORS[i], 1); g.fillRect(x + 1, L.y + 1, fw, L.h - 2); }
+      }
     }
     this.beige = beige;
     this.meterLabel.setText(`TOON ${level}`).setColor(beige ? MOOD.beige : COLORS.text);
@@ -408,12 +427,25 @@ export default class BattleHUD {
     const members = this.model.party().slice(0, 4);
     this.statusRows.forEach((row, i) => {
       const c = members[i];
+      if (row.icon) { row.icon.destroy(); row.icon = null; }
       if (!c) { row.name.setVisible(false); row.hp.setVisible(false); row.amp.setVisible(false); return; }
       const color = c.ko ? COLORS.disabled : (c.uid === this.activeUid ? COLORS.yellow : (c.hp * 4 < c.maxHp ? COLORS.pink : COLORS.text));
       row.name.setText(c.name.toUpperCase().slice(0, 7)).setColor(color).setVisible(true);
       row.hp.setText(`${c.hp}/${c.maxHp}`).setColor(color).setVisible(true);
       row.amp.setText(c.auto ? 'AU' : String(c.amp)).setColor(color).setVisible(true);
+      // x 174: the first status icon (8×8), else the hand on the active row.
+      const st = (c.status || []).map((s) => s.id).concat(c.tuning ? ['TUNING'] : []).concat(c.ko ? ['KO'] : [])[0];
+      const frame = st && this.statusIcon(st);
+      if (frame) row.icon = this.scene.add.image(LAYOUT.status.iconX, row.y, UI_KEY, frame).setOrigin(0, 0).setDepth(DEPTH.text);
+      else if (st) row.icon = this.scene.add.text(LAYOUT.status.iconX, row.y, st === 'TUNING' ? 'T' : st[0], textStyle(COLORS.yellow)).setDepth(DEPTH.text);
+      else if (c.uid === this.activeUid && hasFrame(this.scene, 'cursor')) row.icon = this.scene.add.image(LAYOUT.status.iconX, row.y, UI_KEY, 'cursor').setOrigin(0, 0).setDepth(DEPTH.text);
     });
+  }
+
+  /** ui atlas frame for a status id, or null. */
+  statusIcon(id) {
+    const frame = id === 'KO' ? 'icon_ko' : (id === 'TUNING' ? null : `icon_${String(id).toLowerCase().replace(/_/g, id === 'OUT_OF_TUNE' || id === 'ON_HOLD' ? '' : '_')}`);
+    return frame && hasFrame(this.scene, frame) ? frame : null;
   }
 
   // ---- message strip / enemy name / scan ------------------------------------------------------
@@ -431,7 +463,7 @@ export default class BattleHUD {
     const L = LAYOUT.enemyName;
     if (!this.nameWin) {
       this.nameWin = new Window(this.scene, L.x, L.y, L.w, L.h, { depth: DEPTH.menu });
-      this.nameText = this.scene.add.text(L.x + 8, L.y + 8, '', textStyle(COLORS.text)).setDepth(DEPTH.menu + 2);
+      this.nameText = this.scene.add.text(L.x + 8, L.y + 6, '', textStyle(COLORS.text)).setDepth(DEPTH.menu + 2);
     }
     this.nameWin.open(true);
     this.nameText.setText(String(name).slice(0, 14)).setVisible(true);
@@ -465,6 +497,7 @@ export default class BattleHUD {
     const items = [commands[0], commands[3], commands[1], commands[4], commands[2], commands[5]].map((c) => ({ ...c }));
     const menu = new CursorMenu(this, {
       x: L.x, y: L.y, w: L.w, h: L.h, items, cols: 2, rows: 3, selected, cancelable: false, win: this.commandWin,
+      rowH: L.rowH, colW: L.colW, textDy: 0, // rows y 168 / 184 / 200, cursor columns x 16 / 64
       onHover: (it) => { if (it.disabled && it.reason) this.showMessage(it.reason); else this.clearMessage(); },
     });
     this.activeMenu = menu;

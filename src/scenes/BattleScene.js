@@ -122,6 +122,11 @@ export default class BattleScene extends Phaser.Scene {
     const result = this.model.result || 'flee';
     const summary = applyResults(services.state, this.model);
     if (result === 'win') {
+      if (this.model.flags && this.model.flags.eternityFired) await this.destruction();
+      for (const v of this.actors.values()) {
+        const win = v.c.side === 'party' && !v.c.ko && v.sheet ? `${v.sheet.key}_win` : null;
+        if (win && this.anims.exists(win)) v.sprite.play(win);
+      }
       this.playVictory();
       this.hud.refresh();
       await this.wait(T.text);
@@ -265,8 +270,8 @@ export default class BattleScene extends Phaser.Scene {
       if (this.anims.exists(idle)) spr.play(idle);
       spr.setFlipX(c.side === 'enemy');
     } else if (sheet.kind === 'battle') {
-      const idle = `${sheet.key}_idle`;
-      if (this.anims.exists(idle)) spr.play(idle);
+      const idle = [`${sheet.key}_idle`, `${sheet.key}_loop`].find((k) => this.anims.exists(k));
+      if (idle) spr.play(idle);
     } else {
       view.label = this.add.text(0, -Math.floor(sheet.h / 2), (c.name || c.id).slice(0, Math.max(3, Math.floor(sheet.w / 8))), textStyle(COLORS.white)).setOrigin(0.5, 0.5);
       view.label.setShadow(1, 1, '#141018', 0, false, true);
@@ -278,12 +283,12 @@ export default class BattleScene extends Phaser.Scene {
     this.refreshIcons(view);
   }
 
+  /** Diagonal party column: slot i centre x 212 − 4i, feet y 72 + 28i; AUTO Ryan sits at slot 3 (the kit). */
   partySlot(c) {
     const members = this.model.party().filter((m) => m.present);
-    const hasKit = members.some((m) => m.auto);
-    if (c.auto) return { x: KIT.x, y: KIT.y };
-    const i = members.filter((m) => !m.auto).indexOf(c);
-    return { x: (hasKit ? 180 : 212) - 4 * i, y: 72 + 28 * i };
+    if (c.auto) return { x: 212 - 4 * 3, y: 72 + 28 * 3 };
+    const i = Math.min(2, members.filter((m) => !m.auto).indexOf(c));
+    return { x: 212 - 4 * i, y: 72 + 28 * i };
   }
 
   placeActor(view) {
@@ -292,24 +297,29 @@ export default class BattleScene extends Phaser.Scene {
       const s = this.partySlot(c);
       view.baseX = s.x; view.baseY = s.y;
     }
-    if (c.form === 'eternity') { view.baseX = 140; view.baseY = 144; view.root.setDepth(DEPTH.party + 5); }
+    // The Eternity (64×64) is drawn centred at (200, 120) over slots 2–3.
+    if (c.form === 'eternity') { view.baseX = 200; view.baseY = 152; view.root.setDepth(DEPTH.party + 5); }
     view.root.setPosition(view.baseX - (view.stepped ? 8 : 0), view.baseY);
   }
 
-  /** Enemies left of x 144, feet on y 144; 32 px start at x 32, bigger ones at 40; gaps shrink to fit. */
+  /**
+   * Enemy zone x 8..152, feet line y 144 (DESIGN.md "Battle HUD pixel map"): 32 px ×1 at x 80; ×2 at
+   * 48/112; ×3 at 36/80/124; 48 px ×1 at 80; 48+32 at 64/124; 64 px at 72; 64+48 at 56/120. Other
+   * mixes spread evenly around x 80.
+   */
   layoutEnemies(instant = false) {
     const list = this.model.enemies().filter((c) => c.present && !c.ko && !c.fled && !c.offPanel);
-    const widths = list.map((c) => c.size || 32);
-    const total = widths.reduce((a, b) => a + b, 0);
-    let gap = 16; let start = widths.some((w) => w > 32) ? 40 : 32;
-    if (start + total + gap * (list.length - 1) > 144) { gap = 8; }
-    if (start + total + gap * (list.length - 1) > 144) { gap = 4; start = 16; }
-    let x = start;
+    const sizes = list.map((c) => c.size || 32);
+    const known = { '32': [80], '32,32': [48, 112], '32,32,32': [36, 80, 124], '48': [80], '48,32': [64, 124], '64': [72], '64,48': [56, 120], '48,32,32': [40, 92, 132] };
+    let centers = known[sizes.join(',')];
+    if (!centers) {
+      const n = Math.max(1, list.length);
+      const spacing = Math.min(48, Math.floor(136 / n));
+      centers = list.map((_, i) => Math.round(80 + (i - (n - 1) / 2) * spacing));
+    }
     list.forEach((c, i) => {
       const view = this.actors.get(c.uid);
-      const w = widths[i];
-      const cx = x + Math.floor(w / 2);
-      x += w + gap;
+      const cx = centers[i];
       if (!view) return;
       view.baseX = cx; view.baseY = FEET_Y;
       if (instant) view.root.setPosition(cx, FEET_Y);
@@ -728,6 +738,52 @@ export default class BattleScene extends Phaser.Scene {
       await this.wait(T.text);
     }
     this.hud.refresh();
+  }
+
+  /**
+   * Palmer's destruction (DESIGN.md "The roof peel and wall blow"), the cut-order version that needs
+   * no Explore snapshot: THUD breaks from the ring and hits the ceiling (flash, 4 px shake, `crash`),
+   * the top 64 px fade to the starfield row by row, the walls slide off with 12 brick chunks on integer
+   * parabolas (`wall_blow`), the cymbal crash freezes everything with a 6/4/2/1 px shake, then 2 s of
+   * silence. Frame counts scale under ?fast=1.
+   */
+  async destruction() {
+    this.hud.closeMenus();
+    this.hud.clearMessage();
+    const thud = this.words.find((w) => w && w.active && /THUD/i.test(w.text || '')) || this.words[this.words.length - 1];
+    if (thud && thud.active) {
+      await new Promise((resolve) => this.tweens.add({ targets: thud, y: 24, duration: scaleMs(8 * FRAME), ease: 'Linear', onUpdate: () => { thud.y = Math.round(thud.y); }, onComplete: resolve }));
+      this.sfx('crash', 'drum_hit');
+      this.ui.flash(scaleMs(4 * FRAME));
+      this.shakeFor(4, scaleMs(12 * FRAME));
+    }
+    // Roof: four 16 px rows go to night sky, right to left, with the peel noise.
+    this.sfx('roof_peel', 'feedback');
+    this.bg.setId('palmers_roof_peel');
+    this.bg.setToonLevel(this.model.toonLevel);
+    for (let row = 0; row < 4; row++) {
+      const band = this.add.rectangle(WIDTH, row * 16, WIDTH, 16, 0x2a1a4a, 1).setOrigin(1, 0).setDepth(DEPTH.bg + 1);
+      this.tweens.add({ targets: band, alpha: 0, duration: scaleMs(60 * FRAME), delay: scaleMs(row * 15 * FRAME), onComplete: () => band.destroy() });
+      await this.wait(15 * FRAME);
+    }
+    // Walls blow outward with brick chunks on integer parabolas.
+    this.sfx('wall_blow', 'kraaang');
+    this.shakeFor(4, scaleMs(60 * FRAME));
+    const walls = [this.add.rectangle(0, 64, 16, 96, 0x3a3a4a, 1).setOrigin(0, 0).setDepth(DEPTH.fx), this.add.rectangle(WIDTH, 64, 16, 96, 0x3a3a4a, 1).setOrigin(1, 0).setDepth(DEPTH.fx)];
+    this.tweens.add({ targets: walls[0], x: -32, duration: scaleMs(60 * FRAME), ease: 'Linear', onUpdate: () => { walls[0].x = Math.round(walls[0].x); }, onComplete: () => walls[0].destroy() });
+    this.tweens.add({ targets: walls[1], x: WIDTH + 32, duration: scaleMs(60 * FRAME), ease: 'Linear', onUpdate: () => { walls[1].x = Math.round(walls[1].x); }, onComplete: () => walls[1].destroy() });
+    const chunks = [];
+    for (let i = 0; i < 12; i++) chunks.push({ r: this.add.rectangle(i < 6 ? 16 : WIDTH - 16, 96 + (i % 6) * 8, 8, 8, 0x8c6a4a, 1).setDepth(DEPTH.fx), vx: (i < 6 ? -3 : 3) - (i % 3), vy: -4 - (i % 2), t: 0 });
+    for (let f = 0; f < 60; f++) {
+      for (const c of chunks) { c.t++; c.r.x += c.vx; c.r.y += c.vy; if (c.t % 4 === 0) c.vy += 1; }
+      await this.nextFrame();
+    }
+    for (const c of chunks) c.r.destroy();
+    // The cymbal crash: everything freezes; the shake is the last thing that moves.
+    this.sfx('cymbal');
+    audioCall('stopMusic', { fade: 0 });
+    for (const [px, frames] of [[6, 8], [4, 8], [2, 8], [1, 8]]) { this.shakeFor(px, scaleMs(frames * FRAME)); await this.wait(frames * FRAME); }
+    await this.wait(2000);
   }
 
   /** Placeholder Eternity: a slow purple-black palette cycle so the finisher still reads. */

@@ -179,8 +179,9 @@ export default class BattleBackground {
     this.rebuild();
   }
 
+  /** Toon 4 is the rupture: `black_hole` (concentric purples cycling inward) whatever the fight's id. */
   effectiveId() {
-    if (this.toon >= 4 && this.id !== 'palmers_roof_peel' && this.id !== 'black_hole') return 'rupture';
+    if (this.toon >= 4 && this.id !== 'palmers_roof_peel') return 'black_hole';
     return this.id;
   }
 
