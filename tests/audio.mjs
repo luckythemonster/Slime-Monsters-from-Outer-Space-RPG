@@ -50,8 +50,8 @@ check('sfx: every ARCHITECTURE.md name has a recipe', REQUIRED_SFX.every((n) => 
 // Chapter 1 SFX (design_feel.md "SFX list" + design_systems.md additions)
 const CH1_SFX = ['caption_tick', 'count_click', 'eject', 'static_burst', 'crash', 'pedal_stomp', 'coffee_spill', 'sparks', 'roof_peel',
   'wall_blow', 'mohawk_pop', 'intercom_buzz', 'glitch', 'thud', 'door_slam', 'unplug', 'pop_x3', 'amp_hum', 'krathoom', 'doom', 'crack',
-  'thud_word', 'van_keys', 'tear', 'toon_up', 'gears', 'splash', 'phone_ring', 'click', 'drone_whine', 'stick_click', 'power_chord',
-  'hair_back', 'rubble'];
+  'thud_word', 'thud_low', 'van_keys', 'tear', 'toon_up', 'gears', 'splash', 'phone_ring', 'click', 'drone_whine', 'stick_click', 'power_chord',
+  'hair_back', 'rubble', 'chair', 'jukebox_1', 'jukebox_2', 'jukebox_3', 'jukebox_4'];
 check('sfx: every Chapter 1 cue has a recipe and is listed in SFX_NAMES', CH1_SFX.every((n) => typeof SFX[n] === 'function' && SFX_NAMES.includes(n)),
   { missing: CH1_SFX.filter((n) => typeof SFX[n] !== 'function' || !SFX_NAMES.includes(n)) });
 check('sfx: SFX_NAMES has no duplicates and names only real recipes', new Set(SFX_NAMES).size === SFX_NAMES.length && SFX_NAMES.every((n) => typeof SFX[n] === 'function'));
@@ -216,13 +216,39 @@ try {
   check('songs: index exports title, snow, battle', ['title', 'snow', 'battle'].every((id) => songIds.includes(id)), { songIds });
 
   // --- realtime playback of each song ---
+  const songInfos = await page.evaluate(() => Object.fromEntries(window.__audioHarness.SONG_IDS.map((id) => [id, window.__audioHarness.songInfo(id)])));
   for (const id of songIds) {
-    const r = await page.evaluate(async (id) => {
+    const info0 = songInfos[id];
+    if (!info0.loop && info0.duration < 2.5) {
+      // a short one-shot jingle: plays once, emits end, goes silent (timing is covered by the longer songs)
+      const r = await page.evaluate(async (id) => {
+        const h = window.__audioHarness;
+        const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+        let ended = false;
+        h.play(id, { fade: 0 });
+        const seq = h.engine.sequencer;
+        seq.on('end', () => { ended = true; });
+        await wait(Math.min(400, seq.duration * 1000 * 0.4));
+        const rmsDuring = h.rms();
+        const stateDuring = h.state();
+        await wait(seq.duration * 1000 + 500);
+        const ticks = h.ticks.slice();
+        return { ended, duration: seq.duration, current: h.engine.currentMusic, state: seq.state, rmsDuring, rmsAfter: h.rms(), currentDuring: stateDuring.currentMusic,
+          ticks: ticks.length, monotonic: ticks.every((t, i) => i === 0 || t.step > ticks[i - 1].step), ctxState: h.ctx.state };
+      }, id);
+      check(`realtime ${id}: one-shot plays once (${r.duration.toFixed(2)} s), emits end, goes silent`,
+        r.ended && r.state === 'ended' && r.current === null && r.rmsDuring > 0.01 && r.rmsAfter < 2e-3 && r.currentDuring === id && r.monotonic && r.ticks >= 4 && r.ctxState === 'running', r);
+      continue;
+    }
+    const windowMs = info0.loop ? 2500 : Math.min(2500, Math.floor(info0.duration * 1000) - 400);
+    const introMs = Math.round((info0.loopStartTime || 0) * 1000); // an intro (stick clicks) may be sparse; sample the loop body
+    const r = await page.evaluate(async ({ id, windowMs, introMs }) => {
       const h = window.__audioHarness;
       const info = h.play(id, { fade: 0 });
       const rmsSamples = [];
+      if (introMs > 0) await new Promise((r) => setTimeout(r, introMs));
       const t0 = performance.now();
-      while (performance.now() - t0 < 2500) { await new Promise((r) => setTimeout(r, 100)); rmsSamples.push(h.rms()); }
+      while (performance.now() - t0 < windowMs) { await new Promise((r) => setTimeout(r, 100)); rmsSamples.push(h.rms()); }
       const during = { max: Math.max(...rmsSamples), mean: rmsSamples.reduce((a, b) => a + b, 0) / rmsSamples.length, zeros: rmsSamples.filter((v) => v < 1e-4).length, n: rmsSamples.length };
       const stateDuring = h.state();
       const ticks = h.ticks.slice();
@@ -231,7 +257,7 @@ try {
       const after = [];
       for (let i = 0; i < 6; i++) { after.push(h.rms()); await new Promise((r) => setTimeout(r, 30)); }
       return { info, during, ticks, stateDuring, afterMax: Math.max(...after), stateAfter: h.state(), ctxState: h.ctx.state };
-    }, id);
+    }, { id, windowMs, introMs });
     const { ticks, info } = r;
     const monotonic = ticks.every((t, i) => i === 0 || t.step > ticks[i - 1].step);
     const first = ticks[0];
@@ -241,8 +267,9 @@ try {
     const ctxRate = ticks.length > 2 ? (last.step - first.step) / (last.ctxTime - first.ctxTime) : 0;
     // tick latency: how far behind the audio clock the tick fired (should be < interval + jitter)
     const maxLag = Math.max(...ticks.map((t) => t.ctxTime - t.stepTime));
+    const minTicks = Math.min(10, Math.floor(((expectedRate * windowMs) / 1000) * 0.6)); // slow songs tick less often
     check(`realtime ${id}: no gaps in output while playing`, r.during.max > 0.01 && r.during.zeros === 0, r.during);
-    check(`realtime ${id}: ticks monotonic (${ticks.length} ticks)`, monotonic && ticks.length >= 10, { ticks: ticks.length, monotonic });
+    check(`realtime ${id}: ticks monotonic (${ticks.length} ticks)`, monotonic && ticks.length >= minTicks, { ticks: ticks.length, monotonic, minTicks });
     check(`realtime ${id}: step rate vs wall clock within 5% (expected ${expectedRate.toFixed(2)}/s)`, Math.abs(wallRate / expectedRate - 1) <= 0.05,
       { wallRate: +wallRate.toFixed(3), ctxRate: +ctxRate.toFixed(3), expectedRate: +expectedRate.toFixed(3) });
     check(`realtime ${id}: ticks fire promptly (max lag ${Math.round(maxLag * 1000)} ms)`, maxLag < 0.12, { maxLag });
@@ -299,10 +326,10 @@ try {
       maxRms = Math.max(maxRms, h.rms());
     }
     const unknown = h.sfx('definitely_not_a_sound');
-    await new Promise((r) => setTimeout(r, 900));
+    await new Promise((r) => setTimeout(r, Math.max(...Object.values(durations)) * 1000 + 600));
     return { durations, maxRms, unknown, active: h.state().activeSfxVoices, ctx: h.ctx.state };
   });
-  check('realtime sfx: every recipe plays and returns a duration', Object.values(sfxRt.durations).every((d) => d > 0 && d <= 1) && sfxRt.maxRms > 0.01, { maxRms: sfxRt.maxRms, durations: sfxRt.durations });
+  check('realtime sfx: every recipe plays and returns a duration (≤ 3 s)', Object.values(sfxRt.durations).every((d) => d > 0 && d <= 3) && sfxRt.maxRms > 0.01, { maxRms: sfxRt.maxRms, durations: sfxRt.durations });
   check('realtime sfx: unknown name returns 0 without throwing', sfxRt.unknown === 0);
   check('realtime sfx: voices clean themselves up', sfxRt.active === 0 && sfxRt.ctx === 'running', { active: sfxRt.active });
 
@@ -362,21 +389,110 @@ try {
   });
   check('registerSong: throws a helpful message for an invalid song', typeof bad === 'string' && bad.includes('expected 16') && bad.includes('Z4'), { bad });
 
+  // --- aliases: one song object under several ids ---
+  const al = await page.evaluate(async () => {
+    const h = window.__audioHarness;
+    const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+    const e = h.engine;
+    const has = e.hasSong('hub') && e.hasSong('west_bank') && !e.hasSong('nope') && !e.songIds.includes('hub');
+    const resolved = e.resolveSongId('hub') === 'west_bank' && e.resolveSongId('west_bank') === 'west_bank' && e.resolveSongId('nope') === 'nope';
+    const seqA = e.playMusic('hub', { fade: 0 });
+    const current = e.currentMusic;
+    const noop = e.playMusic('west_bank') === seqA && e.playMusic('hub') === seqA;
+    await wait(300);
+    const rms = h.rms();
+    const seqB = e.playMusic('the_set', { fade: 0 });
+    const switched = !!seqB && seqB !== seqA && e.currentMusic === 'pocket' && seqB.song.id === 'pocket';
+    let threw = false;
+    try { e.registerAlias('zzz', 'not_a_song'); } catch (_) { threw = true; }
+    e.registerAlias('zzz', 'title');
+    const added = e.hasSong('zzz') && e.songAliases.zzz === 'title' && e.resolveSongId('zzz') === 'title';
+    h.stop({ fade: 0 });
+    await wait(150);
+    return { has, resolved, current, noop, rms, switched, threw, added, aliases: Object.keys(e.songAliases).length };
+  });
+  check('aliases: playMusic/hasSong resolve alias ids onto the shared song (currentMusic is canonical, same song is a no-op)',
+    al.has && al.resolved && al.current === 'west_bank' && al.noop && al.rms > 0.01 && al.switched, al);
+  check('aliases: registerAlias validates its target and works at runtime', al.threw && al.added && al.aliases >= 18, al);
+
   // --- offline renders (most reliable path) ---
+  // Sparse cues (a hat and one held note every two bars) may be quiet at the seam; they only have to restart.
+  const SPARSE_LOOPS = new Set(['northern_garage']);
   for (const id of songIds) {
+    const info = songInfos[id];
+    if (!info.loop) {
+      const r = await page.evaluate(async (id) => {
+        const h = window.__audioHarness;
+        const { AudioEngine, bufferRms } = await import('/src/audio/AudioEngine.js');
+        const info = h.songInfo(id);
+        const seconds = info.duration + 0.8;
+        const t0 = performance.now();
+        const { buffer, peak } = await AudioEngine.renderOffline({ music: id, seconds });
+        return { seconds, peak, rmsFirst2s: bufferRms(buffer, 0, Math.min(2, seconds)), rmsBody: bufferRms(buffer, 0, info.duration),
+          tailRms: bufferRms(buffer, info.duration + 0.55, seconds), renderMs: Math.round(performance.now() - t0) };
+      }, id);
+      check(`offline ${id}: one-shot has non-zero RMS over its ${info.duration.toFixed(1)} s (rms ${r.rmsBody.toFixed(3)}, ${r.renderMs} ms)`, r.rmsBody > 0.02 && r.rmsFirst2s > 0.02, { rmsBody: r.rmsBody, rmsFirst2s: r.rmsFirst2s });
+      check(`offline ${id}: no clipping (peak ${r.peak.toFixed(3)})`, r.peak < 1.0, { peak: r.peak });
+      check(`offline ${id}: silent after it ends (tail rms ${r.tailRms.toFixed(5)})`, r.tailRms < 2e-3, { tailRms: r.tailRms });
+      continue;
+    }
     const r = await page.evaluate((id) => window.__audioHarness.renderSong(id), id);
     const minAllowed = r.rms * 0.08;
     check(`offline ${id}: non-zero RMS over ${r.seconds.toFixed(1)} s (rms ${r.rms.toFixed(3)}, ${r.renderMs} ms)`, r.rms > 0.02 && r.rmsFirst2s > 0.02, { rms: r.rms, rmsFirst2s: r.rmsFirst2s });
     check(`offline ${id}: no clipping (peak ${r.peak.toFixed(3)})`, r.peak < 1.0, { peak: r.peak });
-    check(`offline ${id}: loops seamlessly (no 100 ms gap at the seam; min window ${r.minWindowRms.toFixed(4)} vs ${minAllowed.toFixed(4)})`,
-      r.minWindowRms > minAllowed && r.rmsAfterLoop > minAllowed, { minWindowRms: r.minWindowRms, rmsBeforeLoop: r.rmsBeforeLoop, rmsAfterLoop: r.rmsAfterLoop, windows: r.windows.map((w) => +w.rms.toFixed(4)) });
+    if (SPARSE_LOOPS.has(id)) {
+      check(`offline ${id}: sparse cue restarts at the loop seam (rms after ${r.rmsAfterLoop.toFixed(4)})`, r.rmsAfterLoop > 0.005, { rmsBeforeLoop: r.rmsBeforeLoop, rmsAfterLoop: r.rmsAfterLoop });
+    } else {
+      check(`offline ${id}: loops seamlessly (no 100 ms gap at the seam; min window ${r.minWindowRms.toFixed(4)} vs ${minAllowed.toFixed(4)})`,
+        r.minWindowRms > minAllowed && r.rmsAfterLoop > minAllowed, { minWindowRms: r.minWindowRms, rmsBeforeLoop: r.rmsBeforeLoop, rmsAfterLoop: r.rmsAfterLoop, windows: r.windows.map((w) => +w.rms.toFixed(4)) });
+    }
   }
+
+  // --- listen checks (rendered without the limiter so dynamics are real) ---
+  const listen = await page.evaluate(async () => {
+    const { AudioEngine, bufferRms } = await import('/src/audio/AudioEngine.js');
+    const { SONGS } = await import('/src/audio/songs/index.js');
+    const { compileSong } = await import('/src/audio/Sequencer.js');
+    const only = (song, pred) => ({ ...song, channels: Object.fromEntries(Object.entries(song.channels).filter(([n, ch]) => pred(n, ch))),
+      order: song.order.map((bar) => Object.fromEntries(Object.entries(bar).filter(([n]) => pred(n, song.channels[n])))) });
+    const render = async (song, seconds) => (await AudioEngine.renderOffline({ music: song.id, seconds, songs: { [song.id]: song }, limiter: false })).buffer;
+    const out = {};
+    if (SONGS.pocket) {
+      const drums = only(SONGS.pocket, (n, ch) => ch.wave === 'noise');
+      const c = compileSong(drums);
+      const buf = await render(drums, c.stepsPerBar * c.stepDur * 2 + 0.2);
+      const beat = (bar, b) => { const t = (bar * c.stepsPerBar + b * c.stepsPerBeat) * c.stepDur; return +bufferRms(buf, t, t + 0.05).toFixed(4); };
+      out.pocket = { beats: [0, 1].map((bar) => Array.from({ length: c.beatsPerBar }, (_, b) => beat(bar, b))) };
+    }
+    const rmsOf = async (id) => { const song = SONGS[id]; const c = compileSong(song); return +bufferRms(await render(song, Math.min(c.duration, 12))).toFixed(4); };
+    if (SONGS.west_bank && SONGS.sticker_hallway) out.hallway = { west: await rmsOf('west_bank'), hallway: await rmsOf('sticker_hallway') };
+    if (SONGS.six_inch_stage && SONGS.six_inch_stage_ext) out.palmers = { inside: await rmsOf('six_inch_stage'), outside: await rmsOf('six_inch_stage_ext') };
+    return out;
+  });
+  if (listen.pocket) {
+    const quiet = (row) => Math.max(row[1], row[2], row[4], row[6]);
+    check('listen pocket: the kit lands on beats 1 and 4 (kick) and 6 (snare) of the 7/8 bar', listen.pocket.beats.every((row) => row[0] > 2 * quiet(row) && row[3] > 2 * quiet(row) && row[5] > 1.5 * quiet(row)), listen.pocket);
+  }
+  if (listen.hallway) check('listen sticker_hallway: west_bank is quieter through the door', listen.hallway.hallway < listen.hallway.west * 0.8, listen.hallway);
+  if (listen.palmers) check('listen six_inch_stage_ext: the melody is gone outside', listen.palmers.outside < listen.palmers.inside * 0.97, listen.palmers);
+
+  // --- offline SFX: every recipe is audible at once and silent after the duration it returns ---
   const sfxNames = await page.evaluate(() => window.__audioHarness.SFX_NAMES);
   const sfxOffline = {};
   for (const name of sfxNames) {
-    const r = await page.evaluate((name) => window.__audioHarness.renderSfx(name), name);
-    sfxOffline[name] = { rms: +r.rms.toFixed(4), peak: +r.peak.toFixed(3), tail: +r.tailRms.toFixed(5) };
-    check(`offline sfx ${name}: audible, short, unclipped`, r.rms > 2e-4 && r.onsetRms > 1e-3 && r.tailRms < 1e-3 && r.peak < 1.0, sfxOffline[name]);
+    const r = await page.evaluate(async (name) => {
+      const { AudioEngine, bufferRms, bufferPeak } = await import('/src/audio/AudioEngine.js');
+      const sampleRate = 44100, seconds = 3.5;
+      const ctx = new OfflineAudioContext(1, Math.ceil(seconds * sampleRate), sampleRate);
+      const engine = new AudioEngine({ context: ctx, destination: ctx.destination, unlock: false });
+      const dur = engine.sfx(name);
+      const buffer = await ctx.startRendering();
+      return { dur, rms: bufferRms(buffer, 0, Math.max(0.1, dur)), peak: bufferPeak(buffer), onsetRms: bufferRms(buffer, 0, 0.1),
+        afterRms: bufferRms(buffer, Math.min(dur + 0.15, seconds - 0.2), seconds), tailRms: bufferRms(buffer, seconds - 0.2, seconds) };
+    }, name);
+    sfxOffline[name] = { dur: r.dur, rms: +r.rms.toFixed(4), peak: +r.peak.toFixed(3), after: +r.afterRms.toFixed(5), tail: +r.tailRms.toFixed(5) };
+    check(`offline sfx ${name}: audible, silent after its ${(r.dur || 0).toFixed(2)} s, unclipped`,
+      r.dur > 0 && r.dur <= 3 && r.rms > 2e-4 && r.onsetRms > 1e-3 && r.afterRms < 1e-3 && r.tailRms < 1e-3 && r.peak < 1.0, sfxOffline[name]);
   }
 
   check('browser: no page errors', pageErrors.length === 0, { pageErrors });

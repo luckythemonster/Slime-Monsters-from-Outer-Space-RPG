@@ -5,7 +5,7 @@
  * turnaround every fourth bar) and an 8-bar chorus (G D A Bm | G D A A) where
  * pulse1 drops to downstroke power-chord roots and pulse2 shouts the hook
  * ("WEST BANK" — B5 B5 A5 G5, answered a step lower each time). The triangle
- * plays root 8ths with octave jumps throughout; kit is kick/hat/snare with an
+ * plays legato root 8ths with octave jumps throughout; kit is kick/hat/snare with an
  * open hat on the 4-and in the chorus and a snare fill every fourth bar.
  */
 export default {
@@ -57,13 +57,14 @@ export default {
       wave: 'triangle', volume: 0.55,
       env: { attack: 0.003, decay: 0.02, sustain: 0.9, release: 0.02 },
       patterns: {
-        TV1: 'D3 . D3 . D2 . D3 . | A2 . A2 . A3 . A2 .',
-        TV2: 'B2 . B2 . B3 . B2 . | G2 . G2 . G3 . G2 .',
-        TG: 'G2 . G2 . G3 . G2 . | G2 . G2 . G3 . G2 .',
-        TD: 'D3 . D3 . D2 . D3 . | D3 . D3 . D2 . D3 .',
-        TA: 'A2 . A2 . A3 . A2 . | A2 . A2 . A3 . A2 .',
-        TB: 'B2 . B2 . B3 . B2 . | B2 . B2 . B3 . B2 .',
-        TAt: 'A2 . A2 . A3 . A2 . | C#3 . C#3 . E3 . E3 .',
+        // legato 8ths (each note rings into the next) with octave jumps
+        TV1: 'D3 = D3 = D2 = D3 = | A2 = A2 = A3 = A2 =',
+        TV2: 'B2 = B2 = B3 = B2 = | G2 = G2 = G3 = G2 =',
+        TG: 'G2 = G2 = G3 = G2 = | G2 = G2 = G3 = G2 =',
+        TD: 'D3 = D3 = D2 = D3 = | D3 = D3 = D2 = D3 =',
+        TA: 'A2 = A2 = A3 = A2 = | A2 = A2 = A3 = A2 =',
+        TB: 'B2 = B2 = B3 = B2 = | B2 = B2 = B3 = B2 =',
+        TAt: 'A2 = A2 = A3 = A2 = | C#3 = C#3 = E3 = E3 =',
       },
     },
     noise: {

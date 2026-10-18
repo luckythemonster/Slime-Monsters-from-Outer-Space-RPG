@@ -18,15 +18,27 @@ import northern_garage from './northern_garage.js';
 import west_bank from './west_bank.js';
 import normal_music from './normal_music.js';
 import sticker_hallway from './sticker_hallway.js';
+import four_dollars from './four_dollars.js';
+import six_inch_stage from './six_inch_stage.js';
+import six_inch_stage_ext from './six_inch_stage_ext.js';
+import pocket from './pocket.js';
+import rhythm_achieved from './rhythm_achieved.js';
+import plaster_dust from './plaster_dust.js';
+import win_sting from './win_sting.js';
+import level_up from './level_up.js';
+import game_over from './game_over.js';
+import bajonka from './bajonka.js';
 
 export const SONGS = Object.freeze({
   title, snow, battle,
   dental_plan, flying_squirrel, pothole, unpaid_bills, ask_the_universe, northern_garage,
-  west_bank, normal_music, sticker_hallway,
+  west_bank, normal_music, sticker_hallway, four_dollars, six_inch_stage, six_inch_stage_ext, pocket,
+  rhythm_achieved, plaster_dust, win_sting, level_up, game_over, bajonka,
 });
 
 export const ALIASES = Object.freeze({
   pod_bay: 'dental_plan',
+  podbay: 'dental_plan',
   freefall: 'flying_squirrel',
   apartment: 'unpaid_bills',
   signal: 'ask_the_universe',
@@ -35,6 +47,15 @@ export const ALIASES = Object.freeze({
   coffee: 'normal_music',
   rehearsal_brian: 'normal_music',
   citysound: 'sticker_hallway',
+  audition: 'four_dollars',
+  palmers: 'six_inch_stage',
+  palmers_set: 'pocket',
+  the_set: 'pocket',
+  eternity: 'rhythm_achieved',
+  rubble: 'plaster_dust',
+  victory: 'win_sting',
+  gameover: 'game_over',
+  snow_night: 'snow', // DESIGN.md's night hub; the same cue until a neon-pad variant exists
   battle_noise: 'battle',
 });
 
