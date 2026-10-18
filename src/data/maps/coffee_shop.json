@@ -144,6 +144,16 @@
       "script": "npc_cafe_window_table"
     },
     {
+      "id": "pedalboard",
+      "type": "object",
+      "sprite": "obj_pedalboard",
+      "x": 18,
+      "y": 9,
+      "solid": true,
+      "script": "npc_cafe_window_table",
+      "condition": "!flags.brianJoined"
+    },
+    {
       "id": "radiator",
       "type": "object",
       "x": 1,
