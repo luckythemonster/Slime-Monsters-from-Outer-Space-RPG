@@ -1,0 +1,149 @@
+{
+  "ep0_flyer": [
+    { "say": "A corkboard. Nine flyers for the same ska band.", "who": "narrator" },
+    { "say": "Phoenix's flyer says DRUMMER WANTED. The line under it is blank. Three drafts in the margin.", "who": "narrator" },
+    { "choice": [
+      { "text": "MUST PLAY FAST", "then": [
+        { "set": { "vars.flyerText": 0 } },
+        { "say": "DRUMMER WANTED — MUST PLAY FAST.\nPinned between ska and ska.", "who": "narrator" }
+      ] },
+      { "text": "NO COPS", "then": [
+        { "set": { "vars.flyerText": 1 } },
+        { "say": "DRUMMER WANTED — NO COPS.\nPinned between ska and ska.", "who": "narrator" }
+      ] },
+      { "text": "SEEKING RHYTHMIC VESSEL", "then": [
+        { "set": { "vars.flyerText": 2 } },
+        { "say": "SEEKING RHYTHMIC VESSEL FOR COSMIC PURPOSE.\nPinned between ska and ska.", "who": "narrator" }
+      ] }
+    ] },
+    { "take": { "item": "flyer_blank", "qty": 1 } },
+    { "set": { "flags.flyerPosted": true } },
+    { "sfx": "item" },
+    { "say": "Give it an hour. Or a day. Time's weird in here.", "who": "barista" }
+  ],
+
+  "ep0_brian_joins": [
+    { "sfx": "chair" },
+    { "face": { "who": "brian", "toward": "player" } },
+    { "move": { "who": "brian", "path": "DDDLLLLLL", "wait": true } },
+    { "face": { "who": "brian", "toward": "player" } },
+    { "face": { "who": "player", "toward": "brian" } },
+    { "emote": { "who": "brian", "type": "!" } },
+    { "if": "vars.flyerText == 0", "then": [
+      { "say": "You the 'must play fast' people? I play at a very reasonable tempo.", "who": "brian", "portrait": "brian_normal" }
+    ], "else": [
+      { "if": "vars.flyerText == 1", "then": [
+        { "say": "'No cops.' Love it. I'm in insurance.", "who": "brian", "portrait": "brian_normal" }
+      ], "else": [
+        { "say": "'Rhythmic vessel'? I googled it. I think it's me.", "who": "brian", "portrait": "brian_normal" }
+      ] }
+    ] },
+    { "say": "I play guitar. I've got a $2,000 pedalboard and a completely normal amount of free time.", "who": "brian", "portrait": "brian_normal" },
+    { "say": "The flyer says drummer.", "who": "phoenix" },
+    { "say": "I read it as 'band.'", "who": "brian", "portrait": "brian_normal" },
+    { "say": "…Can you play loud?", "who": "lucky" },
+    { "say": "I can play {color:yellow}accurately{/color}.", "who": "brian", "portrait": "brian_smug" },
+    { "say": "Also — do we really need all the political stickers? We're going to alienate the market.", "who": "brian", "portrait": "brian_pointing" },
+    { "say": "Yes.", "who": "lucky" },
+    { "say": "Hey, man, can you turn the bass down?", "who": "brian", "portrait": "brian_normal" },
+    { "say": "I'm not a 'man,' Brian. And no.", "who": "phoenix", "portrait": "phoenix_deadpan" },
+    { "party": { "add": "brian", "toast": "Brian joined the band. (Second.)" } },
+    { "give": { "item": "coffee", "qty": 2, "toast": "Brian buys a round. It is the last nice thing he does." } },
+    { "set": { "flags.brianJoined": true } },
+    { "say": "You need a drummer. I know a guy. My cousin's roommate up north. Doesn't talk. Never misses.", "who": "brian", "portrait": "brian_normal" },
+    { "anim": { "who": "brian", "key": "brian_phone", "wait": false } },
+    { "camera": { "mosaic": 10 } },
+    { "music": null },
+    { "teleport": { "map": "garage_north", "x": 8, "y": 7, "facing": "down" } },
+    { "setEntity": { "id": "player", "visible": false } },
+    { "spawn": { "id": "ryan", "sprite": "ryan", "x": 8, "y": 7, "facing": "down" } },
+    { "anim": { "who": "ryan", "key": "ryan_sit", "wait": false } },
+    { "wait": 700 },
+    { "sfx": "phone_ring" },
+    { "wait": 900 },
+    { "sfx": "phone_ring" },
+    { "wait": 900 },
+    { "anim": { "who": "ryan", "key": "ryan_unfreeze", "wait": true } },
+    { "move": { "who": "ryan", "path": "LLLLU", "wait": true } },
+    { "face": { "who": "ryan", "dir": "up" } },
+    { "wait": 300 },
+    { "say": "Ryan. It's Brian. From the Zappa cover band. I've got a thing.", "who": "brian", "portrait": "brian_phone" },
+    { "say": "Yep.", "who": "ryan", "portrait": "ryan_stoic" },
+    { "sfx": "click" },
+    { "wait": 400 },
+    { "teleport": { "map": "coffee_shop", "x": 10, "y": 11, "facing": "down" } },
+    { "say": "He's in. City Sound, Room 4, tonight. Take the train.", "who": "brian", "portrait": "brian_normal" },
+    { "say": "The universe came through.", "who": "lucky" },
+    { "say": "I called him.", "who": "brian", "portrait": "brian_normal" },
+    { "say": "The UNIVERSE.", "who": "lucky" },
+    { "say": "My brain thinks you're both right and that it doesn't matter.", "who": "phoenix" },
+    { "set": { "flags.ryanCalled": true, "flags.brianCalledRyan": true } },
+    { "music": "normal_music" }
+  ],
+
+  "npc_cafe_corkboard": [
+    { "if": "inventory.has('flyer_blank') && !flags.flyerPosted", "then": [
+      { "run": "ep0_flyer" }
+    ], "else": [
+      { "if": "flags.flyerPosted", "then": [
+        { "say": "KEYBOARDIST WANTED. Must own keyboard. We do not own a keyboard. We own a dream.", "who": "narrator" },
+        { "say": "FREE COUCH. HAUNTED. FIRM.", "who": "narrator" },
+        { "if": "!flags.brianJoined", "then": [
+          { "say": "And yours. Nobody has written on it. Somebody is looking at it.", "who": "narrator" }
+        ] }
+      ], "else": [
+        { "say": "A corkboard. Nine flyers for the same ska band.", "who": "narrator" }
+      ] }
+    ] }
+  ],
+
+  "npc_cafe_barista": [
+    { "face": { "who": "barista", "toward": "player" } },
+    { "say": "Coffee's $3. Hot water's free. Nobody's happy either way.", "who": "barista" },
+    { "shop": "cafe" }
+  ],
+
+  "npc_cafe_tip_jar": [
+    { "say": "A tip jar. $0.75 and a guitar pick.", "who": "narrator" },
+    { "if": "flags.seen_cafe_tipjar && party.has('phoenix')", "then": [
+      { "say": "My brain thinks that's theft.", "who": "phoenix", "portrait": "phoenix_deadpan" }
+    ] },
+    { "set": { "flags.seen_cafe_tipjar": true } }
+  ],
+
+  "npc_cafe_bathroom": [
+    { "say": "A sign on the bathroom door.\nPLEASE DO NOT ASK THE UNIVERSE FOR ANYTHING IN HERE.", "who": "narrator" }
+  ],
+
+  "npc_cafe_window_table": [
+    { "if": "flags.brianJoined", "then": [
+      { "say": "The window table is free. The coffee ring is not.", "who": "narrator" }
+    ], "else": [
+      { "say": "A $2,000 pedalboard on a cafe table, and a nine-dollar iced coffee. The coffee has a name.", "who": "narrator" }
+    ] }
+  ],
+
+  "npc_cafe_radiator": [
+    { "say": "The radiator is on. The radiator is always on. It is the only thing in here that is.", "who": "narrator" }
+  ],
+
+  "npc_cafe_screenwriter": [
+    { "say": "It's about a slime monster who—no. No it isn't. It's about a divorce.", "who": "screenwriter" }
+  ],
+
+  "npc_cafe_poet": [
+    { "say": "A piece about snow. It's called 'Snow.' It's finished.", "who": "poet" }
+  ],
+
+  "npc_cafe_intern": [
+    { "say": "Question 9: 'Describe your demographic.' I put 'tired.'", "who": "intern" },
+    { "if": "flags.seen_cafe_intern", "then": [
+      { "say": "My dad wrote question 9. He thinks 'tired' is a growth segment.", "who": "lucky" }
+    ] },
+    { "set": { "flags.seen_cafe_intern": true } }
+  ],
+
+  "npc_cafe_brian": [
+    { "say": "{speed:fast}Working. Sorry. Big pedalboard day.", "who": "brian", "portrait": "brian_normal" }
+  ]
+}
