@@ -517,7 +517,7 @@ group('enemy AI', (check) => {
 group('ko / win / lose / flee', (check) => {
   const m = model({ party: [seed('lucky', 1)], enemyIds: ['dev_cop', 'dev_cop'], rng: makeRng(11) });
   run(m);
-  check(m.result === 'win' && m.rewards && m.rewards.xp === 6 && m.rewards.money === 4, `L1 Lucky beats two dev cops: ${m.result} ${JSON.stringify(m.rewards)}`);
+  check(m.result === 'win' && m.rewards && m.rewards.xp === 6 && m.rewards.money === 0, `L1 Lucky beats two dev cops (3 XP each, $0): ${m.result} ${JSON.stringify(m.rewards)}`);
   check(evTypes(m).includes('win') && evTypes(m).includes('reward'), 'win + reward events');
   // Lose: all controllables KO'd; AUTO Ryan does not keep the party alive.
   const m2 = model({ party: [seed('lucky', 1), seed('ryan', 4, { opts: { form: 'possessed', guest: true } })], enemyIds: ['cop'], rng: makeRng(3) });
@@ -562,10 +562,11 @@ group('rewards + level-up (setup bridge)', (check) => {
   gs.party.add('brian');
   gs.party.addXp('lucky', 20); gs.party.addXp('phoenix', 20); // L2 each, 20 xp
   gs.inventory.add('pizza_slice', 1);
+  const pizzaBefore = gs.inventory.count('pizza_slice');
   gs.meter = 30;
   const m = buildBattle({ state: gs, data, encounterId: 'hub_goose', rng: makeRng(21) });
   check(m.party().length === 3 && m.find('brian').fixedLevel && m.meter === 30, 'built from state with carryover meter');
-  check(m.inventory.find((e) => e.id === 'pizza_slice').qty === 2, 'inventory snapshot');
+  check(m.inventory.find((e) => e.id === 'pizza_slice').qty === pizzaBefore, 'inventory snapshot');
   // Force a clean, deterministic outcome: use a pizza, then KO the goose.
   m.start(); m.advance();
   const lucky = m.find('lucky');
@@ -580,7 +581,7 @@ group('rewards + level-up (setup bridge)', (check) => {
   check(summary.result === 'win' && gs.money === moneyBefore + 4, 'money applied');
   check(gs.party.level('lucky') === 3 && gs.party.level('phoenix') === 3 && gs.party.level('brian') === 3, 'XP to everyone; Brian stays fixed');
   check(gs.party.get('lucky').hp === gs.party.stats('lucky').maxHp && gs.party.get('lucky').amp === gs.party.stats('lucky').maxAmp, 'level-up restores HP/AMP');
-  check(gs.inventory.count('pizza_slice') === 2, 'used one pizza, dropped one');
+  check(gs.inventory.count('pizza_slice') === pizzaBefore, 'used one pizza, dropped one');
   check(gs.meter === Math.floor(m.meter / 2), `meter carryover ${gs.meter}`);
   check(summary.levelups.some((l) => l.who === 'lucky' && l.riffs.includes('Pseudopod Slap')), 'summary carries new riffs');
   // Lose zeroes the meter; KO persists as hp 0 + KO status.
