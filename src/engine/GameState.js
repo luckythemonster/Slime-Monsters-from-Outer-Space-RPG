@@ -191,7 +191,13 @@ export class GameState {
       const raw = this.storage.getItem(GameState.key(slot));
       if (!raw) return null;
       const o = JSON.parse(raw);
-      return { slot, map: o.map, chapter: o.chapter, playtimeMs: o.playtimeMs, savedAt: o.savedAt, party: (o.party || []).map((m) => m.id) };
+      const lead = (o.party || [])[0];
+      return {
+        slot, map: o.map, chapter: o.chapter, playtimeMs: o.playtimeMs, savedAt: o.savedAt,
+        party: (o.party || []).map((m) => m.id),
+        level: lead ? lead.level : undefined,
+        saveCount: o.vars ? o.vars.saveCount : undefined,
+      };
     } catch { return null; }
   }
 

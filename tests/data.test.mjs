@@ -12,7 +12,9 @@ import { evaluate, evaluateWith, tokenize } from '../src/engine/Conditions.js';
 import { Party } from '../src/engine/Party.js';
 import { Inventory } from '../src/engine/Inventory.js';
 import { GameState } from '../src/engine/GameState.js';
-import { COMMANDS } from '../src/engine/EventRunner.js';
+import { COMMANDS, isExpression, resolveValue } from '../src/engine/EventRunner.js';
+import { expandVars } from '../src/engine/TextVars.js';
+import { normalizeShop, stockFor, sellPrice, buyPrice } from '../src/engine/Shop.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DATA = path.join(ROOT, 'src', 'data');
@@ -35,6 +37,23 @@ const maps = {};
 for (const f of readdirSync(path.join(DATA, 'maps')).filter((n) => n.endsWith('.json'))) {
   maps[f.replace(/\.json$/, '')] = readJson(path.join(DATA, 'maps', f));
 }
+// Speaker registry (DESIGN.md E10/E11): src/data/npcs/*.json, merged like src/engine/Data.js.
+const npcs = {};
+const npcOwner = {};
+const npcDir = path.join(DATA, 'npcs');
+const npcDupes = [];
+if (existsSync(npcDir)) {
+  for (const f of readdirSync(npcDir).filter((n) => n.endsWith('.json'))) {
+    const table = readJson(path.join(npcDir, f));
+    for (const [id, def] of Object.entries(table || {})) {
+      if (npcs[id]) npcDupes.push(`speaker "${id}" in ${f} and ${npcOwner[id]}`);
+      npcs[id] = def;
+      npcOwner[id] = f;
+    }
+  }
+}
+const shops = existsSync(path.join(DATA, 'shops.json')) ? readJson(path.join(DATA, 'shops.json')) : {};
+
 const scripts = {};
 const scriptOwner = {};
 for (const f of readdirSync(path.join(DATA, 'scripts')).filter((n) => n.endsWith('.json'))) {
@@ -227,7 +246,25 @@ group('maps', (check) => {
       });
     }
     check(m.spawn && m.spawn.x >= 0 && m.spawn.x < w && m.spawn.y >= 0 && m.spawn.y < h, `map ${id}: spawn in bounds`);
-    for (const hook of ['onEnter', 'onFirstEnter']) if (m[hook]) check(!!scripts[m[hook]], `map ${id}: ${hook} script "${m[hook]}" exists`);
+    for (const hook of ['onEnter', 'onFirstEnter']) {
+      if (!m[hook]) continue;
+      const entries = Array.isArray(m[hook]) ? m[hook] : [m[hook]];
+      for (const en of entries) {
+        const sid = typeof en === 'string' ? en : en && en.script;
+        check(!!scripts[sid], `map ${id}: ${hook} script "${sid}" exists`);
+        if (en && typeof en === 'object' && en.condition) { try { tokenize(en.condition); } catch (err) { check(false, `map ${id}: ${hook} condition parse: ${err.message}`); } }
+      }
+    }
+    if (m.overlay) {
+      check(typeof m.overlay.color === 'string' && /^#?[0-9a-f]{6}$/i.test(m.overlay.color), `map ${id}: overlay color "${m.overlay.color}"`);
+      if (m.overlay.alpha !== undefined) check(m.overlay.alpha >= 0 && m.overlay.alpha <= 1, `map ${id}: overlay alpha in 0..1`);
+      if (m.overlay.condition) { try { tokenize(m.overlay.condition); } catch (err) { check(false, `map ${id}: overlay condition parse: ${err.message}`); } }
+    }
+    for (const l of m.lights || []) {
+      check(Number.isInteger(l.x) && Number.isInteger(l.y) && l.x >= 0 && l.x < w && l.y >= 0 && l.y < h, `map ${id}: light at ${l.x},${l.y} in bounds`);
+      if (l.condition) { try { tokenize(l.condition); } catch (err) { check(false, `map ${id}: light condition parse: ${err.message}`); } }
+    }
+    if (m.followers !== undefined) check(typeof m.followers === 'boolean', `map ${id}: followers is a boolean`);
     const ids = new Set();
     for (const e of m.entities || []) {
       check(!ids.has(e.id), `map ${id}: duplicate entity id ${e.id}`); ids.add(e.id);
@@ -246,6 +283,9 @@ group('maps', (check) => {
       if (e.type === 'enemy') check(!!encounters[e.encounter], `map ${id}/${e.id}: encounter "${e.encounter}" exists`);
       if (e.behavior) check(['idle', 'wander', 'patrol', 'chase', 'static'].includes(e.behavior), `map ${id}/${e.id}: behavior "${e.behavior}"`);
       if (e.behavior === 'patrol') check(typeof e.path === 'string' && /^[UDLR.]+$/.test(e.path), `map ${id}/${e.id}: patrol path`);
+      if (e.w !== undefined) check(Number.isInteger(e.w) && e.w >= 1 && e.x + e.w <= w, `map ${id}/${e.id}: w ${e.w} fits the map`);
+      if (e.footprint !== undefined) check(Array.isArray(e.footprint) && e.footprint.length === 2 && e.footprint.every((n) => Number.isInteger(n) && n >= 1), `map ${id}/${e.id}: footprint [w,h]`);
+      if (e.type === 'save' && e.prompt !== undefined) check(typeof e.prompt === 'string', `map ${id}/${e.id}: save prompt is a string`);
       if (e.condition) {
         try { tokenize(e.condition); } catch (err) { check(false, `map ${id}/${e.id}: condition parse: ${err.message}`); }
       }
@@ -267,7 +307,8 @@ group('encounters', (check) => {
 
 // ---------------------------------------------------------------------------------------------
 group('scripts', (check) => {
-  const WHO_OK = new Set(['narrator', 'ryan_caption', 'player', ...Object.keys(characters.characters)]);
+  const WHO_OK = new Set(['narrator', 'ryan_caption', 'player', ...Object.keys(characters.characters), ...Object.keys(npcs)]);
+  const CAPTION_STYLES = new Set(['plain', 'tape', 'flyer']);
   const walk = (cmds, sid, labels) => {
     check(Array.isArray(cmds), `script ${sid}: commands array`);
     for (const cmd of cmds || []) {
@@ -291,6 +332,15 @@ group('scripts', (check) => {
       if (k === 'spawn' && manifest) check(!!manifest[cmd.spawn.sprite], `script ${sid}: spawn sprite "${cmd.spawn.sprite}" in manifest`);
       if (k === 'sprite' && manifest) check(!!manifest[cmd.sprite.sheet], `script ${sid}: sprite sheet "${cmd.sprite.sheet}" in manifest`);
       if (k === 'scene') check(['freefall'].includes(cmd.scene), `script ${sid}: scene "${cmd.scene}"`);
+      if (k === 'caption' && cmd.style !== undefined) check(CAPTION_STYLES.has(cmd.style), `script ${sid}: caption style "${cmd.style}"`);
+      if (k === 'insert') {
+        const ins = typeof cmd.insert === 'string' ? { sprite: cmd.insert } : cmd.insert;
+        check(ins && typeof ins.sprite === 'string', `script ${sid}: insert needs a sprite`);
+        if (ins && ins.sprite && manifest && !manifest[ins.sprite]) process.stderr.write(`[data] note: script ${sid}: insert sprite "${ins.sprite}" not in manifest yet (placeholder will show)\n`);
+      }
+      if (k === 'save' && cmd.save && typeof cmd.save === 'object') check(cmd.save.auto === true || typeof cmd.save.prompt === 'string', `script ${sid}: save needs {auto:true} or {prompt}`);
+      if (k === 'shop') check(!!shops[cmd.shop], `script ${sid}: shop "${cmd.shop}" exists in shops.json`);
+      if (k === 'set') for (const [, v] of Object.entries(cmd.set)) if (typeof v === 'string' && isExpression(v)) { try { tokenize(v); } catch (err) { check(false, `script ${sid}: set expression "${v}": ${err.message}`); } }
     }
   };
   for (const [sid, cmds] of Object.entries(scripts)) {
@@ -298,6 +348,67 @@ group('scripts', (check) => {
     walk(cmds, sid, labels);
   }
   check(Object.keys(scripts).length > 0, 'at least one script');
+});
+
+// ---------------------------------------------------------------------------------------------
+group('speakers', (check) => {
+  for (const d of npcDupes) check(false, `duplicate ${d}`);
+  for (const [id, def] of Object.entries(npcs)) {
+    check(/^[a-z0-9_]+$/.test(id), `speaker ${id}: id is snake_case`);
+    check(def && typeof def.name === 'string' && def.name.length > 0, `speaker ${id}: name`);
+    if (def.portrait !== undefined) check(typeof def.portrait === 'string', `speaker ${id}: portrait is a string`);
+    if (def.window !== undefined) check(['ff', 'flat', 'caption'].includes(def.window), `speaker ${id}: window "${def.window}" is ff|flat|caption`);
+    if (def.blip !== undefined) check(typeof def.blip === 'string' || typeof def.blip === 'number', `speaker ${id}: blip`);
+    if (characters.characters[id]) check(false, `speaker ${id}: shadows characters.json (use characters.json for party members)`);
+  }
+  check(!!npcs.dad && npcs.dad.window === 'ff', 'dad speaker renders the FF window');
+});
+
+// ---------------------------------------------------------------------------------------------
+group('textvars+expressions', (check) => {
+  const state = new GameState({ characters, items, equipment, start }, null).newGame();
+  state.vars.saveCount = 4;
+  state.vars.contractPages = 7;
+  state.flags.gigFlyer = true;
+  state.money = 4;
+  check(expandVars('a {var:contractPages}-page agreement', state) === 'a 7-page agreement', 'vars substitute');
+  check(expandVars('${var:money}', state) === '$4', 'money substitutes');
+  check(expandVars('{var:flags.gigFlyer}/{var:vars.saveCount}', state) === 'yes/4', 'dotted paths');
+  check(expandVars('{var:nothing} {pause:100}', state) === '0 {pause:100}', 'missing → 0, other markup kept');
+  check(expandVars(null, state) === '' && expandVars('plain', null) === 'plain', 'null safe');
+  const cases = [
+    ['3 + vars.saveCount', 7], ['money', 4], ['vars.saveCount - 1', 3], ['flags.gigFlyer && money == 4', true],
+    ['DRUMMER WANTED - MUST PLAY FAST', 'DRUMMER WANTED - MUST PLAY FAST'], ['Rent is a feeling', 'Rent is a feeling'],
+    ['3 + 4', 7], ["'a'", "'a'"], ['', ''], [5, 5], [true, true],
+  ];
+  for (const [v, want] of cases) {
+    const got = resolveValue(v, state);
+    check(got === want, `resolveValue(${JSON.stringify(v)}) = ${JSON.stringify(got)}, want ${JSON.stringify(want)}`);
+  }
+  check(isExpression('vars.x') && !isExpression('hello') && isExpression('inventory.count(\'coffee\') + 1'), 'isExpression basics');
+});
+
+// ---------------------------------------------------------------------------------------------
+group('shops', (check) => {
+  const state = new GameState({ characters, items, equipment, start }, null).newGame();
+  for (const [id, def] of Object.entries(shops)) {
+    const shop = normalizeShop(id, def);
+    for (const entry of shop.stock) {
+      check(!!items[entry.id] || !!equipment[entry.id], `shop ${id}: stock "${entry.id}" exists`);
+      if (entry.condition) { try { tokenize(entry.condition); } catch (err) { check(false, `shop ${id}: stock condition parse: ${err.message}`); } }
+    }
+    for (const rid of shop.refuse) check(!!items[rid] || !!equipment[rid], `shop ${id}: refuse "${rid}" exists`);
+    for (const pid of Object.keys(shop.sellPrice)) check(!!items[pid] || !!equipment[pid], `shop ${id}: sellPrice "${pid}" exists`);
+    check(shop.sellRate >= 0 && shop.sellRate <= 1, `shop ${id}: sellRate ${shop.sellRate} in 0..1`);
+    const now = stockFor(shop, state);
+    check(now.length > 0, `shop ${id}: has stock at game start`);
+    for (const sid of now) check(buyPrice(state.inventory.def(sid)) >= 0, `shop ${id}: price of ${sid}`);
+  }
+  if (shops.pawnshop) {
+    const pawn = normalizeShop('pawnshop', shops.pawnshop);
+    check(sellPrice(pawn, 'fried_pedalboard', state.inventory.def('fried_pedalboard')) === 11, 'pawn pays $11 for the pedalboard');
+    check(sellPrice(pawn, 'band_agreement', state.inventory.def('band_agreement')) === null, 'pawn refuses key items');
+  }
 });
 
 process.stdout.write(`${JSON.stringify({ test: 'data.test', ok: failures === 0, checks: total, failures })}\n`);

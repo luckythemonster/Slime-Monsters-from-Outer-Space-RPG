@@ -7,9 +7,12 @@ import equipment from '../data/equipment.json';
 import enemies from '../data/enemies.json';
 import encounters from '../data/encounters.json';
 import start from '../data/start.json';
+import shops from '../data/shops.json';
 
 const mapModules = import.meta.glob('/src/data/maps/*.json', { eager: true, import: 'default' });
 const scriptModules = import.meta.glob('/src/data/scripts/*.json', { eager: true, import: 'default' });
+// Speaker registry (DESIGN.md E10/E11): each file is { "<id>": { "name", "portrait", "window"?, "blip"? } }.
+const npcModules = import.meta.glob('/src/data/npcs/*.json', { eager: true, import: 'default' });
 const manifestModules = import.meta.glob('/assets/generated/manifest.json', { eager: true, import: 'default' });
 // Engine-owned fallback sheets (assets/generated/_dev_*) used only while the real art is missing;
 // entries never override the art agent's manifest.
@@ -24,6 +27,9 @@ const pngUrls = import.meta.glob('/assets/generated/*.png', { eager: true, query
  * @property {object} enemies
  * @property {object} encounters
  * @property {object} start
+ * @property {object} shops shops.json
+ * @property {Record<string, object>} npcs merged src/data/npcs/*.json (non-party speakers)
+ * @property {Record<string, object>} speakers npcs + characters.json entries, keyed by `say.who`
  * @property {Record<string, object>} maps map id → map JSON
  * @property {Record<string, object[]>} scripts script id → command array
  * @property {Record<string, object>|null} manifest assets/generated/manifest.json or null
@@ -57,6 +63,21 @@ export function loadData() {
     }
   }
 
+  const npcs = {};
+  const npcOwner = {};
+  for (const [file, table] of Object.entries(npcModules)) {
+    for (const [id, def] of Object.entries(table || {})) {
+      if (npcs[id]) throw new Error(`[data] duplicate speaker id "${id}" in ${file} and ${npcOwner[id]}`);
+      npcs[id] = def;
+      npcOwner[id] = file;
+    }
+  }
+  const speakers = { ...npcs };
+  for (const [id, def] of Object.entries((characters && characters.characters) || {})) {
+    if (npcs[id]) console.warn(`[data] speaker "${id}" in ${npcOwner[id]} shadows characters.json; characters.json wins`);
+    speakers[id] = def;
+  }
+
   const real = manifestModules['/assets/generated/manifest.json'] || null;
   const dev = devManifestModules['/assets/generated/_dev_manifest.json'] || {};
   if (!real) console.warn('[data] assets/generated/manifest.json missing — run `npm run assets`');
@@ -65,7 +86,7 @@ export function loadData() {
 
   const assetUrl = (file) => pngUrls[`/assets/generated/${file}`] || null;
 
-  registry = { characters, items, equipment, enemies, encounters, start, maps, scripts, manifest, assetUrl };
+  registry = { characters, items, equipment, enemies, encounters, start, shops, npcs, speakers, maps, scripts, manifest, assetUrl };
   return registry;
 }
 

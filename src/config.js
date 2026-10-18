@@ -21,8 +21,14 @@ export const KEYS = {
   right: ['ArrowRight', 'KeyD'],
   confirm: ['KeyZ', 'Enter', 'Space'],
   cancel: ['KeyX', 'Backspace'],
-  menu: ['Escape'],
+  menu: ['Escape', 'KeyC'],
   run: ['ShiftLeft', 'ShiftRight'],
+};
+
+/** App-level toggles (DESIGN.md E23): not logical actions, handled directly by Input.js. */
+export const TOGGLE_KEYS = {
+  mute: ['KeyM'],
+  fullscreen: ['KeyF'],
 };
 
 /** Legacy keyCode for each code (synthetic events and Phaser captures still use keyCode). */
@@ -30,6 +36,7 @@ export const KEY_CODES = {
   ArrowUp: 38, ArrowDown: 40, ArrowLeft: 37, ArrowRight: 39,
   KeyW: 87, KeyA: 65, KeyS: 83, KeyD: 68, KeyZ: 90, KeyX: 88,
   Enter: 13, Space: 32, Backspace: 8, Escape: 27, ShiftLeft: 16, ShiftRight: 16,
+  KeyC: 67, KeyM: 77, KeyF: 70,
 };
 
 /** Gamepad (standard mapping) button index → action. D-pad is 12..15. */

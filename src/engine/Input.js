@@ -8,7 +8,8 @@
 // POST_STEP events. `simulate(action)` dispatches a real synthetic KeyboardEvent, so Phaser's
 // own keyboard plugins (used by UIScene) see the tap exactly like a physical one.
 import Phaser from 'phaser';
-import { KEYS, KEY_CODES, PAD_BUTTONS, ACTIONS } from '../config.js';
+import { services } from './services.js';
+import { KEYS, KEY_CODES, PAD_BUTTONS, ACTIONS, TOGGLE_KEYS } from '../config.js';
 
 const PRE_STEP = Phaser.Core.Events.PRE_STEP;
 const POST_STEP = Phaser.Core.Events.POST_STEP;
@@ -20,6 +21,11 @@ export class Input {
     /** code → action */
     this.codeToAction = new Map();
     for (const [action, codes] of Object.entries(KEYS)) for (const c of codes) this.codeToAction.set(c, action);
+    /** code → app toggle ('mute' | 'fullscreen') */
+    this.codeToToggle = new Map();
+    for (const [name, codes] of Object.entries(TOGGLE_KEYS)) for (const c of codes) this.codeToToggle.set(c, name);
+    /** Toggle counters (tests read these). */
+    this.toggles = { mute: 0, fullscreen: 0 };
     /** physical codes currently held, per action */
     this.heldCodes = new Map(ACTIONS.map((a) => [a, new Set()]));
     /** actions pressed since the last POST_STEP */
@@ -55,9 +61,14 @@ export class Input {
 
   /** @param {KeyboardEvent} ev @param {boolean} down */
   handleKey(ev, down) {
+    if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
+    const toggle = this.codeToToggle.get(ev.code);
+    if (toggle) {
+      if (down && !ev.repeat) this.toggle(toggle);
+      return;
+    }
     const action = this.codeToAction.get(ev.code);
     if (!action) return;
-    if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
     const held = this.heldCodes.get(action);
     if (down) {
       if (ev.repeat) return;
@@ -65,6 +76,47 @@ export class Input {
       held.add(ev.code);
     } else {
       held.delete(ev.code);
+    }
+  }
+
+  /** App-level toggles (DESIGN.md E23): M mutes, F toggles fullscreen. */
+  toggle(name) {
+    if (name === 'mute') this.toggleMute();
+    else if (name === 'fullscreen') this.toggleFullscreen();
+  }
+
+  /** Flip the audio engine's mute. Returns the new muted state (null without audio). */
+  toggleMute() {
+    const a = services.audio;
+    if (!a || typeof a.mute !== 'function') return null;
+    const on = !a.isMuted;
+    try { a.mute(on); } catch (err) { console.warn('[input] mute failed', err); return null; }
+    this.toggles.mute++;
+    return on;
+  }
+
+  /**
+   * Toggle fullscreen through Phaser's ScaleManager. The DOM request is made here (not via
+   * `scale.toggleFullscreen`) so a rejected promise (no user gesture, headless) is caught instead
+   * of surfacing as an unhandled rejection. Returns true when a request/exit was issued.
+   */
+  toggleFullscreen() {
+    const scale = this.game && this.game.scale;
+    if (!scale) return false;
+    this.toggles.fullscreen++;
+    try {
+      if (scale.isFullscreen) { scale.stopFullscreen(); return true; }
+      const fs = scale.fullscreen;
+      if (!fs || !fs.available || typeof scale.getFullscreenTarget !== 'function') return false;
+      const target = scale.getFullscreenTarget();
+      const fn = target && target[fs.request];
+      if (typeof fn !== 'function') return false;
+      const p = fn.call(target, { navigationUI: 'hide' });
+      if (p && typeof p.catch === 'function') p.catch((err) => { if (typeof scale.fullscreenErrorHandler === 'function') scale.fullscreenErrorHandler(err); });
+      return true;
+    } catch (err) {
+      console.warn('[input] fullscreen failed', err && err.message ? err.message : err);
+      return false;
     }
   }
 
@@ -144,7 +196,7 @@ export class Input {
    * @param {string} action
    */
   simulate(action) {
-    const codes = KEYS[action];
+    const codes = KEYS[action] || TOGGLE_KEYS[action];
     if (!codes) throw new Error(`Input.simulate: unknown action "${action}"`);
     const code = codes[0];
     this.dispatch('keydown', code);
