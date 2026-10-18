@@ -57,9 +57,10 @@ export default class InsertWindow {
     const tex = ui.textures.get(key);
     const frameOk = has && (tex.has(this.frame) || tex.has(String(this.frame)));
     this.image = ui.add.image(x + INSERT.w / 2, INSERT.y + INSERT.h / 2, key, frameOk ? this.frame : undefined).setDepth(DEPTH.DIALOGUE + 2);
-    // Keep oversized art inside the window (integer scale only: 1/2, never fractional).
+    // Integer scales only: tiny 16 px props read at 2×, oversized art drops to 1/2.
     const iw = this.image.width, ih = this.image.height;
     if (iw > INSERT.w - 8 || ih > INSERT.h - 8) this.image.setScale(0.5);
+    else if (iw <= 16 && ih <= 16) this.image.setScale(2);
     this.placeholder = !has;
     if (!has) {
       this.label = ui.add.text(x + INSERT.w / 2, INSERT.y + INSERT.h - 14, String(this.sprite || '?').slice(0, 14), textStyle(COLORS.disabled)).setOrigin(0.5, 0).setDepth(DEPTH.DIALOGUE + 2);

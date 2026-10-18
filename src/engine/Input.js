@@ -11,6 +11,8 @@ import Phaser from 'phaser';
 import { services } from './services.js';
 import { KEYS, KEY_CODES, PAD_BUTTONS, ACTIONS, TOGGLE_KEYS } from '../config.js';
 
+/** Actions UIScene consumes while a widget is open (see src/ui/theme.js KEY_ACTIONS). */
+const UI_ACTIONS = new Set(['confirm', 'cancel', 'up', 'down', 'left', 'right']);
 const PRE_STEP = Phaser.Core.Events.PRE_STEP;
 const POST_STEP = Phaser.Core.Events.POST_STEP;
 
@@ -72,7 +74,11 @@ export class Input {
     const held = this.heldCodes.get(action);
     if (down) {
       if (ev.repeat) return;
-      if (held.size === 0) this.just.add(action);
+      // While a UI widget is open the keyboard belongs to UIScene (which handles the same DOM
+      // event synchronously); never let a press it consumes leak into Explore/Battle as a
+      // justPressed. `menu`/`run` are not UI actions, so C/Esc still close the pause menu.
+      const uiBusy = UI_ACTIONS.has(action) && !!(services.ui && typeof services.ui.isBusy === 'function' && services.ui.isBusy());
+      if (held.size === 0 && !uiBusy) this.just.add(action);
       held.add(ev.code);
     } else {
       held.delete(ev.code);

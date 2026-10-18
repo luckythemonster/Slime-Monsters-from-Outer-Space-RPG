@@ -3,7 +3,7 @@ import Phaser from 'phaser';
 import { services } from '../engine/services.js';
 import { markReady } from '../engine/Debug.js';
 import { audioCall } from '../engine/Audio.js';
-import { PIXEL_FONT, WIDTH, PARAMS, FADE_MS, scaleMs } from '../config.js';
+import { PIXEL_FONT, WIDTH, PARAMS, FADE_MS, SAVE_SLOTS, scaleMs } from '../config.js';
 
 const FONT = { fontFamily: PIXEL_FONT, fontSize: '8px', color: '#ffffff', resolution: 1, align: 'center' };
 
@@ -25,13 +25,28 @@ export default class TitleScene extends Phaser.Scene {
     this.showMenu();
   }
 
+  /** The page (slot) Continue loads: `?slot=N`, else the most recently initialed one. */
+  continueSlot() {
+    const state = services.state;
+    if (PARAMS.slot) return state.hasSave(PARAMS.slot) ? PARAMS.slot : 0;
+    let best = 0;
+    let bestAt = '';
+    for (let slot = 1; slot <= SAVE_SLOTS; slot++) {
+      const peek = state.peekSave(slot);
+      if (!peek) continue;
+      const at = peek.savedAt || '';
+      if (!best || at > bestAt) { best = slot; bestAt = at; }
+    }
+    return best;
+  }
+
   /** Menu loop: Continue is disabled without a save; cancel does nothing. */
   async showMenu() {
     const state = services.state;
-    const slot = PARAMS.slot || 1;
     while (!this.closed) {
-      const hasSave = state.hasSave(slot);
-      const items = [{ label: 'New Game' }, { label: 'Continue', disabled: !hasSave, hint: hasSave ? `Slot ${slot}` : 'No save' }];
+      const slot = this.continueSlot();
+      const hasSave = slot > 0;
+      const items = [{ label: 'New Game' }, { label: 'Continue', disabled: !hasSave, hint: hasSave ? `Page ${slot}` : 'No save' }];
       const idx = await services.ui.menu(items, { x: 72, y: 136, cancelable: false });
       if (this.closed) return;
       if (idx === 0) { state.newGame(); await this.startExplore(); return; }

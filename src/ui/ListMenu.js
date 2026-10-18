@@ -215,6 +215,6 @@ export default class ListMenu {
   }
 
   debugState() {
-    return { state: this.state, selected: this.selected, items: this.items.length, x: this.x, y: this.y, w: this.w, h: this.h };
+    return { type: 'menu', state: this.state, selected: this.selected, items: this.items.length, labels: this.items.map((i) => i.label), x: this.x, y: this.y, w: this.w, h: this.h };
   }
 }

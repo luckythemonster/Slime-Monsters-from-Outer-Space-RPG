@@ -590,6 +590,7 @@ export default class DialogueBox {
       shake: this.shakeBox,
       drawn: !!(this.win && this.win.drawn),
       box: this.geo ? { x: this.geo.x, y: this.geo.y, w: this.geo.w, h: this.geo.h } : null,
+      text: this.pages.map((pg) => pg.map((ln) => ln.filter((it) => it.ch !== undefined).map((it) => it.ch).join('')).join('\n')).join('\f'),
     };
   }
 }

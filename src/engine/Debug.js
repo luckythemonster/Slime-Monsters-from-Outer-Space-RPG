@@ -112,8 +112,8 @@ export function installDebug(game) {
     },
     give(itemId, qty = 1) { return services.state.inventory.add(itemId, qty); },
     setMoney(n) { services.state.money = Math.max(0, n); return services.state.money; },
-    addParty(id) { return services.state.party.add(id); },
-    removeParty(id) { return services.state.party.remove(id); },
+    addParty(id) { const m = services.state.party.add(id); const ex = explore(); if (ex) ex.refreshFollowers(); return m; },
+    removeParty(id) { const r = services.state.party.remove(id); const ex = explore(); if (ex) ex.refreshFollowers(); return r; },
 
     startBattle(encounterId) { return requireExplore().startBattle(encounterId); },
     runScript(scriptId) { return requireExplore().runner.run(scriptId); },
@@ -124,6 +124,9 @@ export function installDebug(game) {
       await waitFor(() => { const ex = explore(); return !ex || !ex.player || !ex.player.moving; }, 3000);
     },
     hold(action, ms) { return services.input.hold(action, ms); },
+    camera(fx) { return requireExplore().camera(fx); },
+    toggle(name) { return services.input.toggle(name); },
+    get muted() { return !!(services.audio && services.audio.isMuted); },
     textInstant(v) { if (services.ui) services.ui.setTextInstant(v); },
     autoAdvance(v) { if (services.ui) services.ui.setAutoAdvance(v); },
     get chooseIndex() { return services.ui ? services.ui.chooseIndex : 0; },
@@ -135,7 +138,10 @@ export function installDebug(game) {
       snap.scene = api.scene();
       const ex = explore();
       if (ex && ex.player) {
-        snap.entities = [...ex.entities.values()].map((e) => ({ id: e.id, type: e.type, x: e.tileX, y: e.tileY, facing: e.facing, behavior: e.behavior }));
+        snap.entities = [...ex.entities.values()].map((e) => ({ id: e.id, type: e.type, x: e.tileX, y: e.tileY, facing: e.facing, behavior: e.behavior, visible: e.visible, w: e.w, footprint: e.footprint }));
+        snap.followers = (ex.followers || []).map((f) => ({ id: f.memberId, x: f.tileX, y: f.tileY, facing: f.facing, visible: f.visible, shadowed: !!f.shadowed }));
+        snap.overlay = ex.overlay ? ex.overlay.visible : null;
+        snap.lights = (ex.lights || []).filter((l) => l.obj.visible).length;
       }
       return snap;
     },

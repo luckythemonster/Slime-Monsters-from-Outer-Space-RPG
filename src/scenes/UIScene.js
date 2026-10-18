@@ -74,10 +74,18 @@ export default class UIScene extends Phaser.Scene {
     this.press(action);
   }
 
-  /** Feed a logical action to the top-most open widget (used by key events and the debug API). */
+  /**
+   * Feed a logical action to the top-most open widget (used by key events and the debug API).
+   * A key a widget consumed is also consumed from the gameplay Input, otherwise Explore would
+   * read the same `justPressed` on the next step (Phaser 4 dispatches keys synchronously, so a
+   * confirm that closes the last page can end the script before that step runs).
+   */
   press(action) {
     const top = this._stack[this._stack.length - 1];
-    if (top && typeof top.onAction === 'function') top.onAction(action);
+    if (top && typeof top.onAction === 'function') {
+      top.onAction(action);
+      if (services.input && typeof services.input.consume === 'function') services.input.consume();
+    }
   }
 
   _pushInput(widget) {
@@ -265,6 +273,7 @@ export default class UIScene extends Phaser.Scene {
     return {
       busy: this.isBusy(),
       open: this._open.size,
+      kinds: [...this._open].map((w) => (typeof w.debugState === 'function' ? w.debugState().type : null)),
       top: top && typeof top.debugState === 'function' ? top.debugState() : null,
       fadeAlpha: this._fadeRect ? this._fadeRect.alpha : 0,
       flashAlpha: this._flashRect ? this._flashRect.alpha : 0,

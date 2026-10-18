@@ -99,10 +99,11 @@ export default class Caption {
     if (flyer && typeof this.text.setLetterSpacing === 'function') this.text.setLetterSpacing(FLYER_SPACING);
     this.text.setPosition(x + Math.round((w - this.text.width) / 2), y + Math.round((h - this.text.height) / 2));
     if (this.style === 'tape') {
+      // Atlas `tape` frame, else the art agent's `obj_tape` sheet, else drawn.
       const tex = ui.textures.exists(UI_KEY) ? ui.textures.get(UI_KEY) : null;
-      const hasTape = !!(tex && tex.has('tape'));
+      const tapeKey = tex && tex.has('tape') ? [UI_KEY, 'tape'] : ui.textures.exists('obj_tape') ? ['obj_tape', 0] : null;
       const place = (tx, ty) => {
-        if (hasTape) return ui.add.image(tx, ty, UI_KEY, 'tape').setOrigin(0, 0).setDepth(DEPTH.CAPTION + 2);
+        if (tapeKey) return ui.add.image(tx, ty, tapeKey[0], tapeKey[1]).setOrigin(0, 0).setDepth(DEPTH.CAPTION + 2);
         // Drawn tape: gray strip with a lighter centre line, slightly translucent.
         const g = ui.add.graphics().setDepth(DEPTH.CAPTION + 2);
         g.fillStyle(0x8c8ca0, 0.9); g.fillRect(tx, ty, TAPE.w, TAPE.h);

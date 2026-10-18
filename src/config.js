@@ -73,7 +73,9 @@ export const DEPTH = {
   GROUND: 0,
   DECO: 1,
   ENTITY: 2,
+  OVERLAY: 50, // night tint: above the y-sorted sprites, below `over` (DESIGN.md E17)
   OVER: 100,
+  FX: 200, // camera bend/tear snapshots (scroll factor 0)
   UI: 1000,
 };
 
