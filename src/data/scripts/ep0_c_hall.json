@@ -11,6 +11,7 @@
     { "anim": { "who": "ryan", "key": "ryan_carry_hardware", "wait": false } },
     { "move": { "who": "hardware", "path": "RRRRRRRRRRRRRRRRRR", "wait": false } },
     { "move": { "who": "ryan", "path": "RRRRRRRRRRRRRRRRRR", "wait": true } },
+    { "face": { "who": "ryan", "dir": "right" } },
     { "face": { "who": "player", "toward": "ryan" } },
     { "say": "My brain thinks that's structurally impossible.", "who": "phoenix" },
     { "say": "That's Ryan.", "who": "brian" },
