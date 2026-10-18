@@ -19,6 +19,16 @@ palette:
   G = #1c8c48     # poison shade
   y = #f8d820     # dazed stars
   d = #5c6068     # skull shading
+  1 = #0028a0     # FF window gradient band 1 (top)
+  2 = #001c78     # FF window gradient band 2
+  3 = #001050     # FF window gradient band 3
+  4 = #000838     # FF window gradient band 4 (bottom)
+  r = #d83030     # red (enemy icon, out-of-tune wobble, on-hold)
+  o = #e88830     # orange
+  m = #9aa0a8     # gray mid (clip, auto icon)
+  s = #30303c     # shadow (black meter highlight)
+  u = #a050c0     # purple meter (Toon 4)
+  U = #6a2a8a     # purple meter shadow
 
 region win_tl:
 .kkkkkkk
@@ -179,3 +189,423 @@ kyyykyk.
 .....k..
 ....kyk.
 .....k..
+
+# --- Chapter 1 additions (appended; regions above keep their atlas positions) ---
+# FF4-6 blue window for Dad's intercom: 2-px white border, 1-px black gap, 1-px white inner line,
+# square corners, 4-band vertical gradient (t pieces carry bands 1-2, c band 3, b band 4).
+
+region ffwin_tl:
+wwwwwwww
+wwwwwwww
+wwkkkkkk
+wwkwwwww
+wwkw1111
+wwkw1111
+wwkw2222
+wwkw2222
+
+region ffwin_t:
+wwwwwwww
+wwwwwwww
+kkkkkkkk
+wwwwwwww
+11111111
+11111111
+22222222
+22222222
+
+region ffwin_tr:
+wwwwwwww
+wwwwwwww
+kkkkkkww
+wwwwwkww
+1111wkww
+1111wkww
+2222wkww
+2222wkww
+
+region ffwin_l:
+wwkw3333
+wwkw3333
+wwkw3333
+wwkw3333
+wwkw3333
+wwkw3333
+wwkw3333
+wwkw3333
+
+region ffwin_c:
+33333333
+33333333
+33333333
+33333333
+33333333
+33333333
+33333333
+33333333
+
+region ffwin_r:
+3333wkww
+3333wkww
+3333wkww
+3333wkww
+3333wkww
+3333wkww
+3333wkww
+3333wkww
+
+region ffwin_bl:
+wwkw4444
+wwkw4444
+wwkw4444
+wwkw4444
+wwkwwwww
+wwkkkkkk
+wwwwwwww
+wwwwwwww
+
+region ffwin_b:
+44444444
+44444444
+44444444
+44444444
+wwwwwwww
+kkkkkkkk
+wwwwwwww
+wwwwwwww
+
+region ffwin_br:
+4444wkww
+4444wkww
+4444wkww
+4444wkww
+wwwwwkww
+kkkkkkww
+wwwwwwww
+wwwwwwww
+
+region cursor_down:
+.kkkkkk.
+kwwwwwwk
+kwwwwwwk
+.kkwwkk.
+..kwwk..
+..kwwk..
+..kwwk..
+...kk...
+
+region emote_excl:
+...kk...
+..kwwk..
+..kwwk..
+..kwwk..
+..kwwk..
+...kk...
+..kwwk..
+...kk...
+
+region emote_quest:
+..kkkk..
+.kwwwwk.
+.kkkkwk.
+....kwk.
+...kwk..
+...kkk..
+...kwk..
+...kkk..
+
+region emote_dots:
+........
+........
+........
+........
+........
+ww.ww.ww
+ww.ww.ww
+kk.kk.kk
+
+region emote_note:
+....kk..
+...kwwk.
+...kwkk.
+...kwk..
+...kwk..
+.kkkwk..
+kwwwwk..
+.kkkk...
+
+region emote_heart:
+.kk..kk.
+kPpkkppk
+kppppppk
+kppppppk
+.kppppk.
+..kppk..
+...kk...
+........
+
+region emote_zzz:
+..kkkkk.
+..kwwwk.
+..kkkwk.
+...kwk..
+..kwkkk.
+..kwwwk.
+..kkkkk.
+........
+
+region count_1: 16x16
+................
+.......kkk......
+......kkwk......
+.....kkwwk......
+....kkwwwk......
+....kwkwwk......
+....kkkwwk......
+......kwwk......
+......kwwk......
+......kwwk......
+......kwwk......
+....kkkwwkkk....
+....kwwwwwwk....
+....kkkkkkkk....
+................
+................
+
+region count_2: 16x16
+................
+.....kkkkkk.....
+....kwwwwwwk....
+....kwkkkkwwk...
+....kkk..kwwk...
+........kwwk....
+.......kwwk.....
+......kwwk......
+.....kwwk.......
+....kwwk........
+...kwwkkkkkk....
+...kwwwwwwwwk...
+...kkkkkkkkkk...
+................
+................
+................
+
+region count_3: 16x16
+................
+....kkkkkkk.....
+...kwwwwwwwk....
+...kkkkkkwwk....
+........kwwk....
+.......kwwk.....
+......kwwwk.....
+......kkkwwk....
+........kwwk....
+........kwwk....
+...kkkkkkwwk....
+...kwwwwwwwk....
+...kkkkkkkkk....
+................
+................
+................
+
+region count_4: 16x16
+................
+........kkk.....
+.......kwwk.....
+......kwwwk.....
+.....kwwwwk.....
+....kwwkwwk.....
+...kwwkkwwk.....
+...kwwkkwwk.....
+...kwwwwwwwwk...
+...kkkkkwwkkk...
+.......kwwk.....
+.......kwwk.....
+.......kkkk.....
+................
+................
+................
+
+region beat_lamp_on: 4x4
+kkkk
+kywk
+kyyk
+kkkk
+
+region beat_lamp_off: 4x4
+kkkk
+kJJk
+kJJk
+kkkk
+
+region meter_seg_pink: 4x8
+kkkk
+kPPk
+kppk
+kppk
+kppk
+kppk
+kDDk
+kkkk
+
+region meter_seg_green: 4x8
+kkkk
+kwgk
+kggk
+kggk
+kggk
+kggk
+kGGk
+kkkk
+
+region meter_seg_purple: 4x8
+kkkk
+kPuk
+kuuk
+kuuk
+kuuk
+kuuk
+kUUk
+kkkk
+
+region meter_seg_black: 4x8
+kkkk
+kssk
+keek
+keek
+keek
+keek
+keek
+kkkk
+
+region setlist_party:
+..kkkk..
+.kppppk.
+kpwppwpk
+kppppppk
+kpkppkpk
+.kppppk.
+..kkkk..
+........
+
+region setlist_enemy:
+.kkkkkk.
+krrrrrrk
+krkrrkrk
+krrrrrrk
+.krrrrk.
+..kkkk..
+...kk...
+........
+
+region setlist_auto:
+...kk...
+.kkmmkk.
+kmmLLmmk
+kmLmmLmk
+kmLmmLmk
+kmmLLmmk
+.kkmmkk.
+...kk...
+
+region icon_deaf:
+..k.....
+.kwk..k.
+kwwk.k..
+kwwkk...
+kwwk.k..
+.kwk..k.
+..k.....
+........
+
+region icon_outoftune:
+....kk..
+...kwwk.
+...kwkk.
+...kwk..
+.kkkwk..
+kwwwwk..
+.kkkk...
+.rr.rr..
+
+region icon_tempo_up:
+...kk...
+..kggk..
+.kggggk.
+kggkkggk
+kkkggkkk
+..kggk..
+..kggk..
+..kkkk..
+
+region icon_tempo_down:
+..kkkk..
+..kjjk..
+..kjjk..
+kkkjjkkk
+kjjkkjjk
+.kjjjjk.
+..kjjk..
+...kk...
+
+region icon_bristling:
+..k.k.k.
+.kpkpkpk
+.kpppppk
+.kpppppk
+.kPppppk
+.kpppppk
+..kkkkk.
+........
+
+region icon_slimed:
+kkkkkkkk
+kggggggk
+kkggkggk
+..kgkkgk
+..kgk.k.
+..kgk...
+..kkk...
+........
+
+region icon_baked:
+...kk...
+.k.gg.k.
+.kggggk.
+kgggggGk
+.kggggk.
+...gg...
+...kk...
+........
+
+region icon_onhold:
+kkk..kkk
+kLLkkLLk
+kLLLLLLk
+.kkkkkk.
+...rr...
+..r..r..
+........
+........
+
+region clip: 16x8
+.....kkkkkk.....
+....kLLLLLLk....
+...kLmmmmmmLk...
+...kLmkkkkmLk...
+...kmmkddkmmk...
+...kkkkkkkkkk...
+......kddk......
+......kkkk......
+
+region mood_swatch_frame: 10x10
+kkkkkkkkkk
+kwwwwwwwwk
+kw......wk
+kw......wk
+kw......wk
+kw......wk
+kw......wk
+kw......wk
+kwwwwwwwwk
+kkkkkkkkkk

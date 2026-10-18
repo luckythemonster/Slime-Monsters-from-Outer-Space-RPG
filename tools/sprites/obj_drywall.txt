@@ -1,0 +1,28 @@
+# A fallen drywall slab (Bajonka trots out from under it). 32x16.
+name: obj_drywall
+frame: 32x16
+palette:
+  . = transparent
+  k = #141018     # outline / cracks
+  w = #f8f8f8     # drywall face
+  L = #c8ccd4     # edge
+  d = #5c6068     # underside
+anim: idle  frames: 0  fps: 1
+
+frame 0: idle
+................................
+....kkkkkkkkkkkkkkkkkkkkkkkk....
+...kLLLLLLLLLLLLLLLLLLLLLLLLk...
+..kLwwwwwwwwwwwwkwwwwwwwwwwwLk..
+..kLwwwwwwwwwwwkwwwwwwwwwwwwLk..
+..kLwwwwwwwwwwkwwwwwwwwwwwwwLk..
+..kLwwwwwwwwwwkwwwwwwwkwwwwwLk..
+..kLwwwwwwwwwkwwwwwwwwwkwwwwLk..
+..kLwwwwwwwwwkwwwwwwwwwwkwwwLk..
+..kLwwwwwwwwkwwwwwwwwwwwwkwwLk..
+..kLLLLLLLLLLLLLLLLLLLLLLLLLLk..
+..kddddddddddddddddddddddddddk..
+..kkkkkkkkkkkkkkkkkkkkkkkkkkkk..
+................................
+................................
+................................

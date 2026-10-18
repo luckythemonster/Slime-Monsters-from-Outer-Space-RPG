@@ -1,0 +1,91 @@
+# Brian's $2,000 of pristine, never-stepped-on tone. wet: nine-dollar iced coffee. fried: sparks, smoke.
+name: obj_pedalboard
+frame: 16x16
+palette:
+  . = transparent
+  k = #141018     # outline
+  s = #30303c     # board
+  L = #c8ccd4     # footswitches / cables
+  j = #3c5c9c     # pedal blue
+  r = #d83030     # pedal red
+  g = #39ff8a     # pedal green
+  y = #f8d820     # pedal yellow / sparks
+  h = #7c4c2c     # coffee
+  H = #48281c     # coffee dark
+  w = #f8f8f8     # sparks
+  d = #5c6068     # smoke
+anim: pristine  frames: 0    fps: 1
+anim: wet       frames: 1    fps: 1
+anim: fried     frames: 2 3  fps: 6
+
+frame 0: pristine
+................
+................
+................
+................
+.kkkkkkkkkkkkkk.
+kskkkkkkkkkkkssk
+ksjjkrrkggkyyssk
+kskkkkkkkkkkkssk
+ksjjkrrkggkyyssk
+ksLLkLLkLLkLLssk
+kskkkkkkkkkkkssk
+kssssssssssssssk
+ksLsLsLsLsLsLssk
+kkkkkkkkkkkkkkkk
+................
+................
+
+frame 1: wet
+................
+................
+................
+.........kkkkk..
+.kkkkkkkkHhhhHk.
+kskkkkkkkHhhhhHk
+ksjjkrrkgHhhhhhk
+kskkkkkkkHhhhhHk
+ksjjkrrkgkHhhHsk
+ksLLkLLkLLkHHssk
+kskkkkkkkkkkkssk
+kssssssssssssssk
+ksLsLsLsLsLsLssk
+kkkkkkkkkkkkkkkk
+................
+................
+
+frame 2: fried a
+................
+................
+..........y.....
+...y............
+.kkkkkkkkkkkkkk.
+kskkkkkkkkkkkssk
+kssskssksskssssk
+kskkkkkkkkkkkssk
+kssskssksskyyssk
+ksLLkLLkLLkLLssk
+kskkkkkkkkkkkssk
+kssssssssssssssk
+ksLsLsLsLsLsLssk
+kkkkkkkkkkkkkkkk
+................
+................
+
+frame 3: fried b
+.....d..........
+....ddd.....d...
+.....d.....ddd..
+.w..........d...
+.kkkkkkkkkkkkkk.
+kskkkkkkkkkkkssk
+kswwkssksskssssk
+kskkkkkkkkkkkssk
+kssskssksskssssk
+ksLLkLLkLLkLLssk
+kskkkkkkkkkkkssk
+kssssssssssssssk
+ksLsLsLsLsLsLssk
+kkkkkkkkkkkkkkkk
+................
+................

@@ -1,0 +1,50 @@
+# Escape pod 2, hatch up, seat empty: Lucky's lucky_ball sprite is drawn on top of it. 32x32.
+name: obj_pod
+frame: 32x32
+palette:
+  . = transparent
+  k = #141018     # outline
+  C = #40e0f0     # glass
+  S = #8ca4cc     # glass shade
+  u = #6c7890     # glass dark
+  w = #f8f8f8     # glint
+  W = #e8e8f0     # chrome light
+  L = #c8ccd4     # chrome
+  m = #9aa0a8     # chrome mid
+  d = #5c6068     # chrome dark / seat
+  s = #30303c     # interior
+anim: idle  frames: 0  fps: 1
+
+frame 0: open
+..........kkkkkkkkkkkk..........
+........kkCCCCCCCCCCCCkk........
+.......kCCCwwCCCCCCCCSSCk.......
+......kCCCwCCCCCCCCCCSSSSk......
+......kCCCCCCCCCCCCCSSSSSk......
+......kCCCCCCCCCCCCSSSSSSk......
+......kSCCCCCCCCCCSSSSSSuk......
+......kkkkkkkkkkkkkkkkkkkk......
+....kkkLLLLLLLLLLLLLLLLLLkkk....
+..kkLLWWWWWWWWWWWWWWWWWWWWLLkk..
+.kLLWWLLLLLLLLLLLLLLLLLLLLWWLLk.
+.kLWLLmkkkkkkkkkkkkkkkkkkmLLWLk.
+.kLWLLmksssssssssssssssskmLLWLk.
+.kLWLLmksssssssssssssssskmLLWLk.
+.kLWLLmkssskkkkkkkkkkssskmLLWLk.
+.kLWLLmkssskddddddddkssskmLLWLk.
+.kLWLLmkssskddddddddkssskmLLWLk.
+.kLWLLmkssskddddddddkssskmLLWLk.
+.kLWLLmkssskdLLLLLLdkssskmLLWLk.
+.kLWLLmkssskkkkkkkkkkssskmLLWLk.
+.kLWLLmksskmmmmmmmmmmksskmLLWLk.
+.kLWLLmksskmLLLLLLLLmksskmLLWLk.
+.kLWLLmksskmmmmmmmmmmksskmLLWLk.
+.kLWLLmksskddddddddddksskmLLWLk.
+.kLWLLmksskkkkkkkkkkkksskmLLWLk.
+.kLWLLmksssssssssssssssskmLLWLk.
+.kLWLLmksssssssssssssssskmLLWLk.
+.kLWLLmkkkkkkkkkkkkkkkkkkmLLWLk.
+.kLLLLmmmmmmmmmmmmmmmmmmmmLLLLk.
+..kkddddddddddddddddddddddddkk..
+....kkkkkkkkkkkkkkkkkkkkkkkk....
+................................

@@ -1,0 +1,71 @@
+# Lucky's guitar amp: forty-one stickers, nine political. glow: the cosmic eruption (CS-11).
+name: obj_amp_guitar
+frame: 16x16
+palette:
+  . = transparent
+  k = #141018     # outline
+  s = #30303c     # tolex
+  d = #5c6068     # grille
+  L = #c8ccd4     # knobs
+  r = #d83030     # LED / sticker
+  y = #f8d820     # sticker
+  w = #f8f8f8     # sticker / glow core
+  p = #ff5fd2     # sticker / glow
+  P = #ff9ae6     # glow light
+  g = #39ff8a     # sticker / glow green
+anim: idle  frames: 0    fps: 1
+anim: glow  frames: 1 2  fps: 8
+
+frame 0: idle
+.kkkkkkkkkkkkkk.
+kssssssssssssssk
+ksLkLkLkLkssrssk
+kssyysssssswwssk
+kkkkkkkkkkkkkkkk
+kddddddddddddddk
+kppdsdsdsdsdggdk
+kdddkkkkkkkkdddk
+kdskdddddddkdsdk
+kwwkdsssssdkdsdk
+kdskdsskssdkdsdk
+kdskdsssssdkyydk
+kdskdddddddkdsdk
+kdddkkkkkkkkdddk
+krrdddddddddwwdk
+.kkkkkkkkkkkkkk.
+
+frame 1: glow a
+.kkkkkkkkkkkkkk.
+kssssssssssssssk
+ksLkLkLkLkssgssk
+kssyysssssswwssk
+kkkkkkkkkkkkkkkk
+kddddddddddddddk
+kppdsdsdsdsdggdk
+kdddkkkkkkkkdddk
+kdskdpppppdkdsdk
+kwwkdpPPPpdkdsdk
+kdskdpPwPpdkdsdk
+kdskdpPPPpdkyydk
+kdskdpppppdkdsdk
+kdddkkkkkkkkdddk
+krrdddddddddwwdk
+.kkkkkkkkkkkkkk.
+
+frame 2: glow b
+.kkkkkkkkkkkkkk.
+kssssssssssssssk
+ksLkLkLkLkssgssk
+kssyysssssswwssk
+kkkkkkkkkkkkkkkk
+kdpddddddddddpdk
+kppdsdgdsdgdggdk
+kdddkkkkkkkkdddk
+kdskdgggggdkdsdk
+kwwkdgwwwgdkdsdk
+kdskdgwPwgdkdsdk
+kdskdgwwwgdkyydk
+kdskdgggggdkdsdk
+kdddkkkkkkkkdddk
+krrdpdddddddwwdk
+.kkkkkkkkkkkkkk.

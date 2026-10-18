@@ -1,0 +1,93 @@
+# Dad. A wall intercom speaker in the Vanguard pod bay (sits on vanguard.intercom_mount).
+# idle: LED off. talk: the LED pulses and the grille buzzes. squelched: Lucky's pink pseudopod
+# slapped over the grille, the arm trailing out of the bottom of the frame.
+name: obj_intercom
+frame: 16x16
+palette:
+  . = transparent
+  k = #141018     # outline
+  L = #c8ccd4     # chrome
+  m = #9aa0a8     # gray mid
+  d = #5c6068     # grille
+  s = #30303c     # grille dark
+  r = #d83030     # LED on
+  R = #6c2828     # LED off
+  w = #f8f8f8     # LED flare
+  p = #ff5fd2     # slime
+  P = #ff9ae6     # slime highlight
+  D = #b0308c     # slime shadow
+anim: idle       frames: 0      fps: 1
+anim: talk       frames: 1 2    fps: 6
+anim: squelched  frames: 3      fps: 1
+
+frame 0: idle
+.kkkkkkkkkkkkkk.
+kLLLLLLLLLLLLLLk
+kLmmmmmmmmmmmmLk
+kLmkkkkkkkkkkmLk
+kLmkddddddddkmLk
+kLmksssssssskmLk
+kLmkddddddddkmLk
+kLmksssssssskmLk
+kLmkddddddddkmLk
+kLmksssssssskmLk
+kLmkddddddddkmLk
+kLmkkkkkkkkkkmLk
+kLmmmmmmmmRRmmLk
+kLmmmmmmmmmmmmLk
+kddddddddddddddk
+.kkkkkkkkkkkkkk.
+
+frame 1: talk a
+.kkkkkkkkkkkkkk.
+kLLLLLLLLLLLLLLk
+kLmmmmmmmmmmmmLk
+kLmkkkkkkkkkkmLk
+kLmksssssssskmLk
+kLmkddddddddkmLk
+kLmksssssssskmLk
+kLmkddddddddkmLk
+kLmksssssssskmLk
+kLmkddddddddkmLk
+kLmksssssssskmLk
+kLmkkkkkkkkkkmLk
+kLmmmmmmmmrrmmLk
+kLmmmmmmmmmmmmLk
+kddddddddddddddk
+.kkkkkkkkkkkkkk.
+
+frame 2: talk b
+.kkkkkkkkkkkkkk.
+kLLLLLLLLLLLLLLk
+kLmmmmmmmmmmmmLk
+kLmkkkkkkkkkkmLk
+kLmkddddddddkmLk
+kLmksssssssskmLk
+kLmkddddddddkmLk
+kLmksssssssskmLk
+kLmkddddddddkmLk
+kLmksssssssskmLk
+kLmkddddddddkmLk
+kLmkkkkkkkkkkmLk
+kLmmmmmmmmwrmmLk
+kLmmmmmmmmmmmmLk
+kddddddddddddddk
+.kkkkkkkkkkkkkk.
+
+frame 3: squelched
+.kkkkkkkkkkkkkk.
+kLLLLLLLLLLLLLLk
+kLmmmmmmmmmmmmLk
+kLmkkkkkkkkkkmLk
+kLmkdkkkkkkdkmLk
+kLmkkPPppppkkmLk
+kLmkkPpppppDkmLk
+kLmkkppppppDkmLk
+kLmkkpppppDDkmLk
+kLmkdkppppkdkmLk
+kLmkkkkppkkkkmLk
+kLmkkkkppkkkkmLk
+kLmmmmkppkRRmmLk
+kLmmmmkppkmmmmLk
+kdddddkppkdddddk
+.kkkkkkppkkkkkk.

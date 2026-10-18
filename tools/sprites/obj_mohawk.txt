@@ -1,0 +1,19 @@
+# The cop's glued-on neon green mohawk, after the shockwave. 8x8.
+name: obj_mohawk
+frame: 8x8
+palette:
+  . = transparent
+  k = #141018     # outline
+  g = #39ff8a     # neon green
+  G = #1c8c48     # shade
+anim: idle  frames: 0  fps: 1
+
+frame 0: idle
+...kk...
+..kggk..
+..kggk..
+.kggggk.
+.kgGggk.
+kgGGGggk
+kGGGGGGk
+.kkkkkk.

@@ -1,0 +1,51 @@
+# An unnecessarily red button on a chrome base (sits on vanguard.eject_mount).
+name: obj_eject
+frame: 16x16
+palette:
+  . = transparent
+  k = #141018     # outline
+  r = #d83030     # red
+  R = #6c2828     # red shadow
+  o = #e88830     # red highlight
+  w = #f8f8f8     # glint
+  L = #c8ccd4     # chrome
+  m = #9aa0a8     # chrome mid
+  d = #5c6068     # chrome dark
+anim: idle     frames: 0  fps: 1
+anim: pressed  frames: 1  fps: 1
+
+frame 0: idle
+................
+.....kkkkkk.....
+...kkrrrrrrkk...
+..krowrrrrrrrk..
+.krorrrrrrrrrRk.
+.krrrrrrrrrrrRk.
+.krrrrrrrrrrrRk.
+.krrrrrrrrrrRRk.
+.kRRrrrrrrRRRRk.
+..kRRRRRRRRRRk..
+...kkkkkkkkkk...
+..kLLLLLLLLLLk..
+.kLmmmmmmmmmmLk.
+.kmddddddddddmk.
+.kkkkkkkkkkkkkk.
+................
+
+frame 1: pressed
+................
+................
+................
+................
+................
+.....kkkkkk.....
+...kkrrrrrrkk...
+..krowrrrrrrrk..
+.krrrrrrrrrrrRk.
+.kRRrrrrrrRRRRk.
+..kkkkkkkkkkkk..
+..kLLLLLLLLLLk..
+.kLmmmmmmmmmmLk.
+.kmddddddddddmk.
+.kkkkkkkkkkkkkk.
+................

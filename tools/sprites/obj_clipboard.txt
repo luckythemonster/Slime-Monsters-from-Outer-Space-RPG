@@ -1,0 +1,20 @@
+# Bajonka's clipboard (the one that is gone after the time skip). 8x8.
+name: obj_clipboard
+frame: 8x8
+palette:
+  . = transparent
+  k = #141018     # outline / type
+  L = #c8ccd4     # clip
+  h = #7c4c2c     # board
+  w = #f8f8f8     # paper
+anim: idle  frames: 0  fps: 1
+
+frame 0: idle
+..kLLk..
+.kkkkkk.
+khwwwwhk
+khwkkwhk
+khwwwwhk
+khwkkkhk
+khwwwwhk
+kkkkkkkk

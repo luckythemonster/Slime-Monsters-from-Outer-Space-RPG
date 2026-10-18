@@ -1,0 +1,27 @@
+# Bajonka's milk crate by Palmer's back door.
+name: obj_milk_crate
+frame: 16x16
+palette:
+  . = transparent
+  k = #141018     # outline / holes
+  r = #d83030     # crate
+  R = #6c2828     # crate shade
+anim: idle  frames: 0  fps: 1
+
+frame 0: idle
+................
+................
+................
+................
+..kkkkkkkkkkkk..
+.krrrrrrrrrrrrk.
+.krkrkrkrkrkrrk.
+.krrrrrrrrrrrrk.
+.krkrkrkrkrkrrk.
+.krrrrrrrrrrrrk.
+.krkrkrkrkrkrrk.
+.krrrrrrrrrrrrk.
+.krkrkrkrkrkrrk.
+.kRRRRRRRRRRRRk.
+.kkkkkkkkkkkkkk.
+................
