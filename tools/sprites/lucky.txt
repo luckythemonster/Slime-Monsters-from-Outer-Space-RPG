@@ -32,6 +32,8 @@ anim: bristle    frames: 14 15  fps: 6                  # spikes up / wider, lik
 variant: lucky_rage      swap: p=#ff1aa0,P=#ff66c8,d=#8a0a5a,g=#c8ff3c,G=#7cb028
 variant: lucky_deflated  swap: p=#ffb8e8,P=#ffe0f4,d=#c880b0,g=#b8ffd6,G=#78c8a0
 variant: lucky_bruised   swap: p=#8a4fc8,P=#b080e0,d=#4a2070,g=#6a2a8a,G=#3a1050
+# lucky_glow: lit up after `channel` (docs/DESIGN.md CS-05)
+variant: lucky_glow      swap: P=#f8f8f8,g=#c8ff3c,G=#39ff8a
 variant: lucky_plaster   swap: p=#d8d8e0,P=#f0f0f4,d=#a0a0b0,g=#d8d8e0,G=#a0a0b0,l=#f0f0f4
 
 frame 0: down stand

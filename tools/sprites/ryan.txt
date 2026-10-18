@@ -35,6 +35,8 @@ anim: sit  frames: 12  fps: 1
 anim: drum  frames: 13 14 15 16  fps: 10
 anim: nod  frames: 17 18  fps: 4  repeat: 0
 variant: ryan_slimed   swap: f=#8bff9a,F=#1c8c48,u=#8bff9a,i=#f8f8f8
+# ryan_slimed_map: alias of ryan_slimed used by docs/DESIGN.md cutscenes
+variant: ryan_slimed_map  swap: f=#8bff9a,F=#1c8c48,u=#8bff9a,i=#f8f8f8
 variant: ryan_bruised  swap: f=#7a3aa8,F=#4a2070,u=#7a3aa8,i=#f8f8f8
 variant: ryan_plaster  swap: f=#d8d8e0,F=#a0a0b0,t=#d8d8e0,T=#a0a0b0,u=#f0f0f4,p=#d8d8e0,P=#a0a0b0,H=#d8d8e0,h=#a0a0b0
 
