@@ -25,6 +25,8 @@ anim: riff  frames: 5 6  fps: 6
 anim: hurt  frames: 7  fps: 1  repeat: 0
 anim: ko  frames: 8  fps: 1  repeat: 0
 anim: win  frames: 9 10  fps: 4
+# brian_fried (DESIGN.md B-10): the pedalboard charred and its LEDs glowing hot after the KRAAANG
+variant: brian_fried  swap: l=#30303c,y=#e88830
 
 frame 0: idle a
 ................................

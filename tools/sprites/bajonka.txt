@@ -10,6 +10,8 @@ palette:
   w = #f8f8f8     # white chest / sneeze spray
   i = #c89060     # inner ear
   r = #d83030     # tongue
+  l = #c8ccd4     # clipboard / contract page / key ring
+  y = #f8d820     # van keys
 anim: walk_down  frames: 0 1 0 2  fps: 8
 anim: walk_up    frames: 3 4 3 5  fps: 8
 anim: walk_left  frames: 6 7 6 8  fps: 8
@@ -19,6 +21,9 @@ anim: idle_up    frames: 3  fps: 1
 anim: idle_left  frames: 6  fps: 1
 anim: idle_right frames: 6  fps: 1  flipX: true
 anim: sneeze     frames: 9 10  fps: 6  repeat: 0
+anim: clipboard_sit  frames: 11  fps: 1                 # CS-10: sitting with the clipboard
+anim: keys_sit       frames: 12  fps: 1                 # CS-17: van keys in her mouth
+anim: trot_drop      frames: 13 14  fps: 4  repeat: 0   # CS-12/16: trots up, drops the page
 
 frame 0: down stand
 ................
@@ -210,6 +215,78 @@ frame 10: sneeze b (achoo, ears flat, spray)
 w.koccccccccok.w
 ..koccckkcccok..
 w.kccckrrkccck.w
+...kkccccccckk..
+....kwwwwwwk.kk.
+...kowwwwwwokock
+...kowwwwwwokcok
+...kooooooook.kk
+...kcck..kcck...
+...kkkk..kkkk...
+
+frame 11: clipboard_sit
+................
+....k......k....
+...kok....kok...
+..koiokkkkoiok..
+..kooooooooook..
+..kookooookook..
+..koccccccccok..
+..koccckkcccok..
+..kcccccccccck..
+...kkccckkcckk..
+..kllllllllllk..
+..klwwwwwwwwlk..
+..klwwwwwwwwlk..
+..kkkkkkkkkkkk..
+..kookcckcckook.
+..kkkkkkkkkkkkk.
+
+frame 12: keys_sit
+................
+....k......k....
+...kok....kok...
+..koiokkkkoiok..
+..kooooooooook..
+..kookooookook..
+..koccccccccok..
+..koccckkcccok..
+..kcccccccccck..
+...kkccckkcckk..
+....kwwwlwwk....
+...kowwwyywok...
+...kowwwwywok...
+..koooooooooook.
+..kookcckcckook.
+..kkkkkkkkkkkkk.
+
+frame 13: trot_drop a (trot, page in mouth)
+....k......k....
+...kok....kok...
+..koiokkkkoiok..
+..kooooooooook..
+..kookooookook..
+..koccccccccok..
+..koccckkcccok..
+..kcccckkcccck..
+...kkckllkcckk..
+....kwkllkwk.kk.
+...kowkkkkwokock
+...kowwwwwwokcok
+...kooooooook.kk
+...kcck..kcck...
+...kcck..kkkk...
+...kkkk.........
+
+frame 14: trot_drop b (dropped, mouth open)
+................
+....k......k....
+...kok....kok...
+..koiokkkkoiok..
+..kooooooooook..
+..kookooookook..
+..koccccccccok..
+..koccckkcccok..
+..kcccckkcccck..
 ...kkccccccckk..
 ....kwwwwwwk.kk.
 ...kowwwwwwokock

@@ -26,6 +26,11 @@ anim: smear  frames: 6 7 8 9  fps: 14
 anim: hurt  frames: 10  fps: 1  repeat: 0
 variant: ryan_pocket          swap: g=#7a3aa8,G=#4a2070
 variant: ryan_bruised_battle  swap: g=#7a3aa8,G=#4a2070
+# BattleScene names: ryan_slimed_battle = this sheet, ryan_pocket_purple = ryan_pocket;
+# ryan_pocket_dark is the Pocket palette darkened once flags.eternityArmed (DESIGN.md Ryan forms table)
+variant: ryan_slimed_battle   swap: k=#141018
+variant: ryan_pocket_purple   swap: g=#7a3aa8,G=#4a2070
+variant: ryan_pocket_dark     swap: g=#4a2070,G=#2a1040,t=#6c1818,u=#8a2020,p=#142050,f=#b89070,F=#8a6040
 
 frame 0: idle a
 ................................................

@@ -1,0 +1,67 @@
+# WORK IS LOVE billboard for the Freefall scene (FreefallScene `billboard_fall`): frame 0 the clean board,
+# frame 1 the glitched one after Lucky streaks over it (green face, pink lettering shifted in bands, tears,
+# scanline bars). 64x24: the board is 64x20 on two short posts; origin (0.5, 0) in the scene.
+name: billboard_fall
+frame: 64x24
+palette:
+  . = transparent
+  k = #141018     # outline / lettering
+  w = #f8f8f8     # board face
+  g = #9aa0a8     # subtitle bar
+  s = #5c6068     # posts
+  G = #39ff8a     # glitched face
+  n = #ff5fd2     # glitched lettering / scanlines
+anim: idle    frames: 0  fps: 1
+anim: glitch  frames: 1  fps: 1
+
+frame 0: normal
+kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+kwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwk
+kwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwk
+kwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwk
+kwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwk
+kwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwk
+kwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwk
+kwwwwwwwkwkwkkkwkkwwkwkwwwwwkkkwkkkwwwwwkwwwkkkwkwkwkkkwwwwwwwwk
+kwwwwwwwkwkwkwkwkwkwkwkwwwwwwkwwkwwwwwwwkwwwkwkwkwkwkwwwwwwwwwwk
+kwwwwwwwkkkwkwkwkkwwkkwwwwwwwkwwkkkwwwwwkwwwkwkwkwkwkkwwwwwwwwwk
+kwwwwwwwkkkwkwkwkwkwkwkwwwwwwkwwwwkwwwwwkwwwkwkwkwkwkwwwwwwwwwwk
+kwwwwwwwkwkwkkkwkwkwkwkwwwwwkkkwkkkwwwwwkkkwkkkwwkwwkkkwwwwwwwwk
+kwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwk
+kwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwk
+kwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwk
+kwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwk
+kwwwwwwwwwwwggggggggggggggggggggggggggggggggggggggggwwwwwwwwwwwk
+kwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwk
+kwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwk
+kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+............kssk................................kssk............
+............kssk................................kssk............
+............kssk................................kssk............
+............kssk................................kssk............
+
+frame 1: glitch
+kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+kGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGk
+kGGGGnnnnnGGGGGnnnnnGGGGGnnnnnGGGGGnnnnnGGGGGnnnnnGGGGGnnnnnGGGk
+kGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGk
+kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+kGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGk
+kGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGk
+kGGGGGGGnGnGnnnGnnGGnGnGGGGGnnnGnnnGGGGGnGGGnnnGnGnGnnnGGGGGGGGk
+kGGGGGnGnGnGnGnGnGnGnGGGGGGnGGnGGGGGGGnGGGnGnGnGnGnGGGGGGGGGGGGk
+kGGGGGGGGGGnnnGnGnGnnGGnnGGGGGGGnGGnnnGGGGGnGGGnGnGnGnGnnGGGGGGk
+kGGGGGGGGGGnnnGnGnGnGnGnGnGGGGGGnGGGGnGGGGGnGGGnGnGnGnGnGGGGGGGk
+kGGGGGGGnGnGnnnGnGnGnGnGGGGGnnnGnnnGGGGGnnnGnnnGGnGGnnnGGGGGGGGk
+kGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGk
+kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+kGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGk
+knnGGGnnnGGGnnnGGGnnnGGGnnnGGGnnnGGGnnnGGGnnnGGGnnnGGGnnnGGGnnnk
+kGGGGGGGGGGGkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkGGGGGGGGGGGk
+kGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGk
+kGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGk
+kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+............kssk................................kssk............
+............kssk................................kssk............
+............kssk................................kssk............
+............kssk................................kssk............

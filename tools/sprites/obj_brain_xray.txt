@@ -15,6 +15,7 @@ anim: grind     frames: 0    fps: 1
 anim: spark     frames: 1    fps: 1
 anim: backward  frames: 2 0  fps: 6
 anim: all       frames: 0 1 2  fps: 2  repeat: 0
+anim: gears     frames: 0 1 2 0  fps: 6  repeat: 0   # CS-15: grind, spark, spin backward
 
 frame 0: grind
 ................................

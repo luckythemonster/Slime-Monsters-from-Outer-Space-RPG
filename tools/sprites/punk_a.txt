@@ -25,6 +25,10 @@ anim: idle_right frames: 6  fps: 1  flipX: true
 anim: headbang  frames: 9 10  fps: 6
 anim: run  frames: 11 12 13 12  fps: 10
 variant: punk_a_plaster  swap: f=#d8d8e0,F=#a0a0b0,t=#d8d8e0,T=#a0a0b0,p=#d8d8e0,j=#d8d8e0,P=#a0a0b0
+# Palmer's crowd looks (DESIGN.md: 3 palette variants each)
+variant: punk_a_1  swap: k=#141018
+variant: punk_a_2  swap: p=#39ff8a,j=#6c2828
+variant: punk_a_3  swap: p=#f8d820,j=#30303c,t=#6c2828
 
 frame 0: down stand
 .k..k..k..k..k..

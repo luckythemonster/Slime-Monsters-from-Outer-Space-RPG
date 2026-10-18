@@ -101,3 +101,15 @@ region meter_on: 4x8      # explicit size
 
 Regions are shelf-packed in declaration order into one PNG (max 128 px wide).
 Manifest: `{ "type": "atlas", "frames": { "win_tl": { "x": 0, "y": 0, "w": 8, "h": 8 }, … } }`.
+
+### Aliases and add-ons
+
+- An **alias** (a second manifest key for the same drawing, e.g. `npc_intern` -> `intern`, `cop_b` ->
+  `undercover_cop_b`, `ryan_slimed_battle` -> `ryan_possessed`) is an identity variant:
+  `variant: npc_intern  swap: k=#141018`. The generator writes a second PNG + manifest entry with the
+  alias's own `<alias>_<anim>` keys; the game never needs a lookup table.
+- NPC idle sheets (`npc_*`, `intern`) carry `idle` (2 frames) plus `idle_down/up/left/right` (2 frames each,
+  right = left flipped) so the engine's facing-based idle animates; only `npc_ska` and `stranger_tall` walk.
+- Add-on animations on an existing sheet are **appended** as new frames after the last frame and declared
+  with new `anim:` lines; never renumber existing frames or rename existing keys, because scripts reference
+  `<sheet>_<anim>` by name.

@@ -14,6 +14,8 @@ palette:
   w = #f8f8f8     # lens glint
   j = #3c5c9c     # jeans
   J = #24386c     # jeans shadow
+  r = #6c2828     # bass body
+  B = #7c4c2c     # bass neck
 anim: walk_down  frames: 0 1 0 2  fps: 8
 anim: walk_up    frames: 3 4 3 5  fps: 8
 anim: walk_left  frames: 6 7 6 8  fps: 8
@@ -25,6 +27,8 @@ anim: idle_right frames: 6  fps: 1  flipX: true
 anim: melt       frames: 9 10  fps: 4  repeat: 0
 anim: puddle     frames: 11  fps: 1
 anim: glasses_push frames: 12 13  fps: 4  repeat: 0
+anim: trash_bag  frames: 14  fps: 1                    # CS-04: the trash bag
+anim: bass_mute  frames: 15  fps: 1                    # CS-15: hand flat on the strings
 # plaster-dust variant (design_feel "Palette discipline"): mid-tones -> #d8d8e0
 variant: phoenix_plaster  swap: s=#d8d8e0,S=#f0f0f4,z=#a0a0b0,h=#d8d8e0,e=#a0a0b0,j=#d8d8e0,J=#a0a0b0
 
@@ -387,6 +391,58 @@ frame 13: glasses push b (glasses nudged up a pixel)
 .kzhzeeeeeezhhk.
 .kshzhhhhhhzhhk.
 .kkehkhhhhkhhkk.
+...kjjk..kjjk...
+...kjJk..kJjk...
+...keek..keek...
+...kkkk..kkkk...
+
+frame 14: trash_bag (bag in the right hand)
+................
+.....kkkkkk.....
+...kkhhhhhhkk...
+..khhhhhhhhhhk..
+.khzhhhhhhhhhhk.
+.kzheeeeeeeehhk.
+.kzessssssssehk.
+.kzkkkkSSkkkkhk.
+.kzkwSkkkkSwkhk.
+.kzkSSksskSSkhk.
+.kzkkkksskkkkhk.
+.kzessssssssehk.
+.kzesszkkzssehk.
+..khheeeeeehhk..
+..kkhhhhhhhhkk..
+.kzhhhhhhhhhhhk.
+.kzhzhhhhhhzhhk.
+.kzhzeeeeeezhhk.
+.kshzhhhhhhzhsk.
+.kkehkhhhhkhekk.
+...kjjk..kjjkkk.
+...kjJk..kJjkeek
+...keek..keekzek
+...kkkk..kkkkkkk
+
+frame 15: bass_mute (hand on the strings)
+................
+.....kkkkkk.....
+...kkhhhhhhkk...
+..khhhhhhhhhhk..
+.khzhhhhhhhhhhk.
+.kzheeeeeeeehhk.
+.kzessssssssehk.
+.kzkkkkSSkkkkhk.
+.kzkwSkkkkSwkhk.
+.kzkSSksskSSkhk.
+.kzkkkksskkkkhk.
+.kzessssssssehk.
+.kzesszkkzssehk.
+..khheeeeeehhk..
+..kkhhhhhhhhkk..
+kBBBBBBBkkkkkkk.
+kBBsBBBkrrrrrrk.
+kkkkkkkkrrsrrrk.
+.kshzhhkrrrrrrk.
+.kkehkhhkkkkkkk.
 ...kjjk..kjjk...
 ...kjJk..kJjk...
 ...keek..keek...
