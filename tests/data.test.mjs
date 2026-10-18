@@ -81,6 +81,7 @@ group('conditions', (check) => {
   state.vars.coffeeCount = 2;
   state.money = 4;
   state.inventory.add('coffee', 2);
+  state.inventory.add('pizza_slice', 1); // start.json no longer seeds one
   const cases = [
     ['flags.metPhoenix', true],
     ['!flags.metPhoenix', false],
@@ -361,7 +362,8 @@ group('speakers', (check) => {
     if (def.blip !== undefined) check(typeof def.blip === 'string' || typeof def.blip === 'number', `speaker ${id}: blip`);
     if (characters.characters[id]) check(false, `speaker ${id}: shadows characters.json (use characters.json for party members)`);
   }
-  check(!!npcs.dad && npcs.dad.window === 'ff', 'dad speaker renders the FF window');
+  if (npcs.dad) check(npcs.dad.window === 'ff', 'dad speaker renders the FF window');
+  check(!!npcs.dev_intercom && npcs.dev_intercom.window === 'ff', 'dev_intercom speaker renders the FF window');
 });
 
 // ---------------------------------------------------------------------------------------------

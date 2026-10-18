@@ -142,11 +142,16 @@ async function main() {
     check('title scene up', (await scene()) === 'Title', await scene());
 
     // --- new game ---------------------------------------------------------------------------
+    // start.json points at the real pod bay once content lands; this test lives on the dev maps.
     const s0 = await ev(() => window.__slime.newGame());
     await ev(() => { window.__slime.textInstant(true); window.__slime.autoAdvance(true); });
     await waitIdle();
     check('scene is Explore after newGame', (await scene()) === 'Explore', await scene());
-    check('start map/pos from start.json', s0.map === 'dev_alley' && s0.x === 2 && s0.y === 7, { map: s0.map, x: s0.x, y: s0.y });
+    check('newGame starts on start.json map', typeof s0.map === 'string' && s0.map.length > 0, { map: s0.map, x: s0.x, y: s0.y });
+    await ev(() => window.__slime.warp('dev_alley', 2, 7, 'right'));
+    await waitIdle();
+    const s1 = await snap();
+    check('warped to dev_alley (2,7)', s1.map === 'dev_alley' && s1.x === 2 && s1.y === 7, { map: s1.map, x: s1.x, y: s1.y });
 
     // --- walk 3 tiles right ---------------------------------------------------------------------
     const start = await snap();
@@ -167,6 +172,7 @@ async function main() {
     await press('up');
     const beforeTalk = await snap();
     check('NPC blocks movement', beforeTalk.x === 6 && beforeTalk.y === 7 && beforeTalk.facing === 'up', { x: beforeTalk.x, y: beforeTalk.y, facing: beforeTalk.facing });
+    const pizzaStart = (beforeTalk.inventory.find((e) => e.id === 'pizza_slice') || { qty: 0 }).qty;
     await ev(() => window.__slime.autoAdvance(false));
     await press('confirm');
     await waitFn(() => window.__slime.services.ui.isBusy());
@@ -179,7 +185,7 @@ async function main() {
     check('script set flags.metPhoenix', talked.flags.metPhoenix === true, talked.flags);
     check('script inc vars.phoenixTalks', talked.vars.phoenixTalks === 1, talked.vars);
     const pizza = talked.inventory.find((e) => e.id === 'pizza_slice');
-    check('choice 0 gave a pizza slice (1 → 2)', pizza && pizza.qty === 2, talked.inventory);
+    check('choice 0 gave a pizza slice (+1)', pizza && pizza.qty === pizzaStart + 1, talked.inventory);
 
     // --- exit to dev_street ---------------------------------------------------------------------
     await ev(() => window.__slime.warp('dev_alley', 17, 7, 'right'));
@@ -213,7 +219,7 @@ async function main() {
 
     // --- pause menu (autoAdvance off: the UI would otherwise auto-pick every menu entry) ---------
     await ev(() => window.__slime.autoAdvance(false));
-    const pizzaBefore = (await snap()).inventory.find((e) => e.id === 'pizza_slice').qty;
+    const pizzaBefore = ((await snap()).inventory.find((e) => e.id === 'pizza_slice') || { qty: 0 }).qty;
     await press('menu');
     await waitFn(() => window.__slime.scene() === 'Menu' && window.__slime.services.ui.isBusy());
     await page.waitForTimeout(150);
@@ -229,7 +235,7 @@ async function main() {
     await waitFn(() => window.__slime.scene() === 'Explore');
     await waitIdle();
     check('menu closed back to Explore', (await scene()) === 'Explore', await scene());
-    check('menu browsing consumed nothing', (await snap()).inventory.find((e) => e.id === 'pizza_slice').qty === pizzaBefore, (await snap()).inventory);
+    check('menu browsing consumed nothing', ((await snap()).inventory.find((e) => e.id === 'pizza_slice') || { qty: 0 }).qty === pizzaBefore, (await snap()).inventory);
     await ev(() => window.__slime.autoAdvance(true));
 
     // --- save / load round trip ----------------------------------------------------------------

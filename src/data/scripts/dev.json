@@ -1,115 +1,597 @@
 {
   "dev_phoenix": [
-    { "face": { "who": "phoenix", "toward": "player" } },
-    { "if": "!flags.metPhoenix", "then": [
-      { "emote": { "who": "phoenix", "type": "!" } },
-      { "say": "Oh. You're the slime from the dumpster.", "who": "phoenix" },
-      { "set": { "flags.metPhoenix": true } },
-      { "inc": { "vars.phoenixTalks": 1 } },
-      { "choice": [
-        { "text": "Want a pizza slice?", "then": [
-          { "give": { "item": "pizza_slice", "qty": 1 } },
-          { "say": "Here. It's cold.", "who": "lucky" }
-        ] },
-        { "text": "Nothing.", "then": [
-          { "say": "...", "who": "phoenix" }
-        ] }
-      ] }
-    ], "else": [
-      { "inc": { "vars.phoenixTalks": 1 } },
-      { "if": "vars.phoenixTalks >= 3 && !inventory.has('coffee')", "then": [
-        { "say": "Take this. Stop talking to me.", "who": "phoenix" },
-        { "give": { "item": "coffee", "qty": 1 } }
-      ], "else": [
-        { "say": "We've met.{pause:200} Twice now.", "who": "phoenix" }
-      ] }
-    ] },
-    { "face": { "who": "phoenix", "dir": "down" } }
+    {
+      "face": {
+        "who": "phoenix",
+        "toward": "player"
+      }
+    },
+    {
+      "if": "!flags.metPhoenix",
+      "then": [
+        {
+          "emote": {
+            "who": "phoenix",
+            "type": "!"
+          }
+        },
+        {
+          "say": "Oh. You're the slime from the dumpster.",
+          "who": "phoenix"
+        },
+        {
+          "set": {
+            "flags.metPhoenix": true
+          }
+        },
+        {
+          "inc": {
+            "vars.phoenixTalks": 1
+          }
+        },
+        {
+          "choice": [
+            {
+              "text": "Want a pizza slice?",
+              "then": [
+                {
+                  "give": {
+                    "item": "pizza_slice",
+                    "qty": 1
+                  }
+                },
+                {
+                  "say": "Here. It's cold.",
+                  "who": "lucky"
+                }
+              ]
+            },
+            {
+              "text": "Nothing.",
+              "then": [
+                {
+                  "say": "...",
+                  "who": "phoenix"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "else": [
+        {
+          "inc": {
+            "vars.phoenixTalks": 1
+          }
+        },
+        {
+          "if": "vars.phoenixTalks >= 3 && !inventory.has('coffee')",
+          "then": [
+            {
+              "say": "Take this. Stop talking to me.",
+              "who": "phoenix"
+            },
+            {
+              "give": {
+                "item": "coffee",
+                "qty": 1
+              }
+            }
+          ],
+          "else": [
+            {
+              "say": "We've met.{pause:200} Twice now.",
+              "who": "phoenix"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "face": {
+        "who": "phoenix",
+        "dir": "down"
+      }
+    }
   ],
-
   "dev_sign": [
-    { "say": "PALMER'S BAR\nLIVE MUSIC - NO COPS", "who": "narrator" },
-    { "if": "money >= 4", "then": [ { "say": "You have exactly enough for one beer.", "who": "narrator" } ] }
+    {
+      "say": "PALMER'S BAR\nLIVE MUSIC - NO COPS",
+      "who": "narrator"
+    },
+    {
+      "if": "money >= 4",
+      "then": [
+        {
+          "say": "You have exactly enough for one beer.",
+          "who": "narrator"
+        }
+      ]
+    }
   ],
-
   "dev_trigger": [
-    { "camera": { "shake": 300, "intensity": 0.01 } },
-    { "wait": 200 },
-    { "emote": { "who": "player", "type": "?" } },
-    { "caption": "SOMETHING FELL FROM THE SKY", "ms": 1200 },
-    { "set": { "flags.sawCrash": true } }
+    {
+      "camera": {
+        "shake": 300,
+        "intensity": 0.01
+      }
+    },
+    {
+      "wait": 200
+    },
+    {
+      "emote": {
+        "who": "player",
+        "type": "?"
+      }
+    },
+    {
+      "caption": "SOMETHING FELL FROM THE SKY",
+      "ms": 1200
+    },
+    {
+      "set": {
+        "flags.sawCrash": true
+      }
+    }
   ],
-
   "dev_street_intro": [
-    { "caption": "WEST BANK, MINNEAPOLIS", "ms": 1200 },
-    { "music": "street" },
-    { "set": { "flags.visitedStreet": true } }
+    {
+      "caption": "WEST BANK, MINNEAPOLIS",
+      "ms": 1200
+    },
+    {
+      "music": "street"
+    },
+    {
+      "set": {
+        "flags.visitedStreet": true
+      }
+    }
   ],
-
   "dev_cutscene": [
-    { "music": null },
-    { "sfx": "squelch" },
-    { "spawn": { "id": "ryan", "sprite": "phoenix", "x": 4, "y": 4, "facing": "down" } },
-    { "camera": { "pan": { "x": 64, "y": 64, "ms": 300 } } },
-    { "move": { "who": "ryan", "path": "DD.R", "wait": true, "speed": "walk" } },
-    { "sprite": { "who": "ryan", "sheet": "phoenix" } },
-    { "anim": { "who": "ryan", "key": "phoenix_walk_down", "wait": false } },
-    { "emote": { "who": "ryan", "type": "♪" } },
-    { "face": { "who": "player", "toward": "ryan" } },
-    { "camera": { "flash": 120, "color": "#ffffff" } },
-    { "wait": 100 },
-    { "setEntity": { "id": "ryan", "behavior": "idle" } },
-    { "run": "dev_subroutine" },
-    { "label": "loop" },
-    { "inc": { "vars.loopCount": 1 } },
-    { "if": "vars.loopCount < 2", "then": [ { "goto": "loop" } ] },
-    { "camera": { "follow": "player" } },
-    { "despawn": "ryan" },
-    { "party": { "add": "phoenix" } },
-    { "party": { "heal": true } },
-    { "give": { "money": 10 } },
-    { "take": { "money": 3 } },
-    { "give": { "item": "coffee", "qty": 2 } },
-    { "take": { "item": "coffee", "qty": 1 } },
-    { "set": { "flags.cutsceneDone": true } },
-    { "end": true },
-    { "set": { "flags.unreachable": true } }
+    {
+      "music": null
+    },
+    {
+      "sfx": "squelch"
+    },
+    {
+      "spawn": {
+        "id": "ryan",
+        "sprite": "phoenix",
+        "x": 4,
+        "y": 4,
+        "facing": "down"
+      }
+    },
+    {
+      "camera": {
+        "pan": {
+          "x": 64,
+          "y": 64,
+          "ms": 300
+        }
+      }
+    },
+    {
+      "move": {
+        "who": "ryan",
+        "path": "DD.R",
+        "wait": true,
+        "speed": "walk"
+      }
+    },
+    {
+      "sprite": {
+        "who": "ryan",
+        "sheet": "phoenix"
+      }
+    },
+    {
+      "anim": {
+        "who": "ryan",
+        "key": "phoenix_walk_down",
+        "wait": false
+      }
+    },
+    {
+      "emote": {
+        "who": "ryan",
+        "type": "♪"
+      }
+    },
+    {
+      "face": {
+        "who": "player",
+        "toward": "ryan"
+      }
+    },
+    {
+      "camera": {
+        "flash": 120,
+        "color": "#ffffff"
+      }
+    },
+    {
+      "wait": 100
+    },
+    {
+      "setEntity": {
+        "id": "ryan",
+        "behavior": "idle"
+      }
+    },
+    {
+      "run": "dev_subroutine"
+    },
+    {
+      "label": "loop"
+    },
+    {
+      "inc": {
+        "vars.loopCount": 1
+      }
+    },
+    {
+      "if": "vars.loopCount < 2",
+      "then": [
+        {
+          "goto": "loop"
+        }
+      ]
+    },
+    {
+      "camera": {
+        "follow": "player"
+      }
+    },
+    {
+      "despawn": "ryan"
+    },
+    {
+      "party": {
+        "add": "phoenix"
+      }
+    },
+    {
+      "party": {
+        "heal": true
+      }
+    },
+    {
+      "give": {
+        "money": 10
+      }
+    },
+    {
+      "take": {
+        "money": 3
+      }
+    },
+    {
+      "give": {
+        "item": "coffee",
+        "qty": 2
+      }
+    },
+    {
+      "take": {
+        "item": "coffee",
+        "qty": 1
+      }
+    },
+    {
+      "set": {
+        "flags.cutsceneDone": true
+      }
+    },
+    {
+      "end": true
+    },
+    {
+      "set": {
+        "flags.unreachable": true
+      }
+    }
   ],
-
   "dev_subroutine": [
-    { "camera": { "fade": "out", "ms": 150 } },
-    { "camera": { "fade": "in", "ms": 150 } },
-    { "set": { "flags.subroutineRan": true } }
+    {
+      "camera": {
+        "fade": "out",
+        "ms": 150
+      }
+    },
+    {
+      "camera": {
+        "fade": "in",
+        "ms": 150
+      }
+    },
+    {
+      "set": {
+        "flags.subroutineRan": true
+      }
+    }
   ],
-
   "dev_battle": [
-    { "say": "Hey! You! Slime!", "who": "narrator" },
-    { "battle": "street_cop_duo",
-      "onWin": [ { "set": { "flags.wonDevBattle": true } }, { "say": "They ran.", "who": "narrator" } ],
-      "onLose": "gameover" }
+    {
+      "say": "Hey! You! Slime!",
+      "who": "narrator"
+    },
+    {
+      "battle": "street_cop_duo",
+      "onWin": [
+        {
+          "set": {
+            "flags.wonDevBattle": true
+          }
+        },
+        {
+          "say": "They ran.",
+          "who": "narrator"
+        }
+      ],
+      "onLose": "gameover"
+    }
   ],
-
   "dev_save": [
-    { "sfx": "sneeze" },
-    { "say": "Bajonka sneezes. Save your game?", "who": "narrator" },
-    { "save": true }
+    {
+      "sfx": "sneeze"
+    },
+    {
+      "say": "Bajonka sneezes. Save your game?",
+      "who": "narrator"
+    },
+    {
+      "save": true
+    }
   ],
-
   "dev_teleport": [
-    { "teleport": { "map": "dev_street", "x": 3, "y": 7, "facing": "right" } },
-    { "set": { "flags.teleported": true } }
+    {
+      "teleport": {
+        "map": "dev_street",
+        "x": 3,
+        "y": 7,
+        "facing": "right"
+      }
+    },
+    {
+      "set": {
+        "flags.teleported": true
+      }
+    }
   ],
-
   "dev_shop": [
-    { "shop": "pawnshop" }
+    {
+      "shop": "pawnshop"
+    }
   ],
-
   "dev_freefall": [
-    { "scene": "freefall", "data": {} },
-    { "set": { "flags.freefallDone": true } }
+    {
+      "scene": "freefall",
+      "data": {}
+    },
+    {
+      "set": {
+        "flags.freefallDone": true
+      }
+    }
   ],
-
   "dev_gameover": [
-    { "gameover": "The cops got you." }
+    {
+      "gameover": "The cops got you."
+    }
+  ],
+  "dev_ext_enter_once": [
+    {
+      "inc": {
+        "vars.extEnters": 1
+      }
+    }
+  ],
+  "dev_ext_enter_night": [
+    {
+      "set": {
+        "flags.nightEnterRan": true
+      }
+    }
+  ],
+  "dev_ext_toggle_night": [
+    {
+      "set": {
+        "flags.night": "!flags.night"
+      }
+    }
+  ],
+  "dev_ext_shop": [
+    {
+      "say": "Coffee's $3. Hot water's free.",
+      "who": "dev_barista"
+    },
+    {
+      "shop": "cafe"
+    }
+  ],
+  "dev_ext_pawn": [
+    {
+      "say": "Buying or selling. Pick one.",
+      "who": "dev_pawn"
+    },
+    {
+      "shop": "pawnshop"
+    }
+  ],
+  "dev_ext_text": [
+    {
+      "set": {
+        "vars.saveCount": 4,
+        "vars.contractPages": "3 + vars.saveCount",
+        "vars.plain": "DRUMMER WANTED - NO COPS",
+        "vars.sum": "money + 1"
+      }
+    },
+    {
+      "say": "Bajonka drops a {var:contractPages}-page agreement. You have ${var:money}.",
+      "who": "narrator"
+    },
+    {
+      "caption": "ONE MONTH LATER",
+      "ms": 900,
+      "style": "tape"
+    },
+    {
+      "caption": "NEXT: THE POTATO BELT",
+      "ms": 900,
+      "style": "flyer"
+    },
+    {
+      "insert": {
+        "sprite": "obj_flyer",
+        "frame": 0,
+        "text": "GIG TONIGHT: PALMER'S BAR - NO GUITAR SOLO NECESSARY."
+      }
+    },
+    {
+      "say": "{speed:slow}I'm not finished, Lucky. The quarterly-",
+      "who": "dev_intercom",
+      "collapse": true
+    },
+    {
+      "say": "[I could have killed every person in this room.]",
+      "who": "ryan_caption",
+      "shake": true
+    },
+    {
+      "set": {
+        "flags.extTextDone": true
+      }
+    }
+  ],
+  "dev_ext_camera": [
+    {
+      "camera": {
+        "shake": 200,
+        "intensity": 0.02
+      }
+    },
+    {
+      "camera": {
+        "bend": 30
+      }
+    },
+    {
+      "camera": {
+        "tear": 6,
+        "frames": 6
+      }
+    },
+    {
+      "camera": {
+        "mosaic": 10
+      }
+    },
+    {
+      "set": {
+        "flags.extCameraDone": true
+      }
+    }
+  ],
+  "dev_ext_objects": [
+    {
+      "move": {
+        "who": "crash",
+        "path": "RRR",
+        "wait": true
+      }
+    },
+    {
+      "spawn": {
+        "id": "g",
+        "type": "object",
+        "sprite": "word_g",
+        "x": 2,
+        "y": 2,
+        "w": 2
+      }
+    },
+    {
+      "move": {
+        "who": "g",
+        "path": "RRDD",
+        "wait": true,
+        "speed": "run"
+      }
+    },
+    {
+      "setEntity": {
+        "id": "g",
+        "sheet": "word_pop"
+      }
+    },
+    {
+      "emote": {
+        "who": "player",
+        "type": "!"
+      }
+    },
+    {
+      "despawn": "g"
+    },
+    {
+      "save": {
+        "auto": true
+      }
+    },
+    {
+      "set": {
+        "flags.extObjectsDone": true
+      }
+    }
+  ],
+  "dev_ext_cut": [
+    {
+      "spawn": {
+        "id": "phoenix",
+        "sprite": "phoenix",
+        "x": 8,
+        "y": 4,
+        "facing": "down"
+      }
+    },
+    {
+      "move": {
+        "who": "phoenix",
+        "path": "D",
+        "wait": true
+      }
+    },
+    {
+      "wait": 50
+    },
+    {
+      "despawn": "phoenix"
+    },
+    {
+      "set": {
+        "flags.extCutDone": true
+      }
+    }
+  ],
+  "dev_ext_teleport": [
+    {
+      "teleport": {
+        "map": "dev_ext",
+        "x": 5,
+        "y": 7,
+        "facing": "down",
+        "fade": false
+      }
+    },
+    {
+      "set": {
+        "flags.extTeleported": true
+      }
+    }
   ]
 }
