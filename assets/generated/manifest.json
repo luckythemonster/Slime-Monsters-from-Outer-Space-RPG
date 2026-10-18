@@ -3082,6 +3082,64 @@
       }
     }
   },
+  "portraits": {
+    "type": "spritesheet",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 39,
+    "names": [
+      "lucky_neutral",
+      "lucky_grin",
+      "lucky_rage",
+      "lucky_deflated",
+      "lucky_bristle",
+      "lucky_sunglasses",
+      "lucky_calm_scary",
+      "phoenix_tired",
+      "phoenix_deadpan",
+      "phoenix_glasses_push",
+      "phoenix_terrified_impressed",
+      "phoenix_melting",
+      "phoenix_my_brain_thinks",
+      "brian_normal",
+      "brian_pointing",
+      "brian_rage_red",
+      "brian_stroke_veins",
+      "brian_smug",
+      "ryan_stoic",
+      "ryan_slimed",
+      "ryan_eyes_glow",
+      "bajonka_sit",
+      "bajonka_sneeze",
+      "dad_grille",
+      "dad_grille_talk",
+      "cop_disguise",
+      "cop_mohawk_off",
+      "barista",
+      "pawn_guy",
+      "lucky",
+      "phoenix",
+      "brian",
+      "ryan",
+      "brian_red",
+      "brian_stroke",
+      "brian_phone",
+      "phoenix_droop",
+      "phoenix_baffled",
+      "pawnbroker"
+    ],
+    "anims": [
+      {
+        "key": "portraits_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
   "ryan": {
     "type": "spritesheet",
     "frameWidth": 16,
