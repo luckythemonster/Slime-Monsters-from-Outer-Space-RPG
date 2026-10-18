@@ -1,10 +1,10 @@
 {
-  "map": "dev_alley",
-  "x": 2,
-  "y": 7,
-  "facing": "right",
+  "map": "pod_bay",
+  "x": 7,
+  "y": 11,
+  "facing": "up",
   "chapter": 1,
   "party": ["lucky"],
   "money": 4,
-  "items": [{ "id": "pizza_slice", "qty": 1 }]
+  "items": [{ "id": "half_ounce", "qty": 4 }]
 }
