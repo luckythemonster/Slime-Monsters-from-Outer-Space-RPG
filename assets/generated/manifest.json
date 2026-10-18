@@ -3394,6 +3394,100 @@
       }
     ]
   },
+  "ryan_bruised_battle": {
+    "type": "spritesheet",
+    "frameWidth": 48,
+    "frameHeight": 48,
+    "frames": 11,
+    "names": [
+      "idle a",
+      "idle b",
+      "drum hi/lo",
+      "drum mid/down",
+      "drum lo/hi",
+      "drum down/mid",
+      "smear 1 (six arms, speed lines)",
+      "smear 2 (six arms, speed lines)",
+      "smear 3 (six arms, speed lines)",
+      "smear 4 (six arms, speed lines)",
+      "hurt"
+    ],
+    "anims": [
+      {
+        "key": "ryan_bruised_battle_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_bruised_battle_drum",
+        "frames": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "fps": 10,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_bruised_battle_smear",
+        "frames": [
+          6,
+          7,
+          8,
+          9
+        ],
+        "fps": 14,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_bruised_battle_hurt",
+        "frames": [
+          10
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "ryan_eternity": {
+    "type": "spritesheet",
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 6,
+    "names": [
+      "swirl phase 0",
+      "swirl phase 1",
+      "swirl phase 2",
+      "swirl phase 3",
+      "swirl phase 4",
+      "swirl phase 5"
+    ],
+    "anims": [
+      {
+        "key": "ryan_eternity_loop",
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
   "ryan_plaster": {
     "type": "spritesheet",
     "frameWidth": 16,
@@ -3545,6 +3639,134 @@
           18
         ],
         "fps": 4,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "ryan_pocket": {
+    "type": "spritesheet",
+    "frameWidth": 48,
+    "frameHeight": 48,
+    "frames": 11,
+    "names": [
+      "idle a",
+      "idle b",
+      "drum hi/lo",
+      "drum mid/down",
+      "drum lo/hi",
+      "drum down/mid",
+      "smear 1 (six arms, speed lines)",
+      "smear 2 (six arms, speed lines)",
+      "smear 3 (six arms, speed lines)",
+      "smear 4 (six arms, speed lines)",
+      "hurt"
+    ],
+    "anims": [
+      {
+        "key": "ryan_pocket_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_pocket_drum",
+        "frames": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "fps": 10,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_pocket_smear",
+        "frames": [
+          6,
+          7,
+          8,
+          9
+        ],
+        "fps": 14,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_pocket_hurt",
+        "frames": [
+          10
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "ryan_possessed": {
+    "type": "spritesheet",
+    "frameWidth": 48,
+    "frameHeight": 48,
+    "frames": 11,
+    "names": [
+      "idle a",
+      "idle b",
+      "drum hi/lo",
+      "drum mid/down",
+      "drum lo/hi",
+      "drum down/mid",
+      "smear 1 (six arms, speed lines)",
+      "smear 2 (six arms, speed lines)",
+      "smear 3 (six arms, speed lines)",
+      "smear 4 (six arms, speed lines)",
+      "hurt"
+    ],
+    "anims": [
+      {
+        "key": "ryan_possessed_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_possessed_drum",
+        "frames": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "fps": 10,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_possessed_smear",
+        "frames": [
+          6,
+          7,
+          8,
+          9
+        ],
+        "fps": 14,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_possessed_hurt",
+        "frames": [
+          10
+        ],
+        "fps": 1,
         "repeat": 0,
         "flipX": false
       }
