@@ -65,8 +65,8 @@
     { "id": "bajonka", "type": "save", "sprite": "bajonka", "x": 20, "y": 7, "facing": "up", "condition": "flags.hasBajonka" },
     { "id": "ryan_arrives", "type": "trigger", "x": 16, "y": 6, "w": 3, "h": 2, "script": "ep0_ryan_arrives", "once": true, "condition": "flags.ryanCalled && !flags.ryanArrived" },
     { "id": "to_room4", "type": "exit", "x": 20, "y": 5, "w": 1, "h": 1, "condition": "flags.ryanArrived", "refuse": "npc_cs_room4_closed",
-      "to": { "map": "room4", "x": 3, "y": 10, "facing": "up" } },
+      "to": { "map": "room4", "x": 3, "y": 9, "facing": "up" } },
     { "id": "to_street", "type": "exit", "x": 2, "y": 6, "w": 1, "h": 1,
-      "to": { "map": "street_cedar", "x": 21, "y": 15, "facing": "down" } }
+      "to": { "map": "street_cedar", "x": 22, "y": 15, "facing": "down" } }
   ]
 }

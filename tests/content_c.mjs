@@ -4,7 +4,7 @@
 // Same recipe as tests/explore.mjs: builds with Vite (unless EXPLORE_KEEP_DIST=1), serves dist/,
 // drives window.__slime with `?fast=1`. Battles may be the stub or the real thing: while the Battle
 // scene is up the test taps confirm so a command-menu battle keeps moving (STRUM → first target).
-// Screenshots go to tests/screenshots/content_c_*.png. Not part of tests/run.mjs.
+// Screenshots go to tests/screenshots/content_c_*.png. Part of tests/run.mjs (after extensions.mjs).
 //
 //   node tests/content_c.mjs
 //   CONTENT_C_STAGE=month node tests/content_c.mjs     # start at ONE MONTH LATER (flags + party preset)
@@ -139,7 +139,7 @@ async function main() {
       const s = window.__slime;
       const ex = s.explore ? s.explore() : null;
       return {
-        scene: s.scene(), idle: s.idle(), snap: s.snapshot(),
+        scene: s.scene(), idle: s.idle(), snap: s.snapshot(), titleSeen: window.__titleSeen || 0,
         ui: s.services.ui ? s.services.ui.debugState() : null,
         runner: ex && ex.runner ? ex.runner.running : null, lock: ex ? ex.lockCount : null, transitioning: ex ? ex.transitioning : null,
       };
@@ -341,15 +341,32 @@ async function main() {
     s = await driveUntil('Ryan gone', (sn) => sn.flags.ryanQuit === true, SCENE_TIMEOUT_MS);
     check('vars.quitResponse = 0 (RAGE picked first)', s.vars.quitResponse === 0, s.vars);
     check('Ryan left the party', !s.party.some((m) => m.id === 'ryan'), s.party.map((m) => m.id));
-    s = await driveUntil('chapter complete', (sn, st) => sn.flags.ch1Complete === true && st.idle, SCENE_TIMEOUT_MS);
+    // CS-17 ends on the clipboard (page 1) and the {"title"} command: Explore stops, the title comes up
+    // with CONTINUE enabled, and CONTINUE must load the page just initialed. chooseIndex 1 picks PAGE 1
+    // on the clipboard (row 0 is its disabled title) and then CONTINUE (item 1) on the title menu.
+    await ev(() => {
+      window.__slime.chooseIndex = 1;
+      window.__titleSeen = 0;
+      window.__slime.game.scene.getScene('Title').events.on('create', () => { window.__titleSeen += 1; });
+    });
+    s = await driveUntil('chapter complete', (sn) => sn.flags.ch1Complete === true, SCENE_TIMEOUT_MS);
     check('flags.ch1Complete', s.flags.ch1Complete === true, s.flags);
     check('van_keys + tour_itinerary given', ['van_keys', 'tour_itinerary'].every((id) => s.inventory.some((e) => e.id === id)), s.inventory);
-    check('Bajonka save in the rubble', (s.entities || []).some((e) => e.id === 'bajonka' && e.type === 'save'), (s.entities || []).map((e) => e.id));
-    check('final clipboard save bumped saveCount', s.vars.saveCount === 2, s.vars);
     check('party is Lucky + Phoenix', s.party.map((m) => m.id).join(',') === 'lucky,phoenix', s.party.map((m) => m.id));
+    s = await driveUntil('title → CONTINUE → the rubble', (sn, st) => st.titleSeen > 0 && st.scene === 'Explore' && sn.map === 'palmers_rubble' && st.idle, SCENE_TIMEOUT_MS);
+    const ending = await ev(() => ({ titleSeen: window.__titleSeen, slot: window.__slime.state.slot, scene: window.__slime.scene() }));
+    check('the title screen came up after the chapter-end save', ending.titleSeen === 1, ending);
+    check('CONTINUE loaded the page just initialed (slot 1)', ending.slot === 1 && ending.scene === 'Explore', ending);
+    check('final clipboard save bumped saveCount', s.vars.saveCount === 2, s.vars);
+    check('loaded save lands in the rubble with ch1Complete', s.map === 'palmers_rubble' && s.flags.ch1Complete === true && s.x === 16 && s.y === 9, { map: s.map, x: s.x, y: s.y, ch1Complete: s.flags.ch1Complete });
+    check('Bajonka save in the rubble', (s.entities || []).some((e) => e.id === 'bajonka' && e.type === 'save'), (s.entities || []).map((e) => e.id));
     check('still in the rubble (no exits)', s.map === 'palmers_rubble', s.map);
     await page.waitForTimeout(400);
     await shot('content_c_15_end');
+    // The same page through the debug loader.
+    await ev(() => window.__slime.load(1));
+    s = await driveUntil('__slime.load(1)', (sn, st) => st.scene === 'Explore' && sn.map === 'palmers_rubble' && st.idle, 20_000);
+    check('__slime.load(1) lands in the rubble with ch1Complete and the band', s.map === 'palmers_rubble' && s.flags.ch1Complete === true && s.party.map((m) => m.id).join(',') === 'lucky,phoenix', { map: s.map, party: s.party.map((m) => m.id) });
 
     const lastErrors = await ev(() => window.__slime.lastErrors);
     const scriptErrors = consoleErrors.filter((t) => /\[script|\[explore|\[entities\]|\[data\]/.test(t) && !/placeholder|not in manifest|unknown animation/.test(t));

@@ -83,6 +83,6 @@
     { "id": "bajonka", "type": "save", "sprite": "bajonka", "x": 2, "y": 4, "facing": "down", "prompt": "INITIAL HERE TO ACKNOWLEDGE SOUNDCHECK", "condition": "flags.hasBajonka && !flags.onStage" },
     { "id": "stage", "type": "trigger", "x": 20, "y": 5, "w": 5, "h": 6, "script": "ep0_palmers_set", "once": true, "condition": "!flags.onStage" },
     { "id": "to_street", "type": "exit", "x": 8, "y": 13, "w": 1, "h": 1, "condition": "!flags.onStage", "refuse": "npc_palmers_door_locked",
-      "to": { "map": "street_cedar", "x": 8, "y": 9, "facing": "down" } }
+      "to": { "map": "street_cedar", "x": 6, "y": 9, "facing": "down" } }
   ]
 }

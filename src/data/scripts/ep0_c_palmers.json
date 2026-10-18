@@ -124,7 +124,8 @@
     { "caption": "NEXT: THE POTATO BELT", "ms": 2200, "style": "flyer" },
     { "caption": "(DRUMMER WANTED)", "ms": 1600, "style": "flyer" },
     { "despawn": "bajonka_keys" },
-    { "save": { "prompt": "INITIAL HERE TO END CHAPTER 1" } }
+    { "save": { "prompt": "INITIAL HERE TO END CHAPTER 1" } },
+    { "title": true }
   ],
 
   "npc_palmers_bartender": [

@@ -6,7 +6,7 @@
 //
 //   node tests/content_b.mjs
 //
-// Not part of tests/run.mjs. Knobs: PLAYWRIGHT_MODULE, SMOKE_CHROME, EXPLORE_KEEP_DIST=1.
+// Part of tests/run.mjs (after extensions.mjs). Knobs: PLAYWRIGHT_MODULE, SMOKE_CHROME, EXPLORE_KEEP_DIST=1.
 
 import { spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, readdirSync } from 'node:fs';
@@ -288,7 +288,7 @@ async function main() {
       await press('down');
       await waitFn(() => window.__slime.snapshot().map === 'city_sound_hall' && window.__slime.idle(), null, 20_000);
       s = await snap();
-      check('rail → city_sound_hall (2,6)', s.map === 'city_sound_hall' && s.x === 2 && s.y === 6, { map: s.map, x: s.x, y: s.y });
+      check('rail → city_sound_hall (3,6), inside the doorway', s.map === 'city_sound_hall' && s.x === 3 && s.y === 6, { map: s.map, x: s.x, y: s.y });
     } else {
       notes.push('city_sound_hall map missing at test time: rail exit not exercised');
     }
