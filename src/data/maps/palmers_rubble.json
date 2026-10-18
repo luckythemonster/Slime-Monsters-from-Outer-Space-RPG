@@ -1,0 +1,63 @@
+{
+  "id": "palmers_rubble",
+  "name": "Palmer's, leveled",
+  "tileset": "interiors",
+  "music": null,
+  "ambient": "wind",
+  "battleBackground": "palmers",
+  "encounters": { "rate": 0, "pool": [] },
+  "legend": {
+    "K": "sky_hole_a", "k": "sky_hole_b", "b": "bottles_shelf", "#": "bar_wall", ".": "plaster_floor",
+    "=": "bar_counter", "e": "bar_counter_end", "r": "rubble_a", "q": "rubble_b", "u": "rubble_c",
+    "W": "drywall_chunk_a", "w": "drywall_chunk_b", "S": "stage_floor", "s": "stage_edge_n", "n": "bent_mic",
+    "C": "ceiling_cracked_a", "c": "ceiling_cracked_b"
+  },
+  "layers": {
+    "ground": [
+      "KkKkKkKkKkKkKkKkKkKkKkKkKk",
+      "KbbbbbbbbbbbbbbbbKkKkKkKkK",
+      "r................#.......q",
+      "u===============e........r",
+      "r........................u",
+      "q...................sssssr",
+      "r...................SSSSSq",
+      "u...................SSSSSr",
+      "rrq.................SSSSSu",
+      "qur.................SSSSSr",
+      "ruq.................SSSSSq",
+      "u........................r",
+      "r........................u",
+      "rqurqurqurqurqurqurqurqurq"
+    ],
+    "deco": [
+      "                          ",
+      "                          ",
+      "    C          c    C     ",
+      "                          ",
+      "   W        q      w      ",
+      "                          ",
+      "      q    W        u     ",
+      "                          ",
+      "              q       n   ",
+      "                          ",
+      "    u     W      q        ",
+      "          w       W       ",
+      "  q          u         q  ",
+      "                          "
+    ]
+  },
+  "spawn": { "x": 16, "y": 9, "facing": "right" },
+  "entities": [
+    { "id": "drywall", "type": "object", "sprite": "obj_drywall", "w": 2, "x": 14, "y": 8, "solid": true, "script": "ep0_rubble_drywall" },
+    { "id": "bar", "type": "object", "x": 6, "y": 3, "script": "ep0_rubble_bar" },
+    { "id": "bar_2", "type": "object", "x": 12, "y": 3, "script": "ep0_rubble_bar" },
+    { "id": "bent_mic", "type": "object", "x": 22, "y": 8, "solid": true, "script": "ep0_rubble_mic" },
+    { "id": "kit", "type": "object", "sprite": "obj_drumkit", "w": 2, "footprint": [2, 2], "x": 23, "y": 8, "solid": true, "script": "ep0_rubble_kit" },
+    { "id": "gap", "type": "object", "x": 8, "y": 13, "script": "ep0_rubble_gap" },
+    { "id": "jukebox_rubble", "type": "object", "x": 16, "y": 10, "script": "ep0_rubble_jukebox" },
+    { "id": "patron_1", "type": "npc", "sprite": "punk_b", "x": 5, "y": 6, "facing": "down", "behavior": "idle", "script": "ep0_rubble_patron_1" },
+    { "id": "stranger_tall", "type": "npc", "sprite": "stranger_tall", "h": 2, "x": 12, "y": 11, "facing": "up", "behavior": "idle", "script": "ep0_rubble_stranger" },
+    { "id": "cop_run", "type": "npc", "sprite": "cop", "x": 20, "y": 11, "facing": "left", "behavior": "patrol", "path": "LLLLLLLLLLLLLRRRRRRRRRRRRR", "ghost": true, "solid": false, "script": "ep0_rubble_cop" },
+    { "id": "bajonka", "type": "save", "sprite": "bajonka", "x": 15, "y": 9, "facing": "right", "prompt": "INITIAL HERE TO END CHAPTER 1", "condition": "flags.ch1Complete" }
+  ]
+}

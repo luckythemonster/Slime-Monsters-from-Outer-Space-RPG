@@ -1,0 +1,264 @@
+{
+  "ep0_palmers_enter": [
+    { "if": "inventory.has('half_ounce')", "then": [
+      { "say": "We kept the weed for this.", "who": "phoenix" }
+    ], "else": [
+      { "say": "We sold the weed for this.", "who": "phoenix" }
+    ] }
+  ],
+
+  "ep0_palmers_set": [
+    { "set": { "flags.onStage": true } },
+    { "camera": { "fade": "out", "ms": 150 } },
+    { "setEntity": { "id": "player", "x": 22, "y": 9, "facing": "down" } },
+    { "setEntity": { "id": "phoenix", "x": 21, "y": 9, "facing": "down" } },
+    { "setEntity": { "id": "ryan", "x": 23, "y": 6, "facing": "down" } },
+    { "sprite": { "who": "ryan", "sheet": "ryan_slimed_map" } },
+    { "camera": { "fade": "in", "ms": 150 } },
+    { "say": "The stage is six inches off the floor. It is the tallest thing Lucky has ever stood on.", "who": "narrator" },
+    { "camera": { "pan": { "x": 360, "y": 184, "ms": 600 } } },
+    { "anim": { "who": "cop", "key": "cop_collar_tap", "wait": false } },
+    { "say": "{speed:slow}Dispatch, I have located the unauthorized slime gathering. Stand by.", "who": "cop", "portrait": "cop_disguise" },
+    { "camera": { "follow": "player" } },
+    { "face": { "who": "player", "dir": "up" } },
+    { "emote": { "who": "ryan", "type": "♪" } },
+    { "face": { "who": "player", "dir": "left" } },
+    { "emote": { "who": "phoenix", "type": "♪" } },
+    { "say": "No Brian to ruin the mix.", "who": "narrator" },
+    { "face": { "who": "player", "dir": "down" } },
+    { "sfx": "drum_hit" },
+    { "camera": { "flash": 100, "color": "#ffffff" } },
+    { "camera": { "shake": 600, "intensity": 0.03 } },
+    { "spawn": { "id": "shockwave", "type": "object", "sprite": "obj_shockwave", "w": 2, "x": 19, "y": 10, "solid": false } },
+    { "anim": { "who": "shockwave", "key": "obj_shockwave_burst", "wait": false } },
+    { "move": { "who": "shockwave", "path": "LLLLLLLLLLLL", "wait": true, "speed": "run" } },
+    { "despawn": "shockwave" },
+    { "say": "The first power chord blows the front row's hair back.", "who": "narrator" },
+    { "anim": { "who": "cop", "key": "cop_mohawk_off", "wait": false } },
+    { "sfx": "mohawk_pop" },
+    { "spawn": { "id": "mohawk", "type": "object", "sprite": "obj_mohawk", "x": 22, "y": 10, "solid": false } },
+    { "move": { "who": "mohawk", "path": "LLLLLLLLD", "wait": true, "speed": "run" } },
+    { "despawn": "mohawk" },
+    { "say": "It lands in a stranger's beer.", "who": "narrator" },
+    { "say": "…whoa, man.", "who": "stranger_tall" },
+    { "say": "[No obnoxious guitar solos. Just pure, unadulterated rhythm. The slime is pulsating in 7/8 time. I can work with this.]", "who": "ryan_caption" },
+    { "music": "pocket" },
+    { "battle": "ep0_palmers_set", "onLose": "gameover", "onWin": [
+      { "set": { "flags.eternityDone": true } },
+      { "run": "ep0_aftermath" }
+    ] }
+  ],
+
+  "ep0_aftermath": [
+    { "teleport": { "map": "palmers_rubble", "x": 16, "y": 9, "facing": "right" } },
+    { "sfx": "cymbal" },
+    { "setEntity": { "id": "phoenix", "x": 17, "y": 9, "facing": "right" } },
+    { "setEntity": { "id": "ryan", "x": 23, "y": 6, "facing": "down" } },
+    { "sprite": { "who": "player", "sheet": "lucky_plaster" } },
+    { "sprite": { "who": "phoenix", "sheet": "phoenix_plaster" } },
+    { "sprite": { "who": "ryan", "sheet": "ryan_slimed_map" } },
+    { "wait": 900 },
+    { "say": "The dust settles. The night sky is where the ceiling used to be.", "who": "narrator" },
+    { "anim": { "who": "ryan", "key": "ryan_slimed_map_reform", "wait": true } },
+    { "music": "plaster_dust" },
+    { "say": "Okay. That is our sound.", "who": "lucky" },
+    { "say": "My brain thinks we are officially domestic terrorists.", "who": "phoenix" },
+    { "say": "I think I broke the space-time continuum on that snare fill.", "who": "ryan", "portrait": "ryan_stoic" },
+    { "wait": 1200 },
+    { "face": { "who": "ryan", "dir": "down" } },
+    { "say": "[I could have killed every person in this room.]", "who": "ryan_caption", "shake": true },
+    { "face": { "who": "ryan", "dir": "up" } },
+    { "face": { "who": "ryan", "toward": "player" } },
+    { "say": "I quit.", "who": "ryan", "portrait": "ryan_stoic" },
+    { "music": null },
+    { "sprite": { "who": "player", "sheet": "lucky_rage" } },
+    { "sfx": "slime_pop" },
+    { "camera": { "shake": 200, "intensity": 0.02 } },
+    { "set": { "flags.luckyRageLocked": true } },
+    { "say": "We just found it. We just FOUND it—", "who": "lucky", "portrait": "lucky_rage" },
+    { "choice": [
+      { "text": "RAGE", "then": [
+        { "set": { "vars.quitResponse": 0 } },
+        { "say": "{shake}You don't get to be scared of the best thing you've ever done!{/shake}", "who": "lucky", "portrait": "lucky_rage" }
+      ] },
+      { "text": "PLEAD", "then": [
+        { "set": { "vars.quitResponse": 1 } },
+        { "sprite": { "who": "player", "sheet": "lucky_deflated" } },
+        { "say": "One more show. One. You don't even have to let go.", "who": "lucky", "portrait": "lucky_deflated" }
+      ] },
+      { "text": "JOKE", "then": [
+        { "set": { "vars.quitResponse": 2 } },
+        { "say": "We'll put you on the flyer as a weather event.", "who": "lucky", "portrait": "lucky_rage" }
+      ] }
+    ] },
+    { "say": "Yep.", "who": "ryan", "portrait": "ryan_stoic" },
+    { "face": { "who": "ryan", "dir": "up" } },
+    { "move": { "who": "ryan", "path": "UUUUUU", "wait": true } },
+    { "despawn": "ryan" },
+    { "party": { "remove": "ryan" } },
+    { "set": { "flags.ryanQuit": true } },
+    { "say": "My brain thinks he's scared.", "who": "phoenix" },
+    { "sprite": { "who": "player", "sheet": "lucky_rage" } },
+    { "say": "I don't care what he is.", "who": "lucky", "portrait": "lucky_rage" },
+    { "sfx": "rubble" },
+    { "anim": { "who": "drywall", "key": "obj_drywall_lift", "wait": true } },
+    { "spawn": { "id": "bajonka", "sprite": "bajonka", "x": 14, "y": 8, "facing": "right" } },
+    { "spawn": { "id": "van_keys", "type": "object", "sprite": "obj_van_keys", "x": 14, "y": 8, "solid": false } },
+    { "anim": { "who": "bajonka", "key": "bajonka_keys_sit", "wait": false } },
+    { "move": { "who": "van_keys", "path": "RD", "wait": false } },
+    { "move": { "who": "bajonka", "path": "RD", "wait": true } },
+    { "face": { "who": "bajonka", "dir": "right" } },
+    { "face": { "who": "player", "dir": "left" } },
+    { "face": { "who": "phoenix", "dir": "left" } },
+    { "despawn": "van_keys" },
+    { "give": { "item": "van_keys", "qty": 1, "toast": "Got Van Keys. To a van you have never seen." } },
+    { "give": { "item": "tour_itinerary", "qty": 1, "toast": "Got Tour Itinerary." } },
+    { "insert": { "sprite": "obj_itinerary", "text": "A folded itinerary under her collar. POTATO BELT: TOMORROW, circled in red." } },
+    { "say": "We don't have a drummer.", "who": "lucky", "portrait": "lucky_rage" },
+    { "sfx": "sneeze" },
+    { "anim": { "who": "bajonka", "key": "bajonka_sneeze", "wait": true } },
+    { "set": { "flags.ch1Complete": true } },
+    { "caption": "NEXT: THE POTATO BELT", "ms": 2200, "style": "flyer" },
+    { "caption": "(DRUMMER WANTED)", "ms": 1600, "style": "flyer" },
+    { "despawn": "bajonka" },
+    { "save": { "prompt": "INITIAL HERE TO END CHAPTER 1" } }
+  ],
+
+  "npc_palmers_bartender": [
+    { "face": { "who": "bartender", "toward": "player" } },
+    { "say": "Phoenix, you're not on tonight.", "who": "bartender" },
+    { "say": "My brain thinks I'm on {shake}very{/shake} tonight.", "who": "phoenix" }
+  ],
+  "npc_palmers_bar": [
+    { "say": "Sticky. Historically sticky. The stick has stories.", "who": "narrator" }
+  ],
+  "npc_palmers_sign": [
+    { "say": "PALMER'S — EST. 1906 — NO SOLOS.", "who": "narrator" }
+  ],
+  "npc_palmers_photos": [
+    { "say": "Every band that ever played here. None of them leveled it.", "who": "narrator" }
+  ],
+  "npc_palmers_pulltabs": [
+    { "say": "$1. (You have ${var:money}.) (You do not.)", "who": "narrator" },
+    { "say": "My brain thinks that's a tax on hope.", "who": "phoenix" }
+  ],
+  "npc_palmers_jukebox": [
+    { "say": "A jukebox. Four songs. None of them exist.", "who": "narrator" },
+    { "choice": [
+      { "text": "Pothole Blues", "then": [
+        { "sfx": "jukebox_1" },
+        { "say": "Four bars about a hole. The hole wins.", "who": "narrator" }
+      ] },
+      { "text": "Rent Is a Feeling", "then": [
+        { "sfx": "jukebox_2" },
+        { "say": "Four bars. The feeling is 'due.'", "who": "narrator" }
+      ] },
+      { "text": "7/8 Shuffle", "then": [
+        { "sfx": "jukebox_3" },
+        { "say": "Four bars. Everyone in the bar limps for a second.", "who": "narrator" }
+      ] },
+      { "text": "Dental Plan", "then": [
+        { "sfx": "jukebox_4" },
+        { "say": "Four bars of corporate muzak. Lucky's slime goes beige for a second.", "who": "narrator" }
+      ] }
+    ] },
+    { "set": { "flags.jukeboxPlayed": true } }
+  ],
+  "npc_palmers_bathroom_a": [
+    { "say": "ROCK. The lock is a chair.", "who": "narrator" }
+  ],
+  "npc_palmers_bathroom_b": [
+    { "say": "ROLL. Out of order since the Replacements. (They did not play here.)", "who": "narrator" }
+  ],
+  "npc_palmers_table": [
+    { "say": "Someone carved REPLACEMENTS WERE HERE. Someone else carved NO THEY WEREN'T.", "who": "narrator" }
+  ],
+  "npc_palmers_kit": [
+    { "say": "Ryan's kit. Still the size of a sedan. The ride cymbal is still tinny. He still doesn't know.", "who": "narrator" }
+  ],
+  "npc_palmers_mic": [
+    { "say": "The house mic. It smells like 1906.", "who": "narrator" }
+  ],
+  "npc_palmers_pulltab_lady": [
+    { "say": "Minnesota's slot machine. I'm up four dollars.", "who": "pulltab_lady" }
+  ],
+  "npc_palmers_regular": [
+    { "say": "Been coming since '06. The place, not me. I'm from Fridley.", "who": "regular" }
+  ],
+  "npc_palmers_nurse": [
+    { "say": "Off shift. On something.", "who": "nurse" }
+  ],
+  "npc_palmers_guy": [
+    { "say": "Saw the Replacements here.", "who": "guy" },
+    { "say": "(He did not.)", "who": "narrator" }
+  ],
+  "npc_palmers_cop": [
+    { "anim": { "who": "cop", "key": "cop_collar_tap", "wait": false } },
+    { "say": "Hello, fellow kids. I also enjoy the… moshes.", "who": "cop", "portrait": "cop_disguise" }
+  ],
+  "npc_palmers_stranger": [
+    { "say": "Good vibes in here. Dense.", "who": "stranger_tall" }
+  ],
+  "npc_palmers_crowd_1": [
+    { "say": "Woo.", "who": "crowd" }
+  ],
+  "npc_palmers_crowd_2": [
+    { "say": "Is that the slime band?", "who": "crowd" }
+  ],
+  "npc_palmers_crowd_3": [
+    { "say": "I heard they're from space.", "who": "crowd" }
+  ],
+  "npc_palmers_crowd_4": [
+    { "say": "Everyone's from space, Doug.", "who": "crowd" }
+  ],
+  "npc_palmers_crowd_5": [
+    { "say": "Play faster.", "who": "crowd" }
+  ],
+  "npc_palmers_crowd_6": [
+    { "say": "Play louder.", "who": "crowd" }
+  ],
+  "npc_palmers_door_locked": [
+    { "say": "You're on. The door can wait.", "who": "narrator" },
+    { "move": { "who": "player", "path": "U", "wait": true } }
+  ],
+
+  "ep0_rubble_drywall": [
+    { "if": "flags.ch1Complete", "then": [
+      { "say": "The slab she came out from under. It is still warm. Do not ask questions.", "who": "narrator" }
+    ], "else": [
+      { "say": "A slab of ceiling. It is breathing. Slightly.", "who": "narrator" }
+    ] }
+  ],
+  "ep0_rubble_bar": [
+    { "say": "The bar survived. The bar always survives.", "who": "narrator" }
+  ],
+  "ep0_rubble_mic": [
+    { "say": "The mic stand is bent into a 7. Or an 8. It depends where you stand.", "who": "narrator" }
+  ],
+  "ep0_rubble_kit": [
+    { "if": "flags.ryanQuit", "then": [
+      { "say": "Two perfectly intact drumsticks were here. They left with him. The tinny ride stayed.", "who": "narrator" }
+    ], "else": [
+      { "say": "The kit. Still warm. Still humming in 7/8.", "who": "narrator" }
+    ] }
+  ],
+  "ep0_rubble_gap": [
+    { "say": "The door is gone. So is the wall around the door. Lucky stays anyway. The van isn't here yet.", "who": "narrator" }
+  ],
+  "ep0_rubble_jukebox": [
+    { "if": "flags.jukeboxPlayed", "then": [
+      { "say": "The jukebox. It is still on the song you picked. It will be on that song forever.", "who": "narrator" }
+    ], "else": [
+      { "say": "The jukebox. It is playing. Nothing is plugged in.", "who": "narrator" }
+    ] }
+  ],
+  "ep0_rubble_patron_1": [
+    { "say": "I was mid-pull-tab.", "who": "crowd" }
+  ],
+  "ep0_rubble_stranger": [
+    { "say": "Whoa, man. Is this… someone's?", "who": "stranger_tall" }
+  ],
+  "ep0_rubble_cop": [
+    { "say": "Dispatch — DISPATCH —", "who": "cop", "portrait": "cop_mohawk_off" }
+  ]
+}
