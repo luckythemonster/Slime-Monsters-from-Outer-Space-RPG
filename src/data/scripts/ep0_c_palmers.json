@@ -26,6 +26,14 @@
     { "emote": { "who": "phoenix", "type": "♪" } },
     { "say": "No Brian to ruin the mix.", "who": "narrator" },
     { "face": { "who": "player", "dir": "down" } },
+    { "music": "pocket" },
+    { "battle": "ep0_palmers_set", "onLose": "gameover", "onWin": [
+      { "set": { "flags.eternityDone": true } },
+      { "run": "ep0_aftermath" }
+    ] }
+  ],
+
+  "ep0_palmers_first_chord": [
     { "sfx": "drum_hit" },
     { "camera": { "flash": 100, "color": "#ffffff" } },
     { "camera": { "shake": 600, "intensity": 0.03 } },
@@ -41,12 +49,7 @@
     { "despawn": "mohawk" },
     { "say": "It lands in a stranger's beer.", "who": "narrator" },
     { "say": "…whoa, man.", "who": "stranger_tall" },
-    { "say": "[No obnoxious guitar solos. Just pure, unadulterated rhythm. The slime is pulsating in 7/8 time. I can work with this.]", "who": "ryan_caption" },
-    { "music": "pocket" },
-    { "battle": "ep0_palmers_set", "onLose": "gameover", "onWin": [
-      { "set": { "flags.eternityDone": true } },
-      { "run": "ep0_aftermath" }
-    ] }
+    { "say": "[No obnoxious guitar solos. Just pure, unadulterated rhythm. The slime is pulsating in 7/8 time. I can work with this.]", "who": "ryan_caption" }
   ],
 
   "ep0_aftermath": [
