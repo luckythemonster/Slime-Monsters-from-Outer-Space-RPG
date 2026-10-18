@@ -4,7 +4,9 @@
 //   ui.say({ text, who, portrait, name })   -> Promise<void>
 //   ui.choice(options, { cancelIndex = -1, x, y }) -> Promise<number>
 //   ui.menu(items, { x, y, width, columns = 1, cancelable = true, selected = 0 }) -> Promise<number>
-//   ui.caption(text, ms = 1500) / ui.toast(text, ms = 1200) -> Promise<void>
+//   ui.caption(text, ms = 1500, { style: 'plain'|'tape'|'flyer' }) / ui.toast(text, ms = 1200) -> Promise<void>
+//   ui.insert({ sprite, frame, text }) -> Promise<void>      (DESIGN E9: sprite window + narrator line)
+//   ui.status(text | null)                                   (small persistent window, top-right: shop money)
 //   ui.fade('out'|'in', ms = 400, color = 0x000000) / ui.flash(ms = 150, color = 0xffffff) -> Promise<void>
 //   ui.setTextInstant(bool); ui.setAutoAdvance(bool); ui.chooseIndex = 0   (test hooks)
 //   ui.isBusy(); ui.closeAll()
@@ -19,7 +21,10 @@ import DialogueBox from '../ui/DialogueBox.js';
 import ListMenu from '../ui/ListMenu.js';
 import Caption from '../ui/Caption.js';
 import Toast from '../ui/Toast.js';
-import { DEPTH, KEY_ACTIONS, SCREEN_W, SCREEN_H } from '../ui/theme.js';
+import InsertWindow from '../ui/InsertWindow.js';
+import Window from '../ui/Window.js';
+import { expandVars } from '../engine/TextVars.js';
+import { DEPTH, KEY_ACTIONS, SCREEN_W, SCREEN_H, CHAR_W, COLORS, textStyle } from '../ui/theme.js';
 
 export default class UIScene extends Phaser.Scene {
   constructor() {
@@ -36,6 +41,7 @@ export default class UIScene extends Phaser.Scene {
     this._modal = Promise.resolve(); // serialises say/choice/menu/caption
     this._toasts = Promise.resolve();
     this._toast = null;
+    this._status = null; // { win, text }
     this._held = new Set(); // physical keys held (confirm/cancel need a key-up between presses)
 
     this._fadeRect = this.add.rectangle(0, 0, SCREEN_W, SCREEN_H, 0x000000, 1).setOrigin(0, 0).setDepth(DEPTH.FADE).setAlpha(0).setVisible(false);
@@ -130,10 +136,35 @@ export default class UIScene extends Phaser.Scene {
     return this._runModal(menu, () => menu.show());
   }
 
-  /** Centred title card over black. */
-  caption(text, ms = 1500) {
+  /** Title card over black; `style` tape | flyer | plain (DESIGN E8). */
+  caption(text, ms = 1500, opts = {}) {
     const cap = new Caption(this);
-    return this._runModal(cap, () => cap.show(text, ms));
+    return this._runModal(cap, () => cap.show(expandVars(text, services.state), ms, opts || {}));
+  }
+
+  /** Centred 128×72 sprite window with an optional narrator line (DESIGN E9). */
+  insert(opts = {}) {
+    const ins = new InsertWindow(this);
+    const o = typeof opts === 'string' ? { sprite: opts } : { ...opts };
+    if (o.text) o.text = expandVars(o.text, services.state);
+    return this._runModal(ins, () => ins.show(o));
+  }
+
+  /** Small persistent window at the top-right (e.g. "$4" during a shop). `null` removes it. */
+  status(text) {
+    if (this._status) {
+      this._status.win.destroy();
+      this._status.text.destroy();
+      this._status = null;
+    }
+    if (text === null || text === undefined || text === '') return;
+    const label = String(text);
+    const w = Math.max(16, label.length * CHAR_W + 16);
+    const x = SCREEN_W - 8 - w;
+    const win = new Window(this, x, 8, w, 24, { depth: DEPTH.TOAST });
+    win.open(true);
+    const t = this.add.text(x + 8, 16, label, textStyle(COLORS.text)).setDepth(DEPTH.TOAST + 2);
+    this._status = { win, text: t };
   }
 
   /** Small top-centre notification. Not modal; toasts queue one after another. */
@@ -142,7 +173,7 @@ export default class UIScene extends Phaser.Scene {
       const t = new Toast(this);
       this._toast = t;
       try {
-        await t.show(text, ms);
+        await t.show(expandVars(text, services.state), ms);
       } finally {
         if (this._toast === t) this._toast = null;
       }
@@ -224,6 +255,7 @@ export default class UIScene extends Phaser.Scene {
     this._stack.length = 0;
     if (this._toast) this._toast.forceClose();
     this._toast = null;
+    this.status(null);
     this._held.clear();
   }
 
@@ -237,6 +269,7 @@ export default class UIScene extends Phaser.Scene {
       fadeAlpha: this._fadeRect ? this._fadeRect.alpha : 0,
       flashAlpha: this._flashRect ? this._flashRect.alpha : 0,
       toast: !!this._toast,
+      status: this._status ? this._status.text.text : null,
     };
   }
 

@@ -284,15 +284,16 @@ async function main() {
     p = await t.pending();
     t.check('portrait say resolved after 2 pages (3 more confirms)', p.done && !p.error && presses === 3, `presses=${presses}`);
 
+    // Ryan's caption never types (DESIGN E11): it is complete the frame it opens, at x 8..136, y 28..52.
     await t.start('say', { who: 'ryan_caption', text: "Note to self: the amp is not supposed to smell like that." });
-    await t.waitTop(() => __uih.state().top && __uih.state().top.state === 'typing');
-    await t.key('z', 150);
+    await t.waitTop(() => __uih.state().top && (__uih.state().top.state === 'typing' || __uih.state().top.state === 'complete'));
     st = await t.state();
     t.check('ryan_caption uses caption style, no tag', st.top.style === 'caption' && st.top.name === '');
+    t.check('ryan_caption is instant and square', st.top.state === 'complete' && st.top.cols === 14 && st.top.box && st.top.box.x === 8 && st.top.box.y === 28 && st.top.box.w === 128 && st.top.box.h === 24, JSON.stringify(st.top.box));
     await t.shot('05_say_ryan_caption');
-    await t.key('z', 250);
-    p = await t.waitDone();
-    t.check('ryan_caption resolved', p.done && !p.error);
+    const capPresses = await t.confirmUntilDone(8, 200);
+    p = await t.pending();
+    t.check('ryan_caption resolved (3 pages of 2x14 chars)', p.done && !p.error && capPresses === 3, `presses=${capPresses}`);
 
     await t.start('say', { who: 'narrator', text: 'Snow fell on the West Bank.\nNobody noticed the crater.' });
     await t.waitTop(() => __uih.state().top && __uih.state().top.state === 'typing');

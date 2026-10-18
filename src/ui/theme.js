@@ -14,7 +14,11 @@ export const LINE_H = 12;
 export const COLORS = {
   text: '#ffffff',
   disabled: '#8c8ca0',
-  caption: '#101018', // black text on Ryan's rigid captions
+  caption: '#141018', // black text on Ryan's rigid captions and the tape/flyer cards
+  moodPink: '#ff5fd2', // the flat window's inner rule (DESIGN.md "Window style")
+  moodMagenta: '#ff1aa0', // from flags.luckyRageLocked on
+  moodToon4: '#a050c0',
+  moodTan: '#e8c890', // Bajonka's windows
   // Named colours usable in dialogue markup: {color:pink}...{/color}
   pink: '#ff5fd2',
   green: '#39ff8a',
@@ -71,10 +75,39 @@ export function resolveColor(name, fallback = COLORS.text) {
 }
 
 /** Play a named SFX through the audio service if one is registered; never throws. */
-export function sfx(name) {
+export function sfx(name, opts) {
   try {
-    services.audio?.sfx?.(name);
+    if (opts) services.audio?.sfx?.(name, opts);
+    else services.audio?.sfx?.(name);
   } catch {
     // Audio problems must never break the UI.
   }
+}
+
+const NOTE_INDEX = { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 };
+
+/**
+ * Pitch ratio of a note name ("A3", "G#5") relative to a base note (the `text_blip` recipe sits at
+ * C6). Numbers pass through as ratios; anything unparseable is 1.
+ */
+export function noteRatio(note, base = 'C6') {
+  if (typeof note === 'number') return note > 0 ? note : 1;
+  const midi = (n) => {
+    const m = /^([A-Ga-g])([#b]?)(-?\d)$/.exec(String(n).trim());
+    if (!m) return null;
+    let semi = NOTE_INDEX[m[1].toUpperCase()] + (m[2] === '#' ? 1 : m[2] === 'b' ? -1 : 0);
+    return (Number(m[3]) + 1) * 12 + semi;
+  };
+  const a = midi(note), b = midi(base);
+  if (a === null || b === null) return 1;
+  return Math.pow(2, (a - b) / 12);
+}
+
+/** Current mood colour for the flat window's inner rule (null = leave the atlas art alone). */
+export function moodColor() {
+  const flags = services.state?.flags;
+  if (!flags) return null;
+  if (flags.toon4) return COLORS.moodToon4;
+  if (flags.luckyRageLocked) return COLORS.moodMagenta;
+  return null;
 }
