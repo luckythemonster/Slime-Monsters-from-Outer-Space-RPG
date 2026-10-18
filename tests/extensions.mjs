@@ -257,6 +257,15 @@ async function main() {
     check('spawned 24x24 object moved and despawned', !s2.entities.some((e) => e.id === 'g') && s2.flags.extObjectsDone === true, s2.entities.map((e) => e.id));
     const auto = await ev(() => ({ has: window.__slime.state.hasSave(1), peek: window.__slime.state.peekSave(1) }));
     check('autosave wrote slot 1 silently (no saveCount bump)', auto.has && auto.peek && auto.peek.map === 'dev_ext' && s2.vars.saveCount === 4, { auto, saveCount: s2.vars.saveCount });
+
+    // --- waited anim right after a scripted move (the deferred idle must not clobber it) ------------
+    await runScript('dev_ext_anim_after_move');
+    let animDone = false;
+    try { await waitFn(() => window.__slime.snapshot().flags.extAnimDone === true, null, 6000); animDone = true; } catch { /* the script hung */ }
+    check('waited anim right after a scripted move completes', animDone);
+    if (!animDone) throw new Error('dev_ext_anim_after_move hung: the deferred idle clobbered the waited anim');
+    await waitScript();
+    await waitIdle();
     await warp('dev_ext', 13, 4, 'right');
     await waitIdle();
     await press('right');

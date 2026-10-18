@@ -13,6 +13,7 @@ export default class TitleScene extends Phaser.Scene {
   create() {
     this.closed = false;
     this.cameras.main.setBackgroundColor('#101018');
+    services.ui.fade('in', scaleMs(FADE_MS)); // a chapter end ({"title"}) arrives under a black fade; a no-op otherwise
     this.add.text(WIDTH / 2, 56, 'SLIME MONSTERS\nFROM OUTER SPACE', { ...FONT, color: '#ff5fd2', lineSpacing: 4 }).setOrigin(0.5, 0);
     this.add.text(WIDTH / 2, 96, 'A PUNK ROCK JRPG', { ...FONT, color: '#8c8ca0' }).setOrigin(0.5, 0);
     this.add.text(WIDTH / 2, 208, 'Z/ENTER: CONFIRM  X: CANCEL', { ...FONT, color: '#8c8ca0' }).setOrigin(0.5, 0);

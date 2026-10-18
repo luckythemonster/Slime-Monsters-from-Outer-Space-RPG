@@ -593,5 +593,38 @@
         "flags.extTeleported": true
       }
     }
+  ],
+  "dev_ext_anim_after_move": [
+    {
+      "spawn": {
+        "id": "trotter",
+        "sprite": "bajonka",
+        "x": 8,
+        "y": 8,
+        "facing": "right"
+      }
+    },
+    {
+      "move": {
+        "who": "trotter",
+        "path": "R",
+        "wait": true
+      }
+    },
+    {
+      "anim": {
+        "who": "trotter",
+        "key": "bajonka_trot_drop",
+        "wait": true
+      }
+    },
+    {
+      "despawn": "trotter"
+    },
+    {
+      "set": {
+        "flags.extAnimDone": true
+      }
+    }
   ]
 }

@@ -1,8 +1,11 @@
 #!/usr/bin/env node
 // Runs every test sequentially and exits non-zero if any fails:
-//   data.test.mjs (pure Node) → smoke.mjs (vite build + headless boot) → explore.mjs (gameplay)
-//   → audio.mjs / ui.mjs when present.
-// smoke.mjs builds dist/; explore.mjs reuses it (EXPLORE_KEEP_DIST=1) when smoke succeeded.
+//   data.test.mjs + battle.test.mjs (pure Node) → smoke.mjs (vite build + headless boot) → explore.mjs
+//   (gameplay) → extensions.mjs → content_a/b/c.mjs (chapter walkthroughs) → battle.mjs → audio.mjs /
+//   ui.mjs when present.
+// smoke.mjs builds dist/; every Playwright test after it reuses that build (EXPLORE_KEEP_DIST=1) when
+// smoke succeeded. dist/ is shared, so the run is strictly sequential: never run two Playwright tests
+// at once.
 //
 //   npm test   /   node tests/run.mjs
 
@@ -12,7 +15,9 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const TESTS = ['data.test.mjs', 'battle.test.mjs', 'smoke.mjs', 'explore.mjs', 'extensions.mjs', 'battle.mjs', 'audio.mjs', 'ui.mjs'];
+const TESTS = ['data.test.mjs', 'battle.test.mjs', 'smoke.mjs', 'explore.mjs', 'extensions.mjs', 'content_a.mjs', 'content_b.mjs', 'content_c.mjs', 'battle.mjs', 'audio.mjs', 'ui.mjs'];
+/** Playwright tests that serve dist/ and honour EXPLORE_KEEP_DIST=1 (reuse the build smoke.mjs made). */
+const REUSE_DIST = new Set(['explore.mjs', 'extensions.mjs', 'content_a.mjs', 'content_b.mjs', 'content_c.mjs', 'battle.mjs']);
 
 const results = [];
 let builtDist = false;
@@ -25,7 +30,7 @@ for (const name of TESTS) {
   }
   process.stderr.write(`\n[run] ===== ${name} =====\n`);
   const env = { ...process.env };
-  if ((name === 'explore.mjs' || name === 'extensions.mjs' || name === 'battle.mjs') && builtDist) env.EXPLORE_KEEP_DIST = '1';
+  if (REUSE_DIST.has(name) && builtDist) env.EXPLORE_KEEP_DIST = '1';
   const started = Date.now();
   const r = spawnSync(process.execPath, [file], { cwd: ROOT, stdio: 'inherit', env });
   const ok = r.status === 0;

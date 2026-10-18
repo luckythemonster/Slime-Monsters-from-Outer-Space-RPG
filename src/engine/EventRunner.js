@@ -12,7 +12,7 @@ export const COMMANDS = new Set([
   'say', 'choice', 'if', 'set', 'inc', 'give', 'take', 'party', 'move', 'face', 'teleport',
   'spawn', 'despawn', 'sprite', 'anim', 'emote', 'camera', 'wait', 'caption', 'music', 'sfx',
   'battle', 'scene', 'save', 'shop', 'run', 'label', 'goto', 'end', 'setEntity', 'gameover',
-  'insert',
+  'insert', 'title',
 ]);
 
 const END = Symbol('end');
@@ -339,8 +339,13 @@ export class EventRunner {
 
   cmd_sfx(name) { this.sfx(name); }
 
+  /**
+   * {"battle": "id", "onWin": [...], "onLose": "gameover" | [...]}. A script started by an enemy touch
+   * carries `ctx.ambush` (touched from behind) into the launch and reports the result via `ctx.onBattle`.
+   */
   async cmd_battle(encounterId, cmd, ctx) {
-    const result = await this.explore.startBattle(encounterId);
+    const result = await this.explore.startBattle(encounterId, { ambush: !!ctx.ambush });
+    if (typeof ctx.onBattle === 'function') ctx.onBattle(result);
     if (result === 'win' && Array.isArray(cmd.onWin)) return this.exec(cmd.onWin, ctx);
     if (result === 'lose') {
       if (Array.isArray(cmd.onLose)) return this.exec(cmd.onLose, ctx);
@@ -441,6 +446,18 @@ export class EventRunner {
 
   cmd_gameover(text) {
     this.explore.gameOver(typeof text === 'string' ? text : undefined);
+    return END;
+  }
+
+  /**
+   * {"title": true} / {"title": {"fade": 1000}} — chapter end: fade to black, leave Explore and return to
+   * the title with CONTINUE enabled (the page the preceding `save` initialed is the most recent save, so
+   * it is what CONTINUE loads). Ends the script.
+   */
+  async cmd_title(arg) {
+    const ms = arg && typeof arg === 'object' && arg.fade !== undefined ? Math.max(0, Number(arg.fade) || 0) : 1000;
+    await this.ui.fade('out', scaleMs(ms));
+    this.explore.toTitle();
     return END;
   }
 }

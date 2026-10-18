@@ -49,7 +49,7 @@ export default class ExploreScene extends Phaser.Scene {
     this.player = null;
     this.lockCount = 0;
     this.transitioning = false;
-    this.gameOverStarted = false;
+    this.leaving = false;
     this.queuedDir = null;
     this.runner = null;
     this.overlay = null;
@@ -387,6 +387,7 @@ export default class ExploreScene extends Phaser.Scene {
     const tx = this.player.tileX + dx, ty = this.player.tileY + dy;
     for (const e of this.entities.values()) {
       if (e === this.player || e.type === 'follower' || !e.occupies(tx, ty)) continue;
+      if (e.type === 'enemy') { this.onEnemyTouch(e, { initiator: 'player', emote: false }); return; }
       if (e.type === 'npc' && !e.moving) e.faceToward(this.player);
       if (e.def.script) { this.runner.run(e.def.script, { entity: e }); return; }
       if (e.type === 'save') {
@@ -410,11 +411,26 @@ export default class ExploreScene extends Phaser.Scene {
     if (entity === this.player && this.followers.length && !this.runner.running) this.trailFollowers(fromX, fromY, speed);
   }
 
+  /**
+   * Called by Entity when a non-ghost step was blocked: the player stepping into an enemy's tile, or an
+   * enemy (any behavior) stepping into the player's, is a touch and starts that enemy's encounter.
+   */
+  onEntityBump(entity, tx, ty) {
+    if (this.inputLocked || !this.player) return;
+    if (entity === this.player) {
+      for (const e of this.entities.values()) {
+        if (e.type === 'enemy' && !e.engaged && e.occupies(tx, ty)) { this.onEnemyTouch(e, { initiator: 'player' }); return; }
+      }
+    } else if (entity.type === 'enemy' && this.player.occupies(tx, ty)) {
+      this.onEnemyTouch(entity, { initiator: 'enemy' });
+    }
+  }
+
   /** Called by Entity when a tile step completes. */
   onEntityStep(entity) {
     if (entity === this.player) {
       this.state.setPosition(this.mapId, entity.tileX, entity.tileY, entity.facing);
-      if (this.transitioning || this.runner.running) return;
+      if (this.inputLocked) return; // scripts, transitions and an engagement in progress own the player
       for (const z of this.zones) {
         const inside = entity.tileX >= z.x && entity.tileX < z.x + (z.w || 1) && entity.tileY >= z.y && entity.tileY < z.y + (z.h || 1);
         if (!inside) continue;
@@ -433,29 +449,48 @@ export default class ExploreScene extends Phaser.Scene {
         return;
       }
     }
-    this.checkEnemyContact();
+    this.checkEnemyContact(entity);
   }
 
   scripts(id) { return !!this.gameData.scripts[id]; }
 
-  checkEnemyContact() {
+  /** A chasing enemy next to the player (after its own step, or the player's) has caught it. */
+  checkEnemyContact(stepper) {
     if (this.inputLocked || !this.player) return;
     for (const e of this.entities.values()) {
       if (e.type !== 'enemy' || e.behavior !== 'chase' || e.engaged) continue;
-      if (Math.abs(e.tileX - this.player.tileX) + Math.abs(e.tileY - this.player.tileY) === 1) { this.onEnemyTouch(e); return; }
+      if (Math.abs(e.tileX - this.player.tileX) + Math.abs(e.tileY - this.player.tileY) === 1) {
+        this.onEnemyTouch(e, { initiator: stepper === e ? 'enemy' : 'player' });
+        return;
+      }
     }
   }
 
-  /** A chasing enemy reached the player. */
-  async onEnemyTouch(enemy) {
-    if (enemy.engaged || this.inputLocked) return;
+  /**
+   * An enemy and the player touched (either stepped into the other, a chaser caught up, or the player
+   * pressed confirm facing it). Enemies with a `script` fight through it (the flavor line, {"battle"}
+   * and its onWin flags); the rest run `encounter` directly. `ambush` (enemy behind the player: its
+   * facing equals the player's when the enemy initiated contact) reaches the battle launch. After a
+   * win the enemy is gone (setOnWin / the script's flags / despawn); after BAIL it idles 2 s.
+   * @param {Entity} enemy
+   * @param {{initiator?: 'enemy'|'player', emote?: boolean}} [opts]
+   */
+  async onEnemyTouch(enemy, { initiator = 'enemy', emote = true } = {}) {
+    if (enemy.engaged || !enemy.active || this.inputLocked || this.leaving) return;
+    const behavior = enemy.behavior;
     enemy.engaged = true;
     this.lockInput(true);
     try {
-      this.player.faceToward(enemy);
       enemy.faceToward(this.player);
-      await enemy.showEmote('!', 350);
-      const result = await this.startBattle(enemy.def.encounter);
+      const ambush = initiator === 'enemy' && enemy.facing === this.player.facing;
+      this.player.faceToward(enemy);
+      if (emote) await enemy.showEmote('!', 350);
+      let result = null;
+      if (enemy.def.script) {
+        await this.runner.run(enemy.def.script, { entity: enemy, ambush, onBattle: (r) => { result = r; } });
+      } else {
+        result = await this.startBattle(enemy.def.encounter, { ambush });
+      }
       if (result === 'win') {
         if (enemy.def.setOnWin) this.state.set(enemy.def.setOnWin, true);
         if (enemy.def.onDefeat) await this.runner.run(enemy.def.onDefeat, { entity: enemy });
@@ -463,9 +498,9 @@ export default class ExploreScene extends Phaser.Scene {
       } else if (result === 'lose') {
         this.gameOver();
         return;
-      } else {
+      } else if (enemy.active) {
         enemy.behavior = 'idle';
-        this.time.delayedCall(scaleMs(2000), () => { if (enemy.active) { enemy.engaged = false; enemy.behavior = 'chase'; } });
+        this.time.delayedCall(scaleMs(2000), () => { if (enemy.active) { enemy.engaged = false; enemy.behavior = behavior; } });
       }
     } finally {
       this.lockInput(false);
@@ -475,14 +510,18 @@ export default class ExploreScene extends Phaser.Scene {
 
   // ---- sub-scenes --------------------------------------------------------------------------------
 
-  /** Launch Battle, sleep until it calls back (ARCHITECTURE §12.4). */
-  async startBattle(encounterId) {
+  /**
+   * Launch Battle, sleep until it calls back (ARCHITECTURE §12.4).
+   * @param {string} encounterId
+   * @param {{ambush?: boolean}} [opts] ambush: the enemy touched the player from behind (enemies act first in round 1)
+   */
+  async startBattle(encounterId, { ambush = false } = {}) {
     const encounter = this.gameData.encounters[encounterId];
     if (!encounter) { console.error(`[explore] unknown encounter "${encounterId}"`); return 'win'; }
     services.ui.closeAll();
     audioCall('sfx', 'kraaang');
     await services.ui.fade('out', scaleMs(200));
-    return this.runSub('Battle', { encounterId, encounter, background: this.mapDef.battleBackground || 'street' });
+    return this.runSub('Battle', { encounterId, encounter, background: this.mapDef.battleBackground || 'street', ambush: !!ambush });
   }
 
   /** Launch a special scene (e.g. 'Freefall') and sleep until it calls back. */
@@ -509,15 +548,21 @@ export default class ExploreScene extends Phaser.Scene {
     this.scene.pause();
   }
 
-  gameOver(text) {
-    if (this.gameOverStarted) return;
-    this.gameOverStarted = true;
+  /** Close every UI widget, stop the sub-scenes and this one, and start `key`. Once per Explore run. */
+  leaveTo(key, data) {
+    if (this.leaving) return;
+    this.leaving = true;
     services.ui.closeAll();
     for (const k of ['Battle', 'Menu', 'Freefall']) {
       if (this.scene.isActive(k) || this.scene.isPaused(k) || this.scene.isSleeping(k)) this.scene.stop(k);
     }
-    this.scene.start('GameOver', { text });
+    this.scene.start(key, data);
   }
+
+  gameOver(text) { this.leaveTo('GameOver', { text }); }
+
+  /** Chapter end ({"title"}): back to the title with CONTINUE enabled; the most recent save is what it loads. */
+  toTitle() { this.leaveTo('Title'); }
 
   // ---- camera effects (E12) ----------------------------------------------------------------------
 

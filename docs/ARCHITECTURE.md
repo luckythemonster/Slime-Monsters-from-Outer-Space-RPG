@@ -185,7 +185,8 @@ Rules:
 - Collision = tile `solid` flags from the tileset, OR'd across `ground` and `deco`, plus `solid` entities.
 - All coordinates are tile coordinates. Entities stand on a tile; sprites are drawn with the feet at the tile's bottom.
 - `condition` is evaluated when the map loads (and re-evaluated after every script ends); false ⇒ entity not present.
-- `behavior`: `idle` | `wander` (random steps within `radius`, default 2) | `patrol` (`path`: string of `UDLR`) | `chase` (enemy walks toward the player when within `sight` tiles, default 5; touching starts the encounter) | `static`.
+- `behavior`: `idle` | `wander` (random steps within `radius`, default 2) | `patrol` (`path`: string of `UDLR`) | `chase` (enemy walks toward the player when within `sight` tiles, default 5) | `static`.
+- Touching an enemy of any behavior starts its encounter: the player stepping into its tile, the enemy stepping into the player's, a `chase` enemy reaching the tile next to the player, or `confirm` facing it. An enemy with a `script` fights through it (its flavor line, `{"battle"}` and the `onWin` flags); one without runs `encounter` directly and honours `setOnWin` / `onDefeat`. Touched from behind (the enemy's facing equals the player's when the enemy made contact) the battle launches with `ambush: true` (enemies act first in round 1). After BAIL the enemy idles 2 s.
 - `exit` entities teleport on overlap with a fade. `trigger` entities run `script` on overlap (`once` sets `flags.trig_<mapId>_<id>` automatically).
 - `type: "save"` entities are Bajonka save points: interacting opens the save prompt (and plays the sneeze).
 - Maps may list `"encounters": { "rate": 0, "pool": [] }` for FF-style random battles, but Chapter 1 uses on-map enemies only (`rate: 0`).
@@ -230,6 +231,7 @@ one file: `{ "alley_phoenix": [ … ], "alley_sign": [ … ] }`. Script ids are 
 | `{"end": true}` | Stop the script early. |
 | `{"setEntity": {"id": "cop_a", "behavior": "idle"}}` | Tweak a live entity. |
 | `{"gameover": "text"}` | Straight to Game Over. |
+| `{"title": true}` / `{"title": {"fade": 1000}}` | Chapter end: fade to black (default 1000 ms, honours `?fast=1`), close every widget, stop Explore and its sub-scenes and start Title with CONTINUE enabled — the page the preceding `save` initialed is the most recent save, so it is what CONTINUE loads. Ends the script. |
 
 ### 5.2 Script hooks
 
@@ -312,7 +314,7 @@ window.__slime = {
   newGame(), load(slot), save(slot),
   warp(mapId, x, y),            // from anywhere in Explore
   setFlag(path, value), give(itemId, qty), setMoney(n), addParty(id), removeParty(id),
-  startBattle(encounterId),     // resolves with 'win' | 'lose' | 'flee'
+  startBattle(encounterId, {ambush}), // resolves with 'win' | 'lose' | 'flee'; ambush: true → enemies act first in round 1
   runScript(scriptId),          // resolves when done
   press(action),                // 'up','down','left','right','confirm','cancel','menu','run' — simulated key tap
   hold(action, ms),
@@ -335,6 +337,7 @@ Boot → Title ⇄ (New/Continue) → Explore ──(exit)──► Explore (sam
                                    │ {"scene":"freefall"} → Freefall → back
                                    │ menu key → MenuScene (overlay; Explore paused)
 Battle ──win──► Explore (resume, rewards shown) ──lose──► GameOver → Title
+Explore ──{"title"} (chapter end, after a save)──► Title (CONTINUE enabled; loads that save)
 ```
 `UIScene` is launched once after Boot and never stopped; it exposes `ui.say()`, `ui.choice()`, `ui.caption()`,
 `ui.fade()` returning Promises. Explore and Battle are the only scenes that read gameplay input; `Input.js`
@@ -390,18 +393,24 @@ entity.tileX, entity.tileY, entity.facing
 explore.spawnEntity(def) / explore.despawnEntity(id)
 explore.changeMap(mapId, x, y, facing)            // → Promise (fade out, load, fade in)
 explore.lockInput(bool)
-explore.startBattle(encounterId)                  // → Promise<'win' | 'lose' | 'flee'>  (launches Battle, sleeps Explore)
+explore.startBattle(encounterId, { ambush })      // → Promise<'win' | 'lose' | 'flee'>  (launches Battle, sleeps Explore)
 explore.runSpecialScene(key, data)                // → Promise (e.g. 'Freefall')
 explore.camera(effectObj)                         // same object shape as the {"camera": …} script command
+explore.gameOver(text) / explore.toTitle()        // close widgets, stop sub-scenes and Explore, start GameOver / Title
 ```
 Movement is **grid-locked 4-direction tile stepping** (FF/Pokémon style) with smooth interpolation:
 walk 7 tiles/s, run 11 tiles/s; input is buffered so holding a key chains steps. The player never occupies
 a solid tile or an entity's tile. `Debug.press('up')` therefore moves exactly one tile, which tests rely on.
-Interact = `confirm` while facing an entity that has a `script` (or a `save` entity).
+Interact = `confirm` while facing an entity that has a `script` (or a `save` entity). Enemies are engaged by
+touch (section 4): a blocked step by the player into an enemy, or by an enemy into the player, calls
+`explore.onEnemyTouch(enemy, { initiator })`, as do a chaser reaching the next tile and `confirm` facing one.
 
 ### 12.4 Battle scene interface
 
-`ExploreScene.startBattle(id)` calls `this.scene.launch('Battle', { encounterId: id, onDone })` then sleeps.
+`ExploreScene.startBattle(id, { ambush })` calls
+`this.scene.launch('Battle', { encounterId, encounter, background, ambush, onDone })` then sleeps.
+`ambush` (the enemy touched the player from behind) makes `BattleModel` give the enemies round 1; a scripted
+`{"battle"}` started by an enemy touch carries it through `ctx.ambush`.
 BattleScene must call `onDone('win' | 'lose' | 'flee')` after its own fade-out and stop itself. Until the real
 battle exists, `BattleScene` is a stub that shows the encounter name and auto-resolves `win` after 600 ms.
 

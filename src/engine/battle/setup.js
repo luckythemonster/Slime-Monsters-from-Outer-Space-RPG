@@ -8,20 +8,11 @@ import { BattleModel } from './BattleModel.js';
 import { makeRng } from './rng.js';
 import { meterCarryover } from './formulas.js';
 import { BATTLE_SCRIPTS } from './BattleScripts.js';
+import { STAT_KEYS, levelStats } from '../Party.js';
 
-export const STAT_KEYS = ['hp', 'amp', 'atk', 'def', 'spd', 'lck'];
-
-/** Base stats of a character at a level: `growth` per stat is a number (per level) or a per-level array. */
-export function levelStats(def, level = 1) {
-  const out = {};
-  for (const k of STAT_KEYS) {
-    const base = (def.stats && def.stats[k]) || 0;
-    const g = def.growth ? def.growth[k] : 0;
-    if (Array.isArray(g)) out[k] = g[Math.min(level - 1, g.length - 1)] ?? base;
-    else out[k] = base + Math.round((g || 0) * (level - 1));
-  }
-  return out;
-}
+// The stat list and the level→base-stats rule live in Party.js (one source of truth); re-exported
+// here because the battle tests and BattleScene import them from the bridge.
+export { STAT_KEYS, levelStats };
 
 /** Equipment bonuses and flags for an equip map { instrument, accessory }. */
 export function equipBonus(equipment, equip = {}) {

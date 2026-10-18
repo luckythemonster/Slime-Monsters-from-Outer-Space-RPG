@@ -115,7 +115,7 @@ export function installDebug(game) {
     addParty(id) { const m = services.state.party.add(id); const ex = explore(); if (ex) ex.refreshFollowers(); return m; },
     removeParty(id) { const r = services.state.party.remove(id); const ex = explore(); if (ex) ex.refreshFollowers(); return r; },
 
-    startBattle(encounterId) { return requireExplore().startBattle(encounterId); },
+    startBattle(encounterId, opts = {}) { return requireExplore().startBattle(encounterId, opts); },
     runScript(scriptId) { return requireExplore().runner.run(scriptId); },
 
     async press(action) {

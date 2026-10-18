@@ -10,8 +10,26 @@
 //                                "riffs": [...], "onJoin": "scriptId" } } }
 // equipment.json shape: { "beatup_guitar": { "name", "slot", "bonus": { atk: 3 }, "price" } }
 
-export const STAT_KEYS = ['hp', 'amp', 'atk', 'def', 'spd'];
+/** Every character stat; the one list the battle bridge (battle/setup.js) and the menus share. */
+export const STAT_KEYS = ['hp', 'amp', 'atk', 'def', 'spd', 'lck'];
 export const EQUIP_SLOTS = ['instrument', 'accessory'];
+
+/**
+ * Base stats of a character definition at a level (before equipment): `growth` per stat is a number
+ * (per level) or a per-level array.
+ * @param {object} def characters.json entry
+ * @param {number} [level]
+ */
+export function levelStats(def, level = 1) {
+  const out = {};
+  for (const k of STAT_KEYS) {
+    const base = (def.stats && def.stats[k]) || 0;
+    const g = def.growth ? def.growth[k] : 0;
+    if (Array.isArray(g)) out[k] = g[Math.min(level - 1, g.length - 1)] ?? base;
+    else out[k] = base + Math.round((g || 0) * (level - 1));
+  }
+  return out;
+}
 
 /** @typedef {{id: string, level: number, xp: number, hp: number, amp: number, equip: Record<string, string|null>, status: string[]}} Member */
 
@@ -82,15 +100,7 @@ export class Party {
 
   /** Base stats at a given level (before equipment). */
   baseStats(id, level) {
-    const def = this.defs[id];
-    const out = {};
-    for (const k of STAT_KEYS) {
-      const base = (def.stats && def.stats[k]) || 0;
-      const g = def.growth ? def.growth[k] : 0;
-      if (Array.isArray(g)) out[k] = g[Math.min(level - 1, g.length - 1)] ?? base;
-      else out[k] = base + Math.round((g || 0) * (level - 1));
-    }
-    return out;
+    return levelStats(this.defs[id], level);
   }
 
   /** Sum of equipment bonuses for a member. */
@@ -105,7 +115,7 @@ export class Party {
     return bonus;
   }
 
-  /** Full derived stats (maxHp, maxAmp, atk, def, spd) including equipment. */
+  /** Full derived stats (maxHp, maxAmp, atk, def, spd, lck) including equipment. */
   stats(id) {
     const member = this.get(id);
     const level = member ? member.level : 1;

@@ -5,9 +5,10 @@
 // through window.__slime (docs/ARCHITECTURE.md §9) with autoAdvance + textInstant, asserts the
 // DESIGN.md flag spine and screenshots every map to tests/screenshots/content_a_*.png.
 //
-//   node tests/content_a.mjs            (set CONTENT_KEEP_DIST=1 to reuse dist/)
+//   node tests/content_a.mjs            (EXPLORE_KEEP_DIST=1 or CONTENT_KEEP_DIST=1 reuses dist/)
 //
-// Same build/serve/browser recipe as tests/explore.mjs (PLAYWRIGHT_MODULE, SMOKE_CHROME knobs).
+// Part of tests/run.mjs (which sets EXPLORE_KEEP_DIST=1 after smoke.mjs built dist/). Same
+// build/serve/browser recipe as tests/explore.mjs (PLAYWRIGHT_MODULE, SMOKE_CHROME knobs).
 
 import { spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, readdirSync } from 'node:fs';
@@ -106,7 +107,7 @@ async function main() {
     if (!ok) errors.push(`check failed: ${name}${detail !== undefined ? ` (${JSON.stringify(detail)})` : ''}`);
   };
 
-  if (process.env.CONTENT_KEEP_DIST === '1' && existsSync(path.join(DIST, 'index.html'))) log('CONTENT_KEEP_DIST=1, reusing dist/');
+  if ((process.env.EXPLORE_KEEP_DIST === '1' || process.env.CONTENT_KEEP_DIST === '1') && existsSync(path.join(DIST, 'index.html'))) log('KEEP_DIST set, reusing dist/');
   else build();
 
   const pw = loadPlaywright();

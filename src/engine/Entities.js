@@ -236,6 +236,8 @@ export class Entity extends Phaser.GameObjects.Sprite {
    */
   playAnim(key, { wait = true } = {}) {
     if (!this.scene.anims.exists(key)) { console.warn(`[entities] unknown animation "${key}"`); return Promise.resolve(); }
+    // A finished step defers its idle to the next preUpdate; an explicit animation must not be clobbered by it.
+    this.idlePending = false;
     this.play(key, false);
     const anim = this.scene.anims.get(key);
     if (!wait || !anim || anim.repeat === -1) return Promise.resolve();
@@ -302,7 +304,11 @@ export class Entity extends Phaser.GameObjects.Sprite {
     if (!this.scene || !this.active || this.moving) return Promise.resolve(false);
     const [dx, dy] = DELTA[dir] || [0, 0];
     const tx = this.tileX + dx, ty = this.tileY + dy;
-    if (!ghost && this.scene.isBlocked(tx, ty, this)) { this.face(dir); return Promise.resolve(false); }
+    if (!ghost && this.scene.isBlocked(tx, ty, this)) {
+      this.face(dir);
+      if (typeof this.scene.onEntityBump === 'function') this.scene.onEntityBump(this, tx, ty);
+      return Promise.resolve(false);
+    }
     const fromX = this.tileX, fromY = this.tileY;
     this.facing = dir;
     this.moving = true;
