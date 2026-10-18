@@ -12,7 +12,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const TESTS = ['data.test.mjs', 'smoke.mjs', 'explore.mjs', 'audio.mjs', 'ui.mjs'];
+const TESTS = ['data.test.mjs', 'battle.test.mjs', 'smoke.mjs', 'explore.mjs', 'battle.mjs', 'audio.mjs', 'ui.mjs'];
 
 const results = [];
 let builtDist = false;
@@ -25,7 +25,7 @@ for (const name of TESTS) {
   }
   process.stderr.write(`\n[run] ===== ${name} =====\n`);
   const env = { ...process.env };
-  if (name === 'explore.mjs' && builtDist) env.EXPLORE_KEEP_DIST = '1';
+  if ((name === 'explore.mjs' || name === 'battle.mjs') && builtDist) env.EXPLORE_KEEP_DIST = '1';
   const started = Date.now();
   const r = spawnSync(process.execPath, [file], { cwd: ROOT, stdio: 'inherit', env });
   const ok = r.status === 0;

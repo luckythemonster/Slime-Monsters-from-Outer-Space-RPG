@@ -11,7 +11,7 @@
       "spd": 4
     },
     "xp": 3,
-    "money": 2,
+    "money": 0,
     "weak": [],
     "resist": [],
     "scan": "My brain thinks it's a dev-map cop.",
@@ -29,12 +29,7 @@
         "weight": 1
       }
     ],
-    "drops": [
-      {
-        "item": "coffee",
-        "chance": 0.25
-      }
-    ]
+    "drops": []
   },
   "drone": {
     "name": "Retrieval Drone",

@@ -243,6 +243,9 @@
               "target": "random",
               "weight": 2
             }
+          ],
+          "fallbacks": [
+            "ryan_slimed"
           ]
         },
         "pocket": {
@@ -268,14 +271,20 @@
               "weight": 3
             }
           ],
-          "armedSheet": "ryan_pocket_dark"
+          "armedSheet": "ryan_pocket_dark",
+          "fallbacks": [
+            "ryan_bruised"
+          ]
         },
         "eternity": {
           "sheet": "ryan_eternity",
           "size": 64,
           "friendlyFire": false,
           "toonPerAction": 0,
-          "ai": []
+          "ai": [],
+          "fallbacks": [
+            "ryan_bruised"
+          ]
         }
       },
       "traits": {
