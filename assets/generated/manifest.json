@@ -3966,6 +3966,336 @@
       }
     }
   },
+  "npc_busker": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 6,
+    "names": [
+      "down a (strum up)",
+      "down b (strum down)",
+      "up a",
+      "up b (elbow out)",
+      "left a (strum up)",
+      "left b (strum down)"
+    ],
+    "anims": [
+      {
+        "key": "npc_busker_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "npc_busker_idle_down",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "npc_busker_idle_up",
+        "frames": [
+          2,
+          3
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "npc_busker_idle_left",
+        "frames": [
+          4,
+          5
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "npc_busker_idle_right",
+        "frames": [
+          4,
+          5
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": true
+      }
+    ]
+  },
+  "npc_crustpunk": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 6,
+    "names": [
+      "down a",
+      "down b (shiver)",
+      "up a",
+      "up b (shiver)",
+      "left a",
+      "left b (shiver)"
+    ],
+    "anims": [
+      {
+        "key": "npc_crustpunk_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 4,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "npc_crustpunk_idle_down",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 4,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "npc_crustpunk_idle_up",
+        "frames": [
+          2,
+          3
+        ],
+        "fps": 4,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "npc_crustpunk_idle_left",
+        "frames": [
+          4,
+          5
+        ],
+        "fps": 4,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "npc_crustpunk_idle_right",
+        "frames": [
+          4,
+          5
+        ],
+        "fps": 4,
+        "repeat": -1,
+        "flipX": true
+      }
+    ]
+  },
+  "npc_office": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 6,
+    "names": [
+      "down a (thumb up)",
+      "down b (thumb down)",
+      "up a",
+      "up b (head dips)",
+      "left a (thumb up)",
+      "left b (thumb down)"
+    ],
+    "anims": [
+      {
+        "key": "npc_office_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "npc_office_idle_down",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "npc_office_idle_up",
+        "frames": [
+          2,
+          3
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "npc_office_idle_left",
+        "frames": [
+          4,
+          5
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "npc_office_idle_right",
+        "frames": [
+          4,
+          5
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": true
+      }
+    ]
+  },
+  "npc_shoveler": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 6,
+    "names": [
+      "down a (shovel resting)",
+      "down b (shovel lifted)",
+      "up a (shovel resting)",
+      "up b (shovel lifted)",
+      "left a (shovel resting)",
+      "left b (shovel lifted)"
+    ],
+    "anims": [
+      {
+        "key": "npc_shoveler_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "npc_shoveler_idle_down",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "npc_shoveler_idle_up",
+        "frames": [
+          2,
+          3
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "npc_shoveler_idle_left",
+        "frames": [
+          4,
+          5
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "npc_shoveler_idle_right",
+        "frames": [
+          4,
+          5
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": true
+      }
+    ]
+  },
+  "npc_smoker": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 6,
+    "names": [
+      "down a (ember off)",
+      "down b (ember on, smoke)",
+      "up a",
+      "up b (smoke)",
+      "left a (ember off)",
+      "left b (ember on, smoke)"
+    ],
+    "anims": [
+      {
+        "key": "npc_smoker_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "npc_smoker_idle_down",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "npc_smoker_idle_up",
+        "frames": [
+          2,
+          3
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "npc_smoker_idle_left",
+        "frames": [
+          4,
+          5
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "npc_smoker_idle_right",
+        "frames": [
+          4,
+          5
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": true
+      }
+    ]
+  },
   "obj_amp_bass": {
     "type": "spritesheet",
     "frameWidth": 16,
