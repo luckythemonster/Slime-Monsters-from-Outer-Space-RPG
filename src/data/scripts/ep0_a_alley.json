@@ -1,0 +1,130 @@
+{
+  "ep0_crash": [
+    { "music": null },
+    { "face": { "who": "phoenix", "dir": "down" } },
+    { "camera": { "fade": "in", "ms": 400 } },
+    { "say": "{speed:slow}…", "who": "phoenix" },
+    { "anim": { "who": "player", "key": "lucky_puddle", "wait": false } },
+    { "sfx": "crash" },
+    { "camera": { "flash": 120 } },
+    { "spawn": { "id": "crash_fx", "sprite": "word_crash", "x": 4, "y": 6, "facing": "right", "solid": false } },
+    { "move": { "who": "crash_fx", "path": "RRRRRR", "speed": "run", "wait": false } },
+    { "camera": { "shake": 300, "intensity": 0.03 } },
+    { "spawn": { "id": "dumpster_3", "sprite": "obj_dumpster_tipped", "x": 11, "y": 5, "facing": "down" } },
+    { "sfx": "crash" },
+    { "camera": { "shake": 300, "intensity": 0.03 } },
+    { "spawn": { "id": "dumpster_4", "sprite": "obj_dumpster_tipped", "x": 13, "y": 5, "facing": "down" } },
+    { "sfx": "crash" },
+    { "camera": { "shake": 300, "intensity": 0.03 } },
+    { "anim": { "who": "crash_fx", "key": "word_crash_swing", "wait": true } },
+    { "despawn": "crash_fx" },
+    { "wait": 900 },
+    { "anim": { "who": "phoenix", "key": "phoenix_glasses_push", "wait": true } },
+    { "say": "My brain thinks you're going to have to pay the city for that pothole.", "who": "phoenix", "portrait": "phoenix_tired" },
+    { "sfx": "slime_pop" },
+    { "anim": { "who": "player", "key": "lucky_reform", "wait": true } },
+    { "face": { "who": "player", "dir": "down" } },
+    { "move": { "who": "player", "path": "D", "wait": true } },
+    { "spawn": { "id": "crater", "sprite": "obj_crater", "x": 9, "y": 8, "facing": "down" } },
+    { "anim": { "who": "crater", "key": "obj_crater_glow", "wait": false } },
+    { "face": { "who": "player", "toward": "phoenix" } },
+    { "say": "My dad runs Demographic Alignment for the Vanguard. He thinks a personality is a market segment.", "who": "lucky" },
+    { "say": "Planet California is one billboard with a dental plan.", "who": "lucky" },
+    { "say": "My old band's still back there. Or they're not. I didn't check.", "who": "lucky" },
+    { "face": { "who": "phoenix", "toward": "player" } },
+    { "say": "I came here for college. The economy fell over. Rent didn't.", "who": "phoenix" },
+    { "say": "I'm a permanent resident of the Midwest now. It's a medical condition.", "who": "phoenix" },
+    { "spawn": { "id": "aura", "sprite": "obj_aura_link", "x": 10, "y": 7, "facing": "down", "solid": false } },
+    { "anim": { "who": "aura", "key": "obj_aura_link_pulse", "wait": false } },
+    { "sfx": "feedback" },
+    { "say": "They are made of the same stuff.", "who": "narrator" },
+    { "despawn": "aura" },
+    { "say": "I want to make the loudest, most obnoxious noise possible until this whole empire gets a migraine.", "who": "lucky" },
+    { "say": "Beats the day job.", "who": "phoenix" },
+    { "sfx": "drone_whine" },
+    { "spawn": { "id": "drone", "sprite": "drone_map", "x": 21, "y": 5, "facing": "left" } },
+    { "move": { "who": "drone", "path": "LLLLLLLDDD", "speed": "run", "wait": true } },
+    { "face": { "who": "drone", "toward": "player" } },
+    { "say": "ASSET LOCATED. INITIATING RETRIEVAL. PLEASE HOLD FOR A REPRESENTATIVE.", "who": "drone" },
+    { "emote": { "who": "player", "type": "!" } },
+    { "battle": "alley_drone", "onLose": "gameover", "onWin": [
+      { "despawn": "drone" },
+      { "spawn": { "id": "drone_wreck", "sprite": "obj_drone_wreck", "x": 14, "y": 8, "facing": "down" } },
+      { "party": { "add": "phoenix" } },
+      { "set": { "flags.metPhoenix": true, "flags.droneDefeated": true, "flags.phoenixJoined": true } }
+    ] },
+    { "face": { "who": "phoenix", "toward": "player" } },
+    { "say": "Come on. I've got a bin you can sleep in.", "who": "phoenix" },
+    { "music": "pothole" },
+    { "save": { "auto": true } }
+  ],
+
+  "ep0_alley_phoenix": [
+    { "say": "My brain thinks you should get up first.", "who": "phoenix" }
+  ],
+
+  "ep0_alley_crater": [
+    { "say": "Lucky's pothole. It glows faintly. Someone is going to be billed.", "who": "narrator" },
+    { "if": "flags.craterRead", "then": [
+      { "say": "Four thousand dollars, probably. For a hole I AM.", "who": "lucky" }
+    ] },
+    { "set": { "flags.craterRead": true } }
+  ],
+
+  "ep0_alley_dumpster": [
+    { "say": "Nine Pizza Luce boxes, all empty, all someone's Tuesday.", "who": "narrator" },
+    { "if": "!flags.pizzaBoxLooted", "then": [
+      { "say": "One box is not empty.", "who": "narrator" },
+      { "give": { "item": "pizza_slice", "qty": 1 } },
+      { "set": { "flags.pizzaBoxLooted": true } }
+    ], "else": [
+      { "say": "All empty now. Lucky checked. Twice.", "who": "narrator" }
+    ] }
+  ],
+
+  "ep0_alley_dumpster_up": [
+    { "say": "Still upright. It knows what it did.", "who": "narrator" },
+    { "if": "flags.phoenixJoined", "then": [
+      { "say": "My brain thinks it was the lucky one.", "who": "phoenix" }
+    ] }
+  ],
+
+  "ep0_alley_wreck": [
+    { "say": "RETRIEVAL DRONE (DECEASED). Its little screen still says ASSET LOCATED.", "who": "narrator" },
+    { "if": "flags.wreckRead", "then": [
+      { "say": "Two dollars severance. That's the Vanguard's whole philosophy in a check.", "who": "lucky" }
+    ] },
+    { "set": { "flags.wreckRead": true } }
+  ],
+
+  "ep0_alley_crate": [
+    { "if": "flags.droneDefeated", "then": [
+      { "say": "A dog. She has been there the whole time.", "who": "narrator" },
+      { "if": "flags.bajonkaSeen", "then": [
+        { "say": "That dog's been by the back door since I started here. My brain thinks she's the landlord.", "who": "phoenix" }
+      ] },
+      { "set": { "flags.bajonkaSeen": true } }
+    ], "else": [
+      { "say": "A milk crate. Empty. It has the posture of something waiting for a dog.", "who": "narrator" }
+    ] }
+  ],
+
+  "ep0_alley_door": [
+    { "say": "EMPLOYEES ONLY.", "who": "narrator" },
+    { "if": "flags.phoenixJoined", "then": [
+      { "say": "I'm an employee. I'm not going in there.", "who": "phoenix" }
+    ] }
+  ],
+
+  "ep0_alley_window": [
+    { "say": "The kitchen window. Someone in there is having a worse night, professionally.", "who": "narrator" }
+  ],
+
+  "ep0_alley_bike": [
+    { "say": "Someone has been paying for that U-lock since 2019.", "who": "narrator" }
+  ],
+
+  "ep0_alley_lamp": [
+    { "say": "A streetlight. It is on. This is the most the city has done for this alley.", "who": "narrator" }
+  ]
+}
