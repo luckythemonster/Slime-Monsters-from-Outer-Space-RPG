@@ -1,0 +1,12 @@
+{
+  "cop": { "name": "FELLOW KID", "portrait": "cop_disguise", "blip": "D4" },
+  "bartender": { "name": "Bartender", "blip": "C4" },
+  "night_manager": { "name": "Night Manager", "blip": "B3" },
+  "ska_band": { "name": "Ska Band", "blip": "A5" },
+  "noise_guy": { "name": "Noise Guy", "blip": "F4" },
+  "pulltab_lady": { "name": "Pull-Tab Lady", "blip": "E5" },
+  "regular": { "name": "Regular", "blip": "G3" },
+  "nurse": { "name": "Nurse", "blip": "D5" },
+  "guy": { "name": "Guy", "blip": "C4" },
+  "crowd": { "name": "Crowd", "blip": "A4" }
+}

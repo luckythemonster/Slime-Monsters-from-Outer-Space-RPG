@@ -1,0 +1,95 @@
+{
+  "ep0_cs_hall_autosave": [
+    { "save": { "auto": true } }
+  ],
+
+  "ep0_ryan_arrives": [
+    { "sfx": "door" },
+    { "face": { "who": "player", "dir": "left" } },
+    { "spawn": { "id": "hardware", "type": "object", "sprite": "obj_hardware_stack", "x": 2, "y": 5, "facing": "right", "solid": false } },
+    { "spawn": { "id": "ryan", "sprite": "ryan", "x": 2, "y": 6, "facing": "right" } },
+    { "anim": { "who": "ryan", "key": "ryan_carry_hardware", "wait": false } },
+    { "move": { "who": "hardware", "path": "RRRRRRRRRRRRRRRRRR", "wait": false } },
+    { "move": { "who": "ryan", "path": "RRRRRRRRRRRRRRRRRR", "wait": true } },
+    { "face": { "who": "player", "toward": "ryan" } },
+    { "say": "My brain thinks that's structurally impossible.", "who": "phoenix" },
+    { "say": "That's Ryan.", "who": "brian" },
+    { "face": { "who": "ryan", "dir": "down" } },
+    { "anim": { "who": "ryan", "key": "ryan_nod", "wait": true } },
+    { "wait": 400 },
+    { "sfx": "sneeze" },
+    { "anim": { "who": "bajonka_clip", "key": "bajonka_sneeze", "wait": true } },
+    { "camera": { "fade": "out", "ms": 250 } },
+    { "despawn": "bajonka_clip" },
+    { "despawn": "clipboard" },
+    { "spawn": { "id": "bajonka_pose", "sprite": "bajonka", "x": 20, "y": 7, "facing": "up" } },
+    { "despawn": "hardware" },
+    { "despawn": "ryan" },
+    { "camera": { "fade": "in", "ms": 250 } },
+    { "say": "My brain has questions. My brain is choosing not to ask them.", "who": "phoenix" },
+    { "set": { "flags.ryanArrived": true, "flags.hasBajonka": true } },
+    { "despawn": "bajonka_pose" }
+  ],
+
+  "npc_cs_manager": [
+    { "say": "Room 4. Cash only. Don't put stickers on the stickers.", "who": "night_manager" },
+    { "if": "flags.monthLater", "then": [
+      { "say": "You're a month behind on the stickers rule. The stickers are winning.", "who": "night_manager" }
+    ] }
+  ],
+  "npc_cs_desk": [
+    { "say": "A sign-in sheet. Every band is named after a disease.", "who": "narrator" },
+    { "say": "Someone signed in as 'THE SAME SKA BAND.' Nine times.", "who": "narrator" }
+  ],
+  "npc_cs_ska_1": [
+    { "say": "Ska's coming back.", "who": "ska_band" }
+  ],
+  "npc_cs_ska_2": [
+    { "say": "It never came.", "who": "ska_band" }
+  ],
+  "npc_cs_ska_3": [
+    { "say": "Checkmate.", "who": "ska_band" }
+  ],
+  "npc_cs_noise_guy": [
+    { "say": "I'm the only member. I'm also the audience. Reviews are mixed.", "who": "noise_guy" }
+  ],
+  "npc_cs_vending": [
+    { "say": "Everything is $1.25. Everything is sold out.", "who": "narrator" },
+    { "say": "My brain thinks that's a business model.", "who": "phoenix" }
+  ],
+  "npc_cs_board": [
+    { "say": "BASSIST WANTED (NOT YOU, GREG).", "who": "narrator" },
+    { "say": "DRUMMER AVAILABLE: 13/8 ONLY.", "who": "narrator" },
+    { "say": "LOST: CLIPBOARD. IF FOUND, YOU HAVE ALREADY SIGNED.", "who": "narrator" }
+  ],
+  "npc_cs_door_1": [
+    { "say": "Room 1 is practicing one chord. It is getting better.", "who": "narrator" }
+  ],
+  "npc_cs_door_2": [
+    { "say": "Room 2. Through the door: feedback. Through the feedback: more feedback.", "who": "narrator" }
+  ],
+  "npc_cs_door_3": [
+    { "say": "Room 3. Someone is counting in. They have been counting in for an hour.", "who": "narrator" }
+  ],
+  "npc_cs_door_5": [
+    { "say": "Room 5 is arguing about the set list. The set list is one song.", "who": "narrator" }
+  ],
+  "npc_cs_door_6": [
+    { "say": "Room 6 is silent. The sign says PODCAST. The silence is the podcast.", "who": "narrator" }
+  ],
+  "npc_cs_bathroom": [
+    { "say": "The bathroom. The stickers continue inside. All the way inside.", "who": "narrator" }
+  ],
+  "npc_cs_room4_closed": [
+    { "say": "ROOM 4. The door is soundproof. Through it: nothing yet.", "who": "narrator" },
+    { "if": "party.has('brian')", "then": [
+      { "say": "He's not late. He's just not here yet. Those are different.", "who": "brian" }
+    ] }
+  ],
+  "npc_cs_clipboard": [
+    { "say": "A clipboard. A pen. The pen has been chewed by something with a legal background.", "who": "narrator" }
+  ],
+  "npc_cs_bajonka_clip": [
+    { "say": "A dog with a clipboard. She has not noticed you. She has noticed you.", "who": "narrator" }
+  ]
+}
