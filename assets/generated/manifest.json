@@ -263,6 +263,86 @@
       }
     ]
   },
+  "brian_battle": {
+    "type": "spritesheet",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 11,
+    "names": [
+      "idle a",
+      "idle b (pick shift)",
+      "attack a (wind-up)",
+      "attack b (strike)",
+      "attack c (follow-through)",
+      "riff a (stiff chord)",
+      "riff b",
+      "hurt",
+      "ko (flat on the pedalboard)",
+      "win a (thumbs up)",
+      "win b (sparkle)"
+    ],
+    "anims": [
+      {
+        "key": "brian_battle_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "brian_battle_attack",
+        "frames": [
+          2,
+          3,
+          4
+        ],
+        "fps": 10,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "brian_battle_riff",
+        "frames": [
+          5,
+          6
+        ],
+        "fps": 6,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "brian_battle_hurt",
+        "frames": [
+          7
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "brian_battle_ko",
+        "frames": [
+          8
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "brian_battle_win",
+        "frames": [
+          9,
+          10
+        ],
+        "fps": 4,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
   "brian_red": {
     "type": "spritesheet",
     "frameWidth": 16,
@@ -874,6 +954,486 @@
           15
         ],
         "fps": 6,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "lucky_battle": {
+    "type": "spritesheet",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 11,
+    "names": [
+      "idle a",
+      "idle b (bob)",
+      "attack a (wind-up)",
+      "attack b (strike, laser flash)",
+      "attack c (follow-through)",
+      "riff a (neck up)",
+      "riff b (glow)",
+      "hurt",
+      "ko (puddle)",
+      "win a (fist up, grin)",
+      "win b (sparkle)"
+    ],
+    "anims": [
+      {
+        "key": "lucky_battle_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_battle_attack",
+        "frames": [
+          2,
+          3,
+          4
+        ],
+        "fps": 10,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "lucky_battle_riff",
+        "frames": [
+          5,
+          6
+        ],
+        "fps": 6,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_battle_hurt",
+        "frames": [
+          7
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "lucky_battle_ko",
+        "frames": [
+          8
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "lucky_battle_win",
+        "frames": [
+          9,
+          10
+        ],
+        "fps": 4,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "lucky_battle_bruised": {
+    "type": "spritesheet",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 11,
+    "names": [
+      "idle a",
+      "idle b (bob)",
+      "attack a (wind-up)",
+      "attack b (strike, laser flash)",
+      "attack c (follow-through)",
+      "riff a (neck up)",
+      "riff b (glow)",
+      "hurt",
+      "ko (puddle)",
+      "win a (fist up, grin)",
+      "win b (sparkle)"
+    ],
+    "anims": [
+      {
+        "key": "lucky_battle_bruised_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_battle_bruised_attack",
+        "frames": [
+          2,
+          3,
+          4
+        ],
+        "fps": 10,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "lucky_battle_bruised_riff",
+        "frames": [
+          5,
+          6
+        ],
+        "fps": 6,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_battle_bruised_hurt",
+        "frames": [
+          7
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "lucky_battle_bruised_ko",
+        "frames": [
+          8
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "lucky_battle_bruised_win",
+        "frames": [
+          9,
+          10
+        ],
+        "fps": 4,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "lucky_battle_deflated": {
+    "type": "spritesheet",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 11,
+    "names": [
+      "idle a",
+      "idle b (bob)",
+      "attack a (wind-up)",
+      "attack b (strike, laser flash)",
+      "attack c (follow-through)",
+      "riff a (neck up)",
+      "riff b (glow)",
+      "hurt",
+      "ko (puddle)",
+      "win a (fist up, grin)",
+      "win b (sparkle)"
+    ],
+    "anims": [
+      {
+        "key": "lucky_battle_deflated_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_battle_deflated_attack",
+        "frames": [
+          2,
+          3,
+          4
+        ],
+        "fps": 10,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "lucky_battle_deflated_riff",
+        "frames": [
+          5,
+          6
+        ],
+        "fps": 6,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_battle_deflated_hurt",
+        "frames": [
+          7
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "lucky_battle_deflated_ko",
+        "frames": [
+          8
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "lucky_battle_deflated_win",
+        "frames": [
+          9,
+          10
+        ],
+        "fps": 4,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "lucky_battle_flare": {
+    "type": "spritesheet",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 11,
+    "names": [
+      "idle a",
+      "idle b (bob)",
+      "attack a (wind-up)",
+      "attack b (strike, laser flash)",
+      "attack c (follow-through)",
+      "riff a (neck up)",
+      "riff b (glow)",
+      "hurt",
+      "ko (puddle)",
+      "win a (fist up, grin)",
+      "win b (sparkle)"
+    ],
+    "anims": [
+      {
+        "key": "lucky_battle_flare_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_battle_flare_attack",
+        "frames": [
+          2,
+          3,
+          4
+        ],
+        "fps": 10,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "lucky_battle_flare_riff",
+        "frames": [
+          5,
+          6
+        ],
+        "fps": 6,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_battle_flare_hurt",
+        "frames": [
+          7
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "lucky_battle_flare_ko",
+        "frames": [
+          8
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "lucky_battle_flare_win",
+        "frames": [
+          9,
+          10
+        ],
+        "fps": 4,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "lucky_battle_plaster": {
+    "type": "spritesheet",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 11,
+    "names": [
+      "idle a",
+      "idle b (bob)",
+      "attack a (wind-up)",
+      "attack b (strike, laser flash)",
+      "attack c (follow-through)",
+      "riff a (neck up)",
+      "riff b (glow)",
+      "hurt",
+      "ko (puddle)",
+      "win a (fist up, grin)",
+      "win b (sparkle)"
+    ],
+    "anims": [
+      {
+        "key": "lucky_battle_plaster_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_battle_plaster_attack",
+        "frames": [
+          2,
+          3,
+          4
+        ],
+        "fps": 10,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "lucky_battle_plaster_riff",
+        "frames": [
+          5,
+          6
+        ],
+        "fps": 6,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_battle_plaster_hurt",
+        "frames": [
+          7
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "lucky_battle_plaster_ko",
+        "frames": [
+          8
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "lucky_battle_plaster_win",
+        "frames": [
+          9,
+          10
+        ],
+        "fps": 4,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "lucky_battle_rage": {
+    "type": "spritesheet",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 11,
+    "names": [
+      "idle a",
+      "idle b (bob)",
+      "attack a (wind-up)",
+      "attack b (strike, laser flash)",
+      "attack c (follow-through)",
+      "riff a (neck up)",
+      "riff b (glow)",
+      "hurt",
+      "ko (puddle)",
+      "win a (fist up, grin)",
+      "win b (sparkle)"
+    ],
+    "anims": [
+      {
+        "key": "lucky_battle_rage_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_battle_rage_attack",
+        "frames": [
+          2,
+          3,
+          4
+        ],
+        "fps": 10,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "lucky_battle_rage_riff",
+        "frames": [
+          5,
+          6
+        ],
+        "fps": 6,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_battle_rage_hurt",
+        "frames": [
+          7
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "lucky_battle_rage_ko",
+        "frames": [
+          8
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "lucky_battle_rage_win",
+        "frames": [
+          9,
+          10
+        ],
+        "fps": 4,
         "repeat": -1,
         "flipX": false
       }
@@ -1906,6 +2466,166 @@
         ],
         "fps": 4,
         "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "phoenix_battle": {
+    "type": "spritesheet",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 11,
+    "names": [
+      "idle a",
+      "idle b (bob)",
+      "attack a (bag back)",
+      "attack b (bag swing)",
+      "attack c (bag down)",
+      "riff a (low-end rings)",
+      "riff b",
+      "hurt",
+      "ko (puddle)",
+      "win a (glasses push)",
+      "win b (lens flash)"
+    ],
+    "anims": [
+      {
+        "key": "phoenix_battle_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "phoenix_battle_attack",
+        "frames": [
+          2,
+          3,
+          4
+        ],
+        "fps": 10,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "phoenix_battle_riff",
+        "frames": [
+          5,
+          6
+        ],
+        "fps": 6,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "phoenix_battle_hurt",
+        "frames": [
+          7
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "phoenix_battle_ko",
+        "frames": [
+          8
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "phoenix_battle_win",
+        "frames": [
+          9,
+          10
+        ],
+        "fps": 4,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "phoenix_battle_plaster": {
+    "type": "spritesheet",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 11,
+    "names": [
+      "idle a",
+      "idle b (bob)",
+      "attack a (bag back)",
+      "attack b (bag swing)",
+      "attack c (bag down)",
+      "riff a (low-end rings)",
+      "riff b",
+      "hurt",
+      "ko (puddle)",
+      "win a (glasses push)",
+      "win b (lens flash)"
+    ],
+    "anims": [
+      {
+        "key": "phoenix_battle_plaster_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "phoenix_battle_plaster_attack",
+        "frames": [
+          2,
+          3,
+          4
+        ],
+        "fps": 10,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "phoenix_battle_plaster_riff",
+        "frames": [
+          5,
+          6
+        ],
+        "fps": 6,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "phoenix_battle_plaster_hurt",
+        "frames": [
+          7
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "phoenix_battle_plaster_ko",
+        "frames": [
+          8
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "phoenix_battle_plaster_win",
+        "frames": [
+          9,
+          10
+        ],
+        "fps": 4,
+        "repeat": -1,
         "flipX": false
       }
     ]
