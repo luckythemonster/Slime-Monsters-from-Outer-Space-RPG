@@ -1,4 +1,338 @@
 {
+  "analyst": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 9,
+    "names": [
+      "down stand",
+      "down step a (right foot lifted)",
+      "down step b (left foot lifted)",
+      "up stand",
+      "up step a (right foot lifted)",
+      "up step b (left foot lifted)",
+      "left stand",
+      "left step a (near leg forward)",
+      "left step b (far leg forward)"
+    ],
+    "anims": [
+      {
+        "key": "analyst_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "analyst_walk_up",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "analyst_walk_left",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "analyst_walk_right",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "analyst_idle_down",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "analyst_idle_up",
+        "frames": [
+          3
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "analyst_idle_left",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "analyst_idle_right",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "analyst_idle",
+        "frames": [
+          0,
+          3
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "analyst_b": {
+    "type": "spritesheet",
+    "frameWidth": 48,
+    "frameHeight": 48,
+    "frames": 6,
+    "names": [
+      "idle a",
+      "idle b (bob)",
+      "attack a (pick a demographic)",
+      "attack b",
+      "hurt",
+      "ko (flat, clipboard dropped)"
+    ],
+    "anims": [
+      {
+        "key": "analyst_b_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "analyst_b_attack",
+        "frames": [
+          2,
+          3
+        ],
+        "fps": 8,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "analyst_b_hurt",
+        "frames": [
+          4
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "analyst_b_ko",
+        "frames": [
+          5
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "analyst_map": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 9,
+    "names": [
+      "down stand",
+      "down step a (right foot lifted)",
+      "down step b (left foot lifted)",
+      "up stand",
+      "up step a (right foot lifted)",
+      "up step b (left foot lifted)",
+      "left stand",
+      "left step a (near leg forward)",
+      "left step b (far leg forward)"
+    ],
+    "anims": [
+      {
+        "key": "analyst_map_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "analyst_map_walk_up",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "analyst_map_walk_left",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "analyst_map_walk_right",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "analyst_map_idle_down",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "analyst_map_idle_up",
+        "frames": [
+          3
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "analyst_map_idle_left",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "analyst_map_idle_right",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "analyst_map_idle",
+        "frames": [
+          0,
+          3
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "backup_cop_b": {
+    "type": "spritesheet",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 6,
+    "names": [
+      "idle a",
+      "idle b",
+      "attack a (baton up)",
+      "attack b (baton / cuff)",
+      "hurt",
+      "ko (flat)"
+    ],
+    "anims": [
+      {
+        "key": "backup_cop_b_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "backup_cop_b_attack",
+        "frames": [
+          2,
+          3
+        ],
+        "fps": 8,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "backup_cop_b_hurt",
+        "frames": [
+          4
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "backup_cop_b_ko",
+        "frames": [
+          5
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
   "bajonka": {
     "type": "spritesheet",
     "frameWidth": 16,
@@ -110,6 +444,189 @@
         ],
         "fps": 6,
         "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "barista": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 13,
+    "names": [
+      "down stand",
+      "down step a (right foot lifted)",
+      "down step b (left foot lifted)",
+      "up stand",
+      "up step a (right foot lifted)",
+      "up step b (left foot lifted)",
+      "left stand",
+      "left step a (near leg forward)",
+      "left step b (far leg forward)",
+      "idle a (apron)",
+      "idle b (blink)",
+      "pour a (kettle up)",
+      "pour b (pouring)"
+    ],
+    "anims": [
+      {
+        "key": "barista_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "barista_walk_up",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "barista_walk_left",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "barista_walk_right",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "barista_idle_down",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "barista_idle_up",
+        "frames": [
+          3
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "barista_idle_left",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "barista_idle_right",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "barista_idle",
+        "frames": [
+          9,
+          10
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "barista_pour",
+        "frames": [
+          11,
+          12
+        ],
+        "fps": 4,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "billboard_b": {
+    "type": "spritesheet",
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 7,
+    "names": [
+      "idle a",
+      "idle b",
+      "attack a (slogan)",
+      "attack b",
+      "hurt",
+      "glitch a (WORK IS L0VE)",
+      "glitch b"
+    ],
+    "anims": [
+      {
+        "key": "billboard_b_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "billboard_b_attack",
+        "frames": [
+          2,
+          3
+        ],
+        "fps": 6,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "billboard_b_hurt",
+        "frames": [
+          4
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "billboard_b_glitch",
+        "frames": [
+          5,
+          6
+        ],
+        "fps": 8,
+        "repeat": -1,
         "flipX": false
       }
     ]
@@ -492,6 +1009,60 @@
       }
     ]
   },
+  "chorus_b": {
+    "type": "spritesheet",
+    "frameWidth": 48,
+    "frameHeight": 48,
+    "frames": 6,
+    "names": [
+      "idle a",
+      "idle b (pulse)",
+      "attack a (hook)",
+      "attack b (earworm)",
+      "hurt",
+      "ko (deflated balloon)"
+    ],
+    "anims": [
+      {
+        "key": "chorus_b_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "chorus_b_attack",
+        "frames": [
+          2,
+          3
+        ],
+        "fps": 6,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "chorus_b_hurt",
+        "frames": [
+          4
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "chorus_b_ko",
+        "frames": [
+          5
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
   "cop": {
     "type": "spritesheet",
     "frameWidth": 16,
@@ -628,6 +1199,721 @@
         ],
         "fps": 10,
         "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "cop_b": {
+    "type": "spritesheet",
+    "frameWidth": 48,
+    "frameHeight": 48,
+    "frames": 7,
+    "names": [
+      "idle a",
+      "idle b (collar tap)",
+      "attack a (baton up)",
+      "attack b (baton swing)",
+      "hurt",
+      "mohawk_off (bald, glue line)",
+      "flee (running, mohawk in hand)"
+    ],
+    "anims": [
+      {
+        "key": "cop_b_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "cop_b_attack",
+        "frames": [
+          2,
+          3
+        ],
+        "fps": 8,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "cop_b_hurt",
+        "frames": [
+          4
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "cop_b_mohawk_off",
+        "frames": [
+          5
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "cop_b_flee",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "cop_b_ko",
+        "frames": [
+          5
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "drone": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 16,
+    "frames": 6,
+    "names": [
+      "hover a",
+      "hover b",
+      "hover c",
+      "side a",
+      "side b",
+      "side c"
+    ],
+    "anims": [
+      {
+        "key": "drone_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "drone_walk_up",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "drone_walk_left",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "drone_walk_right",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "drone_idle_down",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "drone_idle_up",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "drone_idle_left",
+        "frames": [
+          3,
+          4
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "drone_idle_right",
+        "frames": [
+          3,
+          4
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "drone_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "drone_b": {
+    "type": "spritesheet",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 6,
+    "names": [
+      "idle a",
+      "idle b (bob)",
+      "attack a (claw open)",
+      "attack b (taser prod)",
+      "hurt",
+      "ko (smoking, dropped)"
+    ],
+    "anims": [
+      {
+        "key": "drone_b_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "drone_b_attack",
+        "frames": [
+          2,
+          3
+        ],
+        "fps": 8,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "drone_b_hurt",
+        "frames": [
+          4
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "drone_b_ko",
+        "frames": [
+          5
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "drone_map": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 16,
+    "frames": 6,
+    "names": [
+      "hover a",
+      "hover b",
+      "hover c",
+      "side a",
+      "side b",
+      "side c"
+    ],
+    "anims": [
+      {
+        "key": "drone_map_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "drone_map_walk_up",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "drone_map_walk_left",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "drone_map_walk_right",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "drone_map_idle_down",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "drone_map_idle_up",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "drone_map_idle_left",
+        "frames": [
+          3,
+          4
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "drone_map_idle_right",
+        "frames": [
+          3,
+          4
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "drone_map_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "goose": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 16,
+    "frames": 8,
+    "names": [
+      "front a",
+      "front b",
+      "front c",
+      "side a",
+      "side b",
+      "side c",
+      "hiss a",
+      "hiss b"
+    ],
+    "anims": [
+      {
+        "key": "goose_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "goose_walk_up",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "goose_walk_left",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "goose_walk_right",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "goose_idle_down",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "goose_idle_up",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "goose_idle_left",
+        "frames": [
+          3,
+          4
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "goose_idle_right",
+        "frames": [
+          3,
+          4
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "goose_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "goose_hiss",
+        "frames": [
+          6,
+          7
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "goose_b": {
+    "type": "spritesheet",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 6,
+    "names": [
+      "idle a",
+      "idle b (settle)",
+      "attack a (neck out)",
+      "attack b (hiss / peck)",
+      "hurt",
+      "ko (flopped)"
+    ],
+    "anims": [
+      {
+        "key": "goose_b_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "goose_b_attack",
+        "frames": [
+          2,
+          3
+        ],
+        "fps": 8,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "goose_b_hurt",
+        "frames": [
+          4
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "goose_b_ko",
+        "frames": [
+          5
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "goose_map": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 16,
+    "frames": 8,
+    "names": [
+      "front a",
+      "front b",
+      "front c",
+      "side a",
+      "side b",
+      "side c",
+      "hiss a",
+      "hiss b"
+    ],
+    "anims": [
+      {
+        "key": "goose_map_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "goose_map_walk_up",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "goose_map_walk_left",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "goose_map_walk_right",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "goose_map_idle_down",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "goose_map_idle_up",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "goose_map_idle_left",
+        "frames": [
+          3,
+          4
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "goose_map_idle_right",
+        "frames": [
+          3,
+          4
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "goose_map_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "goose_map_hiss",
+        "frames": [
+          6,
+          7
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "hall_drone_b": {
+    "type": "spritesheet",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 6,
+    "names": [
+      "idle a",
+      "idle b (bob)",
+      "attack a (claw open)",
+      "attack b (taser prod)",
+      "hurt",
+      "ko (smoking, dropped)"
+    ],
+    "anims": [
+      {
+        "key": "hall_drone_b_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "hall_drone_b_attack",
+        "frames": [
+          2,
+          3
+        ],
+        "fps": 8,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "hall_drone_b_hurt",
+        "frames": [
+          4
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "hall_drone_b_ko",
+        "frames": [
+          5
+        ],
+        "fps": 1,
+        "repeat": 0,
         "flipX": false
       }
     ]
@@ -922,6 +2208,60 @@
         "solid": true
       }
     }
+  },
+  "khaki_b": {
+    "type": "spritesheet",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 6,
+    "names": [
+      "idle a",
+      "idle b",
+      "attack a (baton up)",
+      "attack b (baton / cuff)",
+      "hurt",
+      "ko (flat)"
+    ],
+    "anims": [
+      {
+        "key": "khaki_b_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "khaki_b_attack",
+        "frames": [
+          2,
+          3
+        ],
+        "fps": 8,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "khaki_b_hurt",
+        "frames": [
+          4
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "khaki_b_ko",
+        "frames": [
+          5
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
   },
   "lucky": {
     "type": "spritesheet",
@@ -1883,6 +3223,166 @@
       }
     ]
   },
+  "lucky_glow": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 16,
+    "names": [
+      "down stand",
+      "down step a (right foot lifted)",
+      "down step b (left foot lifted)",
+      "up stand",
+      "up step a",
+      "up step b",
+      "left stand",
+      "left step a (near leg forward)",
+      "left step b (far leg forward)",
+      "melt a (slumping)",
+      "melt b (puddle)",
+      "reform pop (overshoot: thin and tall, arms flung up)",
+      "channel a (right arm raised, glowing green)",
+      "channel b (arm flaring, white-hot core)",
+      "bristle a (spikes straight up and spread, brows down)",
+      "bristle b (wider still, shoulder spikes)"
+    ],
+    "anims": [
+      {
+        "key": "lucky_glow_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_glow_walk_up",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_glow_walk_left",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_glow_walk_right",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "lucky_glow_idle_down",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_glow_idle_up",
+        "frames": [
+          3
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_glow_idle_left",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_glow_idle_right",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "lucky_glow_melt",
+        "frames": [
+          9,
+          10
+        ],
+        "fps": 4,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "lucky_glow_puddle",
+        "frames": [
+          10
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_glow_reform",
+        "frames": [
+          10,
+          9,
+          11
+        ],
+        "fps": 6,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "lucky_glow_channel",
+        "frames": [
+          12,
+          13
+        ],
+        "fps": 6,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "lucky_glow_bristle",
+        "frames": [
+          14,
+          15
+        ],
+        "fps": 6,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
   "lucky_plaster": {
     "type": "spritesheet",
     "frameWidth": 16,
@@ -2466,6 +3966,715 @@
       }
     }
   },
+  "obj_amp_bass": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 16,
+    "frames": 3,
+    "names": [
+      "idle",
+      "glow a",
+      "glow b"
+    ],
+    "anims": [
+      {
+        "key": "obj_amp_bass_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "obj_amp_bass_glow",
+        "frames": [
+          1,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "obj_amp_guitar": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 16,
+    "frames": 3,
+    "names": [
+      "idle",
+      "glow a",
+      "glow b"
+    ],
+    "anims": [
+      {
+        "key": "obj_amp_guitar_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "obj_amp_guitar_glow",
+        "frames": [
+          1,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "obj_aura_link": {
+    "type": "spritesheet",
+    "frameWidth": 32,
+    "frameHeight": 16,
+    "frames": 2,
+    "names": [
+      "link 0",
+      "link 1"
+    ],
+    "anims": [
+      {
+        "key": "obj_aura_link_pulse",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 4,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "obj_brain_xray": {
+    "type": "spritesheet",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 3,
+    "names": [
+      "grind",
+      "spark",
+      "backward"
+    ],
+    "anims": [
+      {
+        "key": "obj_brain_xray_grind",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "obj_brain_xray_spark",
+        "frames": [
+          1
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "obj_brain_xray_backward",
+        "frames": [
+          2,
+          0
+        ],
+        "fps": 6,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "obj_brain_xray_all",
+        "frames": [
+          0,
+          1,
+          2
+        ],
+        "fps": 2,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "obj_clipboard": {
+    "type": "spritesheet",
+    "frameWidth": 8,
+    "frameHeight": 8,
+    "frames": 1,
+    "names": [
+      "idle"
+    ],
+    "anims": [
+      {
+        "key": "obj_clipboard_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "obj_coffee_cup": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 16,
+    "frames": 4,
+    "names": [
+      "idle",
+      "tipping a",
+      "tipping b",
+      "spilled"
+    ],
+    "anims": [
+      {
+        "key": "obj_coffee_cup_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "obj_coffee_cup_tipping",
+        "frames": [
+          1,
+          2
+        ],
+        "fps": 6,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "obj_coffee_cup_spilled",
+        "frames": [
+          3
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "obj_contract": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 16,
+    "frames": 1,
+    "names": [
+      "idle"
+    ],
+    "anims": [
+      {
+        "key": "obj_contract_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "obj_crater": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 16,
+    "frames": 2,
+    "names": [
+      "dim",
+      "bright"
+    ],
+    "anims": [
+      {
+        "key": "obj_crater_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "obj_crater_glow",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "obj_drone_wreck": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 16,
+    "frames": 1,
+    "names": [
+      "idle"
+    ],
+    "anims": [
+      {
+        "key": "obj_drone_wreck_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "obj_drumkit": {
+    "type": "spritesheet",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 4,
+    "names": [
+      "idle",
+      "hit a (crash swings, snare flashes)",
+      "hit b (ride swings, kick flashes)",
+      "slimed"
+    ],
+    "anims": [
+      {
+        "key": "obj_drumkit_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "obj_drumkit_hit",
+        "frames": [
+          1,
+          2
+        ],
+        "fps": 10,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "obj_drumkit_slimed",
+        "frames": [
+          3
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "obj_drywall": {
+    "type": "spritesheet",
+    "frameWidth": 32,
+    "frameHeight": 16,
+    "frames": 1,
+    "names": [
+      "idle"
+    ],
+    "anims": [
+      {
+        "key": "obj_drywall_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "obj_dumpster_tipped": {
+    "type": "spritesheet",
+    "frameWidth": 32,
+    "frameHeight": 16,
+    "frames": 1,
+    "names": [
+      "idle"
+    ],
+    "anims": [
+      {
+        "key": "obj_dumpster_tipped_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "obj_eject": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 16,
+    "frames": 2,
+    "names": [
+      "idle",
+      "pressed"
+    ],
+    "anims": [
+      {
+        "key": "obj_eject_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "obj_eject_pressed",
+        "frames": [
+          1
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "obj_flyer": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 16,
+    "frames": 1,
+    "names": [
+      "crumpled"
+    ],
+    "anims": [
+      {
+        "key": "obj_flyer_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "obj_intercom": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 16,
+    "frames": 4,
+    "names": [
+      "idle",
+      "talk a",
+      "talk b",
+      "squelched"
+    ],
+    "anims": [
+      {
+        "key": "obj_intercom_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "obj_intercom_talk",
+        "frames": [
+          1,
+          2
+        ],
+        "fps": 6,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "obj_intercom_squelched",
+        "frames": [
+          3
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "obj_itinerary": {
+    "type": "spritesheet",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 1,
+    "names": [
+      "idle"
+    ],
+    "anims": [
+      {
+        "key": "obj_itinerary_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "obj_mic_stand": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 1,
+    "names": [
+      "idle"
+    ],
+    "anims": [
+      {
+        "key": "obj_mic_stand_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "obj_milk_crate": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 16,
+    "frames": 1,
+    "names": [
+      "idle"
+    ],
+    "anims": [
+      {
+        "key": "obj_milk_crate_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "obj_mohawk": {
+    "type": "spritesheet",
+    "frameWidth": 8,
+    "frameHeight": 8,
+    "frames": 1,
+    "names": [
+      "idle"
+    ],
+    "anims": [
+      {
+        "key": "obj_mohawk_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "obj_pedalboard": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 16,
+    "frames": 4,
+    "names": [
+      "pristine",
+      "wet",
+      "fried a",
+      "fried b"
+    ],
+    "anims": [
+      {
+        "key": "obj_pedalboard_pristine",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "obj_pedalboard_wet",
+        "frames": [
+          1
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "obj_pedalboard_fried",
+        "frames": [
+          2,
+          3
+        ],
+        "fps": 6,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "obj_pod": {
+    "type": "spritesheet",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 1,
+    "names": [
+      "open"
+    ],
+    "anims": [
+      {
+        "key": "obj_pod_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "obj_shockwave": {
+    "type": "spritesheet",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 3,
+    "names": [
+      "ring 0",
+      "ring 1",
+      "ring 2"
+    ],
+    "anims": [
+      {
+        "key": "obj_shockwave_burst",
+        "frames": [
+          0,
+          1,
+          2
+        ],
+        "fps": 12,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "obj_slime_splat": {
+    "type": "spritesheet",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 2,
+    "names": [
+      "splat 0",
+      "splat 1"
+    ],
+    "anims": [
+      {
+        "key": "obj_slime_splat_splat",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 8,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "obj_soundwave": {
+    "type": "spritesheet",
+    "frameWidth": 64,
+    "frameHeight": 16,
+    "frames": 4,
+    "names": [
+      "roll 0",
+      "roll 1",
+      "roll 2",
+      "roll 3"
+    ],
+    "anims": [
+      {
+        "key": "obj_soundwave_roll",
+        "frames": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "fps": 12,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "obj_tape": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 8,
+    "frames": 2,
+    "names": [
+      "strip a",
+      "strip b"
+    ],
+    "anims": [
+      {
+        "key": "obj_tape_a",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "obj_tape_b",
+        "frames": [
+          1
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "obj_van_keys": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 16,
+    "frames": 1,
+    "names": [
+      "idle"
+    ],
+    "anims": [
+      {
+        "key": "obj_van_keys_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
   "palmers": {
     "type": "tileset",
     "tileWidth": 16,
@@ -2592,6 +4801,236 @@
         "solid": false
       }
     }
+  },
+  "pawn_guy": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 11,
+    "names": [
+      "down stand",
+      "down step a (right foot lifted)",
+      "down step b (left foot lifted)",
+      "up stand",
+      "up step a (right foot lifted)",
+      "up step b (left foot lifted)",
+      "left stand",
+      "left step a (near leg forward)",
+      "left step b (far leg forward)",
+      "idle a",
+      "idle b (blink)"
+    ],
+    "anims": [
+      {
+        "key": "pawn_guy_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "pawn_guy_walk_up",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "pawn_guy_walk_left",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "pawn_guy_walk_right",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "pawn_guy_idle_down",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "pawn_guy_idle_up",
+        "frames": [
+          3
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "pawn_guy_idle_left",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "pawn_guy_idle_right",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "pawn_guy_idle",
+        "frames": [
+          9,
+          10
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "pawnbroker": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 11,
+    "names": [
+      "down stand",
+      "down step a (right foot lifted)",
+      "down step b (left foot lifted)",
+      "up stand",
+      "up step a (right foot lifted)",
+      "up step b (left foot lifted)",
+      "left stand",
+      "left step a (near leg forward)",
+      "left step b (far leg forward)",
+      "idle a",
+      "idle b (blink)"
+    ],
+    "anims": [
+      {
+        "key": "pawnbroker_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "pawnbroker_walk_up",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "pawnbroker_walk_left",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "pawnbroker_walk_right",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "pawnbroker_idle_down",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "pawnbroker_idle_up",
+        "frames": [
+          3
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "pawnbroker_idle_left",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "pawnbroker_idle_right",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "pawnbroker_idle",
+        "frames": [
+          9,
+          10
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
   },
   "phoenix": {
     "type": "spritesheet",
@@ -3135,6 +5574,786 @@
           0
         ],
         "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "punk_a": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 14,
+    "names": [
+      "down stand",
+      "down step a (right foot lifted)",
+      "down step b (left foot lifted)",
+      "up stand",
+      "up step a (right foot lifted)",
+      "up step b (left foot lifted)",
+      "left stand",
+      "left step a (near leg forward)",
+      "left step b (far leg forward)",
+      "headbang a (down)",
+      "headbang b (up)",
+      "run a",
+      "run b",
+      "run c"
+    ],
+    "anims": [
+      {
+        "key": "punk_a_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_a_walk_up",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_a_walk_left",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_a_walk_right",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "punk_a_idle_down",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_a_idle_up",
+        "frames": [
+          3
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_a_idle_left",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_a_idle_right",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "punk_a_headbang",
+        "frames": [
+          9,
+          10
+        ],
+        "fps": 6,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_a_run",
+        "frames": [
+          11,
+          12,
+          13,
+          12
+        ],
+        "fps": 10,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "punk_a_plaster": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 14,
+    "names": [
+      "down stand",
+      "down step a (right foot lifted)",
+      "down step b (left foot lifted)",
+      "up stand",
+      "up step a (right foot lifted)",
+      "up step b (left foot lifted)",
+      "left stand",
+      "left step a (near leg forward)",
+      "left step b (far leg forward)",
+      "headbang a (down)",
+      "headbang b (up)",
+      "run a",
+      "run b",
+      "run c"
+    ],
+    "anims": [
+      {
+        "key": "punk_a_plaster_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_a_plaster_walk_up",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_a_plaster_walk_left",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_a_plaster_walk_right",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "punk_a_plaster_idle_down",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_a_plaster_idle_up",
+        "frames": [
+          3
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_a_plaster_idle_left",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_a_plaster_idle_right",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "punk_a_plaster_headbang",
+        "frames": [
+          9,
+          10
+        ],
+        "fps": 6,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_a_plaster_run",
+        "frames": [
+          11,
+          12,
+          13,
+          12
+        ],
+        "fps": 10,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "punk_b": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 14,
+    "names": [
+      "down stand",
+      "down step a (right foot lifted)",
+      "down step b (left foot lifted)",
+      "up stand",
+      "up step a (right foot lifted)",
+      "up step b (left foot lifted)",
+      "left stand",
+      "left step a (near leg forward)",
+      "left step b (far leg forward)",
+      "headbang a (down)",
+      "headbang b (up)",
+      "run a",
+      "run b",
+      "run c"
+    ],
+    "anims": [
+      {
+        "key": "punk_b_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_b_walk_up",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_b_walk_left",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_b_walk_right",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "punk_b_idle_down",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_b_idle_up",
+        "frames": [
+          3
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_b_idle_left",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_b_idle_right",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "punk_b_headbang",
+        "frames": [
+          9,
+          10
+        ],
+        "fps": 6,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_b_run",
+        "frames": [
+          11,
+          12,
+          13,
+          12
+        ],
+        "fps": 10,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "punk_b_plaster": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 14,
+    "names": [
+      "down stand",
+      "down step a (right foot lifted)",
+      "down step b (left foot lifted)",
+      "up stand",
+      "up step a (right foot lifted)",
+      "up step b (left foot lifted)",
+      "left stand",
+      "left step a (near leg forward)",
+      "left step b (far leg forward)",
+      "headbang a (down)",
+      "headbang b (up)",
+      "run a",
+      "run b",
+      "run c"
+    ],
+    "anims": [
+      {
+        "key": "punk_b_plaster_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_b_plaster_walk_up",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_b_plaster_walk_left",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_b_plaster_walk_right",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "punk_b_plaster_idle_down",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_b_plaster_idle_up",
+        "frames": [
+          3
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_b_plaster_idle_left",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_b_plaster_idle_right",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "punk_b_plaster_headbang",
+        "frames": [
+          9,
+          10
+        ],
+        "fps": 6,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_b_plaster_run",
+        "frames": [
+          11,
+          12,
+          13,
+          12
+        ],
+        "fps": 10,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "punk_c": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 14,
+    "names": [
+      "down stand",
+      "down step a (right foot lifted)",
+      "down step b (left foot lifted)",
+      "up stand",
+      "up step a (right foot lifted)",
+      "up step b (left foot lifted)",
+      "left stand",
+      "left step a (near leg forward)",
+      "left step b (far leg forward)",
+      "headbang a (down)",
+      "headbang b (up)",
+      "run a",
+      "run b",
+      "run c"
+    ],
+    "anims": [
+      {
+        "key": "punk_c_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_c_walk_up",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_c_walk_left",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_c_walk_right",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "punk_c_idle_down",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_c_idle_up",
+        "frames": [
+          3
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_c_idle_left",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_c_idle_right",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "punk_c_headbang",
+        "frames": [
+          9,
+          10
+        ],
+        "fps": 6,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_c_run",
+        "frames": [
+          11,
+          12,
+          13,
+          12
+        ],
+        "fps": 10,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "punk_c_plaster": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 14,
+    "names": [
+      "down stand",
+      "down step a (right foot lifted)",
+      "down step b (left foot lifted)",
+      "up stand",
+      "up step a (right foot lifted)",
+      "up step b (left foot lifted)",
+      "left stand",
+      "left step a (near leg forward)",
+      "left step b (far leg forward)",
+      "headbang a (down)",
+      "headbang b (up)",
+      "run a",
+      "run b",
+      "run c"
+    ],
+    "anims": [
+      {
+        "key": "punk_c_plaster_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_c_plaster_walk_up",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_c_plaster_walk_left",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_c_plaster_walk_right",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "punk_c_plaster_idle_down",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_c_plaster_idle_up",
+        "frames": [
+          3
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_c_plaster_idle_left",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_c_plaster_idle_right",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "punk_c_plaster_headbang",
+        "frames": [
+          9,
+          10
+        ],
+        "fps": 6,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "punk_c_plaster_run",
+        "frames": [
+          11,
+          12,
+          13,
+          12
+        ],
+        "fps": 10,
         "repeat": -1,
         "flipX": false
       }
@@ -3986,6 +7205,995 @@
       }
     ]
   },
+  "ryan_slimed_map": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 19,
+    "names": [
+      "down stand",
+      "down step a (right foot lifted)",
+      "down step b (left foot lifted)",
+      "up stand",
+      "up step a (right foot lifted)",
+      "up step b (left foot lifted)",
+      "left stand",
+      "left step a (near leg forward)",
+      "left step b (far leg forward)",
+      "carry_hardware a",
+      "carry_hardware b",
+      "carry_hardware c",
+      "sit",
+      "drum a (left stick up)",
+      "drum b",
+      "drum c (right stick up)",
+      "drum d",
+      "nod a",
+      "nod b (head down, eyes shut)"
+    ],
+    "anims": [
+      {
+        "key": "ryan_slimed_map_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_slimed_map_walk_up",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_slimed_map_walk_left",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_slimed_map_walk_right",
+        "frames": [
+          6,
+          7,
+          6,
+          8
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "ryan_slimed_map_idle_down",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_slimed_map_idle_up",
+        "frames": [
+          3
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_slimed_map_idle_left",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_slimed_map_idle_right",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "ryan_slimed_map_carry_hardware",
+        "frames": [
+          9,
+          10,
+          9,
+          11
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_slimed_map_sit",
+        "frames": [
+          12
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_slimed_map_drum",
+        "frames": [
+          13,
+          14,
+          15,
+          16
+        ],
+        "fps": 10,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "ryan_slimed_map_nod",
+        "frames": [
+          17,
+          18
+        ],
+        "fps": 4,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "scooter": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 16,
+    "frames": 6,
+    "names": [
+      "front a",
+      "front b",
+      "front c",
+      "side a",
+      "side b",
+      "side c"
+    ],
+    "anims": [
+      {
+        "key": "scooter_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "scooter_walk_up",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "scooter_walk_left",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "scooter_walk_right",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "scooter_idle_down",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "scooter_idle_up",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "scooter_idle_left",
+        "frames": [
+          3,
+          4
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "scooter_idle_right",
+        "frames": [
+          3,
+          4
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "scooter_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "scooter_b": {
+    "type": "spritesheet",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 6,
+    "names": [
+      "idle a",
+      "idle b (wheel)",
+      "attack a (zip)",
+      "attack b (zip, snow spray)",
+      "hurt",
+      "ko (on its side)"
+    ],
+    "anims": [
+      {
+        "key": "scooter_b_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "scooter_b_attack",
+        "frames": [
+          2,
+          3
+        ],
+        "fps": 8,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "scooter_b_hurt",
+        "frames": [
+          4
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "scooter_b_ko",
+        "frames": [
+          5
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "scooter_map": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 16,
+    "frames": 6,
+    "names": [
+      "front a",
+      "front b",
+      "front c",
+      "side a",
+      "side b",
+      "side c"
+    ],
+    "anims": [
+      {
+        "key": "scooter_map_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "scooter_map_walk_up",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "scooter_map_walk_left",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "scooter_map_walk_right",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "scooter_map_idle_down",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "scooter_map_idle_up",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "scooter_map_idle_left",
+        "frames": [
+          3,
+          4
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "scooter_map_idle_right",
+        "frames": [
+          3,
+          4
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "scooter_map_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "slush_b": {
+    "type": "spritesheet",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 6,
+    "names": [
+      "idle a",
+      "idle b (settle)",
+      "attack a (rear up)",
+      "attack b (splash / freeze)",
+      "hurt",
+      "ko (melted flat)"
+    ],
+    "anims": [
+      {
+        "key": "slush_b_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "slush_b_attack",
+        "frames": [
+          2,
+          3
+        ],
+        "fps": 8,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "slush_b_hurt",
+        "frames": [
+          4
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "slush_b_ko",
+        "frames": [
+          5
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "slush_map": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 16,
+    "frames": 6,
+    "names": [
+      "slosh a",
+      "slosh b",
+      "slosh c",
+      "slosh a",
+      "slosh b",
+      "slosh c"
+    ],
+    "anims": [
+      {
+        "key": "slush_map_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "slush_map_walk_up",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "slush_map_walk_left",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "slush_map_walk_right",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "slush_map_idle_down",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "slush_map_idle_up",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "slush_map_idle_left",
+        "frames": [
+          3,
+          4
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "slush_map_idle_right",
+        "frames": [
+          3,
+          4
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "slush_map_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "slush_pile": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 16,
+    "frames": 6,
+    "names": [
+      "slosh a",
+      "slosh b",
+      "slosh c",
+      "slosh a",
+      "slosh b",
+      "slosh c"
+    ],
+    "anims": [
+      {
+        "key": "slush_pile_walk_down",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "slush_pile_walk_up",
+        "frames": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "slush_pile_walk_left",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "slush_pile_walk_right",
+        "frames": [
+          3,
+          4,
+          3,
+          5
+        ],
+        "fps": 8,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "slush_pile_idle_down",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "slush_pile_idle_up",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "slush_pile_idle_left",
+        "frames": [
+          3,
+          4
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "slush_pile_idle_right",
+        "frames": [
+          3,
+          4
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "slush_pile_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "slush_pile_b": {
+    "type": "spritesheet",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 6,
+    "names": [
+      "idle a",
+      "idle b (settle)",
+      "attack a (rear up)",
+      "attack b (splash / freeze)",
+      "hurt",
+      "ko (melted flat)"
+    ],
+    "anims": [
+      {
+        "key": "slush_pile_b_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "slush_pile_b_attack",
+        "frames": [
+          2,
+          3
+        ],
+        "fps": 8,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "slush_pile_b_hurt",
+        "frames": [
+          4
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "slush_pile_b_ko",
+        "frames": [
+          5
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "stranger_tall": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 32,
+    "frames": 3,
+    "names": [
+      "idle a",
+      "idle b (blink)",
+      "bob"
+    ],
+    "anims": [
+      {
+        "key": "stranger_tall_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "stranger_tall_idle_down",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "stranger_tall_idle_up",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "stranger_tall_idle_left",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "stranger_tall_idle_right",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": true
+      },
+      {
+        "key": "stranger_tall_walk_down",
+        "frames": [
+          0,
+          2,
+          0,
+          2
+        ],
+        "fps": 6,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "stranger_tall_walk_up",
+        "frames": [
+          0,
+          2,
+          0,
+          2
+        ],
+        "fps": 6,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "stranger_tall_walk_left",
+        "frames": [
+          0,
+          2,
+          0,
+          2
+        ],
+        "fps": 6,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "stranger_tall_walk_right",
+        "frames": [
+          0,
+          2,
+          0,
+          2
+        ],
+        "fps": 6,
+        "repeat": -1,
+        "flipX": true
+      }
+    ]
+  },
+  "thud_thud_b": {
+    "type": "spritesheet",
+    "frameWidth": 48,
+    "frameHeight": 48,
+    "frames": 6,
+    "names": [
+      "idle a",
+      "idle b",
+      "attack a (stomp up)",
+      "attack b (downbeat)",
+      "hurt",
+      "ko (silence)"
+    ],
+    "anims": [
+      {
+        "key": "thud_thud_b_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 4,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "thud_thud_b_attack",
+        "frames": [
+          2,
+          3
+        ],
+        "fps": 8,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "thud_thud_b_hurt",
+        "frames": [
+          4
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "thud_thud_b_ko",
+        "frames": [
+          5
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "thudthud_b": {
+    "type": "spritesheet",
+    "frameWidth": 48,
+    "frameHeight": 48,
+    "frames": 6,
+    "names": [
+      "idle a",
+      "idle b",
+      "attack a (stomp up)",
+      "attack b (downbeat)",
+      "hurt",
+      "ko (silence)"
+    ],
+    "anims": [
+      {
+        "key": "thudthud_b_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 4,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "thudthud_b_attack",
+        "frames": [
+          2,
+          3
+        ],
+        "fps": 8,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "thudthud_b_hurt",
+        "frames": [
+          4
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "thudthud_b_ko",
+        "frames": [
+          5
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
   "ui": {
     "type": "atlas",
     "frames": {
@@ -4087,6 +8295,79 @@
       }
     }
   },
+  "undercover_cop_b": {
+    "type": "spritesheet",
+    "frameWidth": 48,
+    "frameHeight": 48,
+    "frames": 7,
+    "names": [
+      "idle a",
+      "idle b (collar tap)",
+      "attack a (baton up)",
+      "attack b (baton swing)",
+      "hurt",
+      "mohawk_off (bald, glue line)",
+      "flee (running, mohawk in hand)"
+    ],
+    "anims": [
+      {
+        "key": "undercover_cop_b_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 3,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "undercover_cop_b_attack",
+        "frames": [
+          2,
+          3
+        ],
+        "fps": 8,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "undercover_cop_b_hurt",
+        "frames": [
+          4
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "undercover_cop_b_mohawk_off",
+        "frames": [
+          5
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "undercover_cop_b_flee",
+        "frames": [
+          6
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "undercover_cop_b_ko",
+        "frames": [
+          5
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
   "vanguard": {
     "type": "tileset",
     "tileWidth": 16,
@@ -4173,5 +8454,431 @@
         "solid": true
       }
     }
+  },
+  "whrnnng_b": {
+    "type": "spritesheet",
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 6,
+    "names": [
+      "idle a",
+      "idle b (vibrate)",
+      "attack a (sustain)",
+      "attack b",
+      "hurt",
+      "ko (silence)"
+    ],
+    "anims": [
+      {
+        "key": "whrnnng_b_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 6,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "whrnnng_b_attack",
+        "frames": [
+          2,
+          3
+        ],
+        "fps": 8,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "whrnnng_b_hurt",
+        "frames": [
+          4
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "whrnnng_b_ko",
+        "frames": [
+          5
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "word_bonk": {
+    "type": "spritesheet",
+    "frameWidth": 32,
+    "frameHeight": 16,
+    "frames": 2,
+    "names": [
+      "idle",
+      "swing / impact"
+    ],
+    "anims": [
+      {
+        "key": "word_bonk_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "word_bonk_swing",
+        "frames": [
+          1,
+          0
+        ],
+        "fps": 8,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "word_crack": {
+    "type": "spritesheet",
+    "frameWidth": 48,
+    "frameHeight": 16,
+    "frames": 2,
+    "names": [
+      "idle",
+      "swing / impact"
+    ],
+    "anims": [
+      {
+        "key": "word_crack_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "word_crack_swing",
+        "frames": [
+          1,
+          0
+        ],
+        "fps": 8,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "word_crash": {
+    "type": "spritesheet",
+    "frameWidth": 64,
+    "frameHeight": 24,
+    "frames": 2,
+    "names": [
+      "idle",
+      "swing / impact"
+    ],
+    "anims": [
+      {
+        "key": "word_crash_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "word_crash_swing",
+        "frames": [
+          1,
+          0
+        ],
+        "fps": 8,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "word_doom": {
+    "type": "spritesheet",
+    "frameWidth": 48,
+    "frameHeight": 16,
+    "frames": 2,
+    "names": [
+      "idle",
+      "swing / impact"
+    ],
+    "anims": [
+      {
+        "key": "word_doom_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "word_doom_swing",
+        "frames": [
+          1,
+          0
+        ],
+        "fps": 8,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "word_g": {
+    "type": "spritesheet",
+    "frameWidth": 24,
+    "frameHeight": 24,
+    "frames": 2,
+    "names": [
+      "idle",
+      "swing / impact"
+    ],
+    "anims": [
+      {
+        "key": "word_g_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "word_g_swing",
+        "frames": [
+          1,
+          0
+        ],
+        "fps": 8,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "word_kraaang": {
+    "type": "spritesheet",
+    "frameWidth": 96,
+    "frameHeight": 24,
+    "frames": 2,
+    "names": [
+      "idle",
+      "swing / impact"
+    ],
+    "anims": [
+      {
+        "key": "word_kraaang_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "word_kraaang_swing",
+        "frames": [
+          1,
+          0
+        ],
+        "fps": 8,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "word_krathoom": {
+    "type": "spritesheet",
+    "frameWidth": 96,
+    "frameHeight": 24,
+    "frames": 2,
+    "names": [
+      "idle",
+      "swing / impact"
+    ],
+    "anims": [
+      {
+        "key": "word_krathoom_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "word_krathoom_swing",
+        "frames": [
+          1,
+          0
+        ],
+        "fps": 8,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "word_pop": {
+    "type": "spritesheet",
+    "frameWidth": 32,
+    "frameHeight": 16,
+    "frames": 2,
+    "names": [
+      "idle",
+      "swing / impact"
+    ],
+    "anims": [
+      {
+        "key": "word_pop_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "word_pop_swing",
+        "frames": [
+          1,
+          0
+        ],
+        "fps": 8,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "word_pow": {
+    "type": "spritesheet",
+    "frameWidth": 24,
+    "frameHeight": 16,
+    "frames": 2,
+    "names": [
+      "idle",
+      "swing / impact"
+    ],
+    "anims": [
+      {
+        "key": "word_pow_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "word_pow_swing",
+        "frames": [
+          1,
+          0
+        ],
+        "fps": 8,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "word_thud": {
+    "type": "spritesheet",
+    "frameWidth": 40,
+    "frameHeight": 16,
+    "frames": 2,
+    "names": [
+      "idle",
+      "swing / impact"
+    ],
+    "anims": [
+      {
+        "key": "word_thud_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "word_thud_swing",
+        "frames": [
+          1,
+          0
+        ],
+        "fps": 8,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "word_thwap": {
+    "type": "spritesheet",
+    "frameWidth": 32,
+    "frameHeight": 16,
+    "frames": 2,
+    "names": [
+      "idle",
+      "swing / impact"
+    ],
+    "anims": [
+      {
+        "key": "word_thwap_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "word_thwap_swing",
+        "frames": [
+          1,
+          0
+        ],
+        "fps": 8,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
+  "word_whrnnng": {
+    "type": "spritesheet",
+    "frameWidth": 64,
+    "frameHeight": 16,
+    "frames": 2,
+    "names": [
+      "idle",
+      "swing / impact"
+    ],
+    "anims": [
+      {
+        "key": "word_whrnnng_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "word_whrnnng_swing",
+        "frames": [
+          1,
+          0
+        ],
+        "fps": 8,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
   }
 }
