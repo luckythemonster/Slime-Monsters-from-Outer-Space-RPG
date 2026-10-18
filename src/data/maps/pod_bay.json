@@ -1,0 +1,74 @@
+{
+  "id": "pod_bay",
+  "name": "Vanguard drop-pod bay",
+  "tileset": "vanguard",
+  "music": "dental_plan",
+  "ambient": null,
+  "battleBackground": "vanguard_grid",
+  "onFirstEnter": "ep0_pod_intro",
+  "encounters": { "rate": 0, "pool": [] },
+  "legend": {
+    "T": "hull_wall_top", "#": "hull_wall", "P": "hull_wall_panel", "I": "intercom_mount",
+    "*": "window_stars_a", "+": "window_stars_b", "Q": "plaque", "V": "vending_corp",
+    "c": "catwalk", "r": "catwalk_rail", ".": "hull_floor", "-": "hull_floor_stripe",
+    "w": "warning_stripe", "v": "vent", "C": "conduit",
+    "[": "pod_frame_l", "]": "pod_frame_r", "G": "pod_glass", "s": "pod_seat", "E": "eject_mount"
+  },
+  "layers": {
+    "ground": [
+      "TTTTTTTTTTTTTTTT",
+      "#P##P##PP##P##P#",
+      "#PP#Q##II###*+P#",
+      "#rVcccccccccccr#",
+      "#..............#",
+      "#.-..........-.#",
+      "#......v.......#",
+      "#..............#",
+      "#.-..........-.#",
+      "#..............#",
+      "#wwwwwwwwwwwwww#",
+      "#.[G].Es].[G]..#",
+      "#.CCC.CCC.CCC..#",
+      "TTTTTTTTTTTTTTTT"
+    ],
+    "deco": [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  },
+  "spawn": { "x": 7, "y": 11, "facing": "up" },
+  "entities": [
+    { "id": "speaker", "type": "object", "sprite": "obj_intercom", "x": 7, "y": 2, "script": "ep0_speaker", "solid": true },
+    { "id": "eject", "type": "object", "sprite": "obj_eject", "x": 6, "y": 11, "script": "ep0_eject", "solid": true },
+    { "id": "guitar_case", "type": "object", "x": 8, "y": 11, "script": "ep0_pod_guitar_case", "solid": true },
+    { "id": "nameplate", "type": "object", "x": 11, "y": 11, "script": "ep0_pod_nameplate", "solid": true },
+    { "id": "pod1", "type": "object", "x": 3, "y": 11, "script": "ep0_pod_pod1", "solid": true },
+    { "id": "vending", "type": "object", "x": 2, "y": 3, "script": "ep0_pod_vending", "solid": true },
+    { "id": "plaque", "type": "object", "x": 4, "y": 2, "script": "ep0_pod_plaque", "solid": true },
+    { "id": "viewport", "type": "object", "x": 12, "y": 2, "script": "ep0_pod_viewport", "solid": true },
+    { "id": "viewport_b", "type": "object", "x": 13, "y": 2, "script": "ep0_pod_viewport", "solid": true },
+    { "id": "rail_w", "type": "object", "x": 1, "y": 3, "script": "ep0_pod_rail", "solid": true },
+    { "id": "rail_e", "type": "object", "x": 14, "y": 3, "script": "ep0_pod_rail", "solid": true },
+
+    { "id": "dad_1", "type": "trigger", "x": 3, "y": 10, "w": 10, "h": 1, "script": "ep0_dad_1", "once": true, "condition": "!flags.podSpeakerSlapped" },
+    { "id": "dad_2", "type": "trigger", "x": 3, "y": 8, "w": 10, "h": 1, "script": "ep0_dad_2", "once": true, "condition": "!flags.podSpeakerSlapped" },
+    { "id": "dad_3", "type": "trigger", "x": 3, "y": 6, "w": 10, "h": 1, "script": "ep0_dad_3", "once": true, "condition": "!flags.podSpeakerSlapped" },
+    { "id": "dad_4", "type": "trigger", "x": 3, "y": 4, "w": 10, "h": 1, "script": "ep0_dad_4", "once": true, "condition": "!flags.podSpeakerSlapped" },
+    { "id": "dad_1_mmf", "type": "trigger", "x": 3, "y": 10, "w": 10, "h": 1, "script": "ep0_dad_mmf", "once": true, "condition": "flags.podSpeakerSlapped" },
+    { "id": "dad_2_mmf", "type": "trigger", "x": 3, "y": 8, "w": 10, "h": 1, "script": "ep0_dad_mmf", "once": true, "condition": "flags.podSpeakerSlapped" },
+    { "id": "dad_3_mmf", "type": "trigger", "x": 3, "y": 6, "w": 10, "h": 1, "script": "ep0_dad_mmf", "once": true, "condition": "flags.podSpeakerSlapped" },
+    { "id": "dad_4_mmf", "type": "trigger", "x": 3, "y": 4, "w": 10, "h": 1, "script": "ep0_dad_mmf", "once": true, "condition": "flags.podSpeakerSlapped" }
+  ]
+}
