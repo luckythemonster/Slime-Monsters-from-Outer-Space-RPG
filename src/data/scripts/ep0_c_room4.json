@@ -1,0 +1,238 @@
+{
+  "ep0_room4_setup": [
+    { "music": "sticker_hallway" },
+    { "anim": { "who": "player", "key": "lucky_puddle", "wait": false } },
+    { "anim": { "who": "phoenix", "key": "phoenix_puddle", "wait": false } },
+    { "anim": { "who": "ryan", "key": "ryan_tighten", "wait": false } },
+    { "say": "He does not stare at the alien slime monsters. He does not ask questions. He tightens a cymbal stand.", "who": "narrator" },
+    { "say": "You made good time from the transmission. You cool with playing fast?", "who": "lucky" },
+    { "say": "Yep.", "who": "ryan", "portrait": "ryan_stoic" },
+    { "say": "{speed:fast}I called him.", "who": "brian" },
+    { "say": "{color:gray}psst.{/color} My brain thinks we should have asked his rate first. We have exactly four dollars and a half-ounce of weed.", "who": "phoenix" },
+    { "sfx": "count_click" },
+    { "wait": 250 },
+    { "sfx": "count_click" },
+    { "wait": 250 },
+    { "run": "ep0_audition_start" }
+  ],
+
+  "ep0_audition_start": [
+    { "face": { "who": "player", "dir": "right" } },
+    { "face": { "who": "phoenix", "dir": "right" } },
+    { "anim": { "who": "player", "key": "lucky_stomp", "wait": true } },
+    { "sfx": "pedal_stomp" },
+    { "say": "{shake}One, two, three, four!{/shake}", "who": "lucky" },
+    { "sfx": "drum_hit" },
+    { "camera": { "flash": 100, "color": "#ffffff" } },
+    { "camera": { "shake": 1500, "intensity": 0.04 } },
+    { "camera": { "tear": 6 } },
+    { "spawn": { "id": "splat", "type": "object", "sprite": "obj_slime_splat", "w": 2, "x": 10, "y": 3, "solid": false } },
+    { "anim": { "who": "splat", "key": "obj_slime_splat_splat", "wait": false } },
+    { "sprite": { "who": "ryan", "sheet": "ryan_slimed_map" } },
+    { "music": "four_dollars" },
+    { "battle": "ep0_audition", "onLose": "gameover", "onWin": [
+      { "run": "ep0_contract" }
+    ] }
+  ],
+
+  "ep0_contract": [
+    { "music": null },
+    { "sfx": "cymbal" },
+    { "say": "Slime drips off the ceiling. And the cymbals. And Ryan.", "who": "narrator" },
+    { "say": "Holy shit. You're a machine.", "who": "lucky" },
+    { "say": "[I am literally a hostage.]", "who": "ryan_caption" },
+    { "say": "So, do I get the gig?", "who": "ryan", "portrait": "ryan_stoic" },
+    { "if": "!vars.saveCount", "then": [ { "set": { "vars.saveCount": 0 } } ] },
+    { "set": { "vars.contractPages": "3 + vars.saveCount" } },
+    { "spawn": { "id": "bajonka", "sprite": "bajonka", "x": 12, "y": 3, "facing": "down" } },
+    { "move": { "who": "bajonka", "path": "DDL", "wait": true } },
+    { "anim": { "who": "bajonka", "key": "bajonka_trot_drop", "wait": true } },
+    { "spawn": { "id": "contract", "type": "object", "sprite": "obj_contract", "x": 11, "y": 5, "solid": false } },
+    { "sfx": "thud" },
+    { "move": { "who": "bajonka", "path": "R", "wait": true } },
+    { "face": { "who": "bajonka", "dir": "down" } },
+    { "say": "Bajonka drops a {var:contractPages}-page, legally binding band agreement onto the snare, turns around, and sits down.", "who": "narrator" },
+    { "party": { "add": "ryan", "toast": "Ryan joined the band. He is not available." } },
+    { "give": { "item": "band_agreement", "qty": 1 } },
+    { "set": { "flags.auditionDone": true, "flags.ryanJoined": true } },
+    { "save": { "prompt": "INITIAL HERE TO ACKNOWLEDGE RHYTHM SECTION" } },
+    { "caption": "ONE MONTH LATER", "ms": 1800, "style": "tape" },
+    { "set": { "flags.monthLater": true } },
+    { "teleport": { "map": "room4", "x": 5, "y": 8, "facing": "right" } }
+  ],
+
+  "ep0_month_later": [
+    { "set": { "flags.monthLaterRan": true } },
+    { "music": "normal_music" },
+    { "setEntity": { "id": "brian", "x": 6, "y": 7, "facing": "down" } },
+    { "anim": { "who": "brian", "key": "brian_strum", "wait": false } },
+    { "setEntity": { "id": "ryan", "x": 11, "y": 2, "facing": "down" } },
+    { "anim": { "who": "ryan", "key": "ryan_drum", "wait": false } },
+    { "setEntity": { "id": "phoenix", "x": 4, "y": 7, "facing": "right" } },
+    { "face": { "who": "player", "dir": "right" } },
+    { "anim": { "who": "brian", "key": "brian_point", "wait": false } },
+    { "say": "Do we really need all the political stickers? We're going to alienate the market.", "who": "brian" },
+    { "face": { "who": "brian", "dir": "left" } },
+    { "say": "Hey, man, can you turn the bass down?", "who": "brian" },
+    { "say": "I'm not a 'man,' Brian. And no.", "who": "phoenix", "portrait": "phoenix_droop" },
+    { "say": "[I give this guy three weeks. Tops.]", "who": "ryan_caption" },
+    { "say": "Hit the chorus. Get the band to Toon 2.", "who": "narrator" },
+    { "battle": "ep0_rehearsal",
+      "onWin": [ { "run": "ep0_ultimatum" } ],
+      "onLose": [ { "run": "ep0_ultimatum" } ] }
+  ],
+
+  "ep0_ultimatum": [
+    { "spawn": { "id": "kraaang_cs", "type": "object", "sprite": "word_kraaang", "w": 6, "x": 4, "y": 1, "solid": false } },
+    { "sfx": "kraaang" },
+    { "camera": { "shake": 300, "intensity": 0.02 } },
+    { "spawn": { "id": "g", "type": "object", "sprite": "word_g", "x": 8, "y": 4, "solid": false } },
+    { "anim": { "who": "g", "key": "word_g_swing", "wait": false } },
+    { "move": { "who": "g", "path": "DDD", "wait": true, "speed": "run" } },
+    { "sfx": "coffee_spill" },
+    { "anim": { "who": "coffee_cup", "key": "obj_coffee_cup_spilled", "wait": false } },
+    { "despawn": "g" },
+    { "anim": { "who": "pedalboard", "key": "obj_pedalboard_fried", "wait": false } },
+    { "sfx": "sparks" },
+    { "camera": { "flash": 60, "color": "#ffffff" } },
+    { "sfx": "sparks" },
+    { "wait": 120 },
+    { "camera": { "flash": 60, "color": "#ffffff" } },
+    { "sfx": "sparks" },
+    { "music": null },
+    { "set": { "flags.pedalboardFried": true } },
+    { "say": "I can't work like this! {shake}I hate this weird, creative shit! Can't we just play normal music?!{/shake}", "who": "brian", "portrait": "brian_red" },
+    { "caption": "ONE MONTH BEFORE THE POTATO BELT TOUR", "ms": 1800, "style": "tape" },
+    { "say": "My brain thinks that caption knows something we don't.", "who": "phoenix" },
+    { "anim": { "who": "brian", "key": "brian_pace", "wait": false } },
+    { "move": { "who": "brian", "path": "RRLLRRLL", "wait": true } },
+    { "say": "{shake}I'm not here to have fun.{/shake}", "who": "brian" },
+    { "say": "{shake}I'm not into this creative shit. You people are wasting my time.{/shake}", "who": "brian" },
+    { "sfx": "unplug" },
+    { "anim": { "who": "player", "key": "lucky_bristle", "wait": false } },
+    { "say": "Lucky unplugs. The slime on their shoulders stands up like a cat's.", "who": "narrator" },
+    { "anim": { "who": "phoenix", "key": "phoenix_bass_mute", "wait": true } },
+    { "move": { "who": "phoenix", "path": "L", "wait": true } },
+    { "move": { "who": "player", "path": "U", "wait": true } },
+    { "face": { "who": "player", "toward": "brian" } },
+    { "face": { "who": "brian", "toward": "player" } },
+    { "say": "Listen to me very carefully, Brian.", "who": "lucky", "portrait": "lucky_calm_scary" },
+    { "say": "You need to stop being an asshole, or you are fired.", "who": "lucky", "portrait": "lucky_calm_scary" },
+    { "say": "We clearly have some fundamental differences in how we think a band should work, but that's something we can discuss. What I can't do is work with an asshole, so whatever's going on at home or wherever, don't bring it to rehearsal.", "who": "lucky" },
+    { "camera": { "flash": 80, "color": "#ffffff" } },
+    { "spawn": { "id": "xray", "type": "object", "sprite": "obj_brain_xray", "w": 2, "x": 6, "y": 4, "solid": false } },
+    { "sfx": "gears" },
+    { "anim": { "who": "xray", "key": "obj_brain_xray_all", "wait": true } },
+    { "wait": 500 },
+    { "despawn": "xray" },
+    { "sprite": { "who": "brian", "sheet": "brian_red" } },
+    { "say": "{shake}Did you just say my foundation is broken?! Are you calling my house crooked?!{/shake}", "who": "brian", "portrait": "brian_stroke" },
+    { "if": "flags.auditionDone", "then": [
+      { "anim": { "who": "drip", "key": "obj_drip_freeze", "wait": true } }
+    ] },
+    { "wait": 1200 },
+    { "say": "My brain thinks you might be having a stroke.", "who": "phoenix", "portrait": "phoenix_baffled" },
+    { "say": "I literally didn't say anything about a house…", "who": "lucky" },
+    { "say": "I know what you meant! My property values are fine! You're just jealous of my equity!", "who": "brian", "portrait": "brian_red" },
+    { "anim": { "who": "brian", "key": "brian_red_stuff_cables", "wait": true } },
+    { "move": { "who": "brian", "path": "DDLLLD", "wait": true, "speed": "run" } },
+    { "sfx": "door_slam" },
+    { "camera": { "shake": 300, "intensity": 0.02 } },
+    { "camera": { "tear": 2 } },
+    { "despawn": "brian" },
+    { "party": { "remove": "brian" } },
+    { "give": { "item": "fried_pedalboard", "qty": 1, "toast": "Got Fried Pedalboard. It is all he left." } },
+    { "wait": 1500 },
+    { "say": "[Well. His timing was terrible anyway.]", "who": "ryan_caption" },
+    { "sfx": "door" },
+    { "spawn": { "id": "bajonka", "sprite": "bajonka", "x": 3, "y": 11, "facing": "up" } },
+    { "move": { "who": "bajonka", "path": "UUURRRRU", "wait": true } },
+    { "anim": { "who": "bajonka", "key": "bajonka_trot_drop", "wait": true } },
+    { "spawn": { "id": "gig_flyer", "type": "object", "sprite": "obj_flyer", "x": 7, "y": 7, "solid": true, "script": "ep0_gig_flyer" } },
+    { "sfx": "sneeze" },
+    { "anim": { "who": "bajonka", "key": "bajonka_sneeze", "wait": true } },
+    { "move": { "who": "bajonka", "path": "DLLLLDDD", "wait": true } },
+    { "despawn": "bajonka" },
+    { "despawn": "kraaang_cs" },
+    { "set": { "flags.brianQuit": true } },
+    { "say": "My brain thinks she's making a point.", "who": "phoenix" }
+  ],
+
+  "ep0_gig_flyer": [
+    { "insert": { "sprite": "obj_flyer", "text": "GIG TONIGHT: PALMER'S BAR — NO GUITAR SOLO NECESSARY." } },
+    { "say": "Palmer's. Isn't that—", "who": "lucky" },
+    { "say": "Where I work. Yes. My brain thinks this is fine.", "who": "phoenix" },
+    { "despawn": "gig_flyer" },
+    { "give": { "item": "palmers_flyer", "qty": 1 } },
+    { "set": { "flags.hasPalmersFlyer": true, "flags.gigFlyer": true } }
+  ],
+
+  "ep0_room4_ryan_npc": [
+    { "say": "He is tightening a cymbal stand. It was tight. It is tighter now.", "who": "narrator" },
+    { "say": "[Yep.]", "who": "ryan_caption" }
+  ],
+  "ep0_room4_kit": [
+    { "say": "The size of a sedan. The ride cymbal is tinny. Don't tell him.", "who": "narrator" },
+    { "if": "flags.ryanQuit", "then": [
+      { "say": "It is still here. He is not.", "who": "narrator" }
+    ] }
+  ],
+  "ep0_room4_cymbal": [
+    { "say": "The ride cymbal. It says TINNY on it in Sharpie. He wrote that. Nobody knows when.", "who": "narrator" }
+  ],
+  "ep0_room4_amp_lucky": [
+    { "say": "Forty-one stickers. Nine are political. Brian counted.", "who": "narrator" },
+    { "if": "flags.brianQuit", "then": [
+      { "say": "Forty-two now. The new one says BRIAN WAS WRONG.", "who": "narrator" }
+    ] }
+  ],
+  "ep0_room4_amp_phoenix": [
+    { "say": "Phoenix's amp. No stickers. One sticker. It says STICKER.", "who": "narrator" },
+    { "say": "My brain thinks it's ironic. My brain is not sure.", "who": "phoenix" }
+  ],
+  "ep0_room4_mic": [
+    { "say": "A mic stand. The mic is held on with a hair tie. The hair tie is load-bearing.", "who": "narrator" }
+  ],
+  "ep0_room4_couch": [
+    { "say": "The Puddle Couch. Nobody remembers whose puddle.", "who": "narrator" },
+    { "say": "My brain thinks it was mine. My brain is not proud.", "who": "phoenix" }
+  ],
+  "ep0_room4_fridge": [
+    { "say": "Nobody has ever opened it.", "who": "narrator" },
+    { "say": "My brain thinks that's for the best.", "who": "phoenix" }
+  ],
+  "ep0_room4_tallies": [
+    { "say": "RAT FIGHT WAS HERE. (They toured?)", "who": "narrator" },
+    { "say": "THE DENIM BOYS: ROOM 4 FOREVER. (Crossed out: NOW ROOM 2.)", "who": "narrator" }
+  ],
+  "ep0_room4_poster": [
+    { "say": "RAT FIGHT — FAREWELL SHOW. Their fourth farewell show. The poster is from last month.", "who": "narrator" }
+  ],
+  "ep0_room4_poster_2": [
+    { "say": "A sign: NO FOOD. NO DRINKS. NO SOLOS. Two of these are enforced.", "who": "narrator" }
+  ],
+  "ep0_room4_coffee": [
+    { "say": "Boutique. Nine dollars. It has a name. The name is Brian.", "who": "narrator" },
+    { "if": "flags.pedalboardFried", "then": [
+      { "say": "It is on its side now. It is still named Brian.", "who": "narrator" }
+    ] }
+  ],
+  "ep0_room4_pedalboard": [
+    { "if": "flags.pedalboardFried", "then": [
+      { "say": "It smells like a fuse and oat milk.", "who": "narrator" }
+    ], "else": [
+      { "say": "$2,000 of pristine, never-stepped-on tone.", "who": "narrator" }
+    ] }
+  ],
+  "ep0_room4_drip": [
+    { "if": "flags.brianQuit", "then": [
+      { "say": "The drip. It started again after the door slammed. It was waiting.", "who": "narrator" }
+    ], "else": [
+      { "say": "Slime drips from the ceiling. It has been a month. It is still dripping.", "who": "narrator" },
+      { "say": "My brain thinks it's load-bearing now.", "who": "phoenix" }
+    ] }
+  ],
+  "ep0_room4_kraaang": [
+    { "say": "KRAAANG. It hangs on the back wall now. Nobody put it there. Nobody can take it down.", "who": "narrator" }
+  ]
+}
