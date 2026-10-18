@@ -1,0 +1,98 @@
+{
+  "ep0_signal": [
+    { "spawn": { "id": "phoenix", "sprite": "phoenix", "x": 6, "y": 9, "facing": "left" } },
+    { "move": { "who": "phoenix", "path": "LL", "wait": true } },
+    { "face": { "who": "phoenix", "toward": "player" } },
+    { "say": "We need a drummer. I could put a flyer up at the coffee shop…", "who": "phoenix" },
+    { "say": "Too slow. I'm going to ask the universe.", "who": "lucky" },
+    { "face": { "who": "player", "dir": "down" } },
+    { "sfx": "feedback" },
+    { "anim": { "who": "player", "key": "lucky_channel", "wait": true } },
+    { "sprite": { "who": "player", "sheet": "lucky_glow" } },
+    { "anim": { "who": "player", "key": "lucky_glow_channel", "wait": false } },
+    { "anim": { "who": "amp", "key": "obj_amp_bass_glow", "wait": false } },
+    { "spawn": { "id": "wave", "sprite": "obj_soundwave", "x": 4, "y": 8, "facing": "right", "solid": false, "ghost": true } },
+    { "anim": { "who": "wave", "key": "obj_soundwave_roll", "wait": false } },
+    { "move": { "who": "wave", "path": "RRRRRRRR", "speed": "run", "wait": false } },
+    { "camera": { "flash": 80 } },
+    { "camera": { "shake": 500, "intensity": 0.02 } },
+    { "camera": { "flash": 80 } },
+    { "camera": { "shake": 500, "intensity": 0.02 } },
+    { "camera": { "flash": 80 } },
+    { "camera": { "shake": 400, "intensity": 0.02 } },
+    { "camera": { "bend": 60 } },
+    { "despawn": "wave" },
+    { "music": "ask_the_universe" },
+    { "camera": { "mosaic": 10 } },
+    { "camera": { "fade": "out", "ms": 300 } },
+    { "teleport": { "map": "rooftops", "x": 0, "y": 7, "facing": "right" } },
+    { "setEntity": { "id": "player", "visible": false } },
+    { "spawn": { "id": "wave_r", "sprite": "obj_soundwave", "x": 1, "y": 5, "facing": "right", "solid": false, "ghost": true } },
+    { "anim": { "who": "wave_r", "key": "obj_soundwave_roll", "wait": false } },
+    { "camera": { "fade": "in", "ms": 300 } },
+    { "move": { "who": "wave_r", "path": "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR", "speed": "run", "wait": false } },
+    { "camera": { "pan": { "x": 230, "y": 112, "ms": 1800 } } },
+    { "sfx": "glitch" },
+    { "anim": { "who": "billboard_prod", "key": "billboard_b_glitch", "wait": false } },
+    { "camera": { "flash": 60 } },
+    { "camera": { "pan": { "x": 512, "y": 112, "ms": 2200 } } },
+    { "camera": { "fade": "out", "ms": 600 } },
+    { "music": null },
+    { "teleport": { "map": "garage_north", "x": 8, "y": 7, "facing": "down" } },
+    { "setEntity": { "id": "player", "visible": false } },
+    { "anim": { "who": "ryan", "key": "ryan_sit", "wait": false } },
+    { "camera": { "fade": "in", "ms": 600 } },
+    { "wait": 1200 },
+    { "spawn": { "id": "wave2", "sprite": "obj_soundwave", "x": 1, "y": 8, "facing": "right", "solid": false, "ghost": true } },
+    { "anim": { "who": "wave2", "key": "obj_soundwave_roll", "wait": false } },
+    { "move": { "who": "wave2", "path": "RRRRRRRRRRRRR", "speed": "run", "wait": true } },
+    { "despawn": "wave2" },
+    { "camera": { "flash": 80 } },
+    { "anim": { "who": "ryan", "key": "ryan_sit", "wait": false } },
+    { "emote": { "who": "ryan", "type": "…", "ms": 900 } },
+    { "say": "[…]", "who": "ryan_caption" },
+    { "wait": 900 },
+    { "say": "[Huh.]", "who": "ryan_caption" },
+    { "camera": { "fade": "out", "ms": 400 } },
+    { "caption": "END PART 1", "ms": 2000 },
+    { "set": { "flags.signalSent": true } },
+    { "caption": "ONE WEEK LATER", "ms": 1800 },
+    { "teleport": { "map": "apartment", "x": 3, "y": 7, "facing": "right" } },
+    { "music": "unpaid_bills" },
+    { "set": { "flags.weekLater": true, "flags.hubOpen": true } },
+    { "camera": { "fade": "in", "ms": 600 } },
+    { "run": "ep0_week_later" }
+  ],
+
+  "ep0_week_later": [
+    { "spawn": { "id": "phoenix", "sprite": "phoenix", "x": 3, "y": 6, "facing": "down" } },
+    { "face": { "who": "player", "toward": "phoenix" } },
+    { "say": "Nobody came.", "who": "phoenix" },
+    { "say": "The universe is slow.", "who": "lucky" },
+    { "say": "The universe is a flyer at the coffee shop. I made one. Hard Luck Café. Corkboard. Go.", "who": "phoenix" },
+    { "give": { "item": "flyer_blank", "qty": 1, "toast": "Got Flyer! DRUMMER WANTED, blank until posted." } },
+    { "despawn": "phoenix" }
+  ],
+
+  "ep0_signal_roof": [
+    { "say": "A rooftop. From up here the city is mostly billboards and the billboards are mostly on.", "who": "narrator" }
+  ],
+  "ep0_signal_kit": [
+    { "say": "The size of a sedan. It has never been outside this garage. Neither has Ryan.", "who": "narrator" }
+  ],
+  "ep0_signal_ryan": [
+    { "say": "Yep.", "who": "narrator" }
+  ],
+  "ep0_signal_landline": [
+    { "say": "A landline. The cord reaches the kit. That was the whole point of the cord.", "who": "narrator" }
+  ],
+  "ep0_signal_bench": [
+    { "say": "A workbench. Every tool is where it goes. This is the most frightening thing in the chapter.", "who": "narrator" }
+  ],
+  "ep0_signal_heater": [
+    { "say": "A space heater. It does nothing. It has never done anything. It is on.", "who": "narrator" }
+  ],
+  "ep0_signal_lamp": [
+    { "say": "One bulb. Sixty watts. Enough to drum by, if you already know where the drums are.", "who": "narrator" }
+  ]
+}
