@@ -1,7 +1,6 @@
 {
   "ep0_pod_intro": [
     { "music": "dental_plan" },
-    { "camera": { "fade": "in", "ms": 600 } },
     { "sfx": "intercom_buzz" },
     { "anim": { "who": "speaker", "key": "obj_intercom_talk", "wait": false } },
     { "say": "I just don't understand the whole nonbinary thing.", "who": "dad", "portrait": "dad_grille" },
@@ -71,9 +70,9 @@
     { "camera": { "flash": 120 } },
     { "set": { "flags.ejected": true } },
     { "music": null },
+    { "camera": { "fade": "out", "ms": 300 } },
     { "scene": "freefall", "data": {} },
     { "give": { "item": "slime_sunglasses", "qty": 1, "toast": "Got Spiky Slime Sunglasses! (They formed at 5 seconds. They stayed.)" } },
-    { "camera": { "fade": "out", "ms": 300 } },
     { "teleport": { "map": "alley", "x": 9, "y": 8, "facing": "down" } }
   ],
 

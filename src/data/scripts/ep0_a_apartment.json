@@ -55,7 +55,7 @@
   ],
 
   "ep0_apt_bills": [
-    { "if": "vars.billsIndex == 0", "then": [
+    { "if": "!vars.billsIndex", "then": [
       { "say": "RENT: PAST DUE.", "who": "narrator" }
     ] },
     { "if": "vars.billsIndex == 1", "then": [

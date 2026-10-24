@@ -16,7 +16,7 @@
   "layers": {
     "ground": [
       "TTTTTTTTTTTTTTTT",
-      "#B#a##W#b#c#$%a#",
+      "#B#a#cW#b###$%a#",
       "#........KFk...#",
       "#........lll...#",
       "#..............#",
@@ -50,7 +50,8 @@
   "spawn": { "x": 12, "y": 12, "facing": "up" },
   "entities": [
     { "id": "amp", "type": "object", "sprite": "obj_amp_bass", "x": 3, "y": 9, "script": "ep0_apt_amp", "solid": true },
-    { "id": "bass_stand", "type": "object", "x": 2, "y": 9, "script": "ep0_apt_bass_stand", "solid": true },
+    { "id": "bass_stand", "type": "object", "sprite": "obj_bass_stand", "x": 2, "y": 9, "script": "ep0_apt_bass_stand", "solid": true, "condition": "!flags.bassTaken" },
+    { "id": "bass_stand_empty", "type": "object", "sprite": "obj_bass_stand_empty", "x": 2, "y": 9, "script": "ep0_apt_bass_stand", "solid": true, "condition": "flags.bassTaken" },
     { "id": "couch_a", "type": "object", "x": 2, "y": 6, "script": "ep0_apt_couch", "solid": true },
     { "id": "couch_b", "type": "object", "x": 3, "y": 6, "script": "ep0_apt_couch", "solid": true },
     { "id": "bajonka_couch", "type": "object", "sprite": "bajonka", "x": 4, "y": 6, "facing": "down",
@@ -66,7 +67,7 @@
     { "id": "bathroom", "type": "object", "x": 1, "y": 1, "script": "ep0_apt_bathroom", "solid": true },
     { "id": "poster_1", "type": "object", "x": 3, "y": 1, "script": "ep0_apt_poster_1", "solid": true },
     { "id": "poster_2", "type": "object", "x": 8, "y": 1, "script": "ep0_apt_poster_2", "solid": true },
-    { "id": "poster_3", "type": "object", "x": 10, "y": 1, "script": "ep0_apt_poster_3", "solid": true },
+    { "id": "poster_3", "type": "object", "x": 5, "y": 1, "script": "ep0_apt_poster_3", "solid": true },
     { "id": "poster_4", "type": "object", "x": 14, "y": 1, "script": "ep0_apt_poster_4", "solid": true },
     { "id": "wall_bills_a", "type": "object", "x": 12, "y": 1, "script": "ep0_apt_wall_bills", "solid": true },
     { "id": "wall_bills_b", "type": "object", "x": 13, "y": 1, "script": "ep0_apt_wall_bills", "solid": true },

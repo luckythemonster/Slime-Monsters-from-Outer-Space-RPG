@@ -5993,6 +5993,46 @@
       }
     ]
   },
+  "obj_bass_stand": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 16,
+    "frames": 1,
+    "names": [
+      "idle"
+    ],
+    "anims": [
+      {
+        "key": "obj_bass_stand_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
+  "obj_bass_stand_empty": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 16,
+    "frames": 1,
+    "names": [
+      "idle"
+    ],
+    "anims": [
+      {
+        "key": "obj_bass_stand_empty_idle",
+        "frames": [
+          0
+        ],
+        "fps": 1,
+        "repeat": -1,
+        "flipX": false
+      }
+    ]
+  },
   "obj_brain_xray": {
     "type": "spritesheet",
     "frameWidth": 32,
@@ -7583,7 +7623,7 @@
     "type": "spritesheet",
     "frameWidth": 32,
     "frameHeight": 32,
-    "frames": 39,
+    "frames": 40,
     "names": [
       "lucky_neutral",
       "lucky_grin",
@@ -7623,7 +7663,8 @@
       "brian_phone",
       "phoenix_droop",
       "phoenix_baffled",
-      "pawnbroker"
+      "pawnbroker",
+      "drone"
     ],
     "anims": [
       {

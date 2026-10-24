@@ -63,8 +63,9 @@
       "spawn": {
         "id": "dumpster_3",
         "sprite": "obj_dumpster_tipped",
-        "x": 11,
+        "x": 10,
         "y": 5,
+        "w": 2,
         "facing": "down",
         "type": "object",
         "script": "ep0_alley_dumpster",
@@ -84,8 +85,9 @@
       "spawn": {
         "id": "dumpster_4",
         "sprite": "obj_dumpster_tipped",
-        "x": 13,
+        "x": 12,
         "y": 5,
+        "w": 2,
         "facing": "down",
         "type": "object",
         "script": "ep0_alley_dumpster",

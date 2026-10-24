@@ -231,7 +231,15 @@ async function main() {
     s = await snap();
     check('amp after the signal reads the rent line (flags.ampRead)', s.flags.ampRead === true, s.flags);
     await warp('apartment', 6, 8, 'up');
-    for (let i = 0; i < 5; i++) await step('confirm');
+    await ev(() => window.__slime.autoAdvance(false));
+    await press('confirm'); // the first press (vars.billsIndex unset) must show the first line, not a silent no-op
+    await waitFn(() => window.__slime.services.ui.isBusy());
+    const billsTop = await ev(() => window.__slime.services.ui.debugState().top);
+    check('the first press on the bills reads RENT: PAST DUE.', !!billsTop && billsTop.type === 'say' && /RENT: PAST DUE/.test(billsTop.text || ''), billsTop);
+    await ev(() => window.__slime.autoAdvance(true));
+    for (let i = 0; i < 6 && !(await ev(() => window.__slime.idle())); i++) { await press('confirm'); await page.waitForTimeout(60); }
+    await waitIdle();
+    for (let i = 0; i < 4; i++) await step('confirm');
     s = await snap();
     check('bills cycle five lines then set flags.billsRead', s.flags.billsRead === true && s.vars.billsIndex === 0, { billsRead: s.flags.billsRead, idx: s.vars.billsIndex });
     await warp('apartment', 10, 3, 'up'); await step('confirm');

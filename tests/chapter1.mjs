@@ -280,7 +280,7 @@ async function main() {
       { name: 'ch1_w_caption_plain', when: (p) => cap(p).style === 'plain' },
       { name: 'ch1_w_shop', when: (p) => !!menu(p) && menu(p).labels[0] === 'BUY' },
       { name: 'ch1_w_shop_list', when: (p) => !!menu(p) && /^Pizza Slice/.test(menu(p).labels[0] || '') },
-      { name: 'ch1_08b_cafe_garage_call', when: (p) => p.snap.map === 'garage_north' && p.snap.flags.brianJoined === true, delay: 150 },
+      { name: 'ch1_08b_cafe_garage_call', when: (p) => p.snap.map === 'garage_north' && p.snap.flags.brianJoined === true, delay: 900 }, // after the camera fade-in
       { name: 'ch1_b2_slush', when: (p) => battleMenu(p, 'hub_slush') },
       { name: 'ch1_b3_scooters', when: (p) => battleMenu(p, 'hub_scooters') },
       { name: 'ch1_09b_ryan_arrives', when: (p) => p.snap.map === 'city_sound_hall' && !!ent(p, 'hardware'), delay: 500 },

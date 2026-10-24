@@ -64,7 +64,7 @@
   },
   "spawn": { "x": 8, "y": 9, "facing": "up" },
   "entities": [
-    { "id": "kit", "type": "object", "sprite": "obj_drumkit", "x": 7, "y": 6, "facing": "down", "script": "ep0_signal_kit", "solid": true },
+    { "id": "kit", "type": "object", "sprite": "obj_drumkit", "w": 2, "footprint": [2, 2], "x": 7, "y": 6, "facing": "down", "script": "ep0_signal_kit", "solid": true },
     { "id": "ryan", "type": "npc", "sprite": "ryan", "x": 8, "y": 7, "facing": "down", "behavior": "idle", "script": "ep0_signal_ryan" },
     { "id": "landline", "type": "object", "x": 3, "y": 4, "script": "ep0_signal_landline", "solid": true },
     { "id": "bench_a", "type": "object", "x": 2, "y": 4, "script": "ep0_signal_bench", "solid": true },
