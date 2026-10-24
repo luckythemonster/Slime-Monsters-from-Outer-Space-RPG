@@ -1,0 +1,301 @@
+{
+  "name": "eclipse_of_liberation",
+  "source": "eclipse_of_liberation.mp3",
+  "duration_s": 133.66,
+  "separation": "spleeter:4stems",
+  "bpm": 170.1,
+  "bpm_range": [
+    164.7,
+    182.1
+  ],
+  "tempo_changes": 26,
+  "tempo_map": [
+    {
+      "beat": 0,
+      "bpm": 167.4
+    },
+    {
+      "beat": 14,
+      "bpm": 169.1
+    },
+    {
+      "beat": 25,
+      "bpm": 170.8
+    },
+    {
+      "beat": 95,
+      "bpm": 168.7
+    },
+    {
+      "beat": 103,
+      "bpm": 164.7
+    },
+    {
+      "beat": 111,
+      "bpm": 170.8
+    },
+    {
+      "beat": 119,
+      "bpm": 175.9
+    },
+    {
+      "beat": 127,
+      "bpm": 170.1
+    },
+    {
+      "beat": 182,
+      "bpm": 173.0
+    },
+    {
+      "beat": 190,
+      "bpm": 180.1
+    },
+    {
+      "beat": 199,
+      "bpm": 178.2
+    },
+    {
+      "beat": 212,
+      "bpm": 179.8
+    },
+    {
+      "beat": 220,
+      "bpm": 175.2
+    },
+    {
+      "beat": 228,
+      "bpm": 171.6
+    },
+    {
+      "beat": 244,
+      "bpm": 169.8
+    },
+    {
+      "beat": 252,
+      "bpm": 174.1
+    },
+    {
+      "beat": 260,
+      "bpm": 181.7
+    },
+    {
+      "beat": 268,
+      "bpm": 177.1
+    },
+    {
+      "beat": 276,
+      "bpm": 170.1
+    },
+    {
+      "beat": 284,
+      "bpm": 177.8
+    },
+    {
+      "beat": 292,
+      "bpm": 180.9
+    },
+    {
+      "beat": 300,
+      "bpm": 173.3
+    },
+    {
+      "beat": 308,
+      "bpm": 170.1
+    },
+    {
+      "beat": 345,
+      "bpm": 173.0
+    },
+    {
+      "beat": 353,
+      "bpm": 175.9
+    },
+    {
+      "beat": 362,
+      "bpm": 173.3
+    }
+  ],
+  "beat_tracking_note": "doubled: tracker found half-time",
+  "kick_between_beats_ratio": 4.33,
+  "downbeat_phase": 0,
+  "pickup_beats": 0,
+  "first_beat_time": -0.046,
+  "grid_beat_of_first_tracked_beat": 0,
+  "bars": 97,
+  "ticks_per_beat": 480,
+  "steps_per_beat": 4,
+  "key": "F# minor",
+  "key_confidence": 0.805,
+  "chroma": [
+    0.544,
+    0.912,
+    0.731,
+    0.754,
+    0.707,
+    0.613,
+    1.0,
+    0.594,
+    0.701,
+    0.695,
+    0.521,
+    0.666
+  ],
+  "tuning_semitones": 0.06,
+  "retuned_before_transcription": false,
+  "sections": [
+    {
+      "label": "A",
+      "bar": 0,
+      "bars": 16,
+      "time": -0.05
+    },
+    {
+      "label": "B",
+      "bar": 16,
+      "bars": 9,
+      "time": 22.59
+    },
+    {
+      "label": "A",
+      "bar": 25,
+      "bars": 7,
+      "time": 35.27
+    },
+    {
+      "label": "B",
+      "bar": 32,
+      "bars": 9,
+      "time": 45.17
+    },
+    {
+      "label": "B",
+      "bar": 41,
+      "bars": 8,
+      "time": 57.88
+    },
+    {
+      "label": "A",
+      "bar": 49,
+      "bars": 8,
+      "time": 68.88
+    },
+    {
+      "label": "B",
+      "bar": 57,
+      "bars": 8,
+      "time": 79.76
+    },
+    {
+      "label": "A",
+      "bar": 65,
+      "bars": 9,
+      "time": 90.92
+    },
+    {
+      "label": "B",
+      "bar": 74,
+      "bars": 7,
+      "time": 103.05
+    },
+    {
+      "label": "B",
+      "bar": 81,
+      "bars": 9,
+      "time": 112.93
+    },
+    {
+      "label": "C",
+      "bar": 90,
+      "bars": 6,
+      "time": 125.46
+    }
+  ],
+  "stems": {
+    "vocals": {
+      "notes": 67,
+      "pitch_min": 61,
+      "pitch_max": 83,
+      "pitch_median": 66,
+      "median_len_steps": 2.0,
+      "pitch_class_hist": {
+        "C": 0.0,
+        "C#": 0.124,
+        "D": 0.305,
+        "D#": 0.141,
+        "E": 0.034,
+        "F": 0.192,
+        "F#": 0.175,
+        "G": 0.011,
+        "G#": 0.006,
+        "A": 0.0,
+        "A#": 0.006,
+        "B": 0.006
+      },
+      "first_step": 103,
+      "last_step": 1509
+    },
+    "guitar": {
+      "notes": 729,
+      "pitch_min": 42,
+      "pitch_max": 81,
+      "pitch_median": 56,
+      "median_len_steps": 1.0,
+      "pitch_class_hist": {
+        "C": 0.005,
+        "C#": 0.243,
+        "D": 0.055,
+        "D#": 0.054,
+        "E": 0.055,
+        "F": 0.002,
+        "F#": 0.267,
+        "G": 0.002,
+        "G#": 0.163,
+        "A": 0.084,
+        "A#": 0.0,
+        "B": 0.068
+      },
+      "first_step": 2,
+      "last_step": 1512
+    },
+    "bass": {
+      "notes": 181,
+      "pitch_min": 30,
+      "pitch_max": 66,
+      "pitch_median": 41,
+      "median_len_steps": 2.0,
+      "pitch_class_hist": {
+        "C": 0.053,
+        "C#": 0.232,
+        "D": 0.003,
+        "D#": 0.021,
+        "E": 0.037,
+        "F": 0.008,
+        "F#": 0.082,
+        "G": 0.034,
+        "G#": 0.034,
+        "A": 0.021,
+        "A#": 0.018,
+        "B": 0.456
+      },
+      "first_step": 272,
+      "last_step": 1409
+    },
+    "drums": {
+      "hits": 541,
+      "crash": 1,
+      "hat": 233,
+      "kick": 187,
+      "ohat": 13,
+      "snare": 107
+    }
+  },
+  "files": {
+    "midi": "eclipse_of_liberation.mid",
+    "vocals": "eclipse_of_liberation_vocals.mid",
+    "guitar": "eclipse_of_liberation_guitar.mid",
+    "bass": "eclipse_of_liberation_bass.mid",
+    "drums": "eclipse_of_liberation_drums.mid"
+  },
+  "work_dir": "/tmp/claude-0/-home-user-Slime-Monsters-from-Outer-Space-RPG/e858fb6c-544f-57da-ae5c-09a0289d71a3/scratchpad/work/eclipse_of_liberation",
+  "elapsed_s": 41.3
+}

@@ -1,0 +1,303 @@
+{
+  "name": "monsters",
+  "source": "monsters.mp3",
+  "duration_s": 124.74,
+  "separation": "spleeter:4stems",
+  "bpm": 164.2,
+  "bpm_range": [
+    156.0,
+    168.7
+  ],
+  "tempo_changes": 28,
+  "tempo_map": [
+    {
+      "beat": 0,
+      "bpm": 165.4
+    },
+    {
+      "beat": 18,
+      "bpm": 163.4
+    },
+    {
+      "beat": 26,
+      "bpm": 159.6
+    },
+    {
+      "beat": 34,
+      "bpm": 157.2
+    },
+    {
+      "beat": 42,
+      "bpm": 161.5
+    },
+    {
+      "beat": 50,
+      "bpm": 164.1
+    },
+    {
+      "beat": 61,
+      "bpm": 166.0
+    },
+    {
+      "beat": 70,
+      "bpm": 164.1
+    },
+    {
+      "beat": 78,
+      "bpm": 160.9
+    },
+    {
+      "beat": 86,
+      "bpm": 158.4
+    },
+    {
+      "beat": 96,
+      "bpm": 160.9
+    },
+    {
+      "beat": 104,
+      "bpm": 163.4
+    },
+    {
+      "beat": 113,
+      "bpm": 165.4
+    },
+    {
+      "beat": 129,
+      "bpm": 163.4
+    },
+    {
+      "beat": 143,
+      "bpm": 165.4
+    },
+    {
+      "beat": 152,
+      "bpm": 167.4
+    },
+    {
+      "beat": 160,
+      "bpm": 165.4
+    },
+    {
+      "beat": 203,
+      "bpm": 163.4
+    },
+    {
+      "beat": 211,
+      "bpm": 157.8
+    },
+    {
+      "beat": 219,
+      "bpm": 160.2
+    },
+    {
+      "beat": 228,
+      "bpm": 162.1
+    },
+    {
+      "beat": 239,
+      "bpm": 164.7
+    },
+    {
+      "beat": 279,
+      "bpm": 162.1
+    },
+    {
+      "beat": 287,
+      "bpm": 164.7
+    },
+    {
+      "beat": 295,
+      "bpm": 168.7
+    },
+    {
+      "beat": 303,
+      "bpm": 165.4
+    },
+    {
+      "beat": 326,
+      "bpm": 163.4
+    },
+    {
+      "beat": 334,
+      "bpm": 161.5
+    }
+  ],
+  "beat_tracking_note": null,
+  "kick_between_beats_ratio": 0.64,
+  "downbeat_phase": 2,
+  "pickup_beats": 2,
+  "first_beat_time": 0.023,
+  "grid_beat_of_first_tracked_beat": 2,
+  "bars": 86,
+  "ticks_per_beat": 480,
+  "steps_per_beat": 4,
+  "key": "G major",
+  "key_confidence": 0.46,
+  "chroma": [
+    0.489,
+    0.35,
+    0.446,
+    0.394,
+    0.557,
+    0.445,
+    0.514,
+    0.977,
+    0.709,
+    1.0,
+    0.551,
+    0.655
+  ],
+  "tuning_semitones": -0.28,
+  "retuned_before_transcription": true,
+  "sections": [
+    {
+      "label": "A",
+      "bar": 0,
+      "bars": 17,
+      "time": 0.02
+    },
+    {
+      "label": "B",
+      "bar": 17,
+      "bars": 15,
+      "time": 25.03
+    },
+    {
+      "label": "B",
+      "bar": 32,
+      "bars": 4,
+      "time": 47.3
+    },
+    {
+      "label": "B",
+      "bar": 36,
+      "bars": 7,
+      "time": 53.17
+    },
+    {
+      "label": "C",
+      "bar": 43,
+      "bars": 5,
+      "time": 63.3
+    },
+    {
+      "label": "B",
+      "bar": 48,
+      "bars": 16,
+      "time": 70.59
+    },
+    {
+      "label": "B",
+      "bar": 64,
+      "bars": 8,
+      "time": 94.2
+    },
+    {
+      "label": "B",
+      "bar": 72,
+      "bars": 4,
+      "time": 105.95
+    },
+    {
+      "label": "C",
+      "bar": 76,
+      "bars": 4,
+      "time": 111.66
+    },
+    {
+      "label": "D",
+      "bar": 80,
+      "bars": 5,
+      "time": 117.45
+    }
+  ],
+  "stems": {
+    "vocals": {
+      "notes": 56,
+      "pitch_min": 58,
+      "pitch_max": 88,
+      "pitch_median": 79,
+      "median_len_steps": 1.0,
+      "pitch_class_hist": {
+        "C": 0.076,
+        "C#": 0.033,
+        "D": 0.0,
+        "D#": 0.076,
+        "E": 0.065,
+        "F": 0.087,
+        "F#": 0.022,
+        "G": 0.315,
+        "G#": 0.185,
+        "A": 0.065,
+        "A#": 0.065,
+        "B": 0.011
+      },
+      "first_step": 276,
+      "last_step": 1298
+    },
+    "guitar": {
+      "notes": 298,
+      "pitch_min": 40,
+      "pitch_max": 70,
+      "pitch_median": 47,
+      "median_len_steps": 2.0,
+      "pitch_class_hist": {
+        "C": 0.114,
+        "C#": 0.018,
+        "D": 0.042,
+        "D#": 0.011,
+        "E": 0.044,
+        "F": 0.026,
+        "F#": 0.0,
+        "G": 0.146,
+        "G#": 0.109,
+        "A": 0.279,
+        "A#": 0.135,
+        "B": 0.076
+      },
+      "first_step": 8,
+      "last_step": 1354
+    },
+    "bass": {
+      "notes": 360,
+      "pitch_min": 28,
+      "pitch_max": 67,
+      "pitch_median": 43,
+      "median_len_steps": 2.0,
+      "pitch_class_hist": {
+        "C": 0.133,
+        "C#": 0.005,
+        "D": 0.001,
+        "D#": 0.001,
+        "E": 0.053,
+        "F": 0.007,
+        "F#": 0.002,
+        "G": 0.303,
+        "G#": 0.031,
+        "A": 0.368,
+        "A#": 0.013,
+        "B": 0.083
+      },
+      "first_step": 8,
+      "last_step": 1331
+    },
+    "drums": {
+      "hits": 622,
+      "crash": 8,
+      "hat": 171,
+      "kick": 181,
+      "ohat": 88,
+      "snare": 174
+    }
+  },
+  "files": {
+    "midi": "monsters.mid",
+    "vocals": "monsters_vocals.mid",
+    "guitar": "monsters_guitar.mid",
+    "bass": "monsters_bass.mid",
+    "drums": "monsters_drums.mid"
+  },
+  "work_dir": "/tmp/claude-0/-home-user-Slime-Monsters-from-Outer-Space-RPG/e858fb6c-544f-57da-ae5c-09a0289d71a3/scratchpad/work/monsters",
+  "elapsed_s": 42.4
+}

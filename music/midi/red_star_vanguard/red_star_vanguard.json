@@ -1,0 +1,235 @@
+{
+  "name": "red_star_vanguard",
+  "source": "red_star_vanguard.mp3",
+  "duration_s": 209.45,
+  "separation": "spleeter:4stems",
+  "bpm": 160.2,
+  "bpm_range": [
+    159.0,
+    162.1
+  ],
+  "tempo_changes": 5,
+  "tempo_map": [
+    {
+      "beat": 0,
+      "bpm": 161.5
+    },
+    {
+      "beat": 74,
+      "bpm": 159.6
+    },
+    {
+      "beat": 226,
+      "bpm": 161.5
+    },
+    {
+      "beat": 236,
+      "bpm": 159.6
+    },
+    {
+      "beat": 532,
+      "bpm": 162.1
+    }
+  ],
+  "beat_tracking_note": null,
+  "kick_between_beats_ratio": 0.13,
+  "downbeat_phase": 0,
+  "pickup_beats": 0,
+  "first_beat_time": -0.139,
+  "grid_beat_of_first_tracked_beat": 0,
+  "bars": 141,
+  "ticks_per_beat": 480,
+  "steps_per_beat": 4,
+  "key": "B major",
+  "key_confidence": 0.663,
+  "chroma": [
+    0.456,
+    0.557,
+    0.563,
+    0.602,
+    0.418,
+    0.538,
+    1.0,
+    0.604,
+    0.564,
+    0.754,
+    0.535,
+    0.984
+  ],
+  "tuning_semitones": 0.06,
+  "retuned_before_transcription": false,
+  "sections": [
+    {
+      "label": "A",
+      "bar": 0,
+      "bars": 4,
+      "time": -0.14
+    },
+    {
+      "label": "B",
+      "bar": 4,
+      "bars": 13,
+      "time": 5.8
+    },
+    {
+      "label": "C",
+      "bar": 17,
+      "bars": 11,
+      "time": 25.15
+    },
+    {
+      "label": "D",
+      "bar": 28,
+      "bars": 4,
+      "time": 41.63
+    },
+    {
+      "label": "C",
+      "bar": 32,
+      "bars": 17,
+      "time": 47.65
+    },
+    {
+      "label": "E",
+      "bar": 49,
+      "bars": 15,
+      "time": 73.14
+    },
+    {
+      "label": "C",
+      "bar": 64,
+      "bars": 9,
+      "time": 95.62
+    },
+    {
+      "label": "F",
+      "bar": 73,
+      "bars": 8,
+      "time": 109.13
+    },
+    {
+      "label": "C",
+      "bar": 81,
+      "bars": 13,
+      "time": 121.14
+    },
+    {
+      "label": "C",
+      "bar": 94,
+      "bars": 8,
+      "time": 140.62
+    },
+    {
+      "label": "C",
+      "bar": 102,
+      "bars": 8,
+      "time": 152.62
+    },
+    {
+      "label": "G",
+      "bar": 110,
+      "bars": 4,
+      "time": 164.63
+    },
+    {
+      "label": "G",
+      "bar": 114,
+      "bars": 18,
+      "time": 170.62
+    },
+    {
+      "label": "H",
+      "bar": 132,
+      "bars": 8,
+      "time": 197.63
+    }
+  ],
+  "stems": {
+    "vocals": {
+      "notes": 146,
+      "pitch_min": 48,
+      "pitch_max": 88,
+      "pitch_median": 69,
+      "median_len_steps": 2.0,
+      "pitch_class_hist": {
+        "C": 0.022,
+        "C#": 0.059,
+        "D": 0.037,
+        "D#": 0.041,
+        "E": 0.026,
+        "F": 0.063,
+        "F#": 0.077,
+        "G": 0.033,
+        "G#": 0.159,
+        "A": 0.454,
+        "A#": 0.03,
+        "B": 0.0
+      },
+      "first_step": 179,
+      "last_step": 1862
+    },
+    "guitar": {
+      "notes": 1093,
+      "pitch_min": 35,
+      "pitch_max": 81,
+      "pitch_median": 54,
+      "median_len_steps": 2.0,
+      "pitch_class_hist": {
+        "C": 0.004,
+        "C#": 0.039,
+        "D": 0.047,
+        "D#": 0.072,
+        "E": 0.025,
+        "F": 0.044,
+        "F#": 0.186,
+        "G": 0.041,
+        "G#": 0.002,
+        "A": 0.126,
+        "A#": 0.042,
+        "B": 0.372
+      },
+      "first_step": 2,
+      "last_step": 2220
+    },
+    "bass": {
+      "notes": 231,
+      "pitch_min": 31,
+      "pitch_max": 69,
+      "pitch_median": 47,
+      "median_len_steps": 2.0,
+      "pitch_class_hist": {
+        "C": 0.009,
+        "C#": 0.045,
+        "D": 0.114,
+        "D#": 0.01,
+        "E": 0.019,
+        "F": 0.0,
+        "F#": 0.161,
+        "G": 0.064,
+        "G#": 0.017,
+        "A": 0.017,
+        "A#": 0.01,
+        "B": 0.532
+      },
+      "first_step": 2,
+      "last_step": 2159
+    },
+    "drums": {
+      "hits": 743,
+      "crash": 3,
+      "hat": 293,
+      "kick": 303,
+      "ohat": 43,
+      "snare": 101
+    }
+  },
+  "files": {
+    "midi": "red_star_vanguard.mid",
+    "vocals": "red_star_vanguard_vocals.mid",
+    "guitar": "red_star_vanguard_guitar.mid",
+    "bass": "red_star_vanguard_bass.mid",
+    "drums": "red_star_vanguard_drums.mid"
+  },
+  "work_dir": "/tmp/claude-0/-home-user-Slime-Monsters-from-Outer-Space-RPG/e858fb6c-544f-57da-ae5c-09a0289d71a3/scratchpad/work/red_star_vanguard",
+  "elapsed_s": 49.6
+}

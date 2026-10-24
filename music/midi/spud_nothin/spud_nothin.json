@@ -1,0 +1,229 @@
+{
+  "name": "spud_nothin",
+  "source": "spud_nothin.mp3",
+  "duration_s": 151.49,
+  "separation": "spleeter:4stems",
+  "bpm": 140.1,
+  "bpm_range": [
+    136.0,
+    141.7
+  ],
+  "tempo_changes": 5,
+  "tempo_map": [
+    {
+      "beat": 0,
+      "bpm": 139.7
+    },
+    {
+      "beat": 8,
+      "bpm": 141.6
+    },
+    {
+      "beat": 25,
+      "bpm": 139.7
+    },
+    {
+      "beat": 334,
+      "bpm": 137.8
+    },
+    {
+      "beat": 350,
+      "bpm": 139.7
+    }
+  ],
+  "beat_tracking_note": null,
+  "kick_between_beats_ratio": 0.63,
+  "downbeat_phase": 2,
+  "pickup_beats": 2,
+  "first_beat_time": 0.07,
+  "grid_beat_of_first_tracked_beat": 2,
+  "bars": 90,
+  "ticks_per_beat": 480,
+  "steps_per_beat": 4,
+  "key": "D# minor",
+  "key_confidence": 0.553,
+  "chroma": [
+    0.548,
+    0.527,
+    0.592,
+    1.0,
+    0.857,
+    0.693,
+    0.689,
+    0.697,
+    0.556,
+    0.689,
+    0.769,
+    0.711
+  ],
+  "tuning_semitones": 0.2,
+  "retuned_before_transcription": false,
+  "sections": [
+    {
+      "label": "A",
+      "bar": 0,
+      "bars": 4,
+      "time": 0.07
+    },
+    {
+      "label": "A",
+      "bar": 4,
+      "bars": 8,
+      "time": 6.85
+    },
+    {
+      "label": "B",
+      "bar": 12,
+      "bars": 4,
+      "time": 20.57
+    },
+    {
+      "label": "A",
+      "bar": 16,
+      "bars": 4,
+      "time": 27.42
+    },
+    {
+      "label": "C",
+      "bar": 20,
+      "bars": 8,
+      "time": 34.27
+    },
+    {
+      "label": "A",
+      "bar": 28,
+      "bars": 5,
+      "time": 47.97
+    },
+    {
+      "label": "A",
+      "bar": 33,
+      "bars": 4,
+      "time": 56.54
+    },
+    {
+      "label": "B",
+      "bar": 37,
+      "bars": 4,
+      "time": 63.41
+    },
+    {
+      "label": "A",
+      "bar": 41,
+      "bars": 4,
+      "time": 70.29
+    },
+    {
+      "label": "C",
+      "bar": 45,
+      "bars": 8,
+      "time": 77.14
+    },
+    {
+      "label": "A",
+      "bar": 53,
+      "bars": 15,
+      "time": 90.86
+    },
+    {
+      "label": "C",
+      "bar": 68,
+      "bars": 9,
+      "time": 116.56
+    },
+    {
+      "label": "A",
+      "bar": 77,
+      "bars": 12,
+      "time": 132.01
+    }
+  ],
+  "stems": {
+    "vocals": {
+      "notes": 7,
+      "pitch_min": 51,
+      "pitch_max": 79,
+      "pitch_median": 77,
+      "median_len_steps": 2.0,
+      "pitch_class_hist": {
+        "C": 0.0,
+        "C#": 0.0,
+        "D": 0.0,
+        "D#": 0.154,
+        "E": 0.231,
+        "F": 0.385,
+        "F#": 0.0,
+        "G": 0.231,
+        "G#": 0.0,
+        "A": 0.0,
+        "A#": 0.0,
+        "B": 0.0
+      },
+      "first_step": 13,
+      "last_step": 1357
+    },
+    "guitar": {
+      "notes": 1703,
+      "pitch_min": 39,
+      "pitch_max": 85,
+      "pitch_median": 51,
+      "median_len_steps": 1.0,
+      "pitch_class_hist": {
+        "C": 0.003,
+        "C#": 0.011,
+        "D": 0.078,
+        "D#": 0.326,
+        "E": 0.105,
+        "F": 0.057,
+        "F#": 0.085,
+        "G": 0.031,
+        "G#": 0.051,
+        "A": 0.081,
+        "A#": 0.037,
+        "B": 0.135
+      },
+      "first_step": 40,
+      "last_step": 1411
+    },
+    "bass": {
+      "notes": 215,
+      "pitch_min": 28,
+      "pitch_max": 70,
+      "pitch_median": 47,
+      "median_len_steps": 2.0,
+      "pitch_class_hist": {
+        "C": 0.035,
+        "C#": 0.032,
+        "D": 0.016,
+        "D#": 0.181,
+        "E": 0.215,
+        "F": 0.065,
+        "F#": 0.1,
+        "G": 0.019,
+        "G#": 0.051,
+        "A": 0.062,
+        "A#": 0.056,
+        "B": 0.169
+      },
+      "first_step": 79,
+      "last_step": 1366
+    },
+    "drums": {
+      "hits": 570,
+      "crash": 5,
+      "hat": 209,
+      "kick": 175,
+      "ohat": 8,
+      "snare": 173
+    }
+  },
+  "files": {
+    "midi": "spud_nothin.mid",
+    "vocals": "spud_nothin_vocals.mid",
+    "guitar": "spud_nothin_guitar.mid",
+    "bass": "spud_nothin_bass.mid",
+    "drums": "spud_nothin_drums.mid"
+  },
+  "work_dir": "/tmp/claude-0/-home-user-Slime-Monsters-from-Outer-Space-RPG/e858fb6c-544f-57da-ae5c-09a0289d71a3/scratchpad/work/spud_nothin",
+  "elapsed_s": 47.1
+}
