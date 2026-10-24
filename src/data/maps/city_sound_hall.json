@@ -13,22 +13,24 @@
     "w": "wall_plaster", "W": "wall_plaster_top", "r": "wall_poster_b", "q": "wall_poster_c",
     ".": "hallway_floor", "S": "doorway", "C": "counter", "4": "room_number_4",
     "D": "soundproof_door", "O": "soundproof_door_open", "V": "fridge", "B": "corkboard",
-    "b": "bathroom_door", "l": "hallway_light"
+    "b": "bathroom_door", "l": "hallway_light", "#": "dark"
   },
   "layers": {
     "ground": [
-      "                            ",
-      "                            ",
-      "                            ",
+      "############################",
+      "############################",
+      "############################",
       "WWWWWWWWWWWWWWWWWWWWWWWWWWWW",
       "wxwwCCCacwwwrwwdswwa4dwwywqw",
       "wxsw...aDswxDcwdDawsOcxdDyDa",
       "wxS.........................",
       "yw..........................",
       "wwywwxwwwwywwwxwwwwywwxwwabc",
-      "                            ",
-      "                            ",
-      "                            "
+      "############################",
+      "############################",
+      "############################",
+      "############################",
+      "############################"
     ],
     "deco": [
       "                            ",
@@ -42,6 +44,8 @@
       "                            ",
       "                            ",
       "                            ",
+      "                            ",
+      "                            ",
       "                            "
     ],
     "over": [
@@ -50,6 +54,8 @@
       "                            ",
       "                            ",
       "         l       l     l    ",
+      "                            ",
+      "                            ",
       "                            ",
       "                            ",
       "                            ",

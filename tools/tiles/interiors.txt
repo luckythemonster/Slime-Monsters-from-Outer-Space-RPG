@@ -1432,3 +1432,24 @@ crrrcccccccccccc
 crkricccccccccic
 cciiicccccccccic
 cccicccccccccccc
+
+# The building beyond a room's walls: near-black with a faint speckle, so a map smaller than the
+# 16x14 viewport is padded with this instead of showing the bare canvas. Solid.
+tile dark:
+solid: true
+eeeeeeeeeeeeeeee
+eeeeseeeeeeeeeee
+eeeeeeeeeeeeseee
+eeeeeeeeeeeeeeee
+eseeeeeeeeeeeeee
+eeeeeeeeseeeeeee
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeese
+eeeeeeeeeeeeeeee
+eeeseeeeeeeeeeee
+eeeeeeeeeeseeeee
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+eeeeeeseeeeeeeee
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeesee

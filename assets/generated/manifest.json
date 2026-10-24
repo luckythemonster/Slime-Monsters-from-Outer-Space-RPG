@@ -2473,6 +2473,10 @@
       "sticker_wall_sparse_b": {
         "index": 72,
         "solid": true
+      },
+      "dark": {
+        "index": 73,
+        "solid": true
       }
     }
   },
