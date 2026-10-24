@@ -2465,6 +2465,14 @@
       "cymbal": {
         "index": 70,
         "solid": true
+      },
+      "sticker_wall_sparse_a": {
+        "index": 71,
+        "solid": true
+      },
+      "sticker_wall_sparse_b": {
+        "index": 72,
+        "solid": true
       }
     }
   },

@@ -12,6 +12,7 @@
   ],
   "legend": {
     "a": "sticker_wall_a", "s": "sticker_wall_b", "c": "sticker_wall_c", "d": "sticker_wall_d",
+    "x": "sticker_wall_sparse_a", "z": "sticker_wall_sparse_b", "w": "wall_plaster",
     "t": "wall_bills_a", "u": "wall_bills_b", "p": "wall_poster_a", "q": "wall_poster_c",
     ".": "carpet_stained", "r": "rug", "k": "cable", "m": "mic_tile", "R": "drum_riser", "y": "cymbal",
     "A": "shelf", "P": "radiator", "L": "couch_l", "C": "couch_r", "F": "fridge", "O": "soundproof_door_open"
@@ -19,16 +20,16 @@
   "layers": {
     "ground": [
       "ascdascdascdas",
-      "satuascdaspaqc",
-      "a............d",
-      "a.........RRyd",
-      "a.........RR.d",
-      "a.A..........d",
-      "a...........Fd",
-      "a.P..........d",
-      "a............d",
-      "a..........LCd",
-      "ascOascdascdas",
+      "wxtuwaswzwpwqw",
+      "w............w",
+      "x.........RRyw",
+      "w.........RR.w",
+      "w.A..........w",
+      "w...........Fz",
+      "w.P..........w",
+      "w............w",
+      "z..........LCw",
+      "wxaOdwwzwwwwww",
       "              "
     ],
     "deco": [

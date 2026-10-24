@@ -1391,3 +1391,44 @@ solid: true
 .....kkLkkk.....
 ....kddddddk....
 ....kkkkkkkk....
+
+# Sparse sticker walls (City Sound): plaster with one or two stickers, so the hallway reads as a
+# wall with sticker clusters instead of wall-to-wall confetti. Dense clusters stay on the dark
+# sticker_wall_a..d tiles hugging the soundproof doors; these carry the stragglers in between.
+tile sticker_wall_sparse_a:
+solid: true
+cccccccccccccccc
+ccicccccccccccic
+cccccccccicccccc
+ccpppppccccccccc
+ccpkkkpicccccccc
+ccpppppicccccccc
+ccciiiiicccccccc
+cccccccccccccccc
+cccccccccccccccc
+cccccccccgggggcc
+cccccccccgkkkgic
+cccccccccgggggic
+cccccccccgkgkgic
+cccccccccgggggic
+ccccccccccciiiic
+cccicccccccccccc
+
+tile sticker_wall_sparse_b:
+solid: true
+cccccccccccccccc
+ccicccccccccccic
+cccccccccicccccc
+cccccccccccccccc
+cicccccccccccccc
+ccccccCCCCCCcccc
+ccccccCkkCkCiccc
+ccccccCCCCCCiccc
+ccccccCkCkkCiccc
+ccccccCCCCCCiccc
+cccccccciiiiiccc
+cicccccccccccccc
+crrrcccccccccccc
+crkricccccccccic
+cciiicccccccccic
+cccicccccccccccc
