@@ -113,3 +113,31 @@ Manifest: `{ "type": "atlas", "frames": { "win_tl": { "x": 0, "y": 0, "w": 8, "h
 - Add-on animations on an existing sheet are **appended** as new frames after the last frame and declared
   with new `anim:` lines; never renumber existing frames or rename existing keys, because scripts reference
   `<sheet>_<anim>` by name.
+
+## Audio: band recordings → MIDI → chiptune covers
+
+Three tools turn a demo MP3 into a song file for the engine (`src/audio/README.md` has the format):
+
+```
+# 1. transcribe (Python 3.10 venv, see tools/audio_requirements.txt; Spleeter model in <model-path>/4stems/)
+.venv-audio/bin/python -I tools/audio_to_midi.py "~/Dead Planet Demos/01 Spud Nothin.mp3" --name spud_nothin \
+    --out music/midi/spud_nothin --model-path ~/spleeter_models
+# 2. draft a song file from the MIDI (+ the .json next to it)
+python3 -I tools/midi_to_song.py music/midi/spud_nothin/spud_nothin.mid --id band_spud_nothin --title "Spud Nothin" \
+    --out src/audio/songs/band_spud_nothin.js [--bars 4-19,20-35] [--lead-octave 1] [--max-bars 64]
+# 3. listen: render any registered song (or an unregistered --song file) through the real engine to a WAV
+node tools/render_song.mjs band_spud_nothin --out scratch/spud.wav [--no-limiter] [--song path/to/draft.js]
+```
+
+`audio_to_midi.py` writes `<name>.mid` (Vocals, Guitar (other), Bass, Drums on channel 10, tempo map, section
+markers), one `.mid` per stem and `<name>.json` (BPM and range, key guess, tuning, sections, note counts per
+stem). Stems are separated with Spleeter 4stems (download `4stems.tar.gz` from the Spleeter v1.4.0 GitHub
+release and extract it to `<model-path>/4stems/`); without Spleeter it falls back to an HPSS band split and
+says so in the JSON. Pitched stems go through basic-pitch, drums through onset detection with a
+kick/snare/hat/crash classifier, everything is quantized to a 16th grid relative to the tracked beats.
+
+`midi_to_song.py` is standard-library only. It reduces the MIDI to the engine's four voices (pulse1 vocal
+melody, pulse2 guitar riff, triangle bass, noise kit + hats), dedupes identical bars into patterns and picks
+a loop from the detected sections (`--bars` overrides it). Its summary on stderr includes fidelity numbers
+(how many vocal onsets / kick-snare hits the reduction kept) — the draft still needs ears: `music/README.md`
+has the notes on the six Dead Planet Demos covers.
