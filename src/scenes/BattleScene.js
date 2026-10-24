@@ -21,6 +21,7 @@ import BattleBackground from '../ui/BattleBackground.js';
 import { spawnDamage } from '../ui/DamageText.js';
 import { COLORS, textStyle } from '../ui/theme.js';
 import { UI_KEY } from '../ui/atlas.js';
+import { CAPTION_BOX } from '../ui/DialogueBox.js';
 
 const FRAME = 1000 / 60;
 const DEPTH = { bg: 0, word: 90, enemy: 100, party: 110, fx: 200, icons: 210, burst: 900 };
@@ -105,6 +106,7 @@ export default class BattleScene extends Phaser.Scene {
       const turn = this.model.advance();
       await this.playEvents(this.model.drain());
       if (!turn) break;
+      if (turn.prompt) { await this.playPrompt(turn.prompt); continue; } // normally answered while its batch played
       this.hud.refresh();
       this.setActiveActor(turn.actor.uid);
       let action;
@@ -406,6 +408,23 @@ export default class BattleScene extends Phaser.Scene {
     }
   }
 
+  /**
+   * A scripted choice (THE SET's [Keep fighting it] / [Let go]): the explore `choice` window and cursor, opened
+   * where Ryan's caption just was, with nothing else taking input while it is up. The answer goes back through
+   * `ev.resolve(index)`; the script reacts at once, so its events are drained and played here, in order, before
+   * the rest of the batch. Under autoAdvance the window picks `chooseIndex` (default 0, the first option).
+   */
+  async playPrompt(ev) {
+    if (!ev || ev.answered !== null || this.finished) return;
+    this.hud.closeMenus();
+    this.hud.clearMessage();
+    this.setActiveActor(null);
+    const i = await this.ui.choice(ev.options, { x: CAPTION_BOX.x, y: CAPTION_BOX.y });
+    if (this.finished) return;
+    ev.resolve(Math.max(0, i));
+    await this.playEvents(this.model.drain());
+  }
+
   /** Returns a uid, undefined (no choice needed) or null (cancelled). */
   async pickTarget({ mode, targets }) {
     if (mode === 'none' || mode === 'self' || mode === 'allEnemies' || mode === 'party' || mode === 'all') return undefined;
@@ -533,6 +552,9 @@ export default class BattleScene extends Phaser.Scene {
       case 'lockInput':
         this.inputLocked = !!ev.on;
         if (ev.on) this.hud.closeMenus();
+        break;
+      case 'prompt':
+        await this.playPrompt(ev);
         break;
       case 'music':
         if (ev.id) this.playMusic(ev.id); else audioCall('stopMusic', { fade: 0.2 });

@@ -123,22 +123,58 @@ function ep0_rehearsal() {
   };
 }
 
-/** B-11 `ep0_palmers_set` — THE SET: cops, backup, Pocket Ryan, then The Eternity. */
+/**
+ * B-11 `ep0_palmers_set` — THE SET: cops, backup, Pocket Ryan, the one choice Ryan gets all game, then The Eternity.
+ * Toon 3 / round 6 / the last cop gone, whichever comes first, puts the question: [Keep fighting it] / [Let go].
+ * From the question on the fight cannot be lost (HP floors at 1) and the end check waits on the answer. [Let go]
+ * arms at once and Ryan's next turn levels the bar. [Keep fighting it] holds the possession for two of Ryan's
+ * turns ("[Holding it.]", "[Holding it. Holding it.]") while the walls keep fighting, then his third turn gives up
+ * ("[I couldn't.]") and fires anyway: the choice is about complicity, not outcome. The set remembers it as
+ * `flags.eternityChoice` ('letGo' | 'keptFighting', the story bible's name) and `flags.letGo` (the same answer as
+ * a boolean for script conditions); CS-17's quit branches on it.
+ */
 function ep0_palmers_set() {
+  let asked = false;
   let armed = false;
   let fired = false;
   let mohawk = false;
+  let torn = false;
+  let holding = false;
+  let holdTurns = 0;
+  const tear = (m) => {
+    if (torn) return;
+    torn = true;
+    m.emit({ type: 'uiTear', level: 2 });
+  };
   const arm = (m) => {
     if (armed || fired) return;
     armed = true;
-    CAP(m, "[I've been fighting the possession. That was a mistake.]");
     const ryan = m.find('ryan');
     const dark = (ryan && ryan.forms && ryan.forms.pocket && ryan.forms.pocket.armedSheet) || 'ryan_pocket_purple';
     m.transform('ryan', { form: 'pocket', sheet: dark });
-    m.emit({ type: 'uiTear', level: 2 });
+    tear(m);
     m.lockInput(true);
     m.invincible = true;
     m.flags.eternityArmed = true;
+  };
+  const ask = (m) => {
+    if (asked || fired) return;
+    asked = true;
+    m.invincible = true;
+    CAP(m, "[I've been fighting the possession. That was a mistake.]");
+    m.prompt(['[Keep fighting it]', '[Let go]'], (i) => {
+      if (i === 1) {
+        m.flags.letGo = true;
+        m.flags.eternityChoice = 'letGo';
+        arm(m);
+        return;
+      }
+      m.flags.letGo = false;
+      m.flags.eternityChoice = 'keptFighting';
+      holding = true;
+      tear(m);
+      if (m.living('enemy').length === 0) m.lockInput(true); // nothing left to fight: the rounds tick on their own (until the raid)
+    });
   };
   const eternity = (m, actor) => {
     fired = true;
@@ -192,14 +228,26 @@ function ep0_palmers_set() {
         m.spawn('backup_cop');
         m.spawn('backup_cop');
         m.text('Backup. Also in leather jackets. Also with price tags.');
+        if (holding && !armed && m.inputLocked) m.lockInput(false); // the raid arrives mid-hold: the command window comes back
       }
-      if (n === 6) arm(m);
+      if (n === 6) ask(m);
     },
     onToon(m, level) {
-      if (level >= 3) arm(m);
+      if (level >= 3) ask(m);
     },
     onTurnStart(m, actor) {
-      if (armed && !fired && actor.id === 'ryan') eternity(m, actor);
+      if (actor.id !== 'ryan' || fired) return;
+      if (holding && !armed) {
+        holdTurns += 1;
+        if (holdTurns <= 2) {
+          CAP(m, holdTurns === 1 ? '[Holding it.]' : '[Holding it. Holding it.]');
+          if (m.living('enemy').length === 0) actor.acted = true; // nobody to drum at: the hold is the whole turn
+          return;
+        }
+        CAP(m, "[I couldn't.]");
+        arm(m);
+      }
+      if (armed) eternity(m, actor);
     },
     onDefeat(m, who) {
       const c = m.find(who);
@@ -207,14 +255,17 @@ function ep0_palmers_set() {
       m.text(`${c.name} crawls toward the exit...`);
       m.leave(c, 'flee');
     },
-    // The Eternity ends THE SET, never the cops leaving: when the last one crawls off (or a KRAAANG
-    // knocks it off-panel) before the meter or the clock armed it, hold the win, arm now, and Ryan's
-    // next turn levels the bar. Toon 3 / round 6 / last cop gone, whichever comes first. Runs before
+    // The Eternity ends THE SET, never the cops leaving: when the last one crawls off (or a KRAAANG knocks it
+    // off-panel) hold the win and put the question (or, mid-hold, let the rounds tick until it fires). Runs before
     // the model's end check, so the suspend lands in time.
     onLeave(m) {
       if (fired || m.living('enemy').length > 0) return;
       m.suspendEnd = true;
-      arm(m);
+      if (holding) {
+        if (!armed) m.lockInput(true);
+        return;
+      }
+      ask(m);
     },
   };
 }

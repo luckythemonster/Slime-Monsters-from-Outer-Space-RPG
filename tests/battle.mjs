@@ -4,7 +4,8 @@
 //   1. hub_slush — the command menu is driven with __slime.press: ITEM → Pizza Slice, STRUM → target,
 //      RIFF → Power Chord → target; then autoAdvance finishes the fight. Asserts 'win', XP/$ up.
 //   2. ep0_audition with Brian in the party (Ryan is a battle guest) — auto-played; asserts 'win'.
-//   3. ep0_palmers_set — auto-played; asserts 'win' and flags.eternityArmed / eternityFired.
+//   3. ep0_palmers_set — auto-played (the choice auto-picks [Keep fighting it]); asserts 'win', flags.eternityArmed /
+//      eternityFired and the remembered answer.
 // Screenshots go to tests/screenshots/battle_*.png. Prints one JSON line and exits non-zero on failure.
 //
 //   node tests/battle.mjs
@@ -285,6 +286,7 @@ async function main() {
     const s3 = await snap();
     check("ep0_palmers_set resolves 'win'", r3 === 'win', r3);
     check('flags.eternityArmed + eternityFired', s3.flags.eternityArmed === true && s3.flags.eternityFired === true, s3.flags);
+    check('autoAdvance took the first option of the choice, [Keep fighting it] (letGo false, eternityChoice keptFighting), and it fired anyway', s3.flags.letGo === false && s3.flags.eternityChoice === 'keptFighting', s3.flags);
     check('jacket dropped, no money', s3.inventory.some((e) => e.id === 'price_tag_jacket'), s3.inventory);
     await page.waitForTimeout(150);
     await shot('battle_after');

@@ -297,13 +297,24 @@ level_up, item, door, sneeze, feedback, drum_hit, cymbal, ko, flee, save`.
 `BattleModel` is pure JS: `new BattleModel({ party, enemies, rules, rng })`, `model.getTurnOrder()`, `model.act(actorId, action)`,
 `model.enemyDecide(enemyId)`, `model.events` (an array of presentation events emitted per action:
 `{ type: 'damage', target, amount, crit }`, `{ type: 'text', text }`, `{ type: 'anim', who, key }`, `{ type: 'meter', value }`,
-`{ type: 'transform', who, sheet }`, `{ type: 'status', target, status, on }`, `{ type: 'ko', who }`, `{ type: 'win' }`, `{ type: 'lose' }`, `{ type: 'flee' }`).
+`{ type: 'transform', who, sheet }`, `{ type: 'status', target, status, on }`, `{ type: 'ko', who }`, `{ type: 'win' }`, `{ type: 'lose' }`, `{ type: 'flee' }`,
+`{ type: 'prompt', options, resolve, answered }`).
 `BattleScene` drains events and animates them one by one. Scripted battles register hooks:
 `{ onStart(model), onTurnStart(model, actor), onAction(model, actor, action), onToon(model, level), onHpBelow(model, who, pct), onRound(model, n),
 onDefeat(model, who), onLeave(model, who, how), onWipe(model) }` returning events to inject (e.g. Ryan's transformation). `onDefeat` fires before an
 enemy is marked KO (a script may `leave` it instead); `onLeave` fires after a flee / off-panel removal and before the end check, so a script may set
-`model.suspendEnd` to hold the win until its own finale (THE SET arms The Eternity when the last cop is gone); `onWipe` replaces the loss on `noLose` encounters. Formulas live in `formulas.js` and are the numbers in `docs/DESIGN.md`.
-`tests/battle.test.mjs` must cover: damage formula, turn order ties, meter fill, KO handling, win/lose, each scripted battle's hooks.
+`model.suspendEnd` to hold the win until its own finale (THE SET puts its choice when the last cop is gone); `onWipe` replaces the loss on `noLose` encounters. Formulas live in `formulas.js` and are the numbers in `docs/DESIGN.md`.
+
+**Scripted choices.** A hook calls `model.prompt(options, onAnswer)` (THE SET: Ryan's caption, then `['[Keep fighting it]', '[Let go]']`).
+The model is synchronous, so the handshake works the way `lockInput` / `wait` do: the call emits `{ type: 'prompt', options, resolve, answered }`
+and sets `model.pendingPrompt`; until it is answered `advance()` returns `{ prompt, actor: null }` instead of an actor and `checkEnd()` holds,
+so nothing moves past the question. `BattleScene.playPrompt(ev)` turns the event into a real `ui.choice(options, { x, y })` (the explore
+window and cursor, opened where Ryan's caption was; nothing else takes input) and calls `ev.resolve(index)`, which runs `onAnswer(index, model)`
+on the spot; the script's reaction is queued behind the prompt, so the scene drains and plays it before the rest of the batch. The driving
+loop treats a `{ prompt }` turn as "answer, then continue" (a safety net: the event normally resolves while its batch plays). Under
+`autoAdvance` the window picks `ui.chooseIndex` (default 0, the first option; tests set `__slime.chooseIndex`). The answer is logged in
+`model.log` as `{ round, prompt, index }`; answering twice is a no-op.
+`tests/battle.test.mjs` must cover: damage formula, turn order ties, meter fill, KO handling, win/lose, each scripted battle's hooks (both answers of THE SET's choice).
 
 ## 9. Debug API (required; tests depend on it)
 

@@ -6,6 +6,7 @@
 //   while (!model.result) {
 //     const turn = model.advance();                 // null when the battle ended
 //     if (!turn) break;
+//     if (turn.prompt) { turn.prompt.resolve(await askChoice(turn.prompt.options)); continue; }  // a scripted choice
 //     const action = turn.needsInput ? await askPlayer(turn.actor) : model.decide(turn.actor);
 //     model.act(turn.actor.uid, action);
 //     animate(model.drain());                        // presentation events (see EVENT_TYPES)
@@ -21,7 +22,7 @@ import * as AI from './BattleAI.js';
 
 export const EVENT_TYPES = [
   'start', 'round', 'setlist', 'turn', 'text', 'say', 'caption', 'toast', 'anim', 'damage', 'heal', 'amp', 'meter', 'toon',
-  'transform', 'status', 'ko', 'join', 'leave', 'spawn', 'scan', 'word', 'background', 'uiTear', 'lockInput',
+  'transform', 'status', 'ko', 'join', 'leave', 'spawn', 'scan', 'word', 'background', 'uiTear', 'lockInput', 'prompt',
   'music', 'sfx', 'shake', 'flash', 'wait', 'win', 'lose', 'flee', 'reward', 'levelup', 'mood', 'skip',
 ];
 
@@ -64,6 +65,8 @@ export class BattleModel {
     this.rewards = null;
     this.inputLocked = false;
     this.invincible = false;
+    /** A scripted choice waiting for its answer (see `prompt()`); holds `advance()` and the end check. */
+    this.pendingPrompt = null;
     this.noFlee = !!encounter.noFlee || encounter.canFlee === false;
     this.bailReason = encounter.bailReason || 'the dog has the contract';
     this.noLose = !!encounter.noLose;
@@ -377,6 +380,8 @@ export class BattleModel {
   advance() {
     for (let guard = 0; guard < 1000; guard++) {
       if (this.ended) return null;
+      // A script asked the player something: nothing moves until the scene answers it (see prompt()).
+      if (this.pendingPrompt) return { actor: null, needsInput: false, prompt: this.pendingPrompt };
       this.turnIndex += 1;
       if (this.turnIndex >= this.order.length) {
         this.endRound();
@@ -907,6 +912,28 @@ export class BattleModel {
   wait(ms) { return this.emit({ type: 'wait', ms }); }
 
   /**
+   * A scripted choice put to the player (THE SET: [Keep fighting it] / [Let go]). Emits
+   * `{ type: 'prompt', options, resolve, answered }`; the scene turns it into a real `ui.choice` and calls
+   * `resolve(index)`, which runs `onAnswer(index, model)` on the spot (the model is synchronous, so whatever the
+   * answer emits queues right behind the prompt). Until it is answered, `advance()` returns `{ prompt }` instead
+   * of an actor and `checkEnd()` holds, so nothing moves past the question. Answering twice is a no-op.
+   */
+  prompt(options, onAnswer) {
+    const ev = { type: 'prompt', options: [...options], resolve: null, answered: null };
+    ev.resolve = (index) => {
+      if (ev.answered !== null) return ev.answered;
+      const i = Math.max(0, Math.min(ev.options.length - 1, index | 0));
+      ev.answered = i;
+      if (this.pendingPrompt === ev) this.pendingPrompt = null;
+      this.log.push({ round: this.round, prompt: ev.options, index: i });
+      if (typeof onAnswer === 'function') onAnswer(i, this);
+      return i;
+    };
+    this.pendingPrompt = ev;
+    return this.emit(ev);
+  }
+
+  /**
    * Scripted NOISE word fired on someone's behalf regardless of meter, turn or KO (the forced
    * KRAAANG, DOOM). Damage uses `who`'s stats; `pow` overrides the word's power (DOOM = 999 flat).
    */
@@ -931,7 +958,7 @@ export class BattleModel {
 
   checkEnd() {
     if (this.ended) return this.result;
-    if (this.suspendEnd) return null; // a script is mid-sequence (The Eternity) and will finish itself
+    if (this.suspendEnd || this.pendingPrompt) return null; // a script is mid-sequence (The Eternity) or waiting on a choice; it finishes itself
     if (this.living('enemy').length === 0) return this.finish('win');
     const controllable = this.party().filter((c) => c.controllable && !c.auto);
     if (controllable.length && controllable.every((c) => c.ko)) {

@@ -64,13 +64,18 @@ function model({ party = [seed('lucky')], enemyIds = ['drone'], rng = makeRng(1)
   return new BattleModel({ encounter: { enemies: enemyIds, ...encounter }, party, data, rng, meter, flags, script, inventory, money: 10 });
 }
 
-/** Drive a model to its end with a policy for controllable members. Returns the model. */
-function run(m, policy = strumPolicy, { maxRounds = 60 } = {}) {
+/**
+ * Drive a model to its end with a policy for controllable members. A scripted choice (`advance()` returns
+ * `{ prompt }`) is answered with `choose`: an index or `(m, prompt) => index`; 0 is the first option, what the
+ * scene picks under autoAdvance. Returns the model.
+ */
+function run(m, policy = strumPolicy, { maxRounds = 60, choose = 0 } = {}) {
   if (m.round === 0) m.start();
   let guard = 0;
   while (!m.ended) {
     const t = m.advance();
     if (!t) break;
+    if (t.prompt) { t.prompt.resolve(typeof choose === 'function' ? choose(m, t.prompt) : choose); continue; }
     const action = t.needsInput ? policy(m, t.actor) : m.decide(t.actor);
     const ok = m.act(t.actor.uid, action);
     if (!ok) m.act(t.actor.uid, { cmd: 'tune' });
@@ -724,9 +729,13 @@ group('script: ep0_rehearsal', (check) => {
 // ---------------------------------------------------------------------------------------------
 group('script: ep0_palmers_set', (check) => {
   const party = (l) => [seed('lucky', l), seed('phoenix', l), seed('ryan', 4, { opts: { form: 'pocket', guest: true } })];
+  const OPTIONS = ['[Keep fighting it]', '[Let go]'];
+  const captionsOf = (evs) => evs.filter((e) => e.type === 'caption').map((e) => e.text);
+  const ordered = (list, ...texts) => { const idx = texts.map((t) => list.indexOf(t)); return idx.every((i) => i >= 0) && idx.every((i, k) => k === 0 || i > idx[k - 1]); };
+  // [Let go]: the question, then the arm on the spot, then the Eternity on Ryan's next turn (as before the choice).
   const m = new BattleModel({ encounter: { ...encounters.ep0_palmers_set }, party: party(5), data, rng: makeRng(303), meter: 25, flags: {}, script: BATTLE_SCRIPTS.ep0_palmers_set(), inventory: [], money: 20 });
   const all = [];
-  run(m, (mm, actor) => { all.push(...mm.drain()); return smartPolicy(mm, actor); });
+  run(m, (mm, actor) => { all.push(...mm.drain()); return smartPolicy(mm, actor); }, { choose: 1 });
   all.push(...m.drain());
   check(m.result === 'win', `palmers result ${m.result} round ${m.round}`);
   check(all.some((e) => e.type === 'status' && e.target === 'cop' && e.status === 'ON_HOLD'), 'cop ON HOLD');
@@ -734,10 +743,17 @@ group('script: ep0_palmers_set', (check) => {
   const spawns = all.filter((e) => e.type === 'spawn');
   const spawnRound = all.slice(0, all.indexOf(spawns[0])).filter((e) => e.type === 'round').pop();
   check(spawns.length === 2 && spawnRound && spawnRound.n === 3, `backup ×2 on round 3 (${spawns.length}, round ${spawnRound && spawnRound.n})`);
-  check(m.flags.eternityArmed === true && m.flags.eternityFired === true, 'armed and fired');
+  const askIdx = all.findIndex((e) => e.type === 'prompt');
+  const ask = all[askIdx];
+  check(askIdx > 0 && JSON.stringify(ask.options) === JSON.stringify(OPTIONS) && ask.answered === 1, `one prompt, [Keep fighting it] / [Let go], answered [Let go] (${ask && JSON.stringify(ask.options)}, ${ask && ask.answered})`);
+  check(all[askIdx - 1].type === 'caption' && /fighting the possession/.test(all[askIdx - 1].text), "Ryan's caption comes right before the question");
+  check(all.filter((e) => e.type === 'prompt').length === 1 && m.log.filter((l) => l.prompt).length === 1 && m.log.find((l) => l.prompt).index === 1, 'asked once, logged once');
+  check(m.flags.letGo === true && m.flags.eternityChoice === 'letGo' && m.flags.eternityArmed === true && m.flags.eternityFired === true, 'letGo (eternityChoice letGo), armed and fired');
   const armIdx = all.findIndex((e) => e.type === 'lockInput' && e.on);
-  const armRound = all.slice(0, armIdx).filter((e) => e.type === 'round').pop();
-  check(armRound && armRound.n <= 6, `armed by round 6 (round ${armRound && armRound.n})`);
+  check(armIdx > askIdx && all.slice(askIdx, armIdx).every((e) => e.type !== 'round' && e.type !== 'turn'), '[Let go] arms on the spot: input locks before anyone else moves');
+  const askRound = all.slice(0, askIdx).filter((e) => e.type === 'round').pop();
+  check(askRound && askRound.n <= 6, `asked by round 6 (round ${askRound && askRound.n})`);
+  check(!captionsOf(all).some((t) => /Holding it|couldn't/.test(t)), 'no holding captions on [Let go]');
   const words = all.filter((e) => e.type === 'word' && e.scripted).map((e) => e.word);
   check(JSON.stringify(words) === JSON.stringify(['doom', 'crack', 'thud']), `the three words in order (${words})`);
   check(all.filter((e) => e.type === 'wait' && e.ms === 900).length === 3, 'three 900 ms waits');
@@ -749,56 +765,106 @@ group('script: ep0_palmers_set', (check) => {
   check(all.some((e) => e.type === 'caption' && /Rhythm achieved/.test(e.text)), 'Rhythm achieved');
   check(m.rewards.xp === 100 && m.rewards.money === 0 && m.rewards.drops.includes('price_tag_jacket'), `reward ${JSON.stringify(m.rewards)}`);
   check(m.enemies().every((c) => c.ko || c.fled), 'cops gone');
-  // Cops flee instead of dying before the Eternity; the last one gone holds the win and arms it.
+  // Cops flee instead of dying before the Eternity; the last one gone holds the win and puts the question.
   const m2 = new BattleModel({ encounterId: 'ep0_palmers_set', encounter: { ...encounters.ep0_palmers_set }, party: party(5), data, rng: makeRng(1), meter: 25, flags: {}, script: BATTLE_SCRIPTS.ep0_palmers_set(), inventory: [], money: 0 });
   m2.start();
   m2.damage(m2.find('cop'), 999, { by: 'lucky' });
   check(m2.find('cop').fled && !m2.find('cop').ko && m2.events.some((e) => e.type === 'leave' && e.who === 'cop'), 'cop crawls toward the exit');
-  check(m2.result === null && m2.suspendEnd === true && m2.flags.eternityArmed === true && m2.inputLocked && m2.invincible, `last cop gone: win held, armed (result ${m2.result}, suspend ${m2.suspendEnd}, armed ${m2.flags.eternityArmed})`);
+  check(m2.result === null && m2.suspendEnd === true && !!m2.pendingPrompt && m2.invincible && !m2.flags.eternityArmed && !m2.inputLocked, `last cop gone: win held, the question put, not yet armed (result ${m2.result}, suspend ${m2.suspendEnd}, prompt ${!!m2.pendingPrompt}, armed ${m2.flags.eternityArmed})`);
+  const t2 = m2.advance();
+  check(t2 && t2.prompt === m2.pendingPrompt && t2.actor === null && m2.round === 1 && m2.turnIndex === -1, 'advance() returns the prompt, not an actor, until it is answered');
+  check(m2.checkEnd() === null && m2.result === null, 'the end check waits on the answer');
+  // [Keep fighting it] with nobody left to fight: input locks, the rounds tick, Ryan holds twice, then fires anyway.
   const m2Round = m2.round;
-  run(m2, smartPolicy);
+  run(m2, smartPolicy, { choose: 0 });
+  const caps2 = captionsOf(m2.events);
+  check(m2.pendingPrompt === null && m2.events.find((e) => e.type === 'prompt').answered === 0 && m2.flags.letGo === false && m2.flags.eternityChoice === 'keptFighting', 'answered [Keep fighting it]: letGo false, eternityChoice keptFighting');
+  check(ordered(caps2, '[Holding it.]', '[Holding it. Holding it.]', "[I couldn't.]", '[I am not trapped in the goo. The goo is trapped in the pocket.]'), `the two holding captions, "[I couldn't.]", then the Eternity (${JSON.stringify(caps2)})`);
   const m2Words = m2.events.filter((e) => e.type === 'word' && e.scripted).map((e) => e.word);
-  check(m2.result === 'win' && m2.flags.eternityFired === true && JSON.stringify(m2Words) === JSON.stringify(['doom', 'crack', 'thud']), `the Eternity still fires on Ryan's next turn (${m2.result}, round ${m2Round} → ${m2.round}, words ${m2Words})`);
-  check(m2.round <= m2Round + 1 && m2.rewards && m2.rewards.xp === 100 && m2.rewards.drops.includes('price_tag_jacket'), `Ryan's next turn, with the reward (${m2.round}, ${JSON.stringify(m2.rewards)})`);
-  // The same hold when a KRAAANG knocks the last backup off-panel (no onDefeat on that path).
+  check(m2.result === 'win' && m2.flags.eternityArmed === true && m2.flags.eternityFired === true && JSON.stringify(m2Words) === JSON.stringify(['doom', 'crack', 'thud']), `the Eternity still fires (${m2.result}, words ${m2Words})`);
+  check(m2.round === m2Round + 2, `[Keep fighting it] fires exactly two rounds later (round ${m2Round} → ${m2.round})`);
+  const lock2 = m2.events.findIndex((e) => e.type === 'lockInput' && e.on);
+  const hold2 = m2.events.findIndex((e) => e.type === 'caption' && e.text === '[Holding it.]');
+  check(lock2 >= 0 && lock2 < hold2, 'nobody left to fight: input locked for the hold, the rounds tick on their own');
+  const spawn2 = m2.events.findIndex((e) => e.type === 'spawn');
+  const unlock2 = m2.events.findIndex((e, i) => i > spawn2 && e.type === 'lockInput' && !e.on);
+  const quit2 = m2.events.findIndex((e) => e.type === 'caption' && e.text === "[I couldn't.]");
+  check(spawn2 > hold2 && unlock2 > spawn2 && unlock2 < quit2, `the round-3 raid arrives mid-hold and gives the command window back (spawn ${spawn2}, unlock ${unlock2}, quit ${quit2})`);
+  const raidTurn2 = m2.log.find((l) => l.action && l.who === 'lucky' && l.round === m2Round + 2); // absent when Ryan rolled first and ended it
+  check(!raidTurn2 || raidTurn2.action.cmd !== 'tune', `the player fights the raid, not a locked-input TUNE (${raidTurn2 ? raidTurn2.action.cmd : 'Ryan went first'})`);
+  check(m2.events.filter((e) => e.type === 'uiTear').length === 1 && m2.events.find((e) => e.type === 'uiTear').level === 2, 'uiTear 2, once');
+  check(m2.rewards && m2.rewards.xp === 100 && m2.rewards.drops.includes('price_tag_jacket'), `with the reward (${JSON.stringify(m2.rewards)})`);
+  // The same hold when a KRAAANG knocks the last backup off-panel (no onDefeat on that path); [Let go] from there.
   const m3 = new BattleModel({ encounterId: 'ep0_palmers_set', encounter: { ...encounters.ep0_palmers_set }, party: party(5), data, rng: knockRng, meter: 25, flags: {}, script: BATTLE_SCRIPTS.ep0_palmers_set(), inventory: [], money: 0 });
   m3.start();
   m3.spawn('backup_cop'); m3.spawn('backup_cop');
   m3.damage(m3.find('cop'), 999, { by: 'lucky' });
-  check(m3.find('cop').fled && m3.result === null && !m3.suspendEnd && !m3.flags.eternityArmed, 'the cop leaving with backups on stage does not arm');
+  check(m3.find('cop').fled && m3.result === null && !m3.suspendEnd && !m3.pendingPrompt && !m3.flags.eternityArmed, 'the cop leaving with backups on stage does not ask');
   m3.forceNoise('kraaang', 'lucky');
   check(m3.enemies().filter((c) => c.offPanel).length === 2 && m3.living('enemy').length === 0, `KRAAANG knocks both backups off-panel (${m3.enemies().map((c) => `${c.uid}:${c.offPanel ? 'off' : c.fled ? 'fled' : c.hp}`)})`);
-  check(m3.result === null && m3.suspendEnd === true && m3.flags.eternityArmed === true, `off-panel last cop: win held, armed (result ${m3.result})`);
-  run(m3, smartPolicy);
-  check(m3.result === 'win' && m3.flags.eternityFired === true, `the Eternity fires after the knock-off (${m3.result}, fired ${m3.flags.eternityFired})`);
+  check(m3.result === null && m3.suspendEnd === true && !!m3.pendingPrompt && !m3.flags.eternityArmed, `off-panel last cop: win held, the question put (result ${m3.result})`);
+  const m3Round = m3.round;
+  run(m3, smartPolicy, { choose: 1 });
+  check(m3.result === 'win' && m3.flags.letGo === true && m3.flags.eternityChoice === 'letGo' && m3.flags.eternityFired === true && m3.round <= m3Round + 1, `[Let go] after the knock-off: the Eternity on Ryan's next turn (${m3.result}, round ${m3Round} → ${m3.round})`);
+  // [Keep fighting it] with the cops still on stage (tuning only: the meter or the round-6 clock asks): the walls
+  // keep fighting for two more of Ryan's turns, the player keeps the command window, HP floors at 1, and Ryan
+  // gives up on his third turn, two rounds after the question (three when he had already played that round).
+  const m4 = new BattleModel({ encounterId: 'ep0_palmers_set', encounter: { ...encounters.ep0_palmers_set }, party: party(6), data, rng: makeRng(8), meter: 25, flags: {}, script: BATTLE_SCRIPTS.ep0_palmers_set(), inventory: [], money: 0 });
+  run(m4, () => ({ cmd: 'tune' }), { choose: 0 });
+  const ev4 = m4.events;
+  const ask4 = ev4.findIndex((e) => e.type === 'prompt');
+  const roundIdx4 = ev4.map((e, i) => (e.type === 'round' ? i : -1)).filter((i) => i >= 0 && i < ask4).pop();
+  const askRound4 = roundIdx4 >= 0 ? ev4[roundIdx4] : null;
+  const ryanPlayed4 = ev4.slice(roundIdx4, ask4).some((e) => e.type === 'turn' && e.who === 'ryan');
+  const expected4 = askRound4 ? askRound4.n + (ryanPlayed4 ? 3 : 2) : -1;
+  check(ask4 >= 0 && !!askRound4 && askRound4.n <= 6, `tuning only: asked by round 6 (round ${askRound4 && askRound4.n})`);
+  check(m4.enemies().filter((c) => c.present).length === 3, 'the cop and both backups were on stage');
+  check(m4.result === 'win' && m4.flags.letGo === false && m4.flags.eternityChoice === 'keptFighting' && m4.flags.eternityFired === true && m4.round === expected4, `held two of Ryan's turns with the cops on stage, then fired (${m4.result}, asked round ${askRound4 && askRound4.n}${ryanPlayed4 ? ' after Ryan played' : ''}, fired round ${m4.round}, expected ${expected4})`);
+  const caps4 = captionsOf(ev4);
+  check(ordered(caps4, "[I've been fighting the possession. That was a mistake.]", '[Holding it.]', '[Holding it. Holding it.]', "[I couldn't.]", '[Rhythm achieved.]'), `the hold's captions in order (${JSON.stringify(caps4)})`);
+  const quit4 = ev4.findIndex((e) => e.type === 'caption' && e.text === "[I couldn't.]");
+  const lock4 = ev4.findIndex((e) => e.type === 'lockInput' && e.on);
+  check(lock4 > quit4, "the player keeps the command window through the hold; input locks at [I couldn't.]");
+  const hits4 = ev4.slice(ask4, quit4).filter((e) => e.type === 'damage' && !e.miss && e.amount > 0 && ['lucky', 'phoenix'].includes(e.target));
+  check(hits4.length > 0, `the walls keep fighting through the hold (${hits4.length} hits on the band)`);
+  check(['lucky', 'phoenix'].every((id) => !m4.find(id).ko && m4.find(id).hp >= 1) && !ev4.some((e) => e.type === 'ko' && ['lucky', 'phoenix'].includes(e.who)), `from the question on, HP floors at 1 (${['lucky', 'phoenix'].map((id) => `${id}:${m4.find(id).hp}`)})`);
+  check(m4.enemies().every((c) => c.ko || c.fled) && m4.rewards.xp === 100, 'cops gone, 100 XP');
 });
 
 // ---------------------------------------------------------------------------------------------
 group('monte carlo: the Eternity is unskippable', (check) => {
-  // Before the hold (onLeave → suspendEnd + arm) a party that cleared the cop and both backups before round 6
-  // won THE SET without the finale: 400 seeds at L5 skipped it in 5% of wins with the chapter1 brain and 25%
-  // with smartPolicy (L6: 21% / 62%). Every win must now fire it, and the win rate must not drop below what
-  // those same seeds gave before the hold (100% at L4-6 with both policies).
+  // Before the hold (onLeave → suspendEnd + the question) a party that cleared the cop and both backups before
+  // round 6 won THE SET without the finale: 400 seeds at L5 skipped it in 5% of wins with the chapter1 brain and
+  // 25% with smartPolicy (L6: 21% / 62%). Every win must fire it on both answers (seeds alternate: even
+  // [Keep fighting it], odd [Let go]), and the win rate must not drop below what those same seeds gave before
+  // the hold (100% at L4-6 with both policies): from the question on, HP floors at 1 either way.
   const RUNS = Number(process.env.MC_ETERNITY_RUNS || 300);
   const BASELINE_WIN = { 4: 100, 5: 100, 6: 100 };
   const build = (l) => (rng) => new BattleModel({ encounterId: 'ep0_palmers_set', encounter: { ...encounters.ep0_palmers_set }, party: [seed('lucky', l), seed('phoenix', l), seed('ryan', 4, { opts: { form: 'pocket', guest: true } })], data, rng, meter: 25, flags: {}, script: BATTLE_SCRIPTS.ep0_palmers_set(), inventory: [], money: 20 });
   for (const [pname, policy] of [['chapter1', chapter1Policy], ['smart', smartPolicy]]) {
     for (const l of [4, 5, 6]) {
-      let wins = 0; let skipped = 0; let heldByLeave = 0; let rounds = 0;
+      let wins = 0; let skipped = 0; let heldByLeave = 0; let rounds = 0; let letGo = 0; let held = 0;
       for (let i = 0; i < RUNS; i++) {
         const m = build(l)(makeRng(1000 + i));
-        try { run(m, policy, { maxRounds: 40 }); } catch (err) { throw new Error(`eternity ${pname} L${l} run ${i}: ${err.message}`); }
+        const answer = i % 2; // 0 [Keep fighting it], 1 [Let go]
+        try { run(m, policy, { maxRounds: 40, choose: answer }); } catch (err) { throw new Error(`eternity ${pname} L${l} run ${i}: ${err.message}`); }
         if (m.result === 'win') {
           wins++; rounds += m.round;
-          if (!m.flags.eternityFired || !m.flags.eternityArmed) skipped++;
+          const asked = m.events.find((e) => e.type === 'prompt');
+          const gaveUp = m.events.some((e) => e.type === 'caption' && e.text === "[I couldn't.]");
+          if (!m.flags.eternityFired || !m.flags.eternityArmed || !asked || asked.answered !== answer) skipped++;
+          else if (answer === 1 && m.flags.letGo === true && !gaveUp) letGo++;
+          else if (answer === 0 && m.flags.letGo === false && gaveUp) held++;
+          else skipped++;
           const armIdx = m.events.findIndex((e) => e.type === 'lockInput' && e.on);
           const lastLeave = m.events.map((e, idx) => (e.type === 'leave' ? idx : -1)).filter((idx) => idx >= 0).pop();
-          if (armIdx >= 0 && lastLeave !== undefined && lastLeave < armIdx && m.events.slice(lastLeave, armIdx).every((e) => e.type !== 'round')) heldByLeave++;
+          if (answer === 1 && armIdx >= 0 && lastLeave !== undefined && lastLeave < armIdx && m.events.slice(lastLeave, armIdx).every((e) => e.type !== 'round')) heldByLeave++;
         }
       }
       const winPct = Math.round((wins * 100) / RUNS);
-      process.stdout.write(`${JSON.stringify({ test: 'monte-carlo-eternity', policy: pname, level: l, runs: RUNS, winPct, skipped, heldByLeave, avgRound: wins ? +(rounds / wins).toFixed(1) : null })}\n`);
-      check(skipped === 0, `${pname} L${l}: ${skipped} of ${wins} wins skipped the Eternity`);
+      process.stdout.write(`${JSON.stringify({ test: 'monte-carlo-eternity', policy: pname, level: l, runs: RUNS, winPct, skipped, letGo, held, heldByLeave, avgRound: wins ? +(rounds / wins).toFixed(1) : null })}\n`);
+      check(skipped === 0, `${pname} L${l}: ${skipped} of ${wins} wins skipped the Eternity or took the wrong branch`);
+      check(letGo + held === wins && letGo > 0 && held > 0, `${pname} L${l}: every win took one branch (letGo ${letGo}, held ${held}, wins ${wins})`);
       check(winPct >= BASELINE_WIN[l], `${pname} L${l}: win rate ${winPct}% below the pre-hold ${BASELINE_WIN[l]}%`);
     }
   }
