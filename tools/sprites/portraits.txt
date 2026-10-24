@@ -6,7 +6,7 @@ frame: 32x32
 palette:
   . = transparent
   k = #141018     # outline / frame
-  w = #f8f8f8     # white
+  w = #f8f8f8     # white (Bajonka's coat)
   p = #ff5fd2     # Lucky pink
   P = #ff9ae6     # pink light
   d = #b0308c     # pink shadow
@@ -21,7 +21,7 @@ palette:
   v = #c880b0     # deflated shadow
   V = #b8ffd6     # deflated glow
   s = #9aa0a8     # Phoenix gray
-  S = #c8ccd4     # gray light
+  S = #c8ccd4     # gray light (Bajonka's sneeze spray)
   z = #5c6068     # gray dark
   h = #30303c     # hoodie / leather
   e = #1c0c2c     # deep shadow
@@ -31,8 +31,7 @@ palette:
   b = #48281c     # hair dark
   r = #d83030     # red
   R = #6c2828     # red dark
-  o = #e88830     # orange (Bajonka)
-  c = #f0dcb0     # cream
+  c = #f0dcb0     # cream (Bajonka's spots)
   y = #f8d820     # yellow
   l = #8bff9a     # slime sheen
   C = #40e0f0     # cyan
@@ -755,28 +754,28 @@ kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
 frame 21: bajonka_sit
 kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
 k..kk..................kk......k
-k.koook..............koook.....k
-k.koFook............kooFok.....k
-k.koFFook..........kooFFok.....k
-k.koFFFookkkkkkkkkkooFFFok.....k
-k.kooFFoooooooooooooooFook.....k
-k.kooooooooooooooooooooook.....k
-k..kooooooooooooooooooook......k
-k..kooooooooooooooooooook......k
-k..kookkkooooooooookkkook......k
-k..kookwkooooooooookwkook......k
-k..kookkkooooooooookkkook......k
-k..koooocccccccccccccoook......k
-k..koooccccccccccccccccok......k
-k..kooccccccccccccccccccok.....k
-k..kooccccckkkkkkcccccccok.....k
-k..kooccccckkkkkkcccccccok.....k
-k..kooccccc.kkkk.cccccccok.....k
-k..kooccccccckkcccccccccok.....k
-k..kooccccckkkkkkcccccccok.....k
-k...kocccccccccccccccccok......k
-k....kcccccccccccccccck........k
-k.....kkccccccccccccck.........k
+k.kwwwk..............kccck.....k
+k.kwFwwk............kccFck.....k
+k.kwFFwwk..........kccFFck.....k
+k.kwFFFwwkkkkkkkkkkccFFFck.....k
+k.kwwFFwwwwwwwwwwwccccFcck.....k
+k.kwwwwwwwwwwwwwwcccccccck.....k
+k..kwwwwwwwwwwwwwccccccck......k
+k..kwwwwwwwwwwwwwccccccck......k
+k..kwwkkkwwwwwwwwcckkkcck......k
+k..kwwkwkwwwwwwwwcckwkcck......k
+k..kwwkkkwwwwwwwwcckkkcck......k
+k..kwwwwwwwwwwwwwwwwwccck......k
+k..kwwwwwwwwwwwwwwwwwwcck......k
+k..kwwwwwwwwwwwwwwwwwwwwwk.....k
+k..kwwwwwwwkkkkkkwwwwwwwwk.....k
+k..kwwwwwwwkkkkkkwwwwwwwwk.....k
+k..kwwwwwww.kkkk.wwwwwwwwk.....k
+k..kwwwwwwwwwkkwwwwwwwwwwk.....k
+k..kwwwwwwwkkkkkkwwwwwwwwk.....k
+k...kwwwwwwwwwwwwwwwwwwwk......k
+k....kwwwwwwwwwwwwwwwwk........k
+k.....kkwwwwwwwwwwwwwk.........k
 k.......kkkkkkkkkkkkkk.........k
 k..............................k
 k..............................k
@@ -789,29 +788,29 @@ kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
 frame 22: bajonka_sneeze
 kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
 k..kk..................kk......k
-k.koook..............koook.....k
-k.koFook............kooFok.....k
-k.koFFook..........kooFFok.....k
-k.koFFFookkkkkkkkkkooFFFok.....k
-k.kooFFoooooooooooooooFook.....k
-k.kooooooooooooooooooooook.....k
-k..kooooooooooooooooooook......k
-k..kooooooooooooooooooook......k
-k..kooooooooooooooooooook......k
-k..kokkkkkooooooookkkkkok......k
-k..kooooooooooooooooooook..w...k
-k..koooocccccccccccccoook......k
-k..koooccccccccccccccccok.w....k
-k..kooccccckkkkkkcccccccok.....k
-k..kooccccckkkkkkcccccccok.ww..k
-k..kooccccc.kkkk.cccccccok.....k
-k..kooccccccccccccccccccok..w..k
-k..kooccckkkkkkkkkkcccccok.....k
-k..kooccckrrrrrrrrkcccccok.ww..k
-k...koccckkkkkkkkkkccccok......k
-k....kcccccccccccccccck...w....k
-k.....kkccccccccccccck.........k
-k.......kkkkkkkkkkkkkk......w..k
+k.kwwwk..............kccck.....k
+k.kwFwwk............kccFck.....k
+k.kwFFwwk..........kccFFck.....k
+k.kwFFFwwkkkkkkkkkkccFFFck.....k
+k.kwwFFwwwwwwwwwwwccccFcck.....k
+k.kwwwwwwwwwwwwwwcccccccck.....k
+k..kwwwwwwwwwwwwwccccccck......k
+k..kwwwwwwwwwwwwwccccccck......k
+k..kwwwwwwwwwwwwwccccccck......k
+k..kwkkkkkwwwwwwwckkkkkck......k
+k..kwwwwwwwwwwwwwccccccck..S...k
+k..kwwwwwwwwwwwwwwwwwccck......k
+k..kwwwwwwwwwwwwwwwwwwcck.S....k
+k..kwwwwwwwkkkkkkwwwwwwwwk.....k
+k..kwwwwwwwkkkkkkwwwwwwwwk.SS..k
+k..kwwwwwww.kkkk.wwwwwwwwk.....k
+k..kwwwwwwwwwwwwwwwwwwwwwk..S..k
+k..kwwwwwkkkkkkkkkkwwwwwwk.....k
+k..kwwwwwkrrrrrrrrkwwwwwwk.SS..k
+k...kwwwwkkkkkkkkkkwwwwwk......k
+k....kwwwwwwwwwwwwwwwwk...S....k
+k.....kkwwwwwwwwwwwwwk.........k
+k.......kkkkkkkkkkkkkk......S..k
 k..............................k
 k..............................k
 k..............................k

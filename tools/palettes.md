@@ -9,8 +9,8 @@ and the UI atlas may use up to 32.
 | Name | Hex | Use |
 |---|---|---|
 | outline | `#141018` | **Every outline**, pupils, mouths, soles. Never use pure black. |
-| white | `#f8f8f8` | Eye whites, glints, window border, cursor |
-| gray_light | `#c8ccd4` | Slime highlight (Phoenix), studs, concrete highlight, inner window border |
+| white | `#f8f8f8` | Eye whites, glints, window border, cursor, Bajonka's coat |
+| gray_light | `#c8ccd4` | Slime highlight (Phoenix), studs, concrete highlight, inner window border, Bajonka's sneeze spray |
 | gray_mid | `#9aa0a8` | Phoenix slime base, sidewalk base |
 | gray_dark | `#5c6068` | Slime shadow (Phoenix), hoodie highlight, concrete joints, metal |
 | shadow | `#30303c` | Asphalt, trash bags, hoodie base, deepest neutral shadow |
@@ -36,10 +36,10 @@ and the UI atlas may use up to 32.
 | brick_dark | `#6c2828` | Mortar, brick shadow |
 | brick_light | `#cc6c50` | Brick highlight |
 | yellow | `#f8d820` | Road lines, lit windows, lamp light, dazed stars |
-| orange | `#e88830` | Warm light falloff, Bajonka's coat, rage highlight |
+| orange | `#e88830` | Warm light falloff, rage highlight, billboard glow |
 | red | `#d83030` | EJECT button, Lucky rage base, billboard heart |
 | dumpster_green | `#3c8c40` | Dumpsters, street signs |
-| cream | `#f0dcb0` | Bajonka's muzzle/legs, warm paper |
+| cream | `#f0dcb0` | Bajonka's spots, plaster, warm paper |
 
 ## Conventions
 

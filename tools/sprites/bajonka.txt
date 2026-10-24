@@ -1,16 +1,20 @@
 # Bajonka — Shiba Inu / Korean Jindo mix, band manager and save point. 16x16, feet on the bottom row.
-# Orange coat, cream muzzle and legs, white chest, pointed ears with inner ear showing, curled tail.
+# White coat with cream spots: one patch over her LEFT eye and ear, one saddle on her back (it straddles
+# the spine, so the flanks show its edge from the front), white muzzle, chest, legs and curled tail,
+# pointed ears with the inner ear showing. The patch stays on her left from every side: viewer's right
+# when she faces down, viewer's left when she faces up, the near (front) ear when she faces left
+# (walk_right is the flipped left sheet, so there it shows on the other side, as every flipX sprite does).
 name: bajonka
 frame: 16x16
 palette:
   . = transparent
   k = #141018     # outline
-  o = #e88830     # orange coat
-  c = #f0dcb0     # cream muzzle / legs
-  w = #f8f8f8     # white chest / sneeze spray
+  w = #f8f8f8     # white coat / muzzle / legs / chest / clipboard page
+  c = #f0dcb0     # cream spots (eye-ear patch, saddle)
   i = #c89060     # inner ear
   r = #d83030     # tongue
   l = #c8ccd4     # clipboard / contract page / key ring
+  s = #c8ccd4     # sneeze spray (pale blue so it reads next to the white coat)
   y = #f8d820     # van keys
 anim: walk_down  frames: 0 1 0 2  fps: 8
 anim: walk_up    frames: 3 4 3 5  fps: 8
@@ -28,180 +32,180 @@ anim: trot_drop      frames: 13 14  fps: 4  repeat: 0   # CS-12/16: trots up, dr
 frame 0: down stand
 ................
 ....k......k....
-...kok....kok...
-..koiokkkkoiok..
-..kooooooooook..
-..kookooookook..
-..koccccccccok..
-..koccckkcccok..
-..kcccccccccck..
-...kkccccccckk..
+...kwk....kck...
+..kwiwkkkkcick..
+..kwwwwwwcccck..
+..kwwkwwwckcck..
+..kwwwwwwwwwck..
+..kwwwwkkwwwwk..
+..kwwwwwwwwwwk..
+...kkwwwwwwwkk..
 ....kwwwwwwk.kk.
-...kowwwwwwokock
-...kowwwwwwokcok
-...kooooooook.kk
-...kcck..kcck...
+...kcwwwwwwckwwk
+...kcwwwwwwckwwk
+...kcwwwwwwck.kk
+...kwwk..kwwk...
 ...kkkk..kkkk...
 
 frame 1: down step a (right paw lifted)
 ....k......k....
-...kok....kok...
-..koiokkkkoiok..
-..kooooooooook..
-..kookooookook..
-..koccccccccok..
-..koccckkcccok..
-..kcccccccccck..
-...kkccccccckk..
+...kwk....kck...
+..kwiwkkkkcick..
+..kwwwwwwcccck..
+..kwwkwwwckcck..
+..kwwwwwwwwwck..
+..kwwwwkkwwwwk..
+..kwwwwwwwwwwk..
+...kkwwwwwwwkk..
 ....kwwwwwwk.kk.
-...kowwwwwwokock
-...kowwwwwwokcok
-...kooooooook.kk
-...kcck..kcck...
-...kcck..kkkk...
+...kcwwwwwwckwwk
+...kcwwwwwwckwwk
+...kcwwwwwwck.kk
+...kwwk..kwwk...
+...kwwk..kkkk...
 ...kkkk.........
 
 frame 2: down step b (left paw lifted)
 ....k......k....
-...kok....kok...
-..koiokkkkoiok..
-..kooooooooook..
-..kookooookook..
-..koccccccccok..
-..koccckkcccok..
-..kcccccccccck..
-...kkccccccckk..
+...kwk....kck...
+..kwiwkkkkcick..
+..kwwwwwwcccck..
+..kwwkwwwckcck..
+..kwwwwwwwwwck..
+..kwwwwkkwwwwk..
+..kwwwwwwwwwwk..
+...kkwwwwwwwkk..
 ....kwwwwwwk.kk.
-...kowwwwwwokock
-...kowwwwwwokcok
-...kooooooook.kk
-...kcck..kcck...
-...kkkk..kcck...
+...kcwwwwwwckwwk
+...kcwwwwwwckwwk
+...kcwwwwwwck.kk
+...kwwk..kwwk...
+...kkkk..kwwk...
 .........kkkk...
 
 frame 3: up stand
 ................
 ....k......k....
-...kok....kok...
-..koookkkkoook..
-..kooooooooook..
-..kooooooooook..
-..kooooooooook..
-..kooooooooook..
-..kooooooooook..
-...kkookkoookk..
-...kookcokoook..
-...kookockoook..
-...koookkooook..
-...kooooooook...
-...kcck..kcck...
+...kck....kwk...
+..kccckkkkwwwk..
+..kccwwwwwwwwk..
+..kwwwwwwwwwwk..
+..kwwwwwwwwwwk..
+..kwcccccccwwk..
+..kwcccccccwwk..
+...kkcckkccwkk..
+...kcckwwkccwk..
+...kcckwwkcwwk..
+...kwwwkkwwwwk..
+...kwwwwwwwwk...
+...kwwk..kwwk...
 ...kkkk..kkkk...
 
 frame 4: up step a
 ....k......k....
-...kok....kok...
-..koookkkkoook..
-..kooooooooook..
-..kooooooooook..
-..kooooooooook..
-..kooooooooook..
-..kooooooooook..
-...kkookkoookk..
-...kookcokoook..
-...kookockoook..
-...koookkooook..
-...kooooooook...
-...kcck..kcck...
-...kcck..kkkk...
+...kck....kwk...
+..kccckkkkwwwk..
+..kccwwwwwwwwk..
+..kwwwwwwwwwwk..
+..kwwwwwwwwwwk..
+..kwcccccccwwk..
+..kwcccccccwwk..
+...kkcckkccwkk..
+...kcckwwkccwk..
+...kcckwwkcwwk..
+...kwwwkkwwwwk..
+...kwwwwwwwwk...
+...kwwk..kwwk...
+...kwwk..kkkk...
 ...kkkk.........
 
 frame 5: up step b
 ....k......k....
-...kok....kok...
-..koookkkkoook..
-..kooooooooook..
-..kooooooooook..
-..kooooooooook..
-..kooooooooook..
-..kooooooooook..
-...kkookkoookk..
-...kookcokoook..
-...kookockoook..
-...koookkooook..
-...kooooooook...
-...kcck..kcck...
-...kkkk..kcck...
+...kck....kwk...
+..kccckkkkwwwk..
+..kccwwwwwwwwk..
+..kwwwwwwwwwwk..
+..kwwwwwwwwwwk..
+..kwcccccccwwk..
+..kwcccccccwwk..
+...kkcckkccwkk..
+...kcckwwkccwk..
+...kcckwwkcwwk..
+...kwwwkkwwwwk..
+...kwwwwwwwwk...
+...kwwk..kwwk...
+...kkkk..kwwk...
 .........kkkk...
 
 frame 6: left stand
 ................
 ....k..k........
-...kokkok.......
-..koiooiook.....
-.kkoooooook..kk.
-kcokoooooookkock
-kcccoooooookkcok
-.kccoooooooookk.
-..kkoooooooooook
-....kwwooooooook
-....kwwooooooook
-....kwoooooooook
-....kcckoookcck.
-....kcck...kcck.
-....kcck...kcck.
+...kckkwk.......
+..kcicwiwwk.....
+.kkcccwwwwk..kk.
+kwwkccwwwwwkkwwk
+kwwwcwwwwwwkkwwk
+.kwwwwwwwwwwwkk.
+..kkwwwwccccccck
+....kwwwccccccck
+....kwwwwcccccwk
+....kwwwwwwwwwwk
+....kwwkwwwkwwk.
+....kwwk...kwwk.
+....kwwk...kwwk.
 ....kkkk...kkkk.
 
 frame 7: left step a (legs spread)
 ....k..k........
-...kokkok.......
-..koiooiook.....
-.kkoooooook..kk.
-kcokoooooookkock
-kcccoooooookkcok
-.kccoooooooookk.
-..kkoooooooooook
-....kwwooooooook
-....kwwooooooook
-....kwoooooooook
-....kcckoookcck.
-...kcck.....kcck
-...kcck.....kcck
+...kckkwk.......
+..kcicwiwwk.....
+.kkcccwwwwk..kk.
+kwwkccwwwwwkkwwk
+kwwwcwwwwwwkkwwk
+.kwwwwwwwwwwwkk.
+..kkwwwwccccccck
+....kwwwccccccck
+....kwwwwcccccwk
+....kwwwwwwwwwwk
+....kwwkwwwkwwk.
+...kwwk.....kwwk
+...kwwk.....kwwk
 ...kkkk.....kkkk
 ................
 
 frame 8: left step b (legs tucked)
 ....k..k........
-...kokkok.......
-..koiooiook.....
-.kkoooooook..kk.
-kcokoooooookkock
-kcccoooooookkcok
-.kccoooooooookk.
-..kkoooooooooook
-....kwwooooooook
-....kwwooooooook
-....kwoooooooook
-....kcckoookcck.
-.....kcck.kcck..
-.....kcck.kcck..
+...kckkwk.......
+..kcicwiwwk.....
+.kkcccwwwwk..kk.
+kwwkccwwwwwkkwwk
+kwwwcwwwwwwkkwwk
+.kwwwwwwwwwwwkk.
+..kkwwwwccccccck
+....kwwwccccccck
+....kwwwwcccccwk
+....kwwwwwwwwwwk
+....kwwkwwwkwwk.
+.....kwwk.kwwk..
+.....kwwk.kwwk..
 .....kkkk.kkkk..
 ................
 
 frame 9: sneeze a (inhale, eyes shut)
 ....k......k....
-...kok....kok...
-..koiokkkkoiok..
-..kooooooooook..
-..kokkooookkok..
-..koccccccccok..
-..koccckkcccok..
-..kccckrrkccck..
-...kkccccccckk..
+...kwk....kck...
+..kwiwkkkkcick..
+..kwwwwwwcccck..
+..kwkkwwwckkck..
+..kwwwwwwwwwck..
+..kwwwwkkwwwwk..
+..kwwwkrrkwwwk..
+...kkwwwwwwwkk..
 ....kwwwwwwk.kk.
-...kowwwwwwokock
-...kowwwwwwokcok
-...kooooooook.kk
-...kcck..kcck...
+...kcwwwwwwckwwk
+...kcwwwwwwckwwk
+...kcwwwwwwck.kk
+...kwwk..kwwk...
 ...kkkk..kkkk...
 ................
 
@@ -209,88 +213,88 @@ frame 10: sneeze b (achoo, ears flat, spray)
 ................
 ................
 ...kk......kk...
-..koookkkkooook.
-..kooooooooook..
-..kokkooookkok..
-w.koccccccccok.w
-..koccckkcccok..
-w.kccckrrkccck.w
-...kkccccccckk..
+..kwwwkkkkcccck.
+..kwwwwwwcccck..
+..kwkkwwwckkck..
+s.kwwwwwwwwwck.s
+..kwwwwkkwwwwk..
+s.kwwwkrrkwwwk.s
+...kkwwwwwwwkk..
 ....kwwwwwwk.kk.
-...kowwwwwwokock
-...kowwwwwwokcok
-...kooooooook.kk
-...kcck..kcck...
+...kcwwwwwwckwwk
+...kcwwwwwwckwwk
+...kcwwwwwwck.kk
+...kwwk..kwwk...
 ...kkkk..kkkk...
 
 frame 11: clipboard_sit
 ................
 ....k......k....
-...kok....kok...
-..koiokkkkoiok..
-..kooooooooook..
-..kookooookook..
-..koccccccccok..
-..koccckkcccok..
-..kcccccccccck..
-...kkccckkcckk..
+...kwk....kck...
+..kwiwkkkkcick..
+..kwwwwwwcccck..
+..kwwkwwwckcck..
+..kwwwwwwwwwck..
+..kwwwwkkwwwwk..
+..kwwwwwwwwwwk..
+...kkwwwkkwwkk..
 ..kllllllllllk..
 ..klwwwwwwwwlk..
 ..klwwwwwwwwlk..
 ..kkkkkkkkkkkk..
-..kookcckcckook.
+..kcckwwkwwkcck.
 ..kkkkkkkkkkkkk.
 
 frame 12: keys_sit
 ................
 ....k......k....
-...kok....kok...
-..koiokkkkoiok..
-..kooooooooook..
-..kookooookook..
-..koccccccccok..
-..koccckkcccok..
-..kcccccccccck..
-...kkccckkcckk..
+...kwk....kck...
+..kwiwkkkkcick..
+..kwwwwwwcccck..
+..kwwkwwwckcck..
+..kwwwwwwwwwck..
+..kwwwwkkwwwwk..
+..kwwwwwwwwwwk..
+...kkwwwkkwwkk..
 ....kwwwlwwk....
-...kowwwyywok...
-...kowwwwywok...
-..koooooooooook.
-..kookcckcckook.
+...kcwwwyywck...
+...kcwwwwywck...
+..kcwwwwwwwwwck.
+..kcckwwkwwkcck.
 ..kkkkkkkkkkkkk.
 
 frame 13: trot_drop a (trot, page in mouth)
 ....k......k....
-...kok....kok...
-..koiokkkkoiok..
-..kooooooooook..
-..kookooookook..
-..koccccccccok..
-..koccckkcccok..
-..kcccckkcccck..
-...kkckllkcckk..
+...kwk....kck...
+..kwiwkkkkcick..
+..kwwwwwwcccck..
+..kwwkwwwckcck..
+..kwwwwwwwwwck..
+..kwwwwkkwwwwk..
+..kwwwwkkwwwwk..
+...kkwkllkwwkk..
 ....kwkllkwk.kk.
-...kowkkkkwokock
-...kowwwwwwokcok
-...kooooooook.kk
-...kcck..kcck...
-...kcck..kkkk...
+...kcwkkkkwckwwk
+...kcwwwwwwckwwk
+...kcwwwwwwck.kk
+...kwwk..kwwk...
+...kwwk..kkkk...
 ...kkkk.........
 
 frame 14: trot_drop b (dropped, mouth open)
 ................
 ....k......k....
-...kok....kok...
-..koiokkkkoiok..
-..kooooooooook..
-..kookooookook..
-..koccccccccok..
-..koccckkcccok..
-..kcccckkcccck..
-...kkccccccckk..
+...kwk....kck...
+..kwiwkkkkcick..
+..kwwwwwwcccck..
+..kwwkwwwckcck..
+..kwwwwwwwwwck..
+..kwwwwkkwwwwk..
+..kwwwwkkwwwwk..
+...kkwwwwwwwkk..
 ....kwwwwwwk.kk.
-...kowwwwwwokock
-...kowwwwwwokcok
-...kooooooook.kk
-...kcck..kcck...
+...kcwwwwwwckwwk
+...kcwwwwwwckwwk
+...kcwwwwwwck.kk
+...kwwk..kwwk...
 ...kkkk..kkkk...
