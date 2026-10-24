@@ -130,7 +130,7 @@ export default class ExploreScene extends Phaser.Scene {
 
     const leader = this.state.party.members[0];
     const chars = this.gameData.characters.characters;
-    const sprite = leader && chars[leader.id] ? chars[leader.id].sprite : 'lucky';
+    const sprite = this.playerSheet(leader && chars[leader.id] ? chars[leader.id].sprite : 'lucky');
     this.player = new Entity(this, {
       id: 'player', type: 'player', sprite, behavior: 'idle',
       x: x ?? def.spawn.x, y: y ?? def.spawn.y, facing: facing || def.spawn.facing,
@@ -148,6 +148,16 @@ export default class ExploreScene extends Phaser.Scene {
     if (def.music) audioCall('playMusic', def.music, { fade: 0.5 });
     else audioCall('stopMusic', { fade: 0.5 });
     this.events.emit('mapload', mapId);
+  }
+
+  /**
+   * The leader's map sheet follows the story flags (DESIGN.md "Lucky's color on the map"): `lucky_rage`
+   * from `flags.luckyRageLocked` on, for the rest of the chapter, so a map change or CONTINUE keeps it.
+   * Scripts still swap sheets freely on top of this (`{"sprite"}`).
+   */
+  playerSheet(base) {
+    if (base === 'lucky' && this.state.flags.luckyRageLocked && this.manifest && this.manifest.lucky_rage) return 'lucky_rage';
+    return base;
   }
 
   /**
