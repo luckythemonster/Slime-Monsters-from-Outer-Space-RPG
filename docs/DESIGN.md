@@ -47,7 +47,7 @@ TITLE ─new game─▶ pod_bay
 alley  ep0_crash ─▶ metPhoenix ─B-1─▶ droneDefeated, phoenixJoined  (autosave 1)
 apartment  amp ─▶ signalSent ─[rooftops, garage_north]─▶ END PART 1 / ONE WEEK LATER
   ─▶ weekLater, hubOpen (café, pawn, day enemies ON)  (autosave 2 on leaving the apartment)
-coffee_shop  corkboard ─▶ flyerPosted (vars.flyerText 0..2) ─▶ brianJoined ─[garage call]─▶ ryanCalled (City Sound door ON)
+coffee_shop  corkboard ─▶ flyerPosted (vars.flyerText 0..2) ─▶ brianJoined ─[garage call]─▶ ryanCalled (City Sound door ON)  (autosave 2b at the end of CS-08)
 city_sound_hall  (autosave 3 on enter) ep0_ryan_arrives ─▶ ryanArrived ─▶ hasBajonka (SAVES ON)
 room4  ep0_room4_setup ─B-9─▶ auditionDone, ryanJoined (contractPages = 3 + vars.saveCount) ─save─▶
   ONE MONTH LATER ─▶ monthLater ─B-10─▶ pedalboardFried ─▶ brianQuit (−brian, +fried_pedalboard) ─▶ hasPalmersFlyer (street NIGHT; Palmer's ON)
@@ -211,7 +211,7 @@ Floor-band triggers `ep0_dad_1..4` (once each; `condition: !flags.podSpeakerSlap
 9. `say brian portrait:brian_phone` "Ryan. It's Brian. From the Zappa cover band. I've got a thing." `say ryan` "Yep." `sfx click`.
 10. `teleport coffee_shop 10 11`; `say brian` "He's in. City Sound, Room 4, tonight. Take the train."
 11. `say lucky` "The universe came through." `say brian` "I called him." `say lucky` "The UNIVERSE." `say phoenix` "My brain thinks you're both right and that it doesn't matter."
-12. `set flags.ryanCalled` (opens the rail exit); `music normal_music` resumes.
+12. `set flags.ryanCalled` (opens the rail exit); `music normal_music` resumes; **[EXT]** autosave (`{"save":{"auto":true}}`) so a death at the hub chokepoints resumes here, Brian in the band, instead of before the café.
 
 ### CS-09 `ep0_ryan_arrives` (Room 3 proximity trigger, once) — Toon 0 → 1
 1. `sfx door`; `spawn ryan sprite:ryan_loaded 1 6` (the impossible stack: a 16×40 sheet, or `ryan` plus a `hardware_stack` object moved in lockstep); `move ryan "RRRRRRRRRRRRRRRRRRR" wait:true` to (20,6).
@@ -865,7 +865,7 @@ Not cuttable: `title`, `battle`, `four_dollars`, `pocket`, `rhythm_achieved`. Cu
 
 `src/config.js` adds `KeyC` to `menu`, `KeyM` and `KeyF` as app-level toggles. Text speed and volumes live in the pause menu's STATUS → OPTIONS and in `smfos.settings`. Text 1 char / 30 ms; `confirm` completes the page, then advances; `?fast=1` honored everywhere (instant text, 4× transitions, 8-frame static burst).
 
-**Saving is Bajonka.** She becomes a `save` entity at City Sound (`flags.hasBajonka`, set in CS-09) and sits at: the City Sound hallway outside Room 4 (the canonical clipboard pose), Room 4 after the audition (CS-12 `save` command), outside Palmer's on the hub at night, and the rubble (CS-17). Before she exists the game **autosaves to the active slot** at three points: after the tutorial battle, on leaving the apartment after ONE WEEK LATER, and on entering the City Sound hallway — so a death in the hub costs at most the hub. Interact → `sneeze` → "Bajonka holds out the clipboard." → INITIAL HERE? with three slots, each showing chapter, location, playtime, Lucky's level and the party's portraits in a row; an empty slot reads "— unsigned —"; [Decline] → "The clipboard does not move." Saving bumps `vars.saveCount` (toast "You initial page {n}. Bajonka sneezes."), restores AMP to max for everyone (the dog is a rest), and stores `meter` (zeroed on load). Ryan's agreement is `3 + vars.saveCount` pages, so a cautious player hands him a forty-page contract. Saves use the §6 format in `smfos.save.1..3`; Continue on the title loads the most recent slot; Game Over reads "CONTINUE FROM LAST INITIALED PAGE?" and returns to Title with Continue enabled.
+**Saving is Bajonka.** She becomes a `save` entity at City Sound (`flags.hasBajonka`, set in CS-09) and sits at: the City Sound hallway outside Room 4 (the canonical clipboard pose), Room 4 after the audition (CS-12 `save` command), outside Palmer's on the hub at night, and the rubble (CS-17). Before she exists the game **autosaves to the active slot** at four points: after the tutorial battle, on leaving the apartment after ONE WEEK LATER, when Brian joins (the end of CS-08, so the café is never replayed), and on entering the City Sound hallway — so a death in the hub costs at most the hub. Interact → `sneeze` → "Bajonka holds out the clipboard." → INITIAL HERE? with three slots, each showing chapter, location, playtime, Lucky's level and the party's portraits in a row; an empty slot reads "— unsigned —"; [Decline] → "The clipboard does not move." Saving bumps `vars.saveCount` (toast "You initial page {n}. Bajonka sneezes."), restores AMP to max for everyone (the dog is a rest), and stores `meter` (zeroed on load). Ryan's agreement is `3 + vars.saveCount` pages, so a cautious player hands him a forty-page contract. Saves use the §6 format in `smfos.save.1..3`; Continue on the title loads the most recent slot; Game Over reads "CONTINUE FROM LAST INITIALED PAGE?" and returns to Title with Continue enabled.
 
 ## Content inventory
 

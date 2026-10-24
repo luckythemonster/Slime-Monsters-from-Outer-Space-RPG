@@ -78,7 +78,8 @@
     { "say": "The UNIVERSE.", "who": "lucky" },
     { "say": "My brain thinks you're both right and that it doesn't matter.", "who": "phoenix" },
     { "set": { "flags.ryanCalled": true, "flags.brianCalledRyan": true } },
-    { "music": "normal_music" }
+    { "music": "normal_music" },
+    { "save": { "auto": true } }
   ],
 
   "npc_cafe_corkboard": [
