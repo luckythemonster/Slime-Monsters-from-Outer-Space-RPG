@@ -150,7 +150,6 @@ object under several ids. `audio.playMusic('hub')` plays `west_bank`, `hasSong('
 | `win_sting` | Victory | 240, 4/4 | 2 | 2.0 | **no** | `victory` | D, E, A stabs on three pulses + crash. |
 | `level_up` | Level up | 160, 4/4 | 1 | 1.5 | **no** | — | C5→C7 arpeggio with an echo, crash on the top. |
 | `game_over` | Game over | 50, 5/4 | 1 | 6.0 | **no** | `gameover` | The dental_plan jingle in C minor at half speed. |
-| `bajonka` | Save | 240, 4/4 | 1 | 1.0 | **no** | — | Two triangle boops (A4, E5); play the `sneeze` SFX first. |
 
 Chapter 1 SFX (40 after the original 20): `caption_tick`, `count_click`, `stick_click`, `eject`, `static_burst`, `crash`,
 `pedal_stomp`, `coffee_spill`, `sparks`, `roof_peel`, `wall_blow`, `mohawk_pop`, `intercom_buzz` (2 s; retrigger while

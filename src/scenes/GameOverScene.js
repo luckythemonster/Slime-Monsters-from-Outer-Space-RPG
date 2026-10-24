@@ -1,4 +1,5 @@
-// GameOverScene: text, then confirm (or a timeout) returns to Title.
+// GameOverScene: the `game_over` jingle (DESIGN cue list: dental_plan in minor, Dad wins) cuts the battle
+// song, then confirm (or a timeout) returns to Title.
 import Phaser from 'phaser';
 import { services } from '../engine/services.js';
 import { audioCall } from '../engine/Audio.js';
@@ -19,7 +20,7 @@ export default class GameOverScene extends Phaser.Scene {
     this.add.rectangle(0, 0, WIDTH, HEIGHT, 0x000000, 1).setOrigin(0, 0);
     this.add.text(WIDTH / 2, 80, 'GAME OVER', { ...FONT, color: '#ff5a5a' }).setOrigin(0.5, 0);
     this.add.text(WIDTH / 2, 110, this.message, { ...FONT, wordWrap: { width: 224 } }).setOrigin(0.5, 0);
-    audioCall('stopMusic', { fade: 0.5 });
+    audioCall('playMusic', 'game_over', { fade: 0 }); // fade 0: cut whatever was still playing, start the one-shot
     audioCall('sfx', 'ko');
     services.ui.fade('in', scaleMs(300));
     this.time.delayedCall(scaleMs(800), () => { this.ready = true; });

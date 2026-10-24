@@ -27,13 +27,12 @@ import plaster_dust from './plaster_dust.js';
 import win_sting from './win_sting.js';
 import level_up from './level_up.js';
 import game_over from './game_over.js';
-import bajonka from './bajonka.js';
 
 export const SONGS = Object.freeze({
   title, snow, battle,
   dental_plan, flying_squirrel, pothole, unpaid_bills, ask_the_universe, northern_garage,
   west_bank, normal_music, sticker_hallway, four_dollars, six_inch_stage, six_inch_stage_ext, pocket,
-  rhythm_achieved, plaster_dust, win_sting, level_up, game_over, bajonka,
+  rhythm_achieved, plaster_dust, win_sting, level_up, game_over,
 });
 
 export const ALIASES = Object.freeze({

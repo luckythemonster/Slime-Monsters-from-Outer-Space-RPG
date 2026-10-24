@@ -145,10 +145,11 @@ export async function runShop(shopId, { shops, state, ui, audio }) {
       const rows = entries.map((e) => {
         const price = sellPrice(shop, e.id, e.def);
         const refused = price === null;
+        // 22 name columns + 4 price columns = 26 (w 234, inside the 8..248 window); the quantity lives in the hint.
         return {
           id: e.id, price, qty: e.qty,
-          label: `${pad(`${e.def.name} x${e.qty}`, 20)}${pad(refused ? '--' : money(price), 5)}`,
-          hint: refused ? "Won't take that." : `Sells for ${money(price)} each.`,
+          label: `${pad(e.def.name, 22)}${pad(refused ? '--' : money(price), 4)}`,
+          hint: refused ? "Won't take that." : `x${e.qty} in the bag. Sells for ${money(price)} each.`,
           disabled: refused,
         };
       });

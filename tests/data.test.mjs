@@ -297,6 +297,15 @@ group('maps', (check) => {
 });
 
 // ---------------------------------------------------------------------------------------------
+group('riffs', (check) => {
+  // The pause menu's RIFFS screen and the battle RIFF list both resolve characters.json riff ids through riffs.json.
+  const riffs = readJson(path.join(DATA, 'riffs.json'));
+  for (const [id, c] of Object.entries(characters.characters)) {
+    for (const rid of c.riffs || []) check(!!riffs[rid] && typeof riffs[rid].name === 'string', `character ${id}: riff "${rid}" has a riffs.json entry with a name`);
+  }
+});
+
+// ---------------------------------------------------------------------------------------------
 group('encounters', (check) => {
   for (const [id, enc] of Object.entries(encounters)) {
     check(Array.isArray(enc.enemies) && enc.enemies.length > 0, `encounter ${id}: enemies`);

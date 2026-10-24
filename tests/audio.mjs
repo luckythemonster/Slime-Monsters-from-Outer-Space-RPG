@@ -59,7 +59,7 @@ check('sfx: SFX_NAMES has no duplicates and names only real recipes', new Set(SF
 // Chapter 1 cue list (design_feel.md "Audio") + the jingles
 const CH1_SONGS = ['title', 'snow', 'battle', 'dental_plan', 'flying_squirrel', 'pothole', 'unpaid_bills', 'ask_the_universe', 'northern_garage',
   'west_bank', 'normal_music', 'sticker_hallway', 'four_dollars', 'six_inch_stage', 'six_inch_stage_ext', 'pocket', 'rhythm_achieved',
-  'plaster_dust', 'win_sting', 'level_up', 'game_over', 'bajonka'];
+  'plaster_dust', 'win_sting', 'level_up', 'game_over'];
 check('songs: every Chapter 1 cue is in songs/index.js', CH1_SONGS.every((id) => SONGS[id]), { missing: CH1_SONGS.filter((id) => !SONGS[id]) });
 const REQUIRED_ALIASES = {
   pod_bay: 'dental_plan', freefall: 'flying_squirrel', apartment: 'unpaid_bills', signal: 'ask_the_universe', garage: 'northern_garage',
@@ -152,10 +152,10 @@ if (compiled.northern_garage) {
     c.bpm === 60 && c.channels.length === 2 && SONGS.northern_garage.channels.noise.volume === 0.1 && drumSteps('northern_garage', 'noise', 'h').length === c.bars * 4
       && chan('northern_garage', 'tri').events.length === c.bars / 2);
 }
-for (const id of ['win_sting', 'level_up', 'game_over', 'bajonka']) {
+for (const id of ['win_sting', 'level_up', 'game_over']) {
   if (!compiled[id]) continue;
   const c = compiled[id];
-  const max = { win_sting: 3, level_up: 2, game_over: 7, bajonka: 1.2 }[id];
+  const max = { win_sting: 3, level_up: 2, game_over: 7 }[id];
   check(`${id}: one-shot jingle (loop:false, ≤ ${max} s)`, !c.loop && c.duration <= max, { duration: c.duration });
 }
 check('parser: rejects bad note token', (() => { try { parseToken('H4'); return false; } catch { return true; } })());

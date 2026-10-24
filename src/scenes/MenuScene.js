@@ -6,6 +6,7 @@ import Phaser from 'phaser';
 import { services } from '../engine/services.js';
 import { audioCall } from '../engine/Audio.js';
 import { EQUIP_SLOTS } from '../engine/Party.js';
+import { riffs as RIFFS } from '../engine/battle/data.js';
 
 const TOP_ITEMS = ['Items', 'Riffs', 'Equip', 'Status', 'Save', 'Quit'];
 const SLOT_LABEL = { instrument: 'Inst', accessory: 'Acc' };
@@ -103,8 +104,9 @@ export default class MenuScene extends Phaser.Scene {
 
   async riffs() {
     const lines = this.state.party.members.map((m) => {
-      const riffs = this.state.party.def(m.id).riffs || [];
-      return `${this.state.party.def(m.id).name}: ${riffs.length ? riffs.join(', ') : 'no riffs yet'}`;
+      // characters.json lists riff ids; riffs.json carries the names the battle RIFF list shows, level-gated the same way.
+      const riffs = (this.state.party.def(m.id).riffs || []).filter((id) => RIFFS[id] && (RIFFS[id].level || 1) <= m.level);
+      return `${this.state.party.def(m.id).name}: ${riffs.length ? riffs.map((id) => RIFFS[id].name || id).join(', ') : 'no riffs yet'}`;
     });
     await this.ui.say({ text: lines.join('\n'), who: 'narrator' });
   }
@@ -120,7 +122,7 @@ export default class MenuScene extends Phaser.Scene {
       const mi = await this.ui.menu(members.map((m) => ({ label: p.def(m.id).name })), { x: 128, y: 72, cancelable: true });
       if (this.closed || mi < 0) return;
       const m = members[mi];
-      const si = await this.ui.menu(EQUIP_SLOTS.map((slot) => ({ label: `${SLOT_LABEL[slot]}: ${nameOf(m.equip[slot])}`.slice(0, 28) })), { x: 128, y: 108, cancelable: true });
+      const si = await this.ui.menu(EQUIP_SLOTS.map((slot) => ({ label: `${SLOT_LABEL[slot]}: ${nameOf(m.equip[slot])}`.slice(0, 26) })), { x: 128, y: 108, cancelable: true }); // 26 cols: w 234 fits once ListMenu clamps x
       if (this.closed || si < 0) continue;
       const slot = EQUIP_SLOTS[si];
       const cur = m.equip[slot] ? eq[m.equip[slot]] : null;

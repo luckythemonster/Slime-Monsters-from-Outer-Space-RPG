@@ -38,6 +38,7 @@ export default class ListMenu {
     if (Number.isFinite(opts.x)) this.x = Math.round(opts.x);
     else if (opts.anchor === 'bottom-right') this.x = SCREEN_W - 8 - this.w;
     else this.x = Math.round((SCREEN_W - this.w) / 2);
+    this.x = Math.max(8, Math.min(this.x, SCREEN_W - 8 - this.w)); // keep the window inside the 8 px screen margin
     if (Number.isFinite(opts.y)) this.y = Math.round(opts.y);
     else if (opts.anchor === 'bottom-right') this.y = SCREEN_H - 8 - this.h;
     else this.y = Math.round((SCREEN_H - this.h) / 2);

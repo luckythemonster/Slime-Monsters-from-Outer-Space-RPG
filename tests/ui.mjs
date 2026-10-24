@@ -362,6 +362,14 @@ async function main() {
     p = await t.waitDone();
     t.check('menu cancel resolves -1', p.done && p.value === -1, `value=${p.value}`);
 
+    // A menu asked for at x 128 with a 20-char label (w 194) is pushed back inside the 8 px screen margin.
+    await t.start('menu', [{ label: 'Tater Tot Hotdish x1', hint: 'A casserole' }, { label: 'Pizza Slice x1', hint: 'Cold' }], { x: 128, y: 72 });
+    await t.waitTop(() => __uih.state().top && __uih.state().top.state === 'open');
+    st = await t.state();
+    t.check('menu at x 128 is clamped inside the screen (x + w <= 248)', st.top.x + st.top.w <= 248 && st.top.x >= 8, `x=${st.top.x} w=${st.top.w}`);
+    await t.key('Backspace', 250);
+    p = await t.waitDone();
+
     // ---- 6. caption ----
     await t.start('caption', 'ONE MONTH LATER', 600);
     await sleep(350);
