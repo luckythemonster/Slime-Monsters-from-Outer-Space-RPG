@@ -80,7 +80,7 @@ Twelve maps including the scene. Every map lists `"encounters": { "rate": 0, "po
 
 ### `pod_bay` — 16×14
 **Layout.** Steel floor, catwalk along the top row, three drop pods along the bottom (pod 2 open at (7,11), Lucky inside). Intercom speaker 2×2 on the north wall at (7,2). Viewport (12,2) onto Planet California, a planet made of billboards (`window_stars` animated tile). Vending machine (2,3), plaque (4,2). Pod 3 nameplate (11,11). **Spawn** (7,11) facing up. Lucky uses the `lucky_ball` 16×16 sheet here (CS-01 swaps it in; rolls; 2-frame squish idle) until the crash puts the `lucky` sheet back.
-**Interactables.** Speaker → CS-02. Pod 2 EJECT (6,11) → CS-03. Laser guitar case in the pod (8,11): "The only thing from home worth the fuel." (equips Beat-Up Guitar; one toast: "EQUIP is in the menu."). Pod 3 nameplate: "RESERVED — RUBEN, B." → Lucky: "…They're late. They're always late." (`flags.readBillyPod`). Vending: "DENTAL PLAN: SOLD OUT. DEMOGRAPHIC: SOLD OUT. WATER: $40." Plaque: "EMPLOYEE OF THE QUARTER: DAD (41 CONSECUTIVE)." Viewport: "One billboard says WORK IS LOVE. Lucky has never seen it turned off."
+**Interactables.** Speaker → CS-02. Pod 2 EJECT (6,11) → CS-03. Laser guitar case in the pod (8,11): "The only thing from home worth the fuel." (equips Beat-Up Guitar; one toast: "EQUIP is in the menu."). Pod 3 nameplate: "RESERVED — RUBEN, B." → Lucky: "…He's late. He's always late." (`flags.readBillyPod`). Vending: "DENTAL PLAN: SOLD OUT. DEMOGRAPHIC: SOLD OUT. WATER: $40." Plaque: "EMPLOYEE OF THE QUARTER: DAD (41 CONSECUTIVE)." Viewport: "One billboard says WORK IS LOVE. Lucky has never seen it turned off."
 **Triggers.** Four once-only floor bands (rows 4, 6, 8, 10 across x 3..12) keep Dad going (CS-01 extras). **Enemies:** none.
 
 ### `alley` — 24×14
@@ -148,7 +148,7 @@ Every cutscene is a numbered list of §5.1 commands in shorthand: `say who "text
 4. `say dad` "If you'd just join The Vanguard, you could be financially successful and oppress people with a dental plan!"
 5. `emote player …`; `set flags.podIntro`.
 
-Floor-band triggers `ep0_dad_1..4` (once each; `condition: !flags.podSpeakerSlapped`): `say dad` "Your mother and I paid for the compression. The least you could do is market yourself." / "There's an opening in Demographic Alignment. You'd report to me." / "Billy's parents say Billy 'found themself.' In a storage unit." / "…I can see the speaker light." Twins with `condition: flags.podSpeakerSlapped`: `say dad` "{speed:slow}mmf. mmmf."
+Floor-band triggers `ep0_dad_1..4` (once each; `condition: !flags.podSpeakerSlapped`): `say dad` "Your mother and I paid for the compression. The least you could do is market yourself." / "There's an opening in Demographic Alignment. You'd report to me." / "Billy's parents say Billy 'found himself.' In a storage unit. The Bile Ducts. What kind of a brand is that?" / "…I can see the speaker light." Twins with `condition: flags.podSpeakerSlapped`: `say dad` "{speed:slow}mmf. mmmf."
 
 ### CS-02 `ep0_speaker` (interact, speaker) — Toon 3
 1. `sprite player lucky_ball` (a no-op after CS-01; keeps a warp honest); `face player up`; `anim player lucky_ball_pseudopod wait:true`; `sfx squelch`; `sprite speaker speaker_slimed`; `face player up` (the arm stays on the grille, Lucky is a ball again).

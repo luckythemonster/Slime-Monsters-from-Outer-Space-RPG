@@ -244,7 +244,7 @@ async function main() {
     await ev(() => {
       const s = window.__slime.state;
       window.__slime.addParty('brian');
-      s.party.addXp('lucky', 30); s.party.addXp('phoenix', 30); // L4
+      s.party.addXp('lucky', 61); s.party.addXp('phoenix', 61); // L5: the STRUM-only autoplay loses ~5% of L4 auditions
       s.party.healAll();
       window.__slime.give('pizza_slice', 2);
       window.__slime.autoAdvance(true);
@@ -268,7 +268,7 @@ async function main() {
     await ev(() => {
       const s = window.__slime.state;
       window.__slime.removeParty('brian');
-      s.party.addXp('lucky', 40); s.party.addXp('phoenix', 40); // L5
+      s.party.addXp('lucky', 9); s.party.addXp('phoenix', 9); // still L5
       s.party.healAll();
       window.__slime.autoAdvance(true);
     });
