@@ -71,6 +71,13 @@
     { "wait": 1200 },
     { "face": { "who": "ryan", "dir": "down" } },
     { "say": "[I could have killed every person in this room.]", "who": "ryan_caption", "shake": true },
+    { "if": "flags.letGo", "then": [
+      { "say": "[That wasn't the goo.]", "who": "ryan_caption" },
+      { "say": "[That was me.]", "who": "ryan_caption" }
+    ], "else": [
+      { "say": "[I didn't let go.]", "who": "ryan_caption" },
+      { "say": "[It didn't matter.]", "who": "ryan_caption" }
+    ] },
     { "face": { "who": "ryan", "dir": "up" } },
     { "face": { "who": "ryan", "toward": "player" } },
     { "say": "I quit.", "who": "ryan", "portrait": "ryan_stoic" },
@@ -83,16 +90,25 @@
     { "choice": [
       { "text": "RAGE", "then": [
         { "set": { "vars.quitResponse": 0 } },
-        { "say": "{shake}You don't get to be scared of the best thing you've ever done!{/shake}", "who": "lucky", "portrait": "lucky_rage" }
+        { "say": "{shake}You don't get to be scared of the best thing you've ever done!{/shake}", "who": "lucky", "portrait": "lucky_rage" },
+        { "if": "flags.letGo", "then": [
+          { "say": "She asked the universe for this. She watched him let go.", "who": "narrator" }
+        ] }
       ] },
       { "text": "PLEAD", "then": [
         { "set": { "vars.quitResponse": 1 } },
         { "sprite": { "who": "player", "sheet": "lucky_deflated" } },
-        { "say": "One more show. One. You don't even have to let go.", "who": "lucky", "portrait": "lucky_deflated" }
+        { "say": "One more show. One. You don't even have to let go.", "who": "lucky", "portrait": "lucky_deflated" },
+        { "if": "flags.letGo", "then": [
+          { "say": "He already let go once. That was the show.", "who": "narrator" }
+        ] }
       ] },
       { "text": "JOKE", "then": [
         { "set": { "vars.quitResponse": 2 } },
-        { "say": "We'll put you on the flyer as a weather event.", "who": "lucky", "portrait": "lucky_rage" }
+        { "say": "We'll put you on the flyer as a weather event.", "who": "lucky", "portrait": "lucky_rage" },
+        { "if": "flags.letGo", "then": [
+          { "say": "Weather doesn't choose. He did.", "who": "narrator" }
+        ] }
       ] }
     ] },
     { "say": "Yep.", "who": "ryan", "portrait": "ryan_stoic" },

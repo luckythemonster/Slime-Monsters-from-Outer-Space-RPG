@@ -23,7 +23,7 @@
   ],
   "ep0_dad_3": [
     { "anim": { "who": "speaker", "key": "obj_intercom_talk", "wait": false } },
-    { "say": "Billy's parents say Billy 'found themself.' In a storage unit.", "who": "dad" }
+    { "say": "Billy's parents say Billy 'found himself.' In a storage unit. The Bile Ducts. What kind of a brand is that?", "who": "dad" }
   ],
   "ep0_dad_4": [
     { "anim": { "who": "speaker", "key": "obj_intercom_talk", "wait": false } },
@@ -91,7 +91,7 @@
 
   "ep0_pod_nameplate": [
     { "say": "RESERVED — RUBEN, B.", "who": "narrator" },
-    { "say": "…They're late. They're always late.", "who": "lucky" },
+    { "say": "…He's late. He's always late.", "who": "lucky" },
     { "set": { "flags.readBillyPod": true } }
   ],
 
