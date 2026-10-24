@@ -2,8 +2,8 @@
 // Runs every test sequentially and exits non-zero if any fails:
 //   data.test.mjs + battle.test.mjs (pure Node) → smoke.mjs (vite build + headless boot) → explore.mjs
 //   (gameplay) → extensions.mjs → content_a/b/c.mjs (chapter walkthroughs) → chapter1.mjs (the honest
-//   playthrough) → battle.mjs → audio.mjs /
-//   ui.mjs when present.
+//   playthrough) → chapter1_wrong.mjs (every branch, loss, refusal and edge, with warps) → battle.mjs →
+//   audio.mjs / ui.mjs when present.
 // smoke.mjs builds dist/; every Playwright test after it reuses that build (EXPLORE_KEEP_DIST=1) when
 // smoke succeeded. dist/ is shared, so the run is strictly sequential: never run two Playwright tests
 // at once.
@@ -16,9 +16,9 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const TESTS = ['data.test.mjs', 'battle.test.mjs', 'smoke.mjs', 'explore.mjs', 'extensions.mjs', 'content_a.mjs', 'content_b.mjs', 'content_c.mjs', 'chapter1.mjs', 'battle.mjs', 'audio.mjs', 'ui.mjs'];
+const TESTS = ['data.test.mjs', 'battle.test.mjs', 'smoke.mjs', 'explore.mjs', 'extensions.mjs', 'content_a.mjs', 'content_b.mjs', 'content_c.mjs', 'chapter1.mjs', 'chapter1_wrong.mjs', 'battle.mjs', 'audio.mjs', 'ui.mjs'];
 /** Playwright tests that serve dist/ and honour EXPLORE_KEEP_DIST=1 (reuse the build smoke.mjs made). */
-const REUSE_DIST = new Set(['explore.mjs', 'extensions.mjs', 'content_a.mjs', 'content_b.mjs', 'content_c.mjs', 'chapter1.mjs', 'battle.mjs']);
+const REUSE_DIST = new Set(['explore.mjs', 'extensions.mjs', 'content_a.mjs', 'content_b.mjs', 'content_c.mjs', 'chapter1.mjs', 'chapter1_wrong.mjs', 'battle.mjs']);
 
 const results = [];
 let builtDist = false;

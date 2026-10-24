@@ -55,7 +55,9 @@ npm test
 This runs, in order: the pure-data tests (maps, scripts, items, enemies,
 encounters, speaker registry), the battle model tests, a Vite build plus a
 headless boot smoke test, the gameplay tests (movement, dialogue, saves,
-battles, Chapter 1 content), the audio tests, and the UI tests. The headless
+battles, Chapter 1 content, the honest Chapter 1 playthrough and its
+wrong-path twin: every branch, loss, refusal and map edge), the audio tests,
+and the UI tests. The headless
 tests drive the built game in Chromium through Playwright using the debug API
 on `window.__slime`, and write screenshots to `tests/screenshots/`.
 
