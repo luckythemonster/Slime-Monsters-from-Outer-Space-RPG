@@ -1,0 +1,78 @@
+{
+  "id": "dev_street",
+  "name": "Dev Street",
+  "tileset": "minneapolis",
+  "music": "snow",
+  "ambient": null,
+  "battleBackground": "street",
+  "onFirstEnter": "dev_street_intro",
+  "legend": {
+    "T": "brick_wall_top", "#": "brick_wall", "W": "brick_window_lit", "w": "brick_window_dark", "B": "door_bar",
+    "1": "billboard_a", "2": "billboard_b", "3": "billboard_c",
+    "=": "sidewalk", "-": "sidewalk_crack", "n": "curb_n", "s": "curb_s", "a": "asphalt", "A": "asphalt_line", "F": "fence",
+    "D": "dumpster", "d": "dumpster_lid", "t": "trash_bag", "L": "lamp_post", "l": "lamp_post_top",
+    "p": "slush_puddle", "o": "pothole", "g": "grate", "S": "sign_pole"
+  },
+  "layers": {
+    "ground": [
+      "TTTTTTTTTTTTTTTTTTTTTTTT",
+      "##W##w##B##W##123##W##B#",
+      "########################",
+      "#======================#",
+      "#nnnnnnnnnnnnnnnnnnnnnn#",
+      "#aaaaaaaaaaaaaaaaaaaaaa#",
+      "#aaaaaaaaaaaaaaaaaaaaaa#",
+      "aAAAAAAAAAAAAAAAAAAAAAA#",
+      "#aaaaaaaaaaaaaaaaaaaaaa#",
+      "#ssssssssssssssssssssss#",
+      "#======================#",
+      "#=-======-=======-=====#",
+      "#FFFFFFFFFFFFFFFFFFFFFF#",
+      "TTTTTTTTTTTTTTTTTTTTTTTT"
+    ],
+    "deco": [
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "    L             L     ",
+      "                        ",
+      "         o              ",
+      "                        ",
+      "  g           p         ",
+      "                        ",
+      "   t                d   ",
+      "            t       D   ",
+      "                        ",
+      "                        "
+    ],
+    "over": [
+      "                        ",
+      "                        ",
+      "                        ",
+      "    l             l     ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        "
+    ]
+  },
+  "spawn": { "x": 1, "y": 7, "facing": "right" },
+  "entities": [
+    { "id": "to_alley", "type": "exit", "x": 0, "y": 7, "w": 1, "h": 1,
+      "to": { "map": "dev_alley", "x": 18, "y": 7, "facing": "left" } },
+    { "id": "busker", "type": "npc", "sprite": "phoenix", "x": 10, "y": 10, "facing": "left",
+      "behavior": "wander", "radius": 2, "script": "dev_sign" },
+    { "id": "walker", "type": "npc", "sprite": "lucky", "x": 16, "y": 3, "facing": "right",
+      "behavior": "patrol", "path": "RRRR..LLLL..", "script": "dev_sign" },
+    { "id": "cop_a", "type": "enemy", "sprite": "lucky_rage", "x": 14, "y": 8, "facing": "left",
+      "encounter": "street_cop_duo", "behavior": "chase", "sight": 5,
+      "condition": "!flags.cleared_cop_a", "setOnWin": "flags.cleared_cop_a" }
+  ]
+}

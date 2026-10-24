@@ -1,0 +1,34 @@
+# The impossible stack: the top of Ryan's drum hardware (snare, hardware case, a wide cymbal), spawned one
+# tile above him and moved in lockstep with `ryan_carry_hardware` (DESIGN.md CS-10 `ryan_loaded`). Its bottom
+# rows sit behind Ryan's own cymbals; only the edges of the wide cymbal show past them. 16x16, idle 1.
+name: obj_hardware_stack
+frame: 16x16
+palette:
+  . = transparent
+  k = #141018     # outline
+  d = #f0dcb0     # snare head
+  e = #1c0c2c     # snare shell
+  l = #c8ccd4     # chrome lugs / latches
+  t = #30303c     # hardware case
+  T = #5c6068     # case highlight
+  y = #f8d820     # cymbal
+  Y = #e88830     # cymbal underside
+anim: idle  frames: 0  fps: 1
+
+frame 0: idle
+....kkkkkkkk....
+..kkddddddddkk..
+.kddddddddddddk.
+.keeeeeeeeeeeek.
+.kelelelelelelk.
+.keeeeeeeeeeeek.
+..kkkkkkkkkkkk..
+...kTTTTTTTTk...
+..kttlttttlttk..
+..kttttttttttk..
+..kkkkkkkkkkkk..
+.......kk.......
+kkkkkkkkkkkkkkkk
+kyyyyyyyyyyyyyyk
+kYYYYYYYYYYYYYYk
+kkkkkkkkkkkkkkkk

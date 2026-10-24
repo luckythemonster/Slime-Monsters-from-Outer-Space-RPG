@@ -1,0 +1,14 @@
+{
+  "barista": { "name": "Barista", "portrait": "barista", "blip": "G5" },
+  "pawn_guy": { "name": "Pawnbroker", "portrait": "pawn_guy", "blip": "D4" },
+  "shoveler": { "name": "Shoveler", "blip": "E4" },
+  "cyclist": { "name": "Cyclist", "blip": "A5" },
+  "busker": { "name": "Busker", "blip": "F5" },
+  "crust_punk": { "name": "Crust Punk", "blip": "D5" },
+  "office_worker": { "name": "Office Worker", "blip": "B4" },
+  "screenwriter": { "name": "Screenwriter", "blip": "C5" },
+  "poet": { "name": "Poet", "blip": "E5" },
+  "intern": { "name": "Internship Kid", "blip": "G5" },
+  "stranger_tall": { "name": "Tall Stranger", "blip": "G3" },
+  "smoker": { "name": "Smoker", "blip": "C4" }
+}

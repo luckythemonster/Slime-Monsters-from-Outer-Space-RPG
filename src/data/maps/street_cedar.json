@@ -1,0 +1,576 @@
+{
+  "id": "street_cedar",
+  "name": "Cedar Avenue, West Bank",
+  "tileset": "minneapolis",
+  "music": "west_bank",
+  "ambient": null,
+  "battleBackground": "street",
+  "onEnter": "ep0_street_enter",
+  "followers": true,
+  "overlay": {
+    "color": "#182850",
+    "alpha": 0.45,
+    "depth": 50,
+    "condition": "flags.gigFlyer || flags.hasPalmersFlyer"
+  },
+  "lights": [
+    {
+      "x": 1,
+      "y": 7,
+      "condition": "flags.gigFlyer || flags.hasPalmersFlyer"
+    },
+    {
+      "x": 5,
+      "y": 7,
+      "condition": "flags.gigFlyer || flags.hasPalmersFlyer"
+    },
+    {
+      "x": 8,
+      "y": 7,
+      "condition": "flags.gigFlyer || flags.hasPalmersFlyer"
+    },
+    {
+      "x": 1,
+      "y": 8,
+      "condition": "flags.gigFlyer || flags.hasPalmersFlyer"
+    },
+    {
+      "x": 8,
+      "y": 8,
+      "condition": "flags.gigFlyer || flags.hasPalmersFlyer"
+    },
+    {
+      "x": 4,
+      "y": 6,
+      "condition": "flags.gigFlyer || flags.hasPalmersFlyer"
+    },
+    {
+      "x": 5,
+      "y": 6,
+      "condition": "flags.gigFlyer || flags.hasPalmersFlyer"
+    },
+    {
+      "x": 23,
+      "y": 8,
+      "condition": "flags.gigFlyer || flags.hasPalmersFlyer"
+    },
+    {
+      "x": 24,
+      "y": 8,
+      "condition": "flags.gigFlyer || flags.hasPalmersFlyer"
+    },
+    {
+      "x": 25,
+      "y": 8,
+      "condition": "flags.gigFlyer || flags.hasPalmersFlyer"
+    },
+    {
+      "x": 28,
+      "y": 7,
+      "condition": "flags.gigFlyer || flags.hasPalmersFlyer"
+    },
+    {
+      "x": 33,
+      "y": 8,
+      "condition": "flags.gigFlyer || flags.hasPalmersFlyer"
+    },
+    {
+      "x": 36,
+      "y": 8,
+      "condition": "flags.gigFlyer || flags.hasPalmersFlyer"
+    },
+    {
+      "x": 38,
+      "y": 8,
+      "condition": "flags.gigFlyer || flags.hasPalmersFlyer"
+    }
+  ],
+  "encounters": {
+    "rate": 0,
+    "pool": []
+  },
+  "legend": {
+    "T": "brick_wall_top",
+    "#": "brick_wall",
+    "w": "brick_window_dark",
+    "W": "brick_window_lit",
+    "B": "door_bar",
+    "S": "door_shop",
+    "1": "billboard_a",
+    "2": "billboard_b",
+    "3": "billboard_c",
+    "=": "sidewalk",
+    "-": "sidewalk_crack",
+    "n": "curb_n",
+    "s": "curb_s",
+    "a": "asphalt",
+    "A": "asphalt_line",
+    ".": "snow",
+    ",": "snow_dirty",
+    "F": "fence",
+    "^": "snowbank",
+    "p": "slush_puddle",
+    "o": "pothole",
+    "g": "grate",
+    "L": "lamp_post",
+    "l": "lamp_post_top",
+    "t": "trash_bag",
+    "Q": "bus_shelter_l",
+    "q": "bus_shelter_r",
+    "Z": "bus_shelter_top",
+    "~": "awning",
+    "Y": "bare_tree_trunk",
+    "y": "bare_tree_top",
+    "V": "van_tl",
+    "v": "van_tr",
+    "U": "van_bl",
+    "u": "van_br",
+    "C": "coffee_front_l",
+    "c": "coffee_front_r",
+    "K": "pawn_front_l",
+    "k": "pawn_front_r",
+    "P": "rail_platform",
+    "E": "rail_edge",
+    "H": "hydrant",
+    "R": "bike_rack",
+    "b": "neon_bar_a",
+    "d": "neon_bar_b",
+    "4": "towers_panel_a",
+    "5": "towers_panel_b",
+    "6": "towers_panel_c",
+    "7": "towers_panel_d",
+    "!": "neon_palmers_1",
+    "@": "neon_palmers_2",
+    "$": "neon_palmers_3",
+    "%": "neon_palmers_4"
+  },
+  "layers": {
+    "ground": [
+      "TTTTTTTTTTTTTTFFFFFFTTTTTTTTTTTTTTTTTTTT",
+      "#w##w###w#4567......#w##w#w##w###w##w##w",
+      "##########5674......####################",
+      "#w##w###w#6745......#w##w##w##w#w##w##w#",
+      "##########7456......####################",
+      "##########4567......#W##W###w####w##w##w",
+      "##########5674......####################",
+      "#W###W##W#6745......########W####W##W###",
+      "#W####=#W#w#=w......=CcWWWw#SKk##W##w#W#",
+      "===-=======-=====-=======-=====-=====-==",
+      "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn",
+      "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ssssssssssssssssssssssssssssssssssssssss",
+      "=====-==============-========-=====-====",
+      "..................PPPPPPPPPP............",
+      "..,......,........PPPPPPPPPP..,.....,...",
+      "..................EEEEEEEEEE............",
+      "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+      "........................................",
+      "....,........,.............,.....,......"
+    ],
+    "deco": [
+      "                                        ",
+      "              ^^^^^^                    ",
+      "              ^^^^^^                    ",
+      "              ^^^^^^                    ",
+      "              ^^^^^^                    ",
+      "                                        ",
+      "              t                         ",
+      "                   Y                    ",
+      "               p                        ",
+      "                                 Qq     ",
+      " L                       L        t  L  ",
+      "^^^Vv^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^",
+      "   Uu                   o          p    ",
+      "        g o          p                  ",
+      "^^^^^^^^  ^^^^^^  ^^^^  ^   ^^^^   ^^^^^",
+      "          H               R             ",
+      "^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        "
+    ],
+    "over": [
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "               123                      ",
+      "        b                               ",
+      "   !@$%            y                    ",
+      "                    ~~~                 ",
+      "      B     S       S            ZZ     ",
+      " l                       l           l  ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        "
+    ]
+  },
+  "spawn": {
+    "x": 38,
+    "y": 12,
+    "facing": "left"
+  },
+  "entities": [
+    {
+      "id": "to_alley",
+      "type": "exit",
+      "x": 39,
+      "y": 11,
+      "w": 1,
+      "h": 3,
+      "to": {
+        "map": "alley",
+        "x": 1,
+        "y": 9,
+        "facing": "right"
+      }
+    },
+    {
+      "id": "door_palmers",
+      "type": "exit",
+      "x": 6,
+      "y": 8,
+      "w": 1,
+      "h": 1,
+      "condition": "flags.gigFlyer || flags.hasPalmersFlyer",
+      "refuse": "ep0_street_palmers_closed",
+      "to": {
+        "map": "palmers",
+        "x": 8,
+        "y": 12,
+        "facing": "up"
+      }
+    },
+    {
+      "id": "door_towers",
+      "type": "exit",
+      "x": 12,
+      "y": 8,
+      "w": 1,
+      "h": 1,
+      "to": {
+        "map": "apartment",
+        "x": 12,
+        "y": 12,
+        "facing": "up"
+      }
+    },
+    {
+      "id": "towers_autosave",
+      "type": "trigger",
+      "x": 11,
+      "y": 9,
+      "w": 3,
+      "h": 2,
+      "once": true,
+      "condition": "flags.weekLater",
+      "script": "ep0_street_autosave"
+    },
+    {
+      "id": "door_cafe",
+      "type": "exit",
+      "x": 20,
+      "y": 8,
+      "w": 1,
+      "h": 1,
+      "condition": "flags.hubOpen",
+      "refuse": "ep0_street_cafe_closed",
+      "to": {
+        "map": "coffee_shop",
+        "x": 10,
+        "y": 12,
+        "facing": "up"
+      }
+    },
+    {
+      "id": "rail",
+      "type": "trigger",
+      "x": 21,
+      "y": 16,
+      "w": 3,
+      "h": 1,
+      "script": "ep0_street_rail"
+    },
+    {
+      "id": "pawn_door",
+      "type": "object",
+      "x": 28,
+      "y": 8,
+      "script": "npc_street_pawn"
+    },
+    {
+      "id": "pawn_window",
+      "type": "object",
+      "x": 29,
+      "y": 8,
+      "script": "npc_street_pawn_window"
+    },
+    {
+      "id": "towers_sign",
+      "type": "object",
+      "x": 13,
+      "y": 8,
+      "script": "npc_street_towers_sign"
+    },
+    {
+      "id": "shelter_ad",
+      "type": "object",
+      "x": 33,
+      "y": 9,
+      "script": "npc_street_shelter_ad"
+    },
+    {
+      "id": "pizza_box",
+      "type": "object",
+      "x": 34,
+      "y": 10,
+      "script": "npc_street_pizza_box",
+      "solid": false
+    },
+    {
+      "id": "hydrant",
+      "type": "object",
+      "x": 10,
+      "y": 15,
+      "script": "npc_street_hydrant"
+    },
+    {
+      "id": "bike_rack",
+      "type": "object",
+      "x": 26,
+      "y": 15,
+      "script": "npc_street_bike_rack"
+    },
+    {
+      "id": "van",
+      "type": "object",
+      "x": 3,
+      "y": 12,
+      "script": "npc_street_van"
+    },
+    {
+      "id": "van_b",
+      "type": "object",
+      "x": 4,
+      "y": 12,
+      "script": "npc_street_van"
+    },
+    {
+      "id": "tree",
+      "type": "object",
+      "x": 19,
+      "y": 7,
+      "script": "npc_street_tree"
+    },
+    {
+      "id": "billboard",
+      "type": "object",
+      "x": 16,
+      "y": 5,
+      "script": "ep0_street_billboard",
+      "condition": "flags.hubOpen && !flags.gigFlyer && !flags.hasPalmersFlyer && !flags.cleared_billboard",
+      "solid": true
+    },
+    {
+      "id": "shoveler",
+      "type": "npc",
+      "sprite": "npc_shoveler",
+      "x": 8,
+      "y": 14,
+      "facing": "down",
+      "behavior": "idle",
+      "script": "npc_street_shoveler",
+      "condition": "!flags.gigFlyer && !flags.hasPalmersFlyer"
+    },
+    {
+      "id": "cyclist",
+      "type": "npc",
+      "sprite": "npc_cyclist",
+      "x": 26,
+      "y": 14,
+      "facing": "left",
+      "behavior": "idle",
+      "script": "npc_street_cyclist",
+      "condition": "!flags.gigFlyer && !flags.hasPalmersFlyer"
+    },
+    {
+      "id": "busker",
+      "type": "npc",
+      "sprite": "npc_busker",
+      "x": 18,
+      "y": 9,
+      "facing": "down",
+      "behavior": "idle",
+      "script": "npc_street_busker",
+      "condition": "!flags.gigFlyer && !flags.hasPalmersFlyer"
+    },
+    {
+      "id": "crust_punk",
+      "type": "npc",
+      "sprite": "npc_crustpunk",
+      "x": 30,
+      "y": 15,
+      "facing": "right",
+      "behavior": "idle",
+      "script": "npc_street_crust_punk",
+      "condition": "!flags.gigFlyer && !flags.hasPalmersFlyer"
+    },
+    {
+      "id": "also_bajonka",
+      "type": "npc",
+      "sprite": "bajonka",
+      "x": 31,
+      "y": 15,
+      "facing": "left",
+      "behavior": "idle",
+      "script": "npc_street_also_bajonka",
+      "condition": "!flags.gigFlyer && !flags.hasPalmersFlyer"
+    },
+    {
+      "id": "office_worker",
+      "type": "npc",
+      "sprite": "npc_office",
+      "x": 36,
+      "y": 9,
+      "facing": "down",
+      "behavior": "idle",
+      "script": "npc_street_office_worker",
+      "condition": "flags.signalSent && !flags.gigFlyer && !flags.hasPalmersFlyer"
+    },
+    {
+      "id": "stranger_tall",
+      "type": "npc",
+      "sprite": "stranger_tall",
+      "x": 4,
+      "y": 9,
+      "facing": "down",
+      "behavior": "idle",
+      "script": "npc_street_stranger",
+      "condition": "flags.gigFlyer || flags.hasPalmersFlyer"
+    },
+    {
+      "id": "smoker",
+      "type": "npc",
+      "sprite": "npc_smoker",
+      "x": 8,
+      "y": 9,
+      "facing": "down",
+      "behavior": "idle",
+      "script": "npc_street_smoker",
+      "condition": "flags.gigFlyer || flags.hasPalmersFlyer"
+    },
+    {
+      "id": "bajonka",
+      "type": "save",
+      "sprite": "bajonka",
+      "x": 5,
+      "y": 9,
+      "facing": "down",
+      "condition": "flags.gigFlyer || flags.hasPalmersFlyer"
+    },
+    {
+      "id": "slush",
+      "type": "enemy",
+      "sprite": "slush_map",
+      "x": 16,
+      "y": 12,
+      "w": 2,
+      "encounter": "hub_slush",
+      "behavior": "static",
+      "condition": "flags.hubOpen && !flags.gigFlyer && !flags.hasPalmersFlyer && !flags.cleared_slush",
+      "setOnWin": "flags.cleared_slush",
+      "script": "ep0_street_slush",
+      "facing": "down"
+    },
+    {
+      "id": "scooters",
+      "type": "enemy",
+      "sprite": "scooter_map",
+      "x": 20,
+      "y": 13,
+      "encounter": "hub_scooters",
+      "behavior": "patrol",
+      "condition": "flags.hubOpen && !flags.gigFlyer && !flags.hasPalmersFlyer && !flags.cleared_scooters",
+      "setOnWin": "flags.cleared_scooters",
+      "script": "ep0_street_scooters",
+      "path": "RRRRRRLLLLLL",
+      "facing": "right"
+    },
+    {
+      "id": "goose",
+      "type": "enemy",
+      "sprite": "goose_map",
+      "x": 33,
+      "y": 14,
+      "encounter": "hub_goose",
+      "behavior": "wander",
+      "condition": "flags.hubOpen && !flags.gigFlyer && !flags.hasPalmersFlyer && !flags.cleared_goose",
+      "setOnWin": "flags.cleared_goose",
+      "script": "ep0_street_goose",
+      "radius": 3,
+      "sight": 4,
+      "facing": "down"
+    },
+    {
+      "id": "analyst",
+      "type": "enemy",
+      "sprite": "analyst_map",
+      "x": 27,
+      "y": 10,
+      "encounter": "hub_analyst",
+      "behavior": "chase",
+      "condition": "flags.hubOpen && !flags.gigFlyer && !flags.hasPalmersFlyer && !flags.cleared_analyst",
+      "setOnWin": "flags.cleared_analyst",
+      "script": "ep0_street_analyst",
+      "sight": 5,
+      "facing": "down"
+    },
+    {
+      "id": "analyst_duo",
+      "type": "enemy",
+      "sprite": "analyst_map",
+      "x": 24,
+      "y": 10,
+      "encounter": "hub_analyst_duo",
+      "behavior": "chase",
+      "condition": "(flags.gigFlyer || flags.hasPalmersFlyer) && !flags.cleared_analyst_duo",
+      "setOnWin": "flags.cleared_analyst_duo",
+      "script": "ep0_street_analyst_duo",
+      "sight": 5,
+      "facing": "down"
+    },
+    {
+      "id": "goose_pair",
+      "type": "enemy",
+      "sprite": "goose_map",
+      "x": 31,
+      "y": 15,
+      "encounter": "hub_goose_pair",
+      "behavior": "wander",
+      "condition": "(flags.gigFlyer || flags.hasPalmersFlyer) && !flags.cleared_goose_pair",
+      "setOnWin": "flags.cleared_goose_pair",
+      "script": "ep0_street_goose_pair",
+      "radius": 3,
+      "facing": "left"
+    }
+  ]
+}

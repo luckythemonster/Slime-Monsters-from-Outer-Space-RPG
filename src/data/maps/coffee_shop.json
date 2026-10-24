@@ -1,0 +1,206 @@
+{
+  "id": "coffee_shop",
+  "name": "Hard Luck Cafe",
+  "tileset": "interiors",
+  "music": "normal_music",
+  "ambient": null,
+  "battleBackground": "street",
+  "followers": true,
+  "encounters": {
+    "rate": 0,
+    "pool": []
+  },
+  "legend": {
+    "T": "wall_plaster_top",
+    "#": "wall_plaster",
+    "p": "wall_poster_a",
+    "q": "wall_poster_b",
+    "r": "wall_poster_c",
+    "W": "window_night",
+    "B": "window_billboard",
+    "K": "corkboard",
+    "D": "bathroom_door",
+    "d": "doorway",
+    "e": "espresso_machine",
+    "s": "shelf",
+    "f": "fridge",
+    "a": "radiator",
+    "C": "counter",
+    "c": "counter_corner",
+    "t": "table",
+    "o": "stool",
+    "R": "rug",
+    ".": "wood_floor",
+    ",": "wood_floor_dark",
+    "l": "linoleum"
+  },
+  "layers": {
+    "ground": [
+      "TTTTTTTTTTTTTTTTTTTT",
+      "#p#W##q##W##r#B##p##",
+      "################K###",
+      "#llllll..........###",
+      "#................###",
+      "#................#D#",
+      "#..,...............#",
+      "#..................#",
+      "#.............,....#",
+      "#..................#",
+      "#.........,........#",
+      "#.....,............#",
+      "#...............,..#",
+      "##########d#########"
+    ],
+    "deco": [
+      "                    ",
+      "                    ",
+      " es  f              ",
+      "       c            ",
+      " CCCCCCC            ",
+      "                    ",
+      "                    ",
+      "  t   t     t   t   ",
+      "  o             o   ",
+      "        t         t ",
+      "         o          ",
+      "a        RRR        ",
+      "                    ",
+      "                    "
+    ]
+  },
+  "spawn": {
+    "x": 10,
+    "y": 12,
+    "facing": "up"
+  },
+  "entities": [
+    {
+      "id": "to_street",
+      "type": "exit",
+      "x": 10,
+      "y": 13,
+      "w": 1,
+      "h": 1,
+      "to": {
+        "map": "street_cedar",
+        "x": 20,
+        "y": 9,
+        "facing": "down"
+      }
+    },
+    {
+      "id": "brian_trigger",
+      "type": "trigger",
+      "x": 10,
+      "y": 12,
+      "w": 1,
+      "h": 1,
+      "condition": "flags.flyerPosted && !flags.brianJoined",
+      "script": "ep0_brian_joins"
+    },
+    {
+      "id": "barista",
+      "type": "npc",
+      "sprite": "barista",
+      "x": 4,
+      "y": 3,
+      "facing": "down",
+      "behavior": "idle",
+      "script": "npc_cafe_barista"
+    },
+    {
+      "id": "counter_barista",
+      "type": "object",
+      "x": 4,
+      "y": 4,
+      "script": "npc_cafe_barista"
+    },
+    {
+      "id": "tip_jar",
+      "type": "object",
+      "x": 6,
+      "y": 4,
+      "script": "npc_cafe_tip_jar"
+    },
+    {
+      "id": "corkboard",
+      "type": "object",
+      "x": 16,
+      "y": 2,
+      "script": "npc_cafe_corkboard"
+    },
+    {
+      "id": "bathroom",
+      "type": "object",
+      "x": 18,
+      "y": 5,
+      "script": "npc_cafe_bathroom"
+    },
+    {
+      "id": "window_table",
+      "type": "object",
+      "x": 18,
+      "y": 9,
+      "script": "npc_cafe_window_table"
+    },
+    {
+      "id": "pedalboard",
+      "type": "object",
+      "sprite": "obj_pedalboard",
+      "x": 18,
+      "y": 9,
+      "solid": true,
+      "script": "npc_cafe_window_table",
+      "condition": "!flags.brianJoined"
+    },
+    {
+      "id": "radiator",
+      "type": "object",
+      "x": 0,
+      "y": 11,
+      "solid": true,
+      "script": "npc_cafe_radiator"
+    },
+    {
+      "id": "screenwriter",
+      "type": "npc",
+      "sprite": "npc_screenwriter",
+      "x": 6,
+      "y": 8,
+      "facing": "up",
+      "behavior": "idle",
+      "script": "npc_cafe_screenwriter"
+    },
+    {
+      "id": "poet",
+      "type": "npc",
+      "sprite": "npc_poet",
+      "x": 12,
+      "y": 6,
+      "facing": "down",
+      "behavior": "idle",
+      "script": "npc_cafe_poet"
+    },
+    {
+      "id": "intern",
+      "type": "npc",
+      "sprite": "intern",
+      "x": 8,
+      "y": 10,
+      "facing": "up",
+      "behavior": "idle",
+      "script": "npc_cafe_intern"
+    },
+    {
+      "id": "brian",
+      "type": "npc",
+      "sprite": "brian",
+      "x": 17,
+      "y": 9,
+      "facing": "left",
+      "behavior": "idle",
+      "script": "npc_cafe_brian",
+      "condition": "!flags.brianJoined"
+    }
+  ]
+}

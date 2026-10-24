@@ -1,0 +1,195 @@
+{
+  "name": "hunger",
+  "source": "hunger.mp3",
+  "duration_s": 142.58,
+  "separation": "spleeter:4stems",
+  "bpm": 130.0,
+  "bpm_range": [
+    128.7,
+    130.4
+  ],
+  "tempo_changes": 1,
+  "tempo_map": [
+    {
+      "beat": 0,
+      "bpm": 129.2
+    }
+  ],
+  "beat_tracking_note": null,
+  "kick_between_beats_ratio": 0.6,
+  "downbeat_phase": 0,
+  "pickup_beats": 0,
+  "first_beat_time": -0.023,
+  "grid_beat_of_first_tracked_beat": 0,
+  "bars": 78,
+  "ticks_per_beat": 480,
+  "steps_per_beat": 4,
+  "key": "B major",
+  "key_confidence": 0.763,
+  "chroma": [
+    0.363,
+    0.404,
+    0.392,
+    0.376,
+    0.358,
+    0.449,
+    0.832,
+    0.366,
+    0.331,
+    0.406,
+    0.551,
+    1.0
+  ],
+  "tuning_semitones": 0.17,
+  "retuned_before_transcription": false,
+  "sections": [
+    {
+      "label": "A",
+      "bar": 0,
+      "bars": 7,
+      "time": -0.02
+    },
+    {
+      "label": "B",
+      "bar": 7,
+      "bars": 7,
+      "time": 12.91
+    },
+    {
+      "label": "C",
+      "bar": 14,
+      "bars": 8,
+      "time": 25.84
+    },
+    {
+      "label": "A",
+      "bar": 22,
+      "bars": 8,
+      "time": 40.61
+    },
+    {
+      "label": "C",
+      "bar": 30,
+      "bars": 7,
+      "time": 55.38
+    },
+    {
+      "label": "A",
+      "bar": 37,
+      "bars": 13,
+      "time": 68.31
+    },
+    {
+      "label": "B",
+      "bar": 50,
+      "bars": 6,
+      "time": 92.3
+    },
+    {
+      "label": "A",
+      "bar": 56,
+      "bars": 8,
+      "time": 103.38
+    },
+    {
+      "label": "A",
+      "bar": 64,
+      "bars": 4,
+      "time": 118.14
+    },
+    {
+      "label": "D",
+      "bar": 68,
+      "bars": 9,
+      "time": 125.55
+    }
+  ],
+  "stems": {
+    "vocals": {
+      "notes": 154,
+      "pitch_min": 65,
+      "pitch_max": 83,
+      "pitch_median": 68,
+      "median_len_steps": 1.0,
+      "pitch_class_hist": {
+        "C": 0.004,
+        "C#": 0.004,
+        "D": 0.0,
+        "D#": 0.004,
+        "E": 0.004,
+        "F": 0.007,
+        "F#": 0.051,
+        "G": 0.425,
+        "G#": 0.324,
+        "A": 0.175,
+        "A#": 0.0,
+        "B": 0.004
+      },
+      "first_step": 106,
+      "last_step": 1002
+    },
+    "guitar": {
+      "notes": 998,
+      "pitch_min": 35,
+      "pitch_max": 95,
+      "pitch_median": 55,
+      "median_len_steps": 1.0,
+      "pitch_class_hist": {
+        "C": 0.006,
+        "C#": 0.036,
+        "D": 0.064,
+        "D#": 0.036,
+        "E": 0.058,
+        "F": 0.048,
+        "F#": 0.214,
+        "G": 0.022,
+        "G#": 0.021,
+        "A": 0.03,
+        "A#": 0.032,
+        "B": 0.433
+      },
+      "first_step": 1,
+      "last_step": 1223
+    },
+    "bass": {
+      "notes": 246,
+      "pitch_min": 34,
+      "pitch_max": 69,
+      "pitch_median": 47,
+      "median_len_steps": 2.0,
+      "pitch_class_hist": {
+        "C": 0.006,
+        "C#": 0.0,
+        "D": 0.012,
+        "D#": 0.004,
+        "E": 0.0,
+        "F": 0.02,
+        "F#": 0.074,
+        "G": 0.002,
+        "G#": 0.0,
+        "A": 0.008,
+        "A#": 0.3,
+        "B": 0.573
+      },
+      "first_step": 101,
+      "last_step": 1061
+    },
+    "drums": {
+      "hits": 532,
+      "crash": 3,
+      "hat": 184,
+      "kick": 216,
+      "ohat": 2,
+      "snare": 127
+    }
+  },
+  "files": {
+    "midi": "hunger.mid",
+    "vocals": "hunger_vocals.mid",
+    "guitar": "hunger_guitar.mid",
+    "bass": "hunger_bass.mid",
+    "drums": "hunger_drums.mid"
+  },
+  "work_dir": "/tmp/claude-0/-home-user-Slime-Monsters-from-Outer-Space-RPG/e858fb6c-544f-57da-ae5c-09a0289d71a3/scratchpad/work/hunger",
+  "elapsed_s": 38.5
+}

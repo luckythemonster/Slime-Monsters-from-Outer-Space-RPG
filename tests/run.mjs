@@ -1,0 +1,45 @@
+#!/usr/bin/env node
+// Runs every test sequentially and exits non-zero if any fails:
+//   data.test.mjs + battle.test.mjs (pure Node) → smoke.mjs (vite build + headless boot) → explore.mjs
+//   (gameplay) → extensions.mjs → content_a/b/c.mjs (chapter walkthroughs) → chapter1.mjs (the honest
+//   playthrough) → chapter1_wrong.mjs (every branch, loss, refusal and edge, with warps) → battle.mjs →
+//   audio.mjs / ui.mjs when present.
+// smoke.mjs builds dist/; every Playwright test after it reuses that build (EXPLORE_KEEP_DIST=1) when
+// smoke succeeded. dist/ is shared, so the run is strictly sequential: never run two Playwright tests
+// at once.
+//
+//   npm test   /   node tests/run.mjs
+
+import { spawnSync } from 'node:child_process';
+import { existsSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const TESTS = ['data.test.mjs', 'battle.test.mjs', 'smoke.mjs', 'explore.mjs', 'extensions.mjs', 'content_a.mjs', 'content_b.mjs', 'content_c.mjs', 'chapter1.mjs', 'chapter1_wrong.mjs', 'battle.mjs', 'audio.mjs', 'ui.mjs'];
+/** Playwright tests that serve dist/ and honour EXPLORE_KEEP_DIST=1 (reuse the build smoke.mjs made). */
+const REUSE_DIST = new Set(['explore.mjs', 'extensions.mjs', 'content_a.mjs', 'content_b.mjs', 'content_c.mjs', 'chapter1.mjs', 'chapter1_wrong.mjs', 'battle.mjs']);
+
+const results = [];
+let builtDist = false;
+
+for (const name of TESTS) {
+  const file = path.join(ROOT, 'tests', name);
+  if (!existsSync(file)) {
+    results.push({ test: name, ok: true, skipped: true });
+    continue;
+  }
+  process.stderr.write(`\n[run] ===== ${name} =====\n`);
+  const env = { ...process.env };
+  if (REUSE_DIST.has(name) && builtDist) env.EXPLORE_KEEP_DIST = '1';
+  const started = Date.now();
+  const r = spawnSync(process.execPath, [file], { cwd: ROOT, stdio: 'inherit', env });
+  const ok = r.status === 0;
+  if (name === 'smoke.mjs' && ok) builtDist = true;
+  results.push({ test: name, ok, status: r.status, durationMs: Date.now() - started });
+  if (!ok) process.stderr.write(`[run] ${name} FAILED (exit ${r.status})\n`);
+}
+
+const ok = results.every((r) => r.ok);
+process.stdout.write(`${JSON.stringify({ test: 'run', ok, results })}\n`);
+process.exit(ok ? 0 : 1);

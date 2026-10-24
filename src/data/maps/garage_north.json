@@ -1,0 +1,75 @@
+{
+  "id": "garage_north",
+  "name": "Ryan's garage, up north",
+  "tileset": "pines",
+  "music": "northern_garage",
+  "ambient": null,
+  "battleBackground": "street",
+  "followers": false,
+  "encounters": { "rate": 0, "pool": [] },
+  "legend": {
+    "T": "garage_wall_top", "#": "garage_wall", ".": "garage_floor_concrete", "D": "garage_door_open",
+    "s": "snow_deep", "p": "pine_trunk", "P": "pine_top", "L": "lamp_garage", "H": "space_heater",
+    "N": "landline_phone", "W": "workbench", "d": "dark"
+  },
+  "layers": {
+    "ground": [
+      "TTTTTTTTTTTTTTTT",
+      "#######L########",
+      "#..............#",
+      "#..............#",
+      "#.WNW..........#",
+      "#............H.#",
+      "#..............#",
+      "#..............#",
+      "#..............#",
+      "#..............#",
+      "#..............#",
+      "#######DD#######",
+      "ssssssssssssssss",
+      "ssssssssssssssss"
+    ],
+    "deco": [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      " p         p  p "
+    ],
+    "over": [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      " P         P  P ",
+      "                "
+    ]
+  },
+  "spawn": { "x": 8, "y": 9, "facing": "up" },
+  "entities": [
+    { "id": "kit", "type": "object", "sprite": "obj_drumkit", "w": 2, "footprint": [2, 2], "x": 7, "y": 6, "facing": "down", "script": "ep0_signal_kit", "solid": true },
+    { "id": "ryan", "type": "npc", "sprite": "ryan", "x": 8, "y": 7, "facing": "down", "behavior": "idle", "script": "ep0_signal_ryan" },
+    { "id": "landline", "type": "object", "x": 3, "y": 4, "script": "ep0_signal_landline", "solid": true },
+    { "id": "bench_a", "type": "object", "x": 2, "y": 4, "script": "ep0_signal_bench", "solid": true },
+    { "id": "bench_b", "type": "object", "x": 4, "y": 4, "script": "ep0_signal_bench", "solid": true },
+    { "id": "heater", "type": "object", "x": 13, "y": 5, "script": "ep0_signal_heater", "solid": true },
+    { "id": "lamp", "type": "object", "x": 7, "y": 1, "script": "ep0_signal_lamp", "solid": true }
+  ]
+}

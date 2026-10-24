@@ -1,0 +1,44 @@
+# The folded tour itinerary under Bajonka's collar: POTATO BELT: TOMORROW circled in red marker. 32x32.
+name: obj_itinerary
+frame: 32x32
+palette:
+  . = transparent
+  k = #141018     # outline / type
+  w = #f8f8f8     # paper
+  L = #c8ccd4     # fold / edge
+  r = #d83030     # red marker
+anim: idle  frames: 0  fps: 1
+
+frame 0: idle
+................................
+....kkkkkkkkkkkkkkkkkkkkkkkkk...
+...kwwwwwwwwwwwwwLwwwwwwwwwwwk..
+...kwkkkkkkkwwwwwLwkkkkkkkkwwk..
+...kwwwwwwwwwwwwwLwwwwwwwwwwwk..
+...kwkkkkkwwwwwwwLwkkkkkkwwwwk..
+...kwwwwwwwwwwwwwLwwwwwwwwwwwk..
+...kwkkkkkkkkkwwwLwkkkkwwwwwwk..
+...kwwwwwwwwwwwwwLwwwwwwwwwwwk..
+...kwkkkkkkwwwwwwLwkkkkkkkkwwk..
+...kwwwwwwwwwwwwwLwwwwwwwwwwwk..
+...kwwwwwwwwwwwwwLwwwwwwwwwwwk..
+...kwwwwwwrrrrrrrrrrwwwwwwwwwk..
+...kwwwwrrwwwwwwwLwwrrwwwwwwwk..
+...kwwwrwwwwwwwwwLwwwwrwwwwwwk..
+...kwwrwwwwwwwwwwLwwwwwrwwwwwk..
+...kwwrwwkkkkkkkwLwkkkwrwwwwwk..
+...kwwrwwwwwwwwwwLwwwwwrwwwwwk..
+...kwwrwwkkkkkwkkLwkkkkrwwwwwk..
+...kwwrwwwwwwwwwwLwwwwwrwwwwwk..
+...kwwrwwkkkkkkkkLwkkkwrwwwwwk..
+...kwwrwwwwwwwwwwLwwwwwrwwwwwk..
+...kwwwrwwwwwwwwwLwwwwrwwwwwwk..
+...kwwwwrrwwwwwwwLwwrrwwwwwwwk..
+...kwwwwwwrrrrrrrrrrwwwwwwwwwk..
+...kwwwwwwwwwwwwwLwwwwwwwwwwwk..
+...kwkkkkwwwwwwwwLwwkkkkkkwwwk..
+...kwwwwwwwwwwwwwLwwwwwwwwwwwk..
+...kLLLLLLLLLLLLLLLLLLLLLLLLLk..
+....kkkkkkkkkkkkkkkkkkkkkkkkk...
+................................
+................................

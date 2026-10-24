@@ -1,0 +1,36 @@
+{
+  "name": "slime-monsters-from-outer-space-rpg",
+  "version": "0.1.0",
+  "description": "SNES-style JRPG about a punk rock slime monster starting a band in Minneapolis",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "assets": "python3 tools/gen_assets.py",
+    "digest": "python3 tools/phaser_api_digest.py",
+    "test": "node tests/run.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luckythemonster/Slime-Monsters-from-Outer-Space-RPG.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luckythemonster/Slime-Monsters-from-Outer-Space-RPG/issues"
+  },
+  "homepage": "https://github.com/luckythemonster/Slime-Monsters-from-Outer-Space-RPG#readme",
+  "dependencies": {
+    "phaser": "^4.2.1"
+  },
+  "devDependencies": {
+    "vite": "^8.3.3"
+  },
+  "private": true,
+  "type": "module"
+}

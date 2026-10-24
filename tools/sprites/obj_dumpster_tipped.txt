@@ -1,0 +1,31 @@
+# A dumpster knocked over by the CRASH, lid open to the left, nine empty Pizza Luce boxes spilling out. 32x16.
+name: obj_dumpster_tipped
+frame: 32x16
+palette:
+  . = transparent
+  k = #141018     # outline
+  v = #3c8c40     # dumpster
+  G = #1c8c48     # dumpster shade
+  L = #c8ccd4     # highlight
+  c = #f0dcb0     # pizza box
+  t = #c89060     # box shade
+  r = #d83030     # box logo
+anim: idle  frames: 0  fps: 1
+
+frame 0: idle
+................................
+....kkkkkkkkkkkkkkkk............
+...kvLvvvvvvvvvvvvGk............
+..kkvvvvvvvvvvvvvvGk............
+.kGkvvvvvvvvvvvvvvGk............
+.kGkvvvvGGGGGGGvvvGk...kkkkkkk..
+.kGkvvvvGvvvvvGvvvGk..kkcccccck.
+.kGkvvvvGvvvvvGvvvGk.kcccrrccck.
+.kGkvvvvGGGGGGGvvvGk.kcctrtcccck
+.kGkvvvvvvvvvvvvvvGk.kkkkkkkkkkk
+.kGkvvvvvvvvvvvvvvGk...kkkkkkkk.
+..kkvvvvvvvvvvvvvvGk..kccccccctk
+...kGGGGGGGGGGGGGGGk..kccrrcccck
+....kkkkkkkkkkkkkkkk..kkkkkkkkkk
+................................
+................................

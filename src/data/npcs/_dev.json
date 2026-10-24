@@ -1,0 +1,17 @@
+{
+  "dev_intercom": {
+    "name": "VANGUARD INTERCOM",
+    "portrait": "dad_grille",
+    "window": "ff",
+    "blip": "A3"
+  },
+  "dev_barista": {
+    "name": "Barista",
+    "portrait": "barista",
+    "blip": "G5"
+  },
+  "dev_pawn": {
+    "name": "Pawnbroker",
+    "portrait": "pawnbroker"
+  }
+}

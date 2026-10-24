@@ -1,0 +1,133 @@
+{
+  "ep0_pod_intro": [
+    { "sprite": { "who": "player", "sheet": "lucky_ball" } },
+    { "music": "dental_plan" },
+    { "sfx": "intercom_buzz" },
+    { "anim": { "who": "speaker", "key": "obj_intercom_talk", "wait": false } },
+    { "say": "I just don't understand the whole nonbinary thing.", "who": "dad", "portrait": "dad_grille" },
+    { "anim": { "who": "speaker", "key": "obj_intercom_talk", "wait": false } },
+    { "say": "Why can't you pick a tangible demographic to market yourself to?", "who": "dad" },
+    { "anim": { "who": "speaker", "key": "obj_intercom_talk", "wait": false } },
+    { "say": "If you'd just join The Vanguard, you could be financially successful and oppress people with a dental plan!", "who": "dad" },
+    { "emote": { "who": "player", "type": "…" } },
+    { "set": { "flags.podIntro": true } }
+  ],
+
+  "ep0_dad_1": [
+    { "anim": { "who": "speaker", "key": "obj_intercom_talk", "wait": false } },
+    { "say": "Your mother and I paid for the compression. The least you could do is market yourself.", "who": "dad" }
+  ],
+  "ep0_dad_2": [
+    { "anim": { "who": "speaker", "key": "obj_intercom_talk", "wait": false } },
+    { "say": "There's an opening in Demographic Alignment. You'd report to me.", "who": "dad" }
+  ],
+  "ep0_dad_3": [
+    { "anim": { "who": "speaker", "key": "obj_intercom_talk", "wait": false } },
+    { "say": "Billy's parents say Billy 'found himself.' In a storage unit. The Bile Ducts. What kind of a brand is that?", "who": "dad" }
+  ],
+  "ep0_dad_4": [
+    { "anim": { "who": "speaker", "key": "obj_intercom_talk", "wait": false } },
+    { "say": "…I can see the speaker light.", "who": "dad" }
+  ],
+  "ep0_dad_mmf": [
+    { "say": "{speed:slow}mmf. mmmf.", "who": "dad" }
+  ],
+
+  "ep0_speaker": [
+    { "if": "flags.podSpeakerSlapped", "then": [
+      { "say": "The speaker is slimed. The slime is holding.", "who": "narrator" },
+      { "if": "flags.speakerChecked", "then": [
+        { "say": "{speed:slow}mmf.", "who": "dad" }
+      ] },
+      { "set": { "flags.speakerChecked": true } },
+      { "end": true }
+    ] },
+    { "sprite": { "who": "player", "sheet": "lucky_ball" } },
+    { "face": { "who": "player", "dir": "up" } },
+    { "anim": { "who": "player", "key": "lucky_ball_pseudopod", "wait": true } },
+    { "sfx": "squelch" },
+    { "anim": { "who": "speaker", "key": "obj_intercom_squelched", "wait": false } },
+    { "face": { "who": "player", "dir": "up" } },
+    { "say": "{speed:slow}I'm not finished, Lucky. The quarterly—", "who": "dad", "collapse": true },
+    { "sfx": "squelch" },
+    { "say": "Better.", "who": "lucky" },
+    { "set": { "flags.podSpeakerSlapped": true } },
+    { "music": null }
+  ],
+
+  "ep0_eject": [
+    { "if": "!flags.podSpeakerSlapped", "then": [
+      { "say": "An unnecessarily red button, locked out by PARENTAL OVERRIDE.", "who": "narrator" },
+      { "anim": { "who": "speaker", "key": "obj_intercom_talk", "wait": false } },
+      { "say": "You can't eject while I'm talking, Lucky. Safety is a core value.", "who": "dad" },
+      { "end": true }
+    ] },
+    { "say": "An unnecessarily red button.", "who": "narrator" },
+    { "choice": [
+      { "text": "EJECT", "then": [] },
+      { "text": "Not yet.", "then": [ { "end": true } ] }
+    ] },
+    { "anim": { "who": "eject", "key": "obj_eject_pressed", "wait": false } },
+    { "sfx": "eject" },
+    { "camera": { "shake": 600, "intensity": 0.02 } },
+    { "camera": { "flash": 120 } },
+    { "set": { "flags.ejected": true } },
+    { "music": null },
+    { "camera": { "fade": "out", "ms": 300 } },
+    { "scene": "freefall", "data": {} },
+    { "give": { "item": "slime_sunglasses", "qty": 1, "toast": "Got Spiky Slime Sunglasses! (They formed at 5 seconds. They stayed.)" } },
+    { "teleport": { "map": "alley", "x": 9, "y": 8, "facing": "down" } }
+  ],
+
+  "ep0_pod_guitar_case": [
+    { "say": "The only thing from home worth the fuel.", "who": "narrator" },
+    { "if": "!flags.guitarCaseRead", "then": [
+      { "say": "Beat-Up Guitar. Already on. (EQUIP is in the menu, for when there is something else.)", "who": "narrator" },
+      { "set": { "flags.guitarCaseRead": true } }
+    ], "else": [
+      { "say": "Three strings. The fourth is a philosophy.", "who": "lucky" }
+    ] }
+  ],
+
+  "ep0_pod_nameplate": [
+    { "say": "RESERVED — RUBEN, B.", "who": "narrator" },
+    { "say": "…He's late. He's always late.", "who": "lucky" },
+    { "set": { "flags.readBillyPod": true } }
+  ],
+
+  "ep0_pod_pod1": [
+    { "say": "POD 1. RESERVED — MANAGEMENT. It has a cup holder.", "who": "narrator" },
+    { "if": "flags.pod1Read", "then": [
+      { "say": "Nobody in management has ever needed to escape anything.", "who": "lucky" }
+    ] },
+    { "set": { "flags.pod1Read": true } }
+  ],
+
+  "ep0_pod_vending": [
+    { "say": "DENTAL PLAN: SOLD OUT.\nDEMOGRAPHIC: SOLD OUT.\nWATER: $40.", "who": "narrator" },
+    { "if": "flags.vendingRead", "then": [
+      { "say": "Forty dollars. For water. Dad calls that a value proposition.", "who": "lucky" }
+    ] },
+    { "set": { "flags.vendingRead": true } }
+  ],
+
+  "ep0_pod_plaque": [
+    { "say": "EMPLOYEE OF THE QUARTER: DAD (41 CONSECUTIVE).", "who": "narrator" },
+    { "if": "flags.plaqueRead", "then": [
+      { "say": "He votes. He is the only vote.", "who": "lucky" }
+    ] },
+    { "set": { "flags.plaqueRead": true } }
+  ],
+
+  "ep0_pod_viewport": [
+    { "say": "One billboard says WORK IS LOVE. Lucky has never seen it turned off.", "who": "narrator" },
+    { "if": "flags.viewportRead", "then": [
+      { "say": "Somewhere under that is a storage unit with my name on it. Was.", "who": "lucky" }
+    ] },
+    { "set": { "flags.viewportRead": true } }
+  ],
+
+  "ep0_pod_rail": [
+    { "say": "A catwalk rail. OSHA-compliant. The only thing on this ship that is.", "who": "narrator" }
+  ]
+}

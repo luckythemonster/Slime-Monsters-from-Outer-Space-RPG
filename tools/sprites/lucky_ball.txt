@@ -1,0 +1,243 @@
+# Lucky rolled up for the drop (DESIGN.md pod_bay, CS-01..CS-03): a 16x16 compressed ball of the
+# same pink slime, feet on the bottom row. It is Lucky's head sat on the floor - the three
+# left-leaning green-tipped spikes, the side-eye, the sneer and the green drip - with the body
+# squashed into the shading rows underneath. Idle pulses between round and squished; walking is
+# one rolling loop (spikes go top, left, bottom, right - the ball bumps up when it rolls over
+# them), used for every facing; pseudopod shoots an arm up the full frame to slap the intercom,
+# the ball flattening as the slime goes up. Same palette as lucky.txt.
+name: lucky_ball
+frame: 16x16
+palette:
+  . = transparent
+  k = #141018     # outline
+  p = #ff5fd2     # pink slime
+  P = #ff9ae6     # pink highlight
+  d = #b0308c     # pink shadow
+  g = #39ff8a     # green glow
+  G = #1c8c48     # green glow shaded
+  w = #f8f8f8     # eye whites
+anim: idle_down  frames: 0 1     fps: 2
+anim: idle_up    frames: 8 9     fps: 2
+anim: idle_left  frames: 10 11   fps: 2
+anim: idle_right frames: 10 11   fps: 2  flipX: true
+anim: walk_down  frames: 0 2 3 4 fps: 8
+anim: walk_up    frames: 0 2 3 4 fps: 8
+anim: walk_left  frames: 0 2 3 4 fps: 8
+anim: walk_right frames: 0 2 3 4 fps: 8  flipX: true
+anim: pseudopod  frames: 5 6 7   fps: 8  repeat: 0     # rise, full reach, splat on the grille
+
+frame 0: ball, front
+...k...k...k....
+..kgk.kgk.kgk...
+.kpgpkpgpkpgpk..
+.kppppppppppppk.
+.kpPPppppppppgk.
+.kppkkppppkkpgk.
+.kppwwppppwwpgk.
+.kppkwppppkwpGk.
+.kpppppppppppdk.
+.kppppppkkkppdk.
+.kppkkkppppppdk.
+.kppdpPpppPpdpk.
+.kppdppppppdppk.
+.kppdppppppdppk.
+..kpdppppppdpk..
+...kkkkkkkkkk...
+
+frame 1: ball, front, squished (spikes splay)
+................
+..k....k....k...
+.kgk..kgk..kgk..
+.kgppkpgpkppgk..
+.kppppppppppppk.
+.kpPPppppppppgk.
+.kppkkppppkkpgk.
+.kppwwppppwwpgk.
+.kppkwppppkwpGk.
+.kpppppppppppdk.
+.kppppppkkkppdk.
+.kppkkkppppppdk.
+.kppdpPpppPpdpk.
+.kppdppppppdppk.
+kppdppppppppdppk
+.kkkkkkkkkkkkkk.
+
+frame 2: roll, spikes left
+................
+................
+................
+..kppppppppppppk
+..kpPPppppppppgk
+.kpppkkppppkkpgk
+kggppwwppppwwpgk
+.kpppkwppppkwpGk
+.kppppppppppppdk
+kggppppppkkkppdk
+.kpppkkkppppppdk
+.kpppdpPpppPpdpk
+kggppdppppppdppk
+.kpppdppppppdppk
+...kpdppppppdpk.
+....kkkkkkkkkk..
+
+frame 3: roll, spikes under (bumped up)
+.kppppppppppppk.
+.kpPPppppppppgk.
+.kppkkppppkkpgk.
+.kppwwppppwwpgk.
+.kppkwppppkwpGk.
+.kpppppppppppdk.
+.kppppppkkkppdk.
+.kppkkkppppppdk.
+.kppdpPpppPpdpk.
+.kppdppppppdppk.
+.kppdppppppdppk.
+.kppdppppppdppk.
+.kppppppppppppk.
+.kpgpkpgpkpgpk..
+..kgk.kgk.kgk...
+...k...k...k....
+
+frame 4: roll, spikes right
+................
+................
+................
+kppppppppppppk..
+kpPPppppppppgk..
+kppkkppppkkpgpk.
+kppwwppppwwpgggk
+kppkwppppkwpGpk.
+kpppppppppppdpk.
+kppppppkkkppdggk
+kppkkkppppppdpk.
+kppdpPpppPpdppk.
+kppdppppppdppggk
+kppdppppppdpppk.
+.kpdppppppdpk...
+..kkkkkkkkkk....
+
+frame 5: pseudopod rises (back view, ball flattens)
+................
+................
+................
+................
+................
+.......kk.......
+......kPpk......
+..k...kPpk..k...
+.kgk..kPpk.kgk..
+.kpgpkpPppkpgpk.
+kppPpppppppppppk
+kgpppppppppppdpk
+kGpppppppppppdpk
+kpppdpPpppPppdpk
+kpppdppppppppdpk
+.kkkkkkkkkkkkkk.
+
+frame 6: pseudopod full reach, the slime goes up
+....kkkkkkkk....
+...kpPPPppppk...
+...kppppppppk...
+....kkppppkk....
+......kPpk......
+......kPpk......
+......kPpk......
+......kPpk......
+......kPpk......
+..k...kPpk..k...
+.kgk..kPpk.kgk..
+.kpgpkpPppkpgpk.
+kppPpppppppppppk
+kgppdpPpppPppdpk
+kGppdppppppppdpk
+.kkkkkkkkkkkkkk.
+
+frame 7: pseudopod splat on the grille
+..kkkkkkkkkkkk..
+.kpPPpppppppPpk.
+..kkkkppppkkkkk.
+......kPpk......
+......kPpk......
+......kPpk......
+......kPpk......
+......kPpk......
+......kPpk......
+..k...kPpk..k...
+.kgk..kPpk.kgk..
+.kpgpkpPppkpgpk.
+kppPpppppppppppk
+kgppdpPpppPppdpk
+kGppdppppppppdpk
+.kkkkkkkkkkkkkk.
+
+frame 8: ball, back
+...k...k...k....
+..kgk.kgk.kgk...
+.kpgpkpgpkpgpk..
+.kppppppppppppk.
+.kpPPpppppppppk.
+.kpPpppppppppdk.
+.kgppppppppppdk.
+.kgppppppppppdk.
+.kGppppppppppdk.
+.kpppppppppppdk.
+.kpppppppppppdk.
+.kppdpPpppPpdpk.
+.kppdppppppdppk.
+.kppdppppppdppk.
+..kpdppppppdpk..
+...kkkkkkkkkk...
+
+frame 9: ball, back, squished
+................
+..k....k....k...
+.kgk..kgk..kgk..
+.kgppkpgpkppgk..
+.kppppppppppppk.
+.kpPPpppppppppk.
+.kpPpppppppppdk.
+.kgppppppppppdk.
+.kgppppppppppdk.
+.kGppppppppppdk.
+.kpppppppppppdk.
+.kppdpPpppPpdpk.
+.kppdppppppdppk.
+.kppdppppppdppk.
+kppdppppppppdppk
+.kkkkkkkkkkkkkk.
+
+frame 10: ball, left side
+.......k...k....
+......kgk.kgk...
+.kkkkkpgpkpgpkk.
+.kppppppppppppk.
+.kpPpppppppppdk.
+.kpkkppppppppdk.
+.kpwwppppppppdk.
+.kpkwppppppppdk.
+.kpppppppppppdk.
+.kkppppppppppdk.
+.kkkpppppppppdk.
+.kppdpPpppPpdpk.
+.kppdppppppdppk.
+.kppdppppppdppk.
+..kpdppppppdpk..
+...kkkkkkkkkk...
+
+frame 11: ball, left side, squished
+................
+......k....k....
+.....kgk..kgk...
+.kkkkkpgpkppgk..
+.kppppppppppppk.
+.kpPpppppppppdk.
+.kpkkppppppppdk.
+.kpwwppppppppdk.
+.kpkwppppppppdk.
+.kpppppppppppdk.
+.kkppppppppppdk.
+.kkkpppppppppdk.
+.kppdpPpppPpdpk.
+.kppdppppppdppk.
+kppdppppppppdppk
+.kkkkkkkkkkkkkk.

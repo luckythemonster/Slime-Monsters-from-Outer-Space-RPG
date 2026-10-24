@@ -1,0 +1,65 @@
+# A fallen drywall slab (Bajonka trots out from under it). 32x16. lift 3: the slab heaves up off the floor (CS-17).
+name: obj_drywall
+frame: 32x16
+palette:
+  . = transparent
+  k = #141018     # outline / cracks
+  w = #f8f8f8     # drywall face
+  L = #c8ccd4     # edge
+  d = #5c6068     # underside
+anim: idle  frames: 0  fps: 1
+anim: lift  frames: 0 1 2  fps: 6  repeat: 0
+
+frame 0: idle
+................................
+....kkkkkkkkkkkkkkkkkkkkkkkk....
+...kLLLLLLLLLLLLLLLLLLLLLLLLk...
+..kLwwwwwwwwwwwwkwwwwwwwwwwwLk..
+..kLwwwwwwwwwwwkwwwwwwwwwwwwLk..
+..kLwwwwwwwwwwkwwwwwwwwwwwwwLk..
+..kLwwwwwwwwwwkwwwwwwwkwwwwwLk..
+..kLwwwwwwwwwkwwwwwwwwwkwwwwLk..
+..kLwwwwwwwwwkwwwwwwwwwwkwwwLk..
+..kLwwwwwwwwkwwwwwwwwwwwwkwwLk..
+..kLLLLLLLLLLLLLLLLLLLLLLLLLLk..
+..kddddddddddddddddddddddddddk..
+..kkkkkkkkkkkkkkkkkkkkkkkkkkkk..
+................................
+................................
+................................
+
+frame 1: lift a (heaves up)
+....kkkkkkkkkkkkkkkkkkkkkkkk....
+...kLLLLLLLLLLLLLLLLLLLLLLLLk...
+..kLwwwwwwwwwwwwkwwwwwwwwwwwLk..
+..kLwwwwwwwwwwwkwwwwwwwwwwwwLk..
+..kLwwwwwwwwwwkwwwwwwwwwwwwwLk..
+..kLwwwwwwwwwwkwwwwwwwkwwwwwLk..
+..kLwwwwwwwwwkwwwwwwwwwkwwwwLk..
+..kLwwwwwwwwwkwwwwwwwwwwkwwwLk..
+..kLwwwwwwwwkwwwwwwwwwwwwkwwLk..
+..kLLLLLLLLLLLLLLLLLLLLLLLLLLk..
+..kddddddddddddddddddddddddddk..
+..kkkkkkkkkkkkkkkkkkkkkkkkkkkk..
+..kddddddddddddddddddddddddddk..
+................................
+................................
+................................
+
+frame 2: lift b (up, dark gap beneath)
+...kLLLLLLLLLLLLLLLLLLLLLLLLk...
+..kLwwwwwwwwwwwwkwwwwwwwwwwwLk..
+..kLwwwwwwwwwwwkwwwwwwwwwwwwLk..
+..kLwwwwwwwwwwkwwwwwwwwwwwwwLk..
+..kLwwwwwwwwwwkwwwwwwwkwwwwwLk..
+..kLwwwwwwwwwkwwwwwwwwwkwwwwLk..
+..kLwwwwwwwwwkwwwwwwwwwwkwwwLk..
+..kLwwwwwwwwkwwwwwwwwwwwwkwwLk..
+..kLLLLLLLLLLLLLLLLLLLLLLLLLLk..
+..kddddddddddddddddddddddddddk..
+..kkkkkkkkkkkkkkkkkkkkkkkkkkkk..
+..kddddddddddddddddddddddddddk..
+..kkkkkkkkkkkkkkkkkkkkkkkkkkkk..
+................................
+................................
+................................

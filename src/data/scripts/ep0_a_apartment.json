@@ -1,0 +1,145 @@
+{
+  "ep0_apt_amp": [
+    { "if": "flags.signalSent", "then": [
+      { "say": "It hums at a frequency Phoenix describes as 'rent.'", "who": "narrator" },
+      { "if": "flags.ampRead", "then": [
+        { "say": "My brain thinks it's still waiting for a reply.", "who": "phoenix" }
+      ] },
+      { "set": { "flags.ampRead": true } },
+      { "end": true }
+    ] },
+    { "run": "ep0_signal" }
+  ],
+
+  "ep0_apt_bass_stand": [
+    { "say": "Beat-Up Bass. Four strings. Three work.", "who": "narrator" },
+    { "if": "!flags.bassTaken", "then": [
+      { "give": { "item": "beatup_bass", "qty": 1, "toast": "Got Beat-Up Bass! (EQUIP it on Phoenix from the menu.)" } },
+      { "say": "It's for the trash bag's replacement. The trash bag has opinions.", "who": "phoenix" },
+      { "set": { "flags.bassTaken": true } }
+    ], "else": [
+      { "say": "The stand is empty now. It stands anyway.", "who": "narrator" }
+    ] }
+  ],
+
+  "ep0_apt_couch": [
+    { "say": "The couch. It has a specific way, and Phoenix is the only one who knows it.", "who": "narrator" },
+    { "choice": [
+      { "text": "Nap", "then": [
+        { "camera": { "fade": "out", "ms": 300 } },
+        { "party": { "heal": true } },
+        { "wait": 400 },
+        { "camera": { "fade": "in", "ms": 300 } },
+        { "say": "Everything is restored. Nothing is resolved.", "who": "narrator" },
+        { "if": "!flags.couchCushions", "then": [
+          { "give": { "money": 2, "toast": "Found $2 in the cushions. Rent is still rent." } },
+          { "set": { "flags.couchCushions": true } }
+        ] }
+      ] },
+      { "text": "Not now", "then": [
+        { "say": "The couch waits. It is good at it.", "who": "narrator" }
+      ] }
+    ] }
+  ],
+
+  "ep0_apt_couch_arm": [
+    { "say": "The couch arm. Something has worn a dog-shaped dent into it. There is no dog.", "who": "narrator" }
+  ],
+
+  "ep0_apt_bajonka": [
+    { "say": "The dog is on the couch. Phoenix has not mentioned the dog.", "who": "narrator" },
+    { "if": "flags.aptBajonkaRead", "then": [
+      { "say": "She has a key. My brain thinks she has always had a key.", "who": "phoenix" }
+    ] },
+    { "set": { "flags.aptBajonkaRead": true } }
+  ],
+
+  "ep0_apt_bills": [
+    { "if": "!vars.billsIndex", "then": [
+      { "say": "RENT: PAST DUE.", "who": "narrator" }
+    ] },
+    { "if": "vars.billsIndex == 1", "then": [
+      { "say": "STUDENT LOANS: PAST DUE, FOREVER.", "who": "narrator" }
+    ] },
+    { "if": "vars.billsIndex == 2", "then": [
+      { "say": "VANGUARD SPECTRUM INTERNET: PAST DUE. (You do not have internet.)", "who": "narrator" }
+    ] },
+    { "if": "vars.billsIndex == 3", "then": [
+      { "say": "PARKING TICKET. (Phoenix does not own a car.)", "who": "narrator" }
+    ] },
+    { "if": "vars.billsIndex == 4", "then": [
+      { "say": "CITY OF MINNEAPOLIS: POTHOLE, 1 (one). $4,000.", "who": "narrator" },
+      { "if": "!flags.billsRead", "then": [
+        { "say": "My brain thinks we should frame that one.", "who": "phoenix" }
+      ] },
+      { "set": { "flags.billsRead": true } }
+    ] },
+    { "inc": { "vars.billsIndex": 1 } },
+    { "if": "vars.billsIndex >= 5", "then": [
+      { "set": { "vars.billsIndex": 0 } }
+    ] }
+  ],
+
+  "ep0_apt_fridge": [
+    { "if": "!flags.fridgeLooted", "then": [
+      { "say": "A half-ounce of weed, a Pizza Luce slice and a Tater Tot Hotdish. Assets.", "who": "narrator" },
+      { "give": { "item": "pizza_slice", "qty": 1 } },
+      { "give": { "item": "hotdish", "qty": 1 } },
+      { "set": { "flags.fridgeLooted": true } }
+    ], "else": [
+      { "say": "A half-ounce of weed and a light that doesn't come on. Assets.", "who": "narrator" }
+    ] }
+  ],
+
+  "ep0_apt_counter": [
+    { "say": "A counter. One mug. The mug says WORLD'S OKAYEST BASSIST. Phoenix did not buy it.", "who": "narrator" }
+  ],
+
+  "ep0_apt_window": [
+    { "say": "WORK IS LOVE. It has never once been turned off.", "who": "narrator" },
+    { "if": "flags.signalSent", "then": [
+      { "say": "It blinked once. Last week. Nobody else saw it. Lucky is counting it.", "who": "narrator" }
+    ] }
+  ],
+
+  "ep0_apt_radiator": [
+    { "say": "It clanks in 7/8. Phoenix says it's the building settling. It is not.", "who": "narrator" }
+  ],
+
+  "ep0_apt_bin": [
+    { "say": "It's a bin. It's a big bin. It's yours.", "who": "narrator" },
+    { "if": "flags.binRead", "then": [
+      { "say": "It's got a lid. That's a door. I have a door.", "who": "lucky" }
+    ] },
+    { "set": { "flags.binRead": true } }
+  ],
+
+  "ep0_apt_bathroom": [
+    { "say": "There's a mirror in there. I don't recommend it.", "who": "phoenix" }
+  ],
+
+  "ep0_apt_poster_1": [
+    { "say": "RAT FIGHT — DULUTH", "who": "narrator" }
+  ],
+  "ep0_apt_poster_2": [
+    { "say": "GREAT BIG THING CRAWLING ALL OVER ME", "who": "narrator" }
+  ],
+  "ep0_apt_poster_3": [
+    { "say": "THE DENIM BOYS: A NIGHT OF DENIM", "who": "narrator" }
+  ],
+  "ep0_apt_poster_4": [
+    { "say": "HARD LUCK OPEN MIC (NO MICS)", "who": "narrator" }
+  ],
+
+  "ep0_apt_wall_bills": [
+    { "say": "The wall bills. These are the ones that did not fit on the table.", "who": "narrator" }
+  ],
+
+  "ep0_apt_rug": [
+    { "say": "A rug. It is covering a stain that is covering a worse stain.", "who": "narrator" }
+  ],
+
+  "ep0_week_autosave": [
+    { "save": { "auto": true } }
+  ]
+}

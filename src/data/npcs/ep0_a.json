@@ -1,0 +1,21 @@
+{
+  "dad": {
+    "name": "VANGUARD INTERCOM",
+    "portrait": "dad_grille",
+    "window": "ff",
+    "blip": "A3"
+  },
+  "drone": {
+    "name": "RETRIEVAL DRONE",
+    "portrait": "drone",
+    "window": "ff",
+    "blip": "A3"
+  },
+  "bajonka": {
+    "name": "Bajonka",
+    "portrait": "bajonka_sit",
+    "sprite": "bajonka",
+    "window": "flat",
+    "blip": "C5"
+  }
+}

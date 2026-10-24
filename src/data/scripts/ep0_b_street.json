@@ -1,0 +1,179 @@
+{
+  "ep0_street_enter": [
+    { "if": "!flags.hubOpen || flags.gigFlyer || flags.hasPalmersFlyer", "then": [
+      { "music": "snow" }
+    ], "else": [
+      { "music": "west_bank" }
+    ] }
+  ],
+
+  "ep0_street_palmers_closed": [
+    { "say": "PALMER'S. Closed until there's a reason.", "who": "narrator" },
+    { "move": { "who": "player", "path": "D", "wait": true } }
+  ],
+
+  "ep0_street_cafe_closed": [
+    { "say": "After. I need to lie down in a specific way.", "who": "phoenix", "portrait": "phoenix_tired" },
+    { "move": { "who": "player", "path": "D", "wait": true } }
+  ],
+
+  "ep0_street_autosave": [
+    { "save": { "auto": true } }
+  ],
+
+  "ep0_street_rail": [
+    { "if": "flags.brianCalledRyan || flags.ryanCalled", "then": [
+      { "sfx": "door" },
+      { "caption": "TWENTY MINUTES OF\nLIGHT RAIL LATER", "ms": 1800 },
+      { "teleport": { "map": "city_sound_hall", "x": 3, "y": 6, "facing": "right" } }
+    ], "else": [
+      { "say": "The train is here. The reason to take it isn't.", "who": "narrator" },
+      { "move": { "who": "player", "path": "U", "wait": true } }
+    ] }
+  ],
+
+  "ep0_street_billboard": [
+    { "say": "It's humming. Fight it?", "who": "narrator" },
+    { "choice": [
+      { "text": "Yes", "then": [
+        { "sfx": "glitch" },
+        { "battle": "hub_billboard", "onWin": [
+          { "set": { "flags.cleared_billboard": true } },
+          { "say": "The hum stops. The sign stays. The sign always stays.", "who": "narrator" }
+        ], "onLose": "gameover" }
+      ] },
+      { "text": "No", "then": [
+        { "say": "It keeps humming. It has all day. It has every day.", "who": "narrator" }
+      ] }
+    ] }
+  ],
+
+  "ep0_street_slush": [
+    { "say": "It's not moving. You are.", "who": "narrator" },
+    { "battle": "hub_slush", "onWin": [ { "set": { "flags.cleared_slush": true } } ], "onLose": "gameover" }
+  ],
+
+  "ep0_street_scooters": [
+    { "say": "Three rental scooters. Nobody is riding them. They are doing fifteen in the snow.", "who": "narrator" },
+    { "battle": "hub_scooters", "onWin": [ { "set": { "flags.cleared_scooters": true } } ], "onLose": "gameover" }
+  ],
+
+  "ep0_street_goose": [
+    { "say": "HONK. It is not a greeting.", "who": "narrator" },
+    { "battle": "hub_goose", "onWin": [ { "set": { "flags.cleared_goose": true } } ], "onLose": "gameover" }
+  ],
+
+  "ep0_street_analyst": [
+    { "say": "Khakis. Lanyard. Clipboard. It is already writing you down.", "who": "narrator" },
+    { "battle": "hub_analyst", "onWin": [ { "set": { "flags.cleared_analyst": true } } ], "onLose": "gameover" }
+  ],
+
+  "ep0_street_analyst_duo": [
+    { "say": "Two of them. They are comparing notes. The notes are you.", "who": "narrator" },
+    { "battle": "hub_analyst_duo", "onWin": [ { "set": { "flags.cleared_analyst_duo": true } } ], "onLose": "gameover" }
+  ],
+
+  "ep0_street_goose_pair": [
+    { "say": "Two geese. One opinion.", "who": "narrator" },
+    { "battle": "hub_goose_pair", "onWin": [ { "set": { "flags.cleared_goose_pair": true } } ], "onLose": "gameover" }
+  ],
+
+  "npc_street_shoveler": [
+    { "say": "I've shoveled this square four times today. The city calls it a job. I call it a relationship.", "who": "shoveler" }
+  ],
+
+  "npc_street_cyclist": [
+    { "say": "It's not cold if you're angry enough.", "who": "cyclist" }
+  ],
+
+  "npc_street_busker": [
+    { "say": "I take requests. I can't play them. But I take them.", "who": "busker" }
+  ],
+
+  "npc_street_crust_punk": [
+    { "say": "Her name's Also Bajonka. No relation.", "who": "crust_punk" }
+  ],
+
+  "npc_street_also_bajonka": [
+    { "say": "Also Bajonka sniffs your hand, considers it, and declines.", "who": "narrator" },
+    { "if": "flags.hasBajonka", "then": [
+      { "say": "No clipboard. No relation. She has never made anyone sign anything.", "who": "narrator" }
+    ] }
+  ],
+
+  "npc_street_office_worker": [
+    { "say": "Did you see the sky? {var:billboardsTagged} billboards went down. My boss cried.", "who": "office_worker" }
+  ],
+
+  "npc_street_stranger": [
+    { "say": "Whoa, man. The stars are heavy tonight.", "who": "stranger_tall" }
+  ],
+
+  "npc_street_smoker": [
+    { "say": "They're on in ten. The drummer looks… wet.", "who": "smoker" }
+  ],
+
+  "npc_street_pawn": [
+    { "if": "!flags.hubOpen", "then": [
+      { "say": "CEDAR PAWN & LOAN. BACK IN 10.\nThe sign has said 10 for a week.", "who": "narrator" }
+    ], "else": [
+      { "say": "Cedar Pawn. I buy anything that isn't Vanguard. They track it.", "who": "pawn_guy", "portrait": "pawnbroker" },
+      { "if": "flags.brianQuit && inventory.has('fried_pedalboard')", "then": [
+        { "say": "A pedalboard that smells like oat milk? …Eleven dollars.", "who": "pawn_guy", "portrait": "pawnbroker" }
+      ] },
+      { "shop": "pawnshop" }
+    ] }
+  ],
+
+  "npc_street_pawn_window": [
+    { "say": "Under a tarp: a tin-can robot. NOT FOR SALE (YET).", "who": "narrator" }
+  ],
+
+  "npc_street_towers_sign": [
+    { "say": "RENT DUE. ALSO: RENT INCREASE. ALSO: RENT.", "who": "narrator" },
+    { "if": "party.has('phoenix') && flags.billsRead", "then": [
+      { "say": "My brain thinks they're repeating themselves. My brain thinks it's working.", "who": "phoenix" }
+    ] }
+  ],
+
+  "npc_street_shelter_ad": [
+    { "say": "WORK IS LOVE.\n{color:gray}LOVE IS A VANGUARD TRADEMARK.{/color}", "who": "narrator" },
+    { "if": "flags.seen_shelter_ad", "then": [
+      { "say": "My dad signed off on that trademark. He got a plaque. The plaque says WORK IS LOVE.", "who": "lucky" }
+    ] },
+    { "set": { "flags.seen_shelter_ad": true } }
+  ],
+
+  "npc_street_pizza_box": [
+    { "say": "A Pizza Luce box, left by the bench. Still warm? No. Nothing in Minneapolis is still warm.", "who": "narrator" },
+    { "if": "!flags.pizzaBoxLooted2", "then": [
+      { "give": { "item": "pizza_slice", "qty": 1 } },
+      { "set": { "flags.pizzaBoxLooted2": true } }
+    ], "else": [
+      { "say": "One slice was in there. It isn't now. You know where it went.", "who": "narrator" }
+    ] }
+  ],
+
+  "npc_street_hydrant": [
+    { "if": "flags.eternityDone", "then": [
+      { "say": "A new flyer on the hydrant.\nLOST: MOHAWK. SENTIMENTAL VALUE. NO QUESTIONS.", "who": "narrator" }
+    ], "else": [
+      { "say": "A flyer taped to the hydrant.\nLOST: CAT. ANSWERS TO 'NO.'", "who": "narrator" }
+    ] }
+  ],
+
+  "npc_street_bike_rack": [
+    { "say": "Three U-locks. Zero bikes. The locks are winning.", "who": "narrator" }
+  ],
+
+  "npc_street_van": [
+    { "say": "A van. No plates. Somebody spray-painted a spiral on the side and nobody on this street owns a van.", "who": "narrator" },
+    { "if": "party.has('phoenix')", "then": [
+      { "say": "My brain thinks it's been here longer than I have.", "who": "phoenix" }
+    ] }
+  ],
+
+  "npc_street_tree": [
+    { "say": "A bare tree. It is doing its best. Its best is February.", "who": "narrator" }
+  ]
+}

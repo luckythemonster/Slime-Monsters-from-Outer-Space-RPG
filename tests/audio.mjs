@@ -1,0 +1,545 @@
+#!/usr/bin/env node
+/**
+ * tests/audio.mjs — audio engine test.
+ *
+ * 1. Node (pure): every song in src/audio/songs validates and compiles; token parser rejects garbage.
+ * 2. Headless Chromium (Playwright, global install): serves the repo root with a tiny static server,
+ *    opens tests/audio-harness.html and, through window.__audioHarness:
+ *    - realtime: plays each song ~2.5 s (or its whole length for a short one-shot) → no exceptions,
+ *      context running, tick steps strictly increasing at bpm*stepsPerBeat/60 steps/s (±5 % vs
+ *      wall clock), analyser RMS > 0 while playing and ≈ 0 after stopMusic; crossfade between
+ *      songs; aliases resolve; every SFX plays.
+ *    - offline (OfflineAudioContext, most reliable): renders each looping song across its first
+ *      loop boundary → non-zero RMS, no clipping, no 100 ms gap at the seam (sparse cues only
+ *      need the loop to restart); renders each one-shot to its end → silent tail; renders every
+ *      SFX → audible onset, silent after its returned duration, no clipping.
+ *    - "listen" checks: pocket's kicks land on beats 1 and 4 of the 7/8 bar, sticker_hallway is
+ *      quieter than west_bank, six_inch_stage_ext is six_inch_stage without the melody.
+ * Prints a JSON report and exits non-zero on any failure.
+ */
+import http from 'node:http';
+import fs from 'node:fs';
+import path from 'node:path';
+import { execSync } from 'node:child_process';
+import { createRequire } from 'node:module';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+process.env.PLAYWRIGHT_BROWSERS_PATH ||= '/opt/pw-browsers';
+
+const results = [];
+let failed = 0;
+function check(name, ok, details = {}) {
+  results.push({ name, ok: !!ok, ...details });
+  if (!ok) failed++;
+  process.stderr.write(`${ok ? 'PASS' : 'FAIL'} ${name}${ok ? '' : ' ' + JSON.stringify(details)}\n`);
+}
+
+// ---------------------------------------------------------------------------
+// 1. Pure Node checks
+// ---------------------------------------------------------------------------
+const { validateSong, compileSong, parseToken } = await import(pathToFileURL(path.join(ROOT, 'src/audio/Sequencer.js')));
+const { SONGS } = await import(pathToFileURL(path.join(ROOT, 'src/audio/songs/index.js')));
+const { SFX, SFX_NAMES } = await import(pathToFileURL(path.join(ROOT, 'src/audio/sfx.js')));
+const { ALIASES } = await import(pathToFileURL(path.join(ROOT, 'src/audio/songs/index.js')));
+
+const REQUIRED_SFX = ['cursor', 'confirm', 'cancel', 'text_blip', 'hit', 'crit', 'miss', 'squelch', 'slime_pop', 'kraaang',
+  'level_up', 'item', 'door', 'sneeze', 'feedback', 'drum_hit', 'cymbal', 'ko', 'flee', 'save'];
+check('sfx: every ARCHITECTURE.md name has a recipe', REQUIRED_SFX.every((n) => typeof SFX[n] === 'function') && REQUIRED_SFX.every((n) => SFX_NAMES.includes(n)),
+  { missing: REQUIRED_SFX.filter((n) => typeof SFX[n] !== 'function') });
+// Chapter 1 SFX (design_feel.md "SFX list" + design_systems.md additions)
+const CH1_SFX = ['caption_tick', 'count_click', 'eject', 'static_burst', 'crash', 'pedal_stomp', 'coffee_spill', 'sparks', 'roof_peel',
+  'wall_blow', 'mohawk_pop', 'intercom_buzz', 'glitch', 'thud', 'door_slam', 'unplug', 'pop_x3', 'amp_hum', 'krathoom', 'doom', 'crack',
+  'thud_word', 'thud_low', 'van_keys', 'tear', 'toon_up', 'gears', 'splash', 'phone_ring', 'click', 'drone_whine', 'stick_click', 'power_chord',
+  'hair_back', 'rubble', 'chair', 'jukebox_1', 'jukebox_2', 'jukebox_3', 'jukebox_4', 'wind'];
+check('sfx: every Chapter 1 cue has a recipe and is listed in SFX_NAMES', CH1_SFX.every((n) => typeof SFX[n] === 'function' && SFX_NAMES.includes(n)),
+  { missing: CH1_SFX.filter((n) => typeof SFX[n] !== 'function' || !SFX_NAMES.includes(n)) });
+check('sfx: SFX_NAMES has no duplicates and names only real recipes', new Set(SFX_NAMES).size === SFX_NAMES.length && SFX_NAMES.every((n) => typeof SFX[n] === 'function'));
+
+// Chapter 1 cue list (design_feel.md "Audio") + the jingles
+const CH1_SONGS = ['title', 'snow', 'battle', 'dental_plan', 'flying_squirrel', 'pothole', 'unpaid_bills', 'ask_the_universe', 'northern_garage',
+  'west_bank', 'normal_music', 'sticker_hallway', 'four_dollars', 'six_inch_stage', 'six_inch_stage_ext', 'pocket', 'rhythm_achieved',
+  'plaster_dust', 'win_sting', 'level_up', 'game_over'];
+check('songs: every Chapter 1 cue is in songs/index.js', CH1_SONGS.every((id) => SONGS[id]), { missing: CH1_SONGS.filter((id) => !SONGS[id]) });
+const REQUIRED_ALIASES = {
+  pod_bay: 'dental_plan', freefall: 'flying_squirrel', apartment: 'unpaid_bills', signal: 'ask_the_universe', garage: 'northern_garage',
+  hub: 'west_bank', coffee: 'normal_music', rehearsal_brian: 'normal_music', citysound: 'sticker_hallway', audition: 'four_dollars',
+  palmers_set: 'pocket', the_set: 'pocket', eternity: 'rhythm_achieved', rubble: 'plaster_dust', victory: 'win_sting', gameover: 'game_over',
+  palmers: 'six_inch_stage', battle_noise: 'battle',
+};
+// Band covers (the Dead Planet Demos, transcribed + arranged by tools/audio_to_midi.py and tools/midi_to_song.py)
+const BAND_SONGS = ['band_spud_nothin', 'band_they_came_from_the_sky', 'band_hunger', 'band_red_star_vanguard', 'band_eclipse_of_liberation', 'band_monsters'];
+check('songs: every band cover is in songs/index.js', BAND_SONGS.every((id) => SONGS[id]), { missing: BAND_SONGS.filter((id) => !SONGS[id]) });
+check('aliases: every alias names a registered song and no alias shadows a song id',
+  ALIASES && Object.entries(ALIASES).every(([a, id]) => SONGS[id] && !SONGS[a]), { bad: Object.entries(ALIASES || {}).filter(([a, id]) => !SONGS[id] || SONGS[a]) });
+check('aliases: the other design docs\' cue names are all mapped', Object.entries(REQUIRED_ALIASES).every(([a, id]) => ALIASES && ALIASES[a] === id),
+  { missing: Object.entries(REQUIRED_ALIASES).filter(([a, id]) => !ALIASES || ALIASES[a] !== id) });
+
+for (const [id, song] of Object.entries(SONGS)) {
+  const errs = validateSong(song);
+  check(`song ${id}: validates`, errs.length === 0 && song.id === id, { errs });
+  if (errs.length) continue;
+  const c = compileSong(song);
+  const counts = Object.fromEntries(c.channels.map((ch) => [ch.name, ch.events.length]));
+  check(`song ${id}: compiles (${c.bars} bars, ${c.totalSteps} steps, ${c.duration.toFixed(1)} s)`,
+    c.totalSteps === c.bars * c.stepsPerBar && c.channels.every((ch) => ch.events.length > 0) && c.loopLen > 0, { counts });
+}
+// --- structural "listen" checks on the compiled event lists ---
+const compiled = Object.fromEntries(Object.entries(SONGS).filter(([, song]) => validateSong(song).length === 0).map(([id, song]) => [id, compileSong(song)]));
+const chan = (id, name) => compiled[id] && compiled[id].channels.find((c) => c.name === name);
+const drumSteps = (id, name, drum, bars) => (chan(id, name) ? chan(id, name).events.filter((e) => e.drum === drum && (!bars || bars.includes(Math.floor(e.step / compiled[id].stepsPerBar)))).map((e) => e.step % compiled[id].stepsPerBar) : []);
+if (compiled.normal_music) {
+  const c = compiled.normal_music;
+  const snare = drumSteps('normal_music', 'noise', 's'), kick = drumSteps('normal_music', 'noise', 'k');
+  const accents = c.channels.some((ch) => ch.events.some((e) => e.accent || e.slideFrom));
+  check('normal_music: snare only on 2 and 4, kick only on 1 and 3, no hats, no accents, no slides',
+    snare.length === c.bars * 2 && snare.every((st) => st === 4 || st === 12) && kick.every((st) => st === 0 || st === 8) && drumSteps('normal_music', 'noise', 'h').length === 0 && !accents,
+    { snare: [...new Set(snare)], kick: [...new Set(kick)] });
+}
+if (compiled.pocket) {
+  const c = compiled.pocket;
+  const plain = [0, 1, 2, 4, 5, 6, 8, 9, 10, 12, 13, 14]; // bars without a fill
+  const kicks = drumSteps('pocket', 'noise', 'k', plain), snares = drumSteps('pocket', 'noise', 's', plain);
+  const p2 = chan('pocket', 'pulse2');
+  check('pocket: 7/8 (14 steps), kick on beats 1 and 4, snare on 6, pulse2 silent until bar 9',
+    c.beatsPerBar === 7 && c.stepsPerBeat === 2 && c.bars === 16 && kicks.length > 0 && kicks.every((st) => st === 0 || st === 6) && snares.every((st) => st === 10)
+      && p2 && p2.events.length > 0 && p2.events.every((e) => e.step >= 8 * c.stepsPerBar),
+    { kicks: [...new Set(kicks)], snares: [...new Set(snares)], firstPulse2Bar: p2 && Math.floor(p2.events[0].step / c.stepsPerBar) });
+  const fillBars = [3, 7, 11, 15].filter((b) => drumSteps('pocket', 'noise', 's', [b]).length >= 3);
+  check('pocket: a fill every 4 bars', fillBars.length === 4, { fillBars });
+}
+if (compiled.unpaid_bills) {
+  const c = compiled.unpaid_bills, p2 = chan('unpaid_bills', 'pulse2');
+  check('unpaid_bills: loopStart 8 and the melody only enters on the second pass', c.loopStart === 8 && p2 && p2.events.length > 0 && p2.events.every((e) => e.step >= 8 * c.stepsPerBar), { loopStart: c.loopStart });
+}
+if (compiled.four_dollars) {
+  const c = compiled.four_dollars;
+  const introMelodic = c.channels.filter((ch) => !ch.isNoise).some((ch) => ch.events.some((e) => e.step < c.stepsPerBar));
+  const fills = [4, 8].filter((b) => c.channels.some((ch) => ch.isNoise && ch.events.filter((e) => e.drum === 's' && Math.floor(e.step / c.stepsPerBar) === b).length >= 6));
+  check('four_dollars: 196 BPM, one-bar stick-click intro (loopStart 1), 16th snare fills every 4 bars', c.bpm === 196 && c.loopStart === 1 && !introMelodic && fills.length === 2, { fills, introMelodic });
+}
+if (SONGS.six_inch_stage && SONGS.six_inch_stage_ext) {
+  const a = SONGS.six_inch_stage, b = SONGS.six_inch_stage_ext;
+  check('six_inch_stage_ext: same song with pulse2 at volume 0', b.channels.pulse2.volume === 0 && a.channels.pulse2.volume > 0 && b.channels.pulse2.patterns === a.channels.pulse2.patterns && b.order === a.order && b.bpm === a.bpm);
+}
+if (SONGS.sticker_hallway && SONGS.west_bank) {
+  const h = SONGS.sticker_hallway, w = SONGS.west_bank;
+  check('sticker_hallway: west_bank riff on the triangle, pulse1 at 0.15, no pulse2, hats only',
+    h.bpm === w.bpm && h.channels.tri.patterns === w.channels.pulse1.patterns && h.channels.pulse1.volume === 0.15 && !h.channels.pulse2
+      && h.order.length === w.order.length && drumSteps('sticker_hallway', 'noise', 'k').length === 0 && drumSteps('sticker_hallway', 'noise', 's').length === 0);
+}
+if (compiled.rhythm_achieved) {
+  const c = compiled.rhythm_achieved, s = SONGS.rhythm_achieved;
+  const drones = Object.values(s.channels).filter((ch) => ch.wave === 'pulse');
+  const det = drones.map((ch) => ch.detune || 0);
+  check('rhythm_achieved: 7/8 at 60, loop:false, ~20 s, two detuned pulse drones 8 cents apart, no pulse2, open hat every beat',
+    c.beatsPerBar === 7 && c.bpm === 60 && !c.loop && c.duration >= 19 && c.duration <= 22 && drones.length === 2 && Math.abs(det[0] - det[1]) === 8 && !s.channels.pulse2
+      && drumSteps('rhythm_achieved', 'noise', 'o').length === c.bars * 7, { duration: c.duration, det });
+}
+if (compiled.ask_the_universe) {
+  const c = compiled.ask_the_universe;
+  check('ask_the_universe: 3/4 at 150, loop:false, 24 s, ends on the triangle alone',
+    c.beatsPerBar === 3 && c.bpm === 150 && !c.loop && Math.abs(c.duration - 24) < 0.01
+      && c.channels.filter((ch) => ch.name !== 'tri').every((ch) => ch.events.every((e) => e.step + (e.holdSteps || 1) <= 18 * c.stepsPerBar)), { duration: c.duration });
+}
+if (compiled.plaster_dust && compiled.pocket) {
+  const riffNotes = (id, name) => chan(id, name).events.map((e) => e.note.replace(/[0-9]/, ''));
+  const pocketRiff = riffNotes('pocket', 'pulse1').slice(0, 28), dust = riffNotes('plaster_dust', 'tri');
+  check('plaster_dust: triangle alone, no drums, the pocket riff in quarter notes',
+    compiled.plaster_dust.channels.length === 1 && compiled.plaster_dust.channels[0].wave === 'triangle' && compiled.plaster_dust.bpm === 70
+      && dust.length === 28 && dust.join(' ') === pocketRiff.join(' ') && chan('plaster_dust', 'tri').events.every((e) => e.holdSteps === 4), { dust: dust.join(' '), pocket: pocketRiff.join(' ') });
+}
+if (compiled.northern_garage) {
+  const c = compiled.northern_garage;
+  check('northern_garage: hat every beat at 0.1 and one triangle note every two bars, nothing else',
+    c.bpm === 60 && c.channels.length === 2 && SONGS.northern_garage.channels.noise.volume === 0.1 && drumSteps('northern_garage', 'noise', 'h').length === c.bars * 4
+      && chan('northern_garage', 'tri').events.length === c.bars / 2);
+}
+for (const id of BAND_SONGS) {
+  if (!compiled[id]) continue;
+  const c = compiled[id], song = SONGS[id];
+  const notes = (name) => (chan(id, name) ? chan(id, name).events.filter((e) => e.note).length : 0);
+  const kicks = drumSteps(id, 'noise', 'k').length, snares = drumSteps(id, 'noise', 's').length;
+  const hats = chan(id, 'hats') ? chan(id, 'hats').events.length : 0;
+  const patternCount = Object.values(song.channels).reduce((n, ch) => n + Object.keys(ch.patterns).length, 0);
+  // a cover: 4/4 on a 16th grid, a punk tempo, 16-96 bars that loop, a melody on pulse1, a riff on pulse2, a bass
+  // on the triangle, kick and snare on the kit, hats on their own channel, patterns deduped (fewer than bars x channels)
+  check(`${id}: 4/4 at ${c.bpm} BPM, ${c.bars} bars looping, lead/riff/bass/kit all present (${notes('pulse1')}/${notes('pulse2')}/${notes('tri')} notes, ${kicks}k ${snares}s ${hats}h)`,
+    c.beatsPerBar === 4 && c.stepsPerBeat === 4 && c.bpm >= 110 && c.bpm <= 220 && c.loop && c.bars >= 16 && c.bars <= 96 && c.bars % 4 === 0
+      && notes('pulse1') >= c.bars && notes('pulse2') >= c.bars * 2 && notes('tri') >= c.bars * 2 && kicks >= c.bars && snares >= c.bars / 2 && hats >= c.bars * 2
+      && song.channels.pulse1.wave === 'pulse' && song.channels.pulse2.wave === 'pulse' && song.channels.pulse2.duty === 0.25 && song.channels.tri.wave === 'triangle'
+      && patternCount < c.bars * Object.keys(song.channels).length && (song.loopStart || 0) < c.bars / 2,
+    { bpm: c.bpm, bars: c.bars, patternCount, kicks, snares, hats, loopStart: c.loopStart });
+}
+for (const id of ['win_sting', 'level_up', 'game_over']) {
+  if (!compiled[id]) continue;
+  const c = compiled[id];
+  const max = { win_sting: 3, level_up: 2, game_over: 7 }[id];
+  check(`${id}: one-shot jingle (loop:false, ≤ ${max} s)`, !c.loop && c.duration <= max, { duration: c.duration });
+}
+check('parser: rejects bad note token', (() => { try { parseToken('H4'); return false; } catch { return true; } })());
+check('parser: rejects bad drum token', (() => { try { parseToken('x', 'drum'); return false; } catch { return true; } })());
+check('parser: accepts slide+accent', (() => { const t = parseToken('F#5~!'); return t.type === 'note' && t.slide && t.accent && t.midi === 78; })());
+check('validator: reports wrong bar length and unknown refs', (() => {
+  const errs = validateSong({ id: 'x', bpm: 120, channels: { p: { wave: 'pulse', patterns: { A: 'C4 . .' } } }, order: [{ p: 'A' }, { p: 'B' }, { q: 'A' }] });
+  return errs.length === 3;
+})());
+
+// ---------------------------------------------------------------------------
+// 2. Browser checks
+// ---------------------------------------------------------------------------
+const MIME = {
+  '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8',
+  '.json': 'application/json', '.css': 'text/css', '.png': 'image/png', '.ttf': 'font/ttf', '.txt': 'text/plain',
+};
+function startServer() {
+  const server = http.createServer((req, res) => {
+    const urlPath = decodeURIComponent(new URL(req.url, 'http://x').pathname);
+    const file = path.normalize(path.join(ROOT, urlPath));
+    if (!file.startsWith(ROOT) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) {
+      res.writeHead(404); res.end('not found'); return;
+    }
+    res.writeHead(200, { 'Content-Type': MIME[path.extname(file)] || 'application/octet-stream', 'Cache-Control': 'no-store' });
+    fs.createReadStream(file).pipe(res);
+  });
+  return new Promise((resolve) => server.listen(0, '127.0.0.1', () => resolve({ server, port: server.address().port })));
+}
+
+function loadPlaywright() {
+  const require = createRequire(import.meta.url);
+  const candidates = ['playwright'];
+  try { candidates.push(path.join(execSync('npm root -g', { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim(), 'playwright')); } catch { /* ignore */ }
+  candidates.push('/opt/node-tools/node_modules/playwright', '/opt/node22/lib/node_modules/playwright');
+  for (const c of candidates) { try { return require(c); } catch { /* next */ } }
+  throw new Error(`playwright not found (tried ${candidates.join(', ')})`);
+}
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const { server, port } = await startServer();
+let browser = null;
+const consoleErrors = [];
+const pageErrors = [];
+try {
+  const { chromium } = loadPlaywright();
+  browser = await chromium.launch({ headless: true, args: ['--autoplay-policy=no-user-gesture-required'] });
+  const page = await browser.newPage();
+  page.on('console', (m) => { if (m.type() === 'error') consoleErrors.push(m.text()); });
+  page.on('pageerror', (e) => pageErrors.push(String(e.message || e)));
+  await page.goto(`http://127.0.0.1:${port}/tests/audio-harness.html`, { waitUntil: 'load' });
+  await page.waitForFunction(() => !!window.__audioHarness, null, { timeout: 10000 });
+
+  const state = await page.evaluate(() => window.__audioHarness.init());
+  check('realtime: AudioContext running', state === 'running', { state });
+
+  const songIds = await page.evaluate(() => window.__audioHarness.SONG_IDS);
+  check('songs: index exports title, snow, battle', ['title', 'snow', 'battle'].every((id) => songIds.includes(id)), { songIds });
+
+  // --- realtime playback of each song ---
+  const songInfos = await page.evaluate(() => Object.fromEntries(window.__audioHarness.SONG_IDS.map((id) => [id, window.__audioHarness.songInfo(id)])));
+  for (const id of songIds) {
+    const info0 = songInfos[id];
+    if (!info0.loop && info0.duration < 2.5) {
+      // a short one-shot jingle: plays once, emits end, goes silent (timing is covered by the longer songs)
+      const r = await page.evaluate(async (id) => {
+        const h = window.__audioHarness;
+        const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+        let ended = false;
+        h.play(id, { fade: 0 });
+        const seq = h.engine.sequencer;
+        seq.on('end', () => { ended = true; });
+        await wait(Math.min(400, seq.duration * 1000 * 0.4));
+        const rmsDuring = h.rms();
+        const stateDuring = h.state();
+        await wait(seq.duration * 1000 + 500);
+        const ticks = h.ticks.slice();
+        return { ended, duration: seq.duration, current: h.engine.currentMusic, state: seq.state, rmsDuring, rmsAfter: h.rms(), currentDuring: stateDuring.currentMusic,
+          ticks: ticks.length, monotonic: ticks.every((t, i) => i === 0 || t.step > ticks[i - 1].step), ctxState: h.ctx.state };
+      }, id);
+      check(`realtime ${id}: one-shot plays once (${r.duration.toFixed(2)} s), emits end, goes silent`,
+        r.ended && r.state === 'ended' && r.current === null && r.rmsDuring > 0.01 && r.rmsAfter < 2e-3 && r.currentDuring === id && r.monotonic && r.ticks >= 4 && r.ctxState === 'running', r);
+      continue;
+    }
+    const windowMs = info0.loop ? 2500 : Math.min(2500, Math.floor(info0.duration * 1000) - 400);
+    const introMs = Math.round((info0.loopStartTime || 0) * 1000); // an intro (stick clicks) may be sparse; sample the loop body
+    const r = await page.evaluate(async ({ id, windowMs, introMs }) => {
+      const h = window.__audioHarness;
+      const info = h.play(id, { fade: 0 });
+      const rmsSamples = [];
+      if (introMs > 0) await new Promise((r) => setTimeout(r, introMs));
+      const t0 = performance.now();
+      while (performance.now() - t0 < windowMs) { await new Promise((r) => setTimeout(r, 100)); rmsSamples.push(h.rms()); }
+      const during = { max: Math.max(...rmsSamples), mean: rmsSamples.reduce((a, b) => a + b, 0) / rmsSamples.length, zeros: rmsSamples.filter((v) => v < 1e-4).length, n: rmsSamples.length };
+      const stateDuring = h.state();
+      const ticks = h.ticks.slice();
+      h.stop({ fade: 0.1 });
+      await new Promise((r) => setTimeout(r, 450));
+      const after = [];
+      for (let i = 0; i < 6; i++) { after.push(h.rms()); await new Promise((r) => setTimeout(r, 30)); }
+      return { info, during, ticks, stateDuring, afterMax: Math.max(...after), stateAfter: h.state(), ctxState: h.ctx.state };
+    }, { id, windowMs, introMs });
+    const { ticks, info } = r;
+    const monotonic = ticks.every((t, i) => i === 0 || t.step > ticks[i - 1].step);
+    const first = ticks[0];
+    const last = ticks[ticks.length - 1];
+    const expectedRate = (info.bpm * info.stepsPerBeat) / 60;
+    const wallRate = ticks.length > 2 ? (last.step - first.step) / ((last.wall - first.wall) / 1000) : 0;
+    const ctxRate = ticks.length > 2 ? (last.step - first.step) / (last.ctxTime - first.ctxTime) : 0;
+    // tick latency: how far behind the audio clock the tick fired (should be < interval + jitter)
+    const maxLag = Math.max(...ticks.map((t) => t.ctxTime - t.stepTime));
+    const minTicks = Math.min(10, Math.floor(((expectedRate * windowMs) / 1000) * 0.6)); // slow songs tick less often
+    check(`realtime ${id}: no gaps in output while playing`, r.during.max > 0.01 && r.during.zeros === 0, r.during);
+    check(`realtime ${id}: ticks monotonic (${ticks.length} ticks)`, monotonic && ticks.length >= minTicks, { ticks: ticks.length, monotonic, minTicks });
+    check(`realtime ${id}: step rate vs wall clock within 5% (expected ${expectedRate.toFixed(2)}/s)`, Math.abs(wallRate / expectedRate - 1) <= 0.05,
+      { wallRate: +wallRate.toFixed(3), ctxRate: +ctxRate.toFixed(3), expectedRate: +expectedRate.toFixed(3) });
+    check(`realtime ${id}: ticks fire promptly (max lag ${Math.round(maxLag * 1000)} ms)`, maxLag < 0.12, { maxLag });
+    check(`realtime ${id}: position reports current song`, r.stateDuring.currentMusic === id && r.stateDuring.position && r.stateDuring.position.step >= 0, r.stateDuring);
+    check(`realtime ${id}: silent after stopMusic`, r.afterMax < 2e-3 && r.stateAfter.currentMusic === null, { afterMax: r.afterMax, stateAfter: r.stateAfter });
+    check(`realtime ${id}: context still running`, r.ctxState === 'running', { ctxState: r.ctxState });
+  }
+
+  // --- crossfade + restart semantics ---
+  const xf = await page.evaluate(async () => {
+    const h = window.__audioHarness;
+    h.play('title', { fade: 0 });
+    await new Promise((r) => setTimeout(r, 500));
+    const seqA = h.engine.sequencer;
+    const sameSeq = h.engine.playMusic('title') === seqA; // same song, no restart → no-op
+    h.engine.playMusic('battle', { fade: 0.3 });
+    const midState = h.state();
+    await new Promise((r) => setTimeout(r, 200));
+    const midRms = h.rms();
+    await new Promise((r) => setTimeout(r, 500));
+    const afterState = h.state();
+    const rms = h.rms();
+    const seqB = h.engine.sequencer;
+    const restarted = h.engine.playMusic('battle', { restart: true, fade: 0 }) !== seqB;
+    await new Promise((r) => setTimeout(r, 150));
+    const muteBefore = h.rms();
+    h.engine.mute(true);
+    await new Promise((r) => setTimeout(r, 150));
+    const muted = h.rms();
+    h.engine.mute(false);
+    h.engine.setVolume({ music: 0.3, sfx: 0.5 });
+    const vols = h.engine.volumes;
+    h.engine.setVolume(0.7, 0.8);
+    const vols2 = h.engine.volumes;
+    h.stop({ fade: 0.1 });
+    await new Promise((r) => setTimeout(r, 400));
+    return { sameSeq, midState, midRms, afterState, rms, restarted, muteBefore, muted, vols, vols2, finalState: h.state() };
+  });
+  check('crossfade: switches to new song while old fades', xf.midState.currentMusic === 'battle' && xf.midState.fading === 1 && xf.midRms > 0.01, xf.midState);
+  check('crossfade: old sequencer released after fade', xf.afterState.currentMusic === 'battle' && xf.afterState.fading === 0 && xf.rms > 0.01, xf.afterState);
+  check('playMusic: same song is a no-op, restart:true restarts', xf.sameSeq && xf.restarted, { sameSeq: xf.sameSeq, restarted: xf.restarted });
+  check('mute: silences output; setVolume accepts object and positional', xf.muteBefore > 0.01 && xf.muted < 2e-3 && xf.vols.music === 0.3 && xf.vols.sfx === 0.5 && xf.vols2.music === 0.7,
+    { muteBefore: xf.muteBefore, muted: xf.muted, vols: xf.vols, vols2: xf.vols2 });
+  check('stopMusic: nothing playing afterwards', !xf.finalState.isMusicPlaying && xf.finalState.currentMusic === null, xf.finalState);
+
+  // --- realtime SFX ---
+  const sfxRt = await page.evaluate(async () => {
+    const h = window.__audioHarness;
+    const durations = {};
+    let maxRms = 0;
+    for (const name of h.SFX_NAMES) {
+      durations[name] = h.sfx(name);
+      await new Promise((r) => setTimeout(r, 60));
+      maxRms = Math.max(maxRms, h.rms());
+    }
+    const unknown = h.sfx('definitely_not_a_sound');
+    await new Promise((r) => setTimeout(r, Math.max(...Object.values(durations)) * 1000 + 600));
+    return { durations, maxRms, unknown, active: h.state().activeSfxVoices, ctx: h.ctx.state };
+  });
+  check('realtime sfx: every recipe plays and returns a duration (≤ 3 s)', Object.values(sfxRt.durations).every((d) => d > 0 && d <= 3) && sfxRt.maxRms > 0.01, { maxRms: sfxRt.maxRms, durations: sfxRt.durations });
+  check('realtime sfx: unknown name returns 0 without throwing', sfxRt.unknown === 0);
+  check('realtime sfx: voices clean themselves up', sfxRt.active === 0 && sfxRt.ctx === 'running', { active: sfxRt.active });
+
+  // --- tab blur: suspended context freezes the clock, playback resumes in place ---
+  const blur = await page.evaluate(async () => {
+    const h = window.__audioHarness;
+    const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+    h.play('title', { fade: 0 });
+    await wait(600);
+    const before = h.engine.sequencer.position;
+    await h.ctx.suspend();
+    const stateSuspended = h.ctx.state;
+    await wait(500);
+    const during = h.engine.sequencer.position;
+    await h.ctx.resume();
+    await wait(600);
+    const after = h.engine.sequencer.position;
+    const rmsAfter = h.rms();
+    const ticks = h.ticks.slice();
+    h.stop({ fade: 0 });
+    await wait(100);
+    return {
+      stateSuspended, stateAfter: h.ctx.state, rmsAfter, ticks: ticks.length,
+      frozen: during.time - before.time, resumed: after.time - during.time,
+      monotonic: ticks.every((t, i) => i === 0 || t.step > ticks[i - 1].step),
+    };
+  });
+  check('blur: suspend freezes the position, resume continues in place with monotonic ticks',
+    blur.stateSuspended === 'suspended' && blur.stateAfter === 'running' && blur.frozen < 0.1 && blur.resumed > 0.35 && blur.resumed < 0.9 && blur.rmsAfter > 0.01 && blur.monotonic, blur);
+
+  // --- registerSong + non-looping song ---
+  const once = await page.evaluate(async () => {
+    const h = window.__audioHarness;
+    const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+    h.engine.registerSong({
+      id: 'once_test', bpm: 300, beatsPerBar: 4, stepsPerBeat: 4, loop: false,
+      channels: {
+        p: { wave: 'pulse', duty: 0.5, volume: 0.4, patterns: { A: 'C5 . E5 . G5 . C6 . | C5 . E5 . G5 . C6 .' } },
+        n: { wave: 'noise', volume: 0.4, patterns: { A: 'k . h . s . h . | k . h . s . h .' } },
+      },
+      order: [{ p: 'A', n: 'A' }, { p: 'A', n: 'A' }],
+    });
+    let ended = false;
+    const seq = h.engine.playMusic('once_test', { fade: 0 });
+    seq.on('end', () => { ended = true; });
+    await wait(400);
+    const rmsDuring = h.rms();
+    await wait(seq.duration * 1000 + 400);
+    return { ended, duration: seq.duration, current: h.engine.currentMusic, state: seq.state, rmsDuring, rmsAfter: h.rms(), registered: h.engine.hasSong('once_test') };
+  });
+  check('non-loop song: plays once, emits end, clears currentMusic', once.registered && once.ended && once.current === null && once.state === 'ended' && once.rmsDuring > 0.01 && once.rmsAfter < 2e-3, once);
+  const bad = await page.evaluate(() => {
+    try {
+      window.__audioHarness.engine.registerSong({ id: 'bad', bpm: 100, channels: { p: { wave: 'pulse', patterns: { A: 'C4 Z4' } } }, order: [{ p: 'A' }] });
+      return null;
+    } catch (e) { return e.message; }
+  });
+  check('registerSong: throws a helpful message for an invalid song', typeof bad === 'string' && bad.includes('expected 16') && bad.includes('Z4'), { bad });
+
+  // --- aliases: one song object under several ids ---
+  const al = await page.evaluate(async () => {
+    const h = window.__audioHarness;
+    const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+    const e = h.engine;
+    const has = e.hasSong('hub') && e.hasSong('west_bank') && !e.hasSong('nope') && !e.songIds.includes('hub');
+    const resolved = e.resolveSongId('hub') === 'west_bank' && e.resolveSongId('west_bank') === 'west_bank' && e.resolveSongId('nope') === 'nope';
+    const seqA = e.playMusic('hub', { fade: 0 });
+    const current = e.currentMusic;
+    const noop = e.playMusic('west_bank') === seqA && e.playMusic('hub') === seqA;
+    await wait(300);
+    const rms = h.rms();
+    const seqB = e.playMusic('the_set', { fade: 0 });
+    const switched = !!seqB && seqB !== seqA && e.currentMusic === 'pocket' && seqB.song.id === 'pocket';
+    let threw = false;
+    try { e.registerAlias('zzz', 'not_a_song'); } catch (_) { threw = true; }
+    e.registerAlias('zzz', 'title');
+    const added = e.hasSong('zzz') && e.songAliases.zzz === 'title' && e.resolveSongId('zzz') === 'title';
+    h.stop({ fade: 0 });
+    await wait(150);
+    return { has, resolved, current, noop, rms, switched, threw, added, aliases: Object.keys(e.songAliases).length };
+  });
+  check('aliases: playMusic/hasSong resolve alias ids onto the shared song (currentMusic is canonical, same song is a no-op)',
+    al.has && al.resolved && al.current === 'west_bank' && al.noop && al.rms > 0.01 && al.switched, al);
+  check('aliases: registerAlias validates its target and works at runtime', al.threw && al.added && al.aliases >= 18, al);
+
+  // --- offline renders (most reliable path) ---
+  // Sparse cues (a hat and one held note every two bars) may be quiet at the seam; they only have to restart.
+  const SPARSE_LOOPS = new Set(['northern_garage']);
+  for (const id of songIds) {
+    const info = songInfos[id];
+    if (!info.loop) {
+      const r = await page.evaluate(async (id) => {
+        const h = window.__audioHarness;
+        const { AudioEngine, bufferRms } = await import('/src/audio/AudioEngine.js');
+        const info = h.songInfo(id);
+        const seconds = info.duration + 0.8;
+        const t0 = performance.now();
+        const { buffer, peak } = await AudioEngine.renderOffline({ music: id, seconds });
+        return { seconds, peak, rmsFirst2s: bufferRms(buffer, 0, Math.min(2, seconds)), rmsBody: bufferRms(buffer, 0, info.duration),
+          tailRms: bufferRms(buffer, info.duration + 0.55, seconds), renderMs: Math.round(performance.now() - t0) };
+      }, id);
+      check(`offline ${id}: one-shot has non-zero RMS over its ${info.duration.toFixed(1)} s (rms ${r.rmsBody.toFixed(3)}, ${r.renderMs} ms)`, r.rmsBody > 0.02 && r.rmsFirst2s > 0.02, { rmsBody: r.rmsBody, rmsFirst2s: r.rmsFirst2s });
+      check(`offline ${id}: no clipping (peak ${r.peak.toFixed(3)})`, r.peak < 1.0, { peak: r.peak });
+      check(`offline ${id}: silent after it ends (tail rms ${r.tailRms.toFixed(5)})`, r.tailRms < 2e-3, { tailRms: r.tailRms });
+      continue;
+    }
+    const r = await page.evaluate((id) => window.__audioHarness.renderSong(id), id);
+    const minAllowed = r.rms * 0.08;
+    check(`offline ${id}: non-zero RMS over ${r.seconds.toFixed(1)} s (rms ${r.rms.toFixed(3)}, ${r.renderMs} ms)`, r.rms > 0.02 && r.rmsFirst2s > 0.02, { rms: r.rms, rmsFirst2s: r.rmsFirst2s });
+    check(`offline ${id}: no clipping (peak ${r.peak.toFixed(3)})`, r.peak < 1.0, { peak: r.peak });
+    if (SPARSE_LOOPS.has(id)) {
+      check(`offline ${id}: sparse cue restarts at the loop seam (rms after ${r.rmsAfterLoop.toFixed(4)})`, r.rmsAfterLoop > 0.005, { rmsBeforeLoop: r.rmsBeforeLoop, rmsAfterLoop: r.rmsAfterLoop });
+    } else {
+      check(`offline ${id}: loops seamlessly (no 100 ms gap at the seam; min window ${r.minWindowRms.toFixed(4)} vs ${minAllowed.toFixed(4)})`,
+        r.minWindowRms > minAllowed && r.rmsAfterLoop > minAllowed, { minWindowRms: r.minWindowRms, rmsBeforeLoop: r.rmsBeforeLoop, rmsAfterLoop: r.rmsAfterLoop, windows: r.windows.map((w) => +w.rms.toFixed(4)) });
+    }
+  }
+
+  // --- listen checks (rendered without the limiter so dynamics are real) ---
+  const listen = await page.evaluate(async () => {
+    const { AudioEngine, bufferRms } = await import('/src/audio/AudioEngine.js');
+    const { SONGS } = await import('/src/audio/songs/index.js');
+    const { compileSong } = await import('/src/audio/Sequencer.js');
+    const only = (song, pred) => ({ ...song, channels: Object.fromEntries(Object.entries(song.channels).filter(([n, ch]) => pred(n, ch))),
+      order: song.order.map((bar) => Object.fromEntries(Object.entries(bar).filter(([n]) => pred(n, song.channels[n])))) });
+    const render = async (song, seconds) => (await AudioEngine.renderOffline({ music: song.id, seconds, songs: { [song.id]: song }, limiter: false })).buffer;
+    const out = {};
+    if (SONGS.pocket) {
+      const drums = only(SONGS.pocket, (n, ch) => ch.wave === 'noise');
+      const c = compileSong(drums);
+      const buf = await render(drums, c.stepsPerBar * c.stepDur * 2 + 0.2);
+      const beat = (bar, b) => { const t = (bar * c.stepsPerBar + b * c.stepsPerBeat) * c.stepDur; return +bufferRms(buf, t, t + 0.05).toFixed(4); };
+      out.pocket = { beats: [0, 1].map((bar) => Array.from({ length: c.beatsPerBar }, (_, b) => beat(bar, b))) };
+    }
+    const rmsOf = async (id) => { const song = SONGS[id]; const c = compileSong(song); return +bufferRms(await render(song, Math.min(c.duration, 12))).toFixed(4); };
+    if (SONGS.west_bank && SONGS.sticker_hallway) out.hallway = { west: await rmsOf('west_bank'), hallway: await rmsOf('sticker_hallway') };
+    if (SONGS.six_inch_stage && SONGS.six_inch_stage_ext) out.palmers = { inside: await rmsOf('six_inch_stage'), outside: await rmsOf('six_inch_stage_ext') };
+    return out;
+  });
+  if (listen.pocket) {
+    const quiet = (row) => Math.max(row[1], row[2], row[4], row[6]);
+    check('listen pocket: the kit lands on beats 1 and 4 (kick) and 6 (snare) of the 7/8 bar', listen.pocket.beats.every((row) => row[0] > 2 * quiet(row) && row[3] > 2 * quiet(row) && row[5] > 1.5 * quiet(row)), listen.pocket);
+  }
+  if (listen.hallway) check('listen sticker_hallway: west_bank is quieter through the door', listen.hallway.hallway < listen.hallway.west * 0.8, listen.hallway);
+  if (listen.palmers) check('listen six_inch_stage_ext: the melody is gone outside', listen.palmers.outside < listen.palmers.inside * 0.97, listen.palmers);
+
+  // --- offline SFX: every recipe is audible at once and silent after the duration it returns ---
+  const sfxNames = await page.evaluate(() => window.__audioHarness.SFX_NAMES);
+  const sfxOffline = {};
+  for (const name of sfxNames) {
+    const r = await page.evaluate(async (name) => {
+      const { AudioEngine, bufferRms, bufferPeak } = await import('/src/audio/AudioEngine.js');
+      const sampleRate = 44100, seconds = 3.5;
+      const ctx = new OfflineAudioContext(1, Math.ceil(seconds * sampleRate), sampleRate);
+      const engine = new AudioEngine({ context: ctx, destination: ctx.destination, unlock: false });
+      const dur = engine.sfx(name);
+      const buffer = await ctx.startRendering();
+      return { dur, rms: bufferRms(buffer, 0, Math.max(0.1, dur)), peak: bufferPeak(buffer), onsetRms: bufferRms(buffer, 0, 0.1),
+        afterRms: bufferRms(buffer, Math.min(dur + 0.15, seconds - 0.2), seconds), tailRms: bufferRms(buffer, seconds - 0.2, seconds) };
+    }, name);
+    sfxOffline[name] = { dur: r.dur, rms: +r.rms.toFixed(4), peak: +r.peak.toFixed(3), after: +r.afterRms.toFixed(5), tail: +r.tailRms.toFixed(5) };
+    check(`offline sfx ${name}: audible, silent after its ${(r.dur || 0).toFixed(2)} s, unclipped`,
+      r.dur > 0 && r.dur <= 3 && r.rms > 2e-4 && r.onsetRms > 1e-3 && r.afterRms < 1e-3 && r.tailRms < 1e-3 && r.peak < 1.0, sfxOffline[name]);
+  }
+
+  // --- distortion curve: silence in, silence out. An even-length curve has no sample at x = 0, so a connected
+  // but silent input came out as -0.053 of DC: a click at the start of every distorted SFX and a DC tail until
+  // the voice was disconnected (which made the offline checks above timing-dependent under load).
+  const dc = await page.evaluate(async () => {
+    const { makeDistortion } = await import('/src/audio/Synth.js');
+    const { bufferRms } = await import('/src/audio/AudioEngine.js');
+    const ctx = new OfflineAudioContext(1, 4410, 44100);
+    const shaper = makeDistortion(ctx, 60, ctx.destination);
+    const src = ctx.createConstantSource(); src.offset.value = 0; src.connect(shaper); src.start(0); // connected, silent, never stops
+    const buffer = await ctx.startRendering();
+    const d = buffer.getChannelData(0); let sum = 0; for (let i = 0; i < d.length; i++) sum += d[i];
+    return { mean: +(sum / d.length).toFixed(6), rms: +bufferRms(buffer).toFixed(6) };
+  });
+  check('distortion: a connected silent input shapes to exactly 0 (no DC offset)', Math.abs(dc.mean) < 1e-4 && dc.rms < 1e-4, dc);
+
+  check('browser: no page errors', pageErrors.length === 0, { pageErrors });
+  check('browser: no console errors', consoleErrors.length === 0, { consoleErrors });
+  const harnessErrors = await page.evaluate(() => window.__audioHarness.errors);
+  check('browser: no uncaught errors / rejections in harness', harnessErrors.length === 0, { harnessErrors });
+} catch (e) {
+  check('browser run completed', false, { error: String(e && e.stack || e), pageErrors, consoleErrors });
+} finally {
+  if (browser) await browser.close().catch(() => {});
+  server.close();
+}
+
+const summary = { ok: failed === 0, passed: results.length - failed, failed, results };
+console.log(JSON.stringify(summary, null, 2));
+process.exit(failed === 0 ? 0 : 1);

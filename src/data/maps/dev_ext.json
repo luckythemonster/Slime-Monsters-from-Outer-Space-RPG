@@ -1,0 +1,82 @@
+{
+  "id": "dev_ext",
+  "name": "Dev Extensions Yard",
+  "tileset": "minneapolis",
+  "music": null,
+  "ambient": null,
+  "battleBackground": "street",
+  "onEnter": [
+    { "script": "dev_ext_enter_once", "once": true },
+    { "script": "dev_ext_enter_night", "condition": "flags.night" }
+  ],
+  "overlay": { "color": "#102040", "alpha": 0.45, "condition": "flags.night" },
+  "lights": [
+    { "x": 4, "y": 2 },
+    { "x": 14, "y": 2, "alpha": 0.5 }
+  ],
+  "legend": {
+    "T": "brick_wall_top", "#": "brick_wall", "W": "brick_window_lit", "w": "brick_window_dark", "B": "door_bar",
+    ".": "snow", ",": "snow_dirty", "=": "sidewalk", "F": "fence",
+    "D": "dumpster", "d": "dumpster_lid", "t": "trash_bag", "L": "lamp_post", "l": "lamp_post_top", "p": "slush_puddle"
+  },
+  "layers": {
+    "ground": [
+      "TTTTTTTTTTTTTTTTTTTT",
+      "##W##w####B#W##w##W#",
+      "#..................#",
+      "#..................#",
+      "#..................#",
+      "#..................#",
+      "#..................#",
+      "#..................#",
+      "#..........,.......#",
+      "#..................#",
+      "#..,...............#",
+      "#..................#",
+      "#..................#",
+      "FFFFFFFFFFFFFFFFFFFF"
+    ],
+    "deco": [
+      "                    ",
+      "                    ",
+      "                    ",
+      "                   L",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    "
+    ],
+    "over": [
+      "                    ",
+      "                    ",
+      "                   l",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    "
+    ]
+  },
+  "spawn": { "x": 3, "y": 6, "facing": "right" },
+  "entities": [
+    { "id": "crash", "type": "object", "sprite": "word_crash", "w": 4, "x": 6, "y": 10, "solid": true },
+    { "id": "kit", "type": "object", "sprite": "obj_drumkit", "w": 2, "footprint": [2, 2], "x": 14, "y": 5, "solid": true },
+    { "id": "barista", "type": "npc", "sprite": "phoenix", "x": 10, "y": 3, "facing": "down", "behavior": "idle", "script": "dev_ext_shop" },
+    { "id": "pawn", "type": "npc", "sprite": "brian", "x": 16, "y": 8, "facing": "left", "behavior": "idle", "script": "dev_ext_pawn" },
+    { "id": "bajonka", "type": "save", "sprite": "bajonka", "x": 3, "y": 3, "facing": "down", "prompt": "INITIAL HERE TO TEST" },
+    { "id": "to_alley", "type": "exit", "x": 0, "y": 6, "w": 1, "h": 1, "to": { "map": "dev_alley", "x": 18, "y": 7, "facing": "left" } },
+    { "id": "night_switch", "type": "trigger", "x": 10, "y": 11, "w": 1, "h": 1, "script": "dev_ext_toggle_night" }
+  ]
+}

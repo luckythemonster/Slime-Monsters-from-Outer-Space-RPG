@@ -1,0 +1,183 @@
+# Cedar Avenue shoveler: red knit hat with a pompom, blue parka with a cream fur collar, snow pants,
+# snow shovel at the right hand. idle 2 (shovel lift / drop) for down, up, left; right = left flipped. 16x24.
+name: npc_shoveler
+frame: 16x24
+palette:
+  . = transparent
+  k = #141018     # outline
+  f = #f0c8a0     # skin
+  F = #c89060     # skin shadow
+  w = #f8f8f8     # eye white / pompom / snow on the blade
+  i = #141018     # pupil
+  h = #48281c     # hair (back of the head)
+  r = #d83030     # knit hat
+  R = #6c2828     # hat ribbing
+  p = #3c5c9c     # parka
+  P = #24386c     # parka shadow / zipper
+  c = #f0dcb0     # fur collar / hood trim
+  t = #30303c     # snow pants
+  b = #48281c     # boots
+  H = #7c4c2c     # shovel handle
+  s = #9aa0a8     # shovel blade
+  S = #5c6068     # blade shade
+anim: idle        frames: 0 1  fps: 2
+anim: idle_down   frames: 0 1  fps: 2
+anim: idle_up     frames: 2 3  fps: 2
+anim: idle_left   frames: 4 5  fps: 2
+anim: idle_right  frames: 4 5  fps: 2  flipX: true
+
+frame 0: down a (shovel resting)
+......kk........
+.....kwwk.......
+....kkwwkk......
+...krrrrrrrrk...
+..krrrrrrrrrrk..
+..kRRRRRRRRRRk..
+..kRffffffffRk..
+...kfkkffkkfk...
+...kfwiffwifk...
+...kffffffffk.k.
+...kFffkkffFk.H.
+....kFffffFk..H.
+.....kkkkkk...H.
+..kkpccccccpkkH.
+.kppkpppPppkppH.
+.kppkpppPppkppH.
+.kPPkpppPppkPPH.
+.kffkPPPPPPkffH.
+..kkkttttttkkkH.
+....kttkkttkkkkk
+....kttkkttkwssk
+....kbbkkbbksssk
+....kbbkkbbkSSSk
+....kkkkkkkkkkkk
+
+frame 1: down b (shovel lifted)
+......kk........
+.....kwwk.......
+....kkwwkk......
+...krrrrrrrrk...
+..krrrrrrrrrrk..
+..kRRRRRRRRRRk..
+..kRffffffffRk..
+...kfkkffkkfk.k.
+...kfwiffwifk.H.
+...kffffffffk.H.
+...kFffkkffFk.H.
+....kFffffFk..H.
+.....kkkkkk...H.
+..kkpccccccpkkH.
+.kppkpppPppkppH.
+.kppkpppPppkffH.
+.kPPkpppPppkkkH.
+.kffkPPPPPPkkkkk
+..kkkttttttkwssk
+....kttkkttksssk
+....kttkkttkSSSk
+....kbbkkbbkkkkk
+....kbbkkbbk....
+....kkkkkkkk....
+
+frame 2: up a (shovel resting)
+......kk........
+.....kwwk.......
+....kkwwkk......
+...krrrrrrrrk...
+..krrrrrrrrrrk..
+..kRRRRRRRRRRk..
+..kRhhhhhhhhRk..
+...khhhhhhhhk...
+...khhhhhhhhk...
+...khhhhhhhhk.k.
+...kFhhhhhhFk.H.
+....kFffffFk..H.
+.....kkkkkk...H.
+..kkpccccccpkkH.
+.kppkcppppckppH.
+.kppkcppppckppH.
+.kPPkpccccpkPPH.
+.kffkPPPPPPkffH.
+..kkkttttttkkkH.
+....kttkkttkkkkk
+....kttkkttkwssk
+....kbbkkbbksssk
+....kbbkkbbkSSSk
+....kkkkkkkkkkkk
+
+frame 3: up b (shovel lifted)
+......kk........
+.....kwwk.......
+....kkwwkk......
+...krrrrrrrrk...
+..krrrrrrrrrrk..
+..kRRRRRRRRRRk..
+..kRhhhhhhhhRk..
+...khhhhhhhhk.k.
+...khhhhhhhhk.H.
+...khhhhhhhhk.H.
+...kFhhhhhhFk.H.
+....kFffffFk..H.
+.....kkkkkk...H.
+..kkpccccccpkkH.
+.kppkcppppckppH.
+.kppkcppppckffH.
+.kPPkpccccpkkkH.
+.kffkPPPPPPkkkkk
+..kkkttttttkwssk
+....kttkkttksssk
+....kttkkttkSSSk
+....kbbkkbbkkkkk
+....kbbkkbbk....
+....kkkkkkkk....
+
+frame 4: left a (shovel resting)
+.......kk.......
+......kwwk......
+.....kkwwkk.....
+....krrrrrrrrk..
+...krrrrrrrrrrk.
+...kRRRRRRRRRRk.
+...kRffffhhhhRk.
+....kkkffhhhhk..
+....kwiffhhhhk..
+.k.kfffffhhhhk..
+.H..kkfffhhhhk..
+.H...kFffffhk...
+.H....kkkkkk....
+.H..kkppccckk...
+.H.kppkpppppk...
+.Hkppkkpppppk...
+.HkffkpPPPPPk...
+.H..kkkttttttk..
+.H....kttttttk..
+kkkkk.kttkttk...
+kwssk.kttkttk...
+ksssk.kbbkbbk...
+kSSSk.kbbkbbk...
+kkkkk.kkkkkkk...
+
+frame 5: left b (shovel lifted)
+.......kk.......
+......kwwk......
+.....kkwwkk.....
+....krrrrrrrrk..
+...krrrrrrrrrrk.
+...kRRRRRRRRRRk.
+...kRffffhhhhRk.
+.k..kkkffhhhhk..
+.H..kwiffhhhhk..
+.H.kfffffhhhhk..
+.H..kkfffhhhhk..
+.H...kFffffhk...
+.H....kkkkkk....
+.H..kkppccckk...
+.Hkffkkpppppk...
+.H.kkkkpppppk...
+.H....kpppppk...
+kkkkkkkttttttk..
+kwssk.kttttttk..
+ksssk.kttkttk...
+kSSSk.kttkttk...
+kkkkk.kbbkbbk...
+......kbbkbbk...
+......kkkkkkk...

@@ -1,0 +1,50 @@
+{
+  "cafe": {
+    "name": "Grounds for Dismissal",
+    "keeper": "barista",
+    "greeting": "What can I get you.",
+    "items": [
+      "pizza_slice",
+      "coffee",
+      "hand_warmer"
+    ],
+    "after": {
+      "if": "flags.monthLater",
+      "items": [
+        "hotdish"
+      ]
+    },
+    "buys": false
+  },
+  "pawnshop": {
+    "name": "Lake Street Pawn & Loan",
+    "keeper": "pawn_guy",
+    "greeting": "Buying or selling. Pick one.",
+    "items": [
+      "thrift_telecaster",
+      "earplugs",
+      "band_sticker"
+    ],
+    "after": {
+      "if": "flags.monthLater",
+      "items": [
+        "pbass_copy",
+        "hand_warmer"
+      ]
+    },
+    "buys": true,
+    "buyPrices": {
+      "fried_pedalboard": 11,
+      "half_ounce": 20,
+      "price_tag_jacket": 20
+    },
+    "buyRate": 0.5,
+    "refuses": [
+      "beatup_guitar",
+      "drumsticks",
+      "brians_strat",
+      "flannel",
+      "pedalboard_2000"
+    ]
+  }
+}

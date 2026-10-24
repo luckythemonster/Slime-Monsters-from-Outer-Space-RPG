@@ -1,0 +1,167 @@
+# Lucky, freefall (DESIGN.md E22 / FreefallScene): a flattened streaking slime blob seen from above, spikes
+# trailing up, side-eye and sneer on the leading face, studded belt along the bottom. glide 2, bank_left 1,
+# bank_right 1 (mirrored), then the same four with the Spiky Slime Sunglasses on. 24x16, origin centre.
+name: lucky_fall
+frame: 24x16
+palette:
+  . = transparent
+  k = #141018     # outline / pupils / mouth
+  p = #ff5fd2     # pink slime
+  P = #ff9ae6     # pink highlight
+  d = #b0308c     # pink shadow
+  g = #39ff8a     # green spike tips / drip
+  G = #1c8c48     # green shaded
+  w = #f8f8f8     # eye whites
+  e = #1c0c2c     # belt / sunglass lenses
+  l = #c8ccd4     # belt studs
+  c = #40e0f0     # lens glint
+anim: glide              frames: 0 1  fps: 6
+anim: bank_left          frames: 2    fps: 1
+anim: bank_right         frames: 3    fps: 1
+anim: glide_shades       frames: 4 5  fps: 6
+anim: bank_left_shades   frames: 6    fps: 1
+anim: bank_right_shades  frames: 7    fps: 1
+
+frame 0: glide a
+.....k.....k.....k......
+....kgk...kgk...kgk.....
+....kgk...kgk...kgk.....
+...kpgpk.kpgpk.kpgpk....
+..kkpppkkkpppkkkpppkk...
+.kppppppppppppppppppppk.
+kpPPppppppppppppppppppdk
+kpPpppkkppppppkkppppppdk
+kppppkwwkppppkwwkpppppGk
+kppppkkwkppppkkwkppppggk
+kppppppppppppppppppppgGk
+kpppppppkkkkpppppppppddk
+.kpppppppppppppppppppdk.
+.kdelelelelelelelelelek.
+..kkdddddddddddddddddkk.
+....kkkkkkkkkkkkkkkk....
+
+frame 1: glide b
+....k.....k.....k.......
+...kgk...kgk...kgk......
+....kgk...kgk...kgk.....
+...kpgpk.kpgpk.kpgpk....
+..kkpppkkkpppkkkpppkk...
+.kppppppppppppppppppppk.
+kpPPppppppppppppppppppdk
+kpPpppkkppppppkkppppppdk
+kppppkwwkppppkwwkpppppgk
+kppppkkwkppppkkwkppppgGk
+kppppppppppppppppppppGgk
+kpppppppkkkkpppppppppddk
+.kpppppppppppppppppppdk.
+.kdelelelelelelelelelek.
+..kkdddddddddddddddddkk.
+....kkkkkkkkkkkkkkkk....
+
+frame 2: bank left
+....kgk....k............
+....kgk...kgk....k......
+...kpgpk..kgk...kgk.....
+..kkpppk.kpgpk.kkgk.....
+.kppppppkkpppkkkpgpk....
+kpPPpppppppppppppppkk...
+kpPpppkkppppppppppppppk.
+kppppkwwppppppkkppppppdk
+kppppkkwkppppkwwppppppdk
+kpppppppkppppkkwkpppppGk
+kpppppppppppppppkppppggk
+.kppppppkkkkpppppppppgGk
+.kdelelepppppppppppppddk
+..kkddddlelelelepppppdk.
+....kkkkddddddddlelelek.
+........kkkkkkkkdddddkk.
+
+frame 3: bank right
+............k....kgk....
+......k....kgk...kgk....
+.....kgk...kgk..kpgpk...
+.....kgkk.kpgpk.kpppkk..
+....kpgpkkkpppkkppppppk.
+...kkpppppppppppppppPPpk
+.kppppppppppppppkkpppPpk
+kdppppppkkppppppwwkppppk
+kdppppppwwkppppkwkkppppk
+kGpppppkwkkppppkpppppppk
+kggppppkpppppppppppppppk
+kGgpppppppppkkkkppppppk.
+kddpppppppppppppeleledk.
+.kdpppppelelelelddddkk..
+.kelelelddddddddkkkk....
+.kkdddddkkkkkkkk........
+
+frame 4: glide shades a
+.....k.....k.....k......
+....kgk...kgk...kgk.....
+....kgk...kgk...kgk.....
+...kpgpk.kpgpk.kpgpk....
+..kkpppkkkpppkkkpppkk...
+.kppppppppppppppppppppk.
+kpPPppppppppppppppppppdk
+kpPppkkkkkkkkkkkkpppppdk
+kppppkeeeekkeeeekpppppGk
+kppppkceeekkceeekppppggk
+kppppkkkkkkkkkkkkppppgGk
+kpppppppkkkkpppppppppddk
+.kpppppppppppppppppppdk.
+.kdelelelelelelelelelek.
+..kkdddddddddddddddddkk.
+....kkkkkkkkkkkkkkkk....
+
+frame 5: glide shades b
+....k.....k.....k.......
+...kgk...kgk...kgk......
+....kgk...kgk...kgk.....
+...kpgpk.kpgpk.kpgpk....
+..kkpppkkkpppkkkpppkk...
+.kppppppppppppppppppppk.
+kpPPppppppppppppppppppdk
+kpPppkkkkkkkkkkkkpppppdk
+kppppkeeeekkeeeekpppppgk
+kppppkceeekkceeekppppgGk
+kppppkkkkkkkkkkkkppppGgk
+kpppppppkkkkpppppppppddk
+.kpppppppppppppppppppdk.
+.kdelelelelelelelelelek.
+..kkdddddddddddddddddkk.
+....kkkkkkkkkkkkkkkk....
+
+frame 6: bank left shades
+....kgk....k............
+....kgk...kgk....k......
+...kpgpk..kgk...kgk.....
+..kkpppk.kpgpk.kkgk.....
+.kppppppkkpppkkkpgpk....
+kpPPpppppppppppppppkk...
+kpPppkkkppppppppppppppk.
+kppppkeekkkkkkkkppppppdk
+kppppkceeekkeeeekpppppdk
+kppppkkkeekkceeekpppppGk
+kpppppppkkkkkkkkkppppggk
+.kppppppkkkkppppkppppgGk
+.kdelelepppppppppppppddk
+..kkddddlelelelepppppdk.
+....kkkkddddddddlelelek.
+........kkkkkkkkdddddkk.
+
+frame 7: bank right shades
+............k....kgk....
+......k....kgk...kgk....
+.....kgk...kgk..kpgpk...
+.....kgkk.kpgpk.kpppkk..
+....kpgpkkkpppkkppppppk.
+...kkpppppppppppppppPPpk
+.kppppppppppppppkkkppPpk
+kdppppppkkkkkkkkeekppppk
+kdpppppkeeeekkeeeckppppk
+kGpppppkeeeckkeekkkppppk
+kggppppkkkkkkkkkpppppppk
+kGgppppkppppkkkkppppppk.
+kddpppppppppppppeleledk.
+.kdpppppelelelelddddkk..
+.kelelelddddddddkkkk....
+.kkdddddkkkkkkkk........

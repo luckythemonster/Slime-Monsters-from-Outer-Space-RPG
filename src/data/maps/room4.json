@@ -1,0 +1,78 @@
+{
+  "id": "room4",
+  "name": "City Sound, Room 4",
+  "tileset": "interiors",
+  "music": "sticker_hallway",
+  "ambient": null,
+  "battleBackground": "room4",
+  "encounters": { "rate": 0, "pool": [] },
+  "onFirstEnter": "ep0_room4_setup",
+  "onEnter": [
+    { "script": "ep0_month_later", "condition": "flags.monthLater && !flags.monthLaterRan" }
+  ],
+  "legend": {
+    "a": "sticker_wall_a", "s": "sticker_wall_b", "c": "sticker_wall_c", "d": "sticker_wall_d",
+    "x": "sticker_wall_sparse_a", "z": "sticker_wall_sparse_b", "w": "wall_plaster",
+    "t": "wall_bills_a", "u": "wall_bills_b", "p": "wall_poster_a", "q": "wall_poster_c",
+    ".": "carpet_stained", "r": "rug", "k": "cable", "m": "mic_tile", "R": "drum_riser", "y": "cymbal",
+    "A": "shelf", "P": "radiator", "L": "couch_l", "C": "couch_r", "F": "fridge", "O": "soundproof_door_open",
+    "#": "dark"
+  },
+  "layers": {
+    "ground": [
+      "ascdascdascdas##",
+      "wxtuwaswzwpwqw##",
+      "w............w##",
+      "x.........RRyw##",
+      "w.........RR.w##",
+      "w.A..........w##",
+      "w...........Fz##",
+      "w.P..........w##",
+      "w............w##",
+      "z..........LCw##",
+      "wxaOdwwzwwwwww##",
+      "################",
+      "################",
+      "################"
+    ],
+    "deco": [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "     rrrr       ",
+      "    krrmr       ",
+      "     rrrr k     ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  },
+  "spawn": { "x": 4, "y": 9, "facing": "right" },
+  "entities": [
+    { "id": "ryan", "type": "npc", "sprite": "ryan", "x": 11, "y": 2, "facing": "down", "behavior": "static", "script": "ep0_room4_ryan_npc", "condition": "flags.ryanArrived && !flags.ryanJoined" },
+    { "id": "kit", "type": "object", "sprite": "obj_drumkit", "w": 2, "footprint": [2, 2], "x": 10, "y": 4, "solid": true, "script": "ep0_room4_kit" },
+    { "id": "ride", "type": "object", "x": 12, "y": 3, "script": "ep0_room4_cymbal" },
+    { "id": "amp_lucky", "type": "object", "x": 2, "y": 5, "script": "ep0_room4_amp_lucky" },
+    { "id": "amp_phoenix", "type": "object", "x": 2, "y": 7, "script": "ep0_room4_amp_phoenix" },
+    { "id": "mic", "type": "object", "x": 7, "y": 6, "solid": true, "script": "ep0_room4_mic" },
+    { "id": "couch", "type": "object", "x": 11, "y": 9, "script": "ep0_room4_couch" },
+    { "id": "couch_r", "type": "object", "x": 12, "y": 9, "script": "ep0_room4_couch" },
+    { "id": "fridge", "type": "object", "x": 12, "y": 6, "script": "ep0_room4_fridge" },
+    { "id": "tallies", "type": "object", "x": 2, "y": 1, "script": "ep0_room4_tallies" },
+    { "id": "tallies_2", "type": "object", "x": 3, "y": 1, "script": "ep0_room4_tallies" },
+    { "id": "poster", "type": "object", "x": 10, "y": 1, "script": "ep0_room4_poster" },
+    { "id": "poster_2", "type": "object", "x": 12, "y": 1, "script": "ep0_room4_poster_2" },
+    { "id": "pedalboard", "type": "object", "sprite": "obj_pedalboard", "x": 6, "y": 8, "solid": true, "script": "ep0_room4_pedalboard", "condition": "flags.monthLater && !flags.brianQuit" },
+    { "id": "coffee_cup", "type": "object", "sprite": "obj_coffee_cup", "x": 8, "y": 8, "solid": true, "script": "ep0_room4_coffee", "condition": "flags.monthLater && !flags.brianQuit" },
+    { "id": "drip", "type": "object", "sprite": "obj_drip", "x": 11, "y": 1, "solid": false, "script": "ep0_room4_drip", "condition": "flags.auditionDone" },
+    { "id": "kraaang", "type": "object", "sprite": "word_kraaang", "w": 6, "x": 4, "y": 1, "solid": false, "script": "ep0_room4_kraaang", "condition": "flags.pedalboardFried" },
+    { "id": "gig_flyer", "type": "object", "sprite": "obj_flyer", "x": 7, "y": 7, "solid": true, "script": "ep0_gig_flyer", "condition": "flags.brianQuit && !flags.hasPalmersFlyer" },
+    { "id": "to_hall", "type": "exit", "x": 3, "y": 10, "w": 1, "h": 1,
+      "to": { "map": "city_sound_hall", "x": 20, "y": 6, "facing": "down" } }
+  ]
+}

@@ -1,0 +1,31 @@
+# Gray duct-tape strips for the hastily taped ONE MONTH LATER card (the card itself is drawn by code). 16x8.
+name: obj_tape
+frame: 16x8
+palette:
+  . = transparent
+  k = #141018     # outline
+  L = #c8ccd4     # tape highlight
+  m = #9aa0a8     # tape
+  d = #5c6068     # tape shadow
+anim: a  frames: 0  fps: 1
+anim: b  frames: 1  fps: 1
+
+frame 0: strip a
+.kkkkkkkkkkkkk..
+kLmmmmmmmmmmmmkk
+kmmLmmmmmmmLmmmk
+kmmmmmmmmmmmmmdk
+kmmmmmmLmmmmmddk
+kkmmmmmmmmmmmmkk
+.kdddddddddddkk.
+..kkkkkkkkkkk...
+
+frame 1: strip b
+..kkkkkkkkkkkkk.
+.kkLmmmmmmmmmmmk
+kmmmmmLmmmmmmmmk
+kmmmmmmmmmmLmmdk
+kkmmmmmmmmmmmmdk
+.kmmmLmmmmmmmdkk
+.kkddddddddddkk.
+...kkkkkkkkkkk..

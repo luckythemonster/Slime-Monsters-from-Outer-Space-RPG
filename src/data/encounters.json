@@ -1,0 +1,181 @@
+{
+  "street_cop_duo": {
+    "name": "Two Cops",
+    "enemies": [
+      "dev_cop",
+      "dev_cop"
+    ],
+    "background": "street",
+    "music": "battle",
+    "canFlee": true,
+    "script": null
+  },
+  "alley_drone": {
+    "name": "Retrieval Drone",
+    "enemies": [
+      "drone"
+    ],
+    "background": "alley",
+    "music": "battle",
+    "canFlee": false,
+    "bailReason": "Not yet.",
+    "toonStart": 0,
+    "script": "ep0_drone"
+  },
+  "hub_slush": {
+    "name": "Slush Pile",
+    "enemies": [
+      "slush"
+    ],
+    "background": "street",
+    "music": "battle",
+    "canFlee": true,
+    "script": null
+  },
+  "hub_goose": {
+    "name": "Canada Goose",
+    "enemies": [
+      "goose"
+    ],
+    "background": "street",
+    "music": "battle",
+    "canFlee": true,
+    "script": null
+  },
+  "hub_scooters": {
+    "name": "Scooter Pack",
+    "enemies": [
+      "scooter",
+      "scooter",
+      "scooter"
+    ],
+    "overrides": [
+      {
+        "xp": 4
+      },
+      {},
+      {}
+    ],
+    "background": "street",
+    "music": "battle",
+    "canFlee": true,
+    "script": null
+  },
+  "hub_analyst": {
+    "name": "Demographic Analyst",
+    "enemies": [
+      "analyst"
+    ],
+    "background": "street",
+    "music": "battle",
+    "canFlee": true,
+    "script": null
+  },
+  "hub_billboard": {
+    "name": "WORK IS LOVE",
+    "enemies": [
+      "billboard"
+    ],
+    "background": "street",
+    "music": "battle",
+    "canFlee": true,
+    "script": null
+  },
+  "hub_analyst_duo": {
+    "name": "Analyst Duo",
+    "enemies": [
+      "analyst",
+      "analyst"
+    ],
+    "scan": "My brain thinks they bill in fifteen-minute increments.",
+    "background": "street",
+    "music": "battle",
+    "canFlee": true,
+    "script": null
+  },
+  "hub_goose_pair": {
+    "name": "Goose Pair",
+    "enemies": [
+      "goose",
+      "goose"
+    ],
+    "scan": "My brain thinks they're married.",
+    "background": "street",
+    "music": "battle",
+    "canFlee": true,
+    "script": null
+  },
+  "ep0_audition": {
+    "name": "AUDITION",
+    "enemies": [
+      "whrnnng",
+      "thud_thud"
+    ],
+    "guests": [
+      "ryan"
+    ],
+    "forms": {
+      "ryan": "possessed"
+    },
+    "background": "room4",
+    "music": "audition",
+    "noFlee": true,
+    "toonStart": 0,
+    "fixedXp": 50,
+    "fixedMoney": 0,
+    "drops": [
+      {
+        "item": "tinny_ride_cymbal",
+        "chance": 1
+      }
+    ],
+    "script": "ep0_audition",
+    "countIn": "lucky"
+  },
+  "ep0_rehearsal": {
+    "name": "The Chorus",
+    "enemies": [
+      "chorus"
+    ],
+    "guests": [
+      "ryan"
+    ],
+    "forms": {
+      "ryan": "possessed"
+    },
+    "background": "room4",
+    "music": "rehearsal_brian",
+    "noFlee": true,
+    "noLose": true,
+    "toonStart": 0,
+    "fixedXp": 30,
+    "fixedMoney": 0,
+    "script": "ep0_rehearsal"
+  },
+  "ep0_palmers_set": {
+    "name": "THE SET",
+    "enemies": [
+      "cop"
+    ],
+    "guests": [
+      "ryan"
+    ],
+    "forms": {
+      "ryan": "pocket"
+    },
+    "background": "palmers",
+    "music": "palmers_set",
+    "noFlee": true,
+    "toonStart": 25,
+    "fixedXp": 100,
+    "fixedMoney": 0,
+    "drops": [
+      {
+        "item": "price_tag_jacket",
+        "chance": 1
+      }
+    ],
+    "script": "ep0_palmers_set",
+    "countIn": "lucky"
+  }
+}

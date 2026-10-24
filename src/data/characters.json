@@ -1,0 +1,298 @@
+{
+  "xpTable": [
+    0,
+    10,
+    24,
+    48,
+    85,
+    135,
+    200,
+    275,
+    365,
+    470,
+    590,
+    725,
+    875,
+    1040,
+    1220,
+    1415,
+    1625,
+    1850,
+    2090,
+    2345
+  ],
+  "characters": {
+    "lucky": {
+      "name": "Lucky",
+      "sprite": "lucky",
+      "portrait": "lucky",
+      "battleSprite": "lucky_battle",
+      "moodSheets": {
+        "rage": "lucky_battle_rage",
+        "deflated": "lucky_battle_deflated",
+        "bruised": "lucky_battle_bruised"
+      },
+      "stats": {
+        "hp": 28,
+        "amp": 8,
+        "atk": 7,
+        "def": 4,
+        "spd": 7,
+        "lck": 6
+      },
+      "growth": {
+        "hp": 6,
+        "amp": 2,
+        "atk": 2,
+        "def": 1,
+        "spd": 1,
+        "lck": 1
+      },
+      "equip": {
+        "instrument": "beatup_guitar",
+        "accessory": null
+      },
+      "freq": "HIGH",
+      "voice": "NOISE",
+      "riffs": [
+        "power_chord",
+        "feedback_squeal",
+        "pseudopod_slap",
+        "migraine",
+        "bristle"
+      ],
+      "syncs": [
+        "shared_aura",
+        "low_end_theory",
+        "wall_of_sound",
+        "pocket"
+      ],
+      "traits": {
+        "critSlimes": true
+      },
+      "onJoin": null
+    },
+    "phoenix": {
+      "name": "Phoenix",
+      "sprite": "phoenix",
+      "portrait": "phoenix",
+      "battleSprite": "phoenix_battle",
+      "stats": {
+        "hp": 34,
+        "amp": 10,
+        "atk": 5,
+        "def": 6,
+        "spd": 5,
+        "lck": 4
+      },
+      "growth": {
+        "hp": 7,
+        "amp": 2,
+        "atk": [
+          5,
+          6,
+          8,
+          9,
+          11,
+          12,
+          14,
+          15,
+          17,
+          18,
+          20,
+          21,
+          23,
+          24,
+          26,
+          27,
+          29,
+          30,
+          32,
+          33
+        ],
+        "def": 2,
+        "spd": 1,
+        "lck": 1
+      },
+      "equip": {
+        "instrument": "trash_bag",
+        "accessory": "hoodie"
+      },
+      "freq": "LOW",
+      "riffs": [
+        "root_note",
+        "my_brain_thinks",
+        "deadpan",
+        "drone_note",
+        "rent_is_due"
+      ],
+      "syncs": [
+        "shared_aura",
+        "low_end_theory",
+        "wall_of_sound"
+      ],
+      "traits": {},
+      "onJoin": null
+    },
+    "brian": {
+      "name": "Brian",
+      "sprite": "brian",
+      "portrait": "brian",
+      "battleSprite": "brian_battle",
+      "altSheets": {
+        "fried": "brian_fried"
+      },
+      "startLevel": 3,
+      "fixedLevel": true,
+      "stats": {
+        "hp": 30,
+        "amp": 6,
+        "atk": 8,
+        "def": 5,
+        "spd": 9,
+        "lck": 0
+      },
+      "growth": {
+        "hp": 0,
+        "amp": 0,
+        "atk": 0,
+        "def": 0,
+        "spd": 0,
+        "lck": 0
+      },
+      "equip": {
+        "instrument": "brians_strat",
+        "accessory": "pedalboard_2000"
+      },
+      "freq": "HIGH",
+      "riffs": [
+        "sterile_chord",
+        "turn_the_bass_down",
+        "tube_screamer",
+        "normal_music"
+      ],
+      "syncs": [],
+      "traits": {
+        "marketAlignment": true,
+        "noSync": "Brian hates this",
+        "noNoise": "Brian hates this",
+        "buzzkill": 0.2,
+        "buzzkillLines": [
+          "Can we turn the bass down?",
+          "Do we really need the stickers?",
+          "Is this in a weird time signature?",
+          "My coffee's getting warm.",
+          "Can we play something people know?",
+          "I've got a thing at nine."
+        ]
+      },
+      "onJoin": null
+    },
+    "ryan": {
+      "name": "Ryan",
+      "sprite": "ryan",
+      "portrait": "ryan",
+      "battleSprite": "ryan_slimed_battle",
+      "startLevel": 4,
+      "fixedLevel": true,
+      "stats": {
+        "hp": 40,
+        "amp": 12,
+        "atk": 10,
+        "def": 6,
+        "spd": 11,
+        "lck": 5
+      },
+      "growth": {
+        "hp": 0,
+        "amp": 0,
+        "atk": 0,
+        "def": 0,
+        "spd": 0,
+        "lck": 0
+      },
+      "equip": {
+        "instrument": "drumsticks",
+        "accessory": "flannel"
+      },
+      "freq": "PHYS",
+      "riffs": [],
+      "syncs": [],
+      "auto": true,
+      "minHp": 1,
+      "form": "possessed",
+      "forms": {
+        "possessed": {
+          "sheet": "ryan_slimed_battle",
+          "size": 32,
+          "friendlyFire": true,
+          "toonPerAction": 8,
+          "ai": [
+            {
+              "do": "blast_beat",
+              "target": "all",
+              "weight": 4
+            },
+            {
+              "do": "fill",
+              "target": "randomAny",
+              "weight": 3
+            },
+            {
+              "do": "tinny_ride",
+              "target": "random",
+              "weight": 2
+            }
+          ],
+          "fallbacks": [
+            "ryan_possessed",
+            "ryan_slimed"
+          ]
+        },
+        "pocket": {
+          "sheet": "ryan_pocket_purple",
+          "size": 32,
+          "friendlyFire": false,
+          "toonPerAction": 8,
+          "ai": [
+            {
+              "if": "toon >= 50 && partner('lucky')",
+              "do": "pocket",
+              "target": "all",
+              "weight": 5
+            },
+            {
+              "do": "seven_eight",
+              "target": "all",
+              "weight": 4
+            },
+            {
+              "do": "kick",
+              "target": "highestAtk",
+              "weight": 3
+            }
+          ],
+          "armedSheet": "ryan_pocket_dark",
+          "fallbacks": [
+            "ryan_pocket",
+            "ryan_bruised"
+          ]
+        },
+        "eternity": {
+          "sheet": "ryan_eternity",
+          "size": 64,
+          "friendlyFire": false,
+          "toonPerAction": 0,
+          "ai": [],
+          "fallbacks": [
+            "ryan_bruised"
+          ]
+        }
+      },
+      "traits": {
+        "captions": true
+      },
+      "onJoin": null
+    }
+  }
+}

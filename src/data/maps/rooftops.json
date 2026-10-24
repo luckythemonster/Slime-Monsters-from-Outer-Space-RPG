@@ -1,0 +1,105 @@
+{
+  "id": "rooftops",
+  "name": "Over the rooftops",
+  "tileset": "minneapolis",
+  "music": "ask_the_universe",
+  "ambient": null,
+  "battleBackground": "street",
+  "followers": false,
+  "encounters": {
+    "rate": 0,
+    "pool": []
+  },
+  "legend": {
+    "T": "brick_wall_top",
+    "#": "brick_wall",
+    "W": "brick_window_lit",
+    "w": "brick_window_dark",
+    "1": "billboard_a",
+    "2": "billboard_b",
+    "3": "billboard_c",
+    "L": "lamp_post",
+    "l": "lamp_post_top",
+    ".": "snow",
+    "=": "sidewalk",
+    "a": "asphalt",
+    "-": "street_line_dashed",
+    "n": "snowbank",
+    "p": "bare_tree_trunk",
+    "P": "bare_tree_top"
+  },
+  "layers": {
+    "ground": [
+      "                                                ",
+      "                                                ",
+      "                                                ",
+      "                                                ",
+      " TTTT                                           ",
+      " ####                TTT                        ",
+      " #w#w                ###                        ",
+      " #### TTTT           #w#                        ",
+      " #w#w #### TTTTTTTTT ###             123        ",
+      " #### #w#W ######### #w# TTT        TTTTT       ",
+      ".#w#w.####.#W#w#w#W#.###.###========#####.......",
+      ".####.#w#W.#########.#w#.#w#aaaaaaaa#w#W#.......",
+      ".#w#w.####.#W#w#w#W#.###.###--------#####.......",
+      ".####.#w#W.#########.#w#.#w#aaaaaaaa#w#W#......."
+    ],
+    "deco": [
+      "                                                ",
+      "                                                ",
+      "                                                ",
+      "                                                ",
+      "                                                ",
+      "                                                ",
+      "                                                ",
+      "                                                ",
+      "                                                ",
+      "                                                ",
+      "                             L   L              ",
+      "                                               n",
+      "                                              p ",
+      "                                          np n  "
+    ],
+    "over": [
+      "                                                ",
+      "                                                ",
+      "                                                ",
+      "                                                ",
+      "                                                ",
+      "                                                ",
+      "                                                ",
+      "                                                ",
+      "                                                ",
+      "                             l   l              ",
+      "                                                ",
+      "                                              P ",
+      "                                           P    ",
+      "                                                "
+    ]
+  },
+  "spawn": {
+    "x": 0,
+    "y": 7,
+    "facing": "right"
+  },
+  "entities": [
+    {
+      "id": "billboard_prod",
+      "type": "object",
+      "sprite": "billboard_b",
+      "x": 15,
+      "y": 8,
+      "facing": "down",
+      "solid": true
+    },
+    {
+      "id": "roof_note",
+      "type": "object",
+      "x": 2,
+      "y": 4,
+      "script": "ep0_signal_roof",
+      "solid": true
+    }
+  ]
+}

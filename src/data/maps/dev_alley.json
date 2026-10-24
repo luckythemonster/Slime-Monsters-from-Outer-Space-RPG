@@ -1,0 +1,73 @@
+{
+  "id": "dev_alley",
+  "name": "Dev Alley",
+  "tileset": "minneapolis",
+  "music": "snow",
+  "ambient": null,
+  "battleBackground": "street",
+  "legend": {
+    "T": "brick_wall_top", "#": "brick_wall", "W": "brick_window_lit", "w": "brick_window_dark", "B": "door_bar",
+    ".": "snow", ",": "snow_dirty", "=": "sidewalk", "F": "fence",
+    "D": "dumpster", "d": "dumpster_lid", "t": "trash_bag", "L": "lamp_post", "l": "lamp_post_top", "p": "slush_puddle"
+  },
+  "layers": {
+    "ground": [
+      "TTTTTTTTTTTTTTTTTTTT",
+      "##W##w####B#W##w##W#",
+      "#..................#",
+      "#.......,..........#",
+      "#..................#",
+      "#..................#",
+      "#..................#",
+      "#..................=",
+      "#..........,.......#",
+      "#..................#",
+      "#..,...............#",
+      "#..................#",
+      "#..................#",
+      "FFFFFFFFFFFFFFFFFFFF"
+    ],
+    "deco": [
+      "                    ",
+      "                    ",
+      "                    ",
+      "                  L ",
+      "                    ",
+      "     d              ",
+      "     D        t     ",
+      "                    ",
+      "                    ",
+      "   t          p     ",
+      "              d     ",
+      "              D     ",
+      "                    ",
+      "                    "
+    ],
+    "over": [
+      "                    ",
+      "                    ",
+      "                  l ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    "
+    ]
+  },
+  "spawn": { "x": 2, "y": 7, "facing": "right" },
+  "entities": [
+    { "id": "phoenix", "type": "npc", "sprite": "phoenix", "x": 6, "y": 6, "facing": "down",
+      "behavior": "idle", "script": "dev_phoenix" },
+    { "id": "sign", "type": "object", "x": 10, "y": 1, "script": "dev_sign", "solid": true },
+    { "id": "to_street", "type": "exit", "x": 19, "y": 7, "w": 1, "h": 1,
+      "to": { "map": "dev_street", "x": 1, "y": 7, "facing": "right" } },
+    { "id": "crash", "type": "trigger", "x": 10, "y": 7, "w": 3, "h": 3, "script": "dev_trigger", "once": true },
+    { "id": "bajonka", "type": "save", "sprite": "bajonka", "x": 2, "y": 4, "facing": "down" }
+  ]
+}

@@ -1,0 +1,70 @@
+# Phoenix's unplugged, beat-up bass amp (apartment, Room 4). glow: Lucky channelling the universe into it.
+name: obj_amp_bass
+frame: 16x16
+palette:
+  . = transparent
+  k = #141018     # outline
+  s = #30303c     # tolex
+  d = #5c6068     # grille
+  L = #c8ccd4     # knobs
+  r = #d83030     # power LED
+  p = #ff5fd2     # glow pink
+  P = #ff9ae6     # glow pink light
+  g = #39ff8a     # glow green
+  w = #f8f8f8     # glow core
+anim: idle  frames: 0    fps: 1
+anim: glow  frames: 1 2  fps: 8
+
+frame 0: idle
+.kkkkkkkkkkkkkk.
+kssssssssssssssk
+ksLkLkLkLkssrssk
+kssssssssssssssk
+kkkkkkkkkkkkkkkk
+kddddddddddddddk
+kdsdsdsdsdsdsddk
+kdddkkkkkkkkdddk
+kdskdddddddkdsdk
+kdskdsssssdkdsdk
+kdskdsskssdkdsdk
+kdskdsssssdkdsdk
+kdskdddddddkdsdk
+kdddkkkkkkkkdddk
+kddddddddddddddk
+.kkkkkkkkkkkkkk.
+
+frame 1: glow a
+.kkkkkkkkkkkkkk.
+kssssssssssssssk
+ksLkLkLkLkssgssk
+kssssssssssssssk
+kkkkkkkkkkkkkkkk
+kddddddddddddddk
+kdsdsdsdsdsdsddk
+kdddkkkkkkkkdddk
+kdskdpppppdkdsdk
+kdskdpPPPpdkdsdk
+kdskdpPwPpdkdsdk
+kdskdpPPPpdkdsdk
+kdskdpppppdkdsdk
+kdddkkkkkkkkdddk
+kddddddddddddddk
+.kkkkkkkkkkkkkk.
+
+frame 2: glow b
+.kkkkkkkkkkkkkk.
+kssssssssssssssk
+ksLkLkLkLkssgssk
+kssssssssssssssk
+kkkkkkkkkkkkkkkk
+kdpddddddddddpdk
+kdsdsdgdsdgdsddk
+kdddkkkkkkkkdddk
+kdskdgggggdkdsdk
+kdskdgwwwgdkdsdk
+kdskdgwPwgdkdsdk
+kdskdgwwwgdkdsdk
+kdskdgggggdkdsdk
+kdddkkkkkkkkdddk
+kdpddddddddddpdk
+.kkkkkkkkkkkkkk.

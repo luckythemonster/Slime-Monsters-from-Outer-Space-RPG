@@ -1,0 +1,189 @@
+{
+  "name": "they_came_from_the_sky",
+  "source": "they_came_from_the_sky.mp3",
+  "duration_s": 127.72,
+  "separation": "spleeter:4stems",
+  "bpm": 120.2,
+  "bpm_range": [
+    119.1,
+    124.5
+  ],
+  "tempo_changes": 4,
+  "tempo_map": [
+    {
+      "beat": 0,
+      "bpm": 121.6
+    },
+    {
+      "beat": 13,
+      "bpm": 119.8
+    },
+    {
+      "beat": 229,
+      "bpm": 121.6
+    },
+    {
+      "beat": 237,
+      "bpm": 123.4
+    }
+  ],
+  "beat_tracking_note": null,
+  "kick_between_beats_ratio": 0.96,
+  "downbeat_phase": 0,
+  "pickup_beats": 0,
+  "first_beat_time": 0.07,
+  "grid_beat_of_first_tracked_beat": 0,
+  "bars": 65,
+  "ticks_per_beat": 480,
+  "steps_per_beat": 4,
+  "key": "B major",
+  "key_confidence": 0.536,
+  "chroma": [
+    0.563,
+    0.536,
+    0.577,
+    0.783,
+    0.57,
+    0.609,
+    0.925,
+    0.747,
+    0.82,
+    0.971,
+    0.654,
+    1.0
+  ],
+  "tuning_semitones": 0.04,
+  "retuned_before_transcription": false,
+  "sections": [
+    {
+      "label": "A",
+      "bar": 0,
+      "bars": 9,
+      "time": 0.07
+    },
+    {
+      "label": "B",
+      "bar": 9,
+      "bars": 8,
+      "time": 18.0
+    },
+    {
+      "label": "A",
+      "bar": 17,
+      "bars": 7,
+      "time": 33.97
+    },
+    {
+      "label": "A",
+      "bar": 24,
+      "bars": 9,
+      "time": 48.0
+    },
+    {
+      "label": "A",
+      "bar": 33,
+      "bars": 11,
+      "time": 65.97
+    },
+    {
+      "label": "A",
+      "bar": 44,
+      "bars": 15,
+      "time": 88.0
+    },
+    {
+      "label": "C",
+      "bar": 59,
+      "bars": 5,
+      "time": 117.93
+    }
+  ],
+  "stems": {
+    "vocals": {
+      "notes": 287,
+      "pitch_min": 55,
+      "pitch_max": 86,
+      "pitch_median": 69,
+      "median_len_steps": 1.0,
+      "pitch_class_hist": {
+        "C": 0.033,
+        "C#": 0.0,
+        "D": 0.008,
+        "D#": 0.0,
+        "E": 0.004,
+        "F": 0.05,
+        "F#": 0.409,
+        "G": 0.115,
+        "G#": 0.044,
+        "A": 0.284,
+        "A#": 0.021,
+        "B": 0.031
+      },
+      "first_step": 13,
+      "last_step": 951
+    },
+    "guitar": {
+      "notes": 893,
+      "pitch_min": 35,
+      "pitch_max": 95,
+      "pitch_median": 68,
+      "median_len_steps": 1.0,
+      "pitch_class_hist": {
+        "C": 0.003,
+        "C#": 0.022,
+        "D": 0.001,
+        "D#": 0.1,
+        "E": 0.019,
+        "F": 0.016,
+        "F#": 0.039,
+        "G": 0.015,
+        "G#": 0.14,
+        "A": 0.312,
+        "A#": 0.001,
+        "B": 0.332
+      },
+      "first_step": 16,
+      "last_step": 1017
+    },
+    "bass": {
+      "notes": 421,
+      "pitch_min": 32,
+      "pitch_max": 66,
+      "pitch_median": 43,
+      "median_len_steps": 1.0,
+      "pitch_class_hist": {
+        "C": 0.015,
+        "C#": 0.059,
+        "D": 0.38,
+        "D#": 0.019,
+        "E": 0.0,
+        "F": 0.0,
+        "F#": 0.039,
+        "G": 0.152,
+        "G#": 0.125,
+        "A": 0.011,
+        "A#": 0.008,
+        "B": 0.192
+      },
+      "first_step": 20,
+      "last_step": 952
+    },
+    "drums": {
+      "hits": 629,
+      "crash": 24,
+      "hat": 129,
+      "kick": 237,
+      "ohat": 104,
+      "snare": 135
+    }
+  },
+  "files": {
+    "midi": "they_came_from_the_sky.mid",
+    "vocals": "they_came_from_the_sky_vocals.mid",
+    "guitar": "they_came_from_the_sky_guitar.mid",
+    "bass": "they_came_from_the_sky_bass.mid",
+    "drums": "they_came_from_the_sky_drums.mid"
+  },
+  "work_dir": "/tmp/claude-0/-home-user-Slime-Monsters-from-Outer-Space-RPG/e858fb6c-544f-57da-ae5c-09a0289d71a3/scratchpad/work/they_came_from_the_sky",
+  "elapsed_s": 36.9
+}

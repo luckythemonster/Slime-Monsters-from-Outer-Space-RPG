@@ -1,0 +1,5639 @@
+# Phaser 4.2.1 API digest
+
+Generated from node_modules/phaser/types/phaser.d.ts by tools/phaser_api_digest.py. Signatures only;
+see node_modules/phaser/types/phaser.d.ts for full JSDoc. Only namespaces this project uses are included.
+
+## namespace Phaser
+### namespace Phaser.Animations
+#### class Phaser.Animations.AnimationManager
+- `constructor(game: Phaser.Game);`
+- `protected game: Phaser.Game;`
+- `protected textureManager: Phaser.Textures.TextureManager;`
+- `globalTimeScale: number;`
+- `protected anims: Phaser.Structs.Map<string, Phaser.Animations.Animation>;`
+- `mixes: Phaser.Structs.Map<string, Phaser.Animations.Animation>;`
+- `paused: boolean;`
+- `name: string;`
+- `boot(): void;`
+- `addMix(animA: string | Phaser.Animations.Animation, animB: string | Phaser.Animations.Animation, delay: number): this;`
+- `removeMix(animA: string | Phaser.Animations.Animation, animB?: string | Phaser.Animations.Animation): this;`
+- `getMix(animA: string | Phaser.Animations.Animation, animB: string | Phaser.Animations.Animation): number;`
+- `add(key: string, animation: Phaser.Animations.Animation): this;`
+- `exists(key: string): boolean;`
+- `createFromAseprite(key: string, tags?: string[], target?: Phaser.Animations.AnimationManager | Phaser.GameObjects.GameObject): Phaser.Animations.Animation[];`
+- `create(config: Phaser.Types.Animations.Animation): Phaser.Animations.Animation | false;`
+- `fromJSON(data: string | Phaser.Types.Animations.JSONAnimations | Phaser.Types.Animations.JSONAnimation, clearCurrentAnimations?: boolean): Phaser.Animations.Animation[];`
+- `generateFrameNames(key: string, config?: Phaser.Types.Animations.GenerateFrameNames): Phaser.Types.Animations.AnimationFrame[];`
+- `generateFrameNumbers(key: string, config?: Phaser.Types.Animations.GenerateFrameNumbers): Phaser.Types.Animations.AnimationFrame[];`
+- `get(key: string): Phaser.Animations.Animation | undefined;`
+- `getAnimsFromTexture(key: string | Phaser.Textures.Texture | Phaser.Textures.Frame): string[];`
+- `pauseAll(): this;`
+- `play(key: string | Phaser.Animations.Animation | Phaser.Types.Animations.PlayAnimationConfig, children: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[]): this;`
+- `staggerPlay<G extends Phaser.GameObjects.GameObject[]>(key: string | Phaser.Animations.Animation | Phaser.Types.Animations.PlayAnimationConfig, children: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[], stagger: number, staggerFirst?: boolean): G;`
+- `remove(key: string): Phaser.Animations.Animation;`
+- `resumeAll(): this;`
+- `toJSON(key?: string): Phaser.Types.Animations.JSONAnimations;`
+- `destroy(): void;`
+
+#### class Phaser.Animations.AnimationState
+- `constructor(parent: Phaser.GameObjects.GameObject);`
+- `parent: Phaser.GameObjects.GameObject;`
+- `animationManager: Phaser.Animations.AnimationManager;`
+- `protected textureManager: Phaser.Textures.TextureManager;`
+- `protected anims: Phaser.Structs.Map<string, Phaser.Animations.Animation>;`
+- `isPlaying: boolean;`
+- `hasStarted: boolean;`
+- `currentAnim: Phaser.Animations.Animation | null;`
+- `currentFrame: Phaser.Animations.AnimationFrame | null;`
+- `nextAnim: string | Phaser.Animations.Animation | Phaser.Types.Animations.PlayAnimationConfig | null;`
+- `nextAnimsQueue: any[];`
+- `timeScale: number;`
+- `frameRate: number;`
+- `duration: number;`
+- `msPerFrame: number;`
+- `skipMissedFrames: boolean;`
+- `randomFrame: boolean;`
+- `delay: number;`
+- `repeat: number;`
+- `repeatDelay: number;`
+- `yoyo: boolean;`
+- `showBeforeDelay: boolean;`
+- `showOnStart: boolean;`
+- `hideOnComplete: boolean;`
+- `forward: boolean;`
+- `inReverse: boolean;`
+- `accumulator: number;`
+- `nextTick: number;`
+- `delayCounter: number;`
+- `repeatCounter: number;`
+- `pendingRepeat: boolean;`
+- `chain(key?: string | Phaser.Animations.Animation | Phaser.Types.Animations.PlayAnimationConfig | string[] | Phaser.Animations.Animation[] | Phaser.Types.Animations.PlayAnimationConfig[]): Phaser.GameObjects.GameObject;`
+- `getName(): string;`
+- `getFrameName(): string;`
+- `protected load(key: string | Phaser.Types.Animations.PlayAnimationConfig): Phaser.GameObjects.GameObject;`
+- `pause(atFrame?: Phaser.Animations.AnimationFrame): Phaser.GameObjects.GameObject;`
+- `resume(fromFrame?: Phaser.Animations.AnimationFrame): Phaser.GameObjects.GameObject;`
+- `playAfterDelay(key: string | Phaser.Animations.Animation | Phaser.Types.Animations.PlayAnimationConfig, delay: number): Phaser.GameObjects.GameObject;`
+- `playAfterRepeat(key: string | Phaser.Animations.Animation | Phaser.Types.Animations.PlayAnimationConfig, repeatCount?: number): Phaser.GameObjects.GameObject;`
+- `play(key: string | Phaser.Animations.Animation | Phaser.Types.Animations.PlayAnimationConfig, ignoreIfPlaying?: boolean): Phaser.GameObjects.GameObject;`
+- `playReverse(key: string | Phaser.Animations.Animation | Phaser.Types.Animations.PlayAnimationConfig, ignoreIfPlaying?: boolean): Phaser.GameObjects.GameObject;`
+- `startAnimation(key: string | Phaser.Types.Animations.PlayAnimationConfig): Phaser.GameObjects.GameObject;`
+- `reverse(): Phaser.GameObjects.GameObject;`
+- `getProgress(): number;`
+- `setProgress(value?: number): Phaser.GameObjects.GameObject;`
+- `setRepeat(value: number): Phaser.GameObjects.GameObject;`
+- `globalRemove(key?: string, animation?: Phaser.Animations.Animation): void;`
+- `restart(includeDelay?: boolean, resetRepeats?: boolean): Phaser.GameObjects.GameObject;`
+- `complete(): Phaser.GameObjects.GameObject;`
+- `stop(): Phaser.GameObjects.GameObject;`
+- `stopAfterDelay(delay: number): Phaser.GameObjects.GameObject;`
+- `stopAfterRepeat(repeatCount?: number): Phaser.GameObjects.GameObject;`
+- `stopOnFrame(frame: Phaser.Animations.AnimationFrame): Phaser.GameObjects.GameObject;`
+- `getTotalFrames(): number;`
+- `update(time: number, delta: number): void;`
+- `setCurrentFrame(animationFrame: Phaser.Animations.AnimationFrame): Phaser.GameObjects.GameObject;`
+- `nextFrame(): Phaser.GameObjects.GameObject;`
+- `previousFrame(): Phaser.GameObjects.GameObject;`
+- `get(key: string): Phaser.Animations.Animation;`
+- `exists(key: string): boolean;`
+- `create(config: Phaser.Types.Animations.Animation): Phaser.Animations.Animation | false;`
+- `createFromAseprite(key: string, tags?: string[]): Phaser.Animations.Animation[];`
+- `generateFrameNames(key: string, config?: Phaser.Types.Animations.GenerateFrameNames): Phaser.Types.Animations.AnimationFrame[];`
+- `generateFrameNumbers(key: string, config?: Phaser.Types.Animations.GenerateFrameNumbers): Phaser.Types.Animations.AnimationFrame[];`
+- `remove(key: string): Phaser.Animations.Animation;`
+- `destroy(): void;`
+- `readonly isPaused: boolean;`
+
+### namespace Phaser.Cameras
+#### namespace Phaser.Cameras.Scene2D
+##### class Phaser.Cameras.Scene2D.Camera
+- `constructor(x: number, y: number, width: number, height: number);`
+- `filters: Phaser.Types.GameObjects.FiltersInternalExternal;`
+- `isObjectInversion: boolean;`
+- `inputEnabled: boolean;`
+- `fadeEffect: Phaser.Cameras.Scene2D.Effects.Fade;`
+- `flashEffect: Phaser.Cameras.Scene2D.Effects.Flash;`
+- `shakeEffect: Phaser.Cameras.Scene2D.Effects.Shake;`
+- `panEffect: Phaser.Cameras.Scene2D.Effects.Pan;`
+- `rotateToEffect: Phaser.Cameras.Scene2D.Effects.RotateTo;`
+- `zoomEffect: Phaser.Cameras.Scene2D.Effects.Zoom;`
+- `lerp: Phaser.Math.Vector2;`
+- `followOffset: Phaser.Math.Vector2;`
+- `deadzone: Phaser.Geom.Rectangle | null;`
+- `setDeadzone(width?: number, height?: number): this;`
+- `fadeIn(duration?: number, red?: number, green?: number, blue?: number, callback?: Function, context?: any): this;`
+- `fadeOut(duration?: number, red?: number, green?: number, blue?: number, callback?: Function, context?: any): this;`
+- `fadeFrom(duration?: number, red?: number, green?: number, blue?: number, force?: boolean, callback?: Function, context?: any): this;`
+- `fade(duration?: number, red?: number, green?: number, blue?: number, force?: boolean, callback?: Function, context?: any): this;`
+- `flash(duration?: number, red?: number, green?: number, blue?: number, force?: boolean, callback?: Function, context?: any): this;`
+- `shake(duration?: number, intensity?: number | Phaser.Math.Vector2, force?: boolean, callback?: Function, context?: any): this;`
+- `pan(x: number, y: number, duration?: number, ease?: string | Function, force?: boolean, callback?: Phaser.Types.Cameras.Scene2D.CameraPanCallback, context?: any): this;`
+- `rotateTo(angle: number, shortestPath?: boolean, duration?: number, ease?: string | Function, force?: boolean, callback?: Phaser.Types.Cameras.Scene2D.CameraRotateCallback, context?: any): Phaser.Cameras.Scene2D.Camera;`
+- `zoomTo(zoom: number, duration?: number, ease?: string | Function, force?: boolean, callback?: Phaser.Types.Cameras.Scene2D.CameraZoomCallback, context?: any): this;`
+- `preRender(): void;`
+- `getViewMatrix(forceComposite?: boolean): Phaser.GameObjects.Components.TransformMatrix;`
+- `getPaddingWrapper(padding?: number): Phaser.Types.Cameras.Scene2D.CameraPaddingWrapper;`
+- `setLerp(x?: number, y?: number): this;`
+- `setFollowOffset(x?: number, y?: number): this;`
+- `startFollow(target: Phaser.GameObjects.GameObject | object, roundPixels?: boolean, lerpX?: number, lerpY?: number, offsetX?: number, offsetY?: number): this;`
+- `stopFollow(): this;`
+- `resetFX(): this;`
+- `protected update(time: number, delta: number): void;`
+- `destroy(): void;`
+- `clearAlpha(): this;`
+
+##### class Phaser.Cameras.Scene2D.CameraManager
+- `constructor(scene: Phaser.Scene);`
+- `scene: Phaser.Scene;`
+- `systems: Phaser.Scenes.Systems;`
+- `roundPixels: boolean;`
+- `cameras: Phaser.Cameras.Scene2D.Camera[];`
+- `main: Phaser.Cameras.Scene2D.Camera;`
+- `default: Phaser.Cameras.Scene2D.Camera;`
+- `add(x?: number, y?: number, width?: number, height?: number, makeMain?: boolean, name?: string): Phaser.Cameras.Scene2D.Camera;`
+- `addExisting(camera: Phaser.Cameras.Scene2D.Camera, makeMain?: boolean): Phaser.Cameras.Scene2D.Camera | null;`
+- `getTotal(isVisible?: boolean): number;`
+- `fromJSON(config: Phaser.Types.Cameras.Scene2D.CameraConfig | Phaser.Types.Cameras.Scene2D.CameraConfig[]): this;`
+- `getCamera(name: string): Phaser.Cameras.Scene2D.Camera | null;`
+- `getCamerasBelowPointer(pointer: Phaser.Input.Pointer): Phaser.Cameras.Scene2D.Camera[];`
+- `remove(camera: Phaser.Cameras.Scene2D.Camera | Phaser.Cameras.Scene2D.Camera[], runDestroy?: boolean): number;`
+- `protected render(renderer: Phaser.Renderer.Canvas.CanvasRenderer | Phaser.Renderer.WebGL.WebGLRenderer, displayList: Phaser.GameObjects.DisplayList): void;`
+- `getVisibleChildren(children: Phaser.GameObjects.GameObject[], camera: Phaser.Cameras.Scene2D.Camera): Phaser.GameObjects.GameObject[];`
+- `resetAll(): Phaser.Cameras.Scene2D.Camera;`
+- `protected update(time: number, delta: number): void;`
+- `onResize(gameSize: Phaser.Structs.Size, baseSize: Phaser.Structs.Size): void;`
+- `resize(width: number, height: number): void;`
+
+##### namespace Phaser.Cameras.Scene2D.Effects
+###### class Phaser.Cameras.Scene2D.Effects.Fade
+- `constructor(camera: Phaser.Cameras.Scene2D.Camera);`
+- `readonly camera: Phaser.Cameras.Scene2D.Camera;`
+- `readonly isRunning: boolean;`
+- `readonly isComplete: boolean;`
+- `readonly direction: boolean;`
+- `readonly duration: number;`
+- `progress: number;`
+- `start(direction?: boolean, duration?: number, red?: number, green?: number, blue?: number, force?: boolean, callback?: Phaser.Types.Cameras.Scene2D.CameraFadeCallback, context?: any): Phaser.Cameras.Scene2D.Camera;`
+- `update(time: number, delta: number): void;`
+- `postRenderCanvas(ctx: CanvasRenderingContext2D): boolean;`
+- `postRenderWebGL(): boolean;`
+- `effectComplete(): void;`
+- `reset(): void;`
+- `destroy(): void;`
+###### class Phaser.Cameras.Scene2D.Effects.Flash
+- `constructor(camera: Phaser.Cameras.Scene2D.Camera);`
+- `readonly camera: Phaser.Cameras.Scene2D.Camera;`
+- `readonly isRunning: boolean;`
+- `readonly duration: number;`
+- `alpha: number;`
+- `progress: number;`
+- `start(duration?: number, red?: number, green?: number, blue?: number, force?: boolean, callback?: Phaser.Types.Cameras.Scene2D.CameraFlashCallback, context?: any): Phaser.Cameras.Scene2D.Camera;`
+- `update(time: number, delta: number): void;`
+- `postRenderCanvas(ctx: CanvasRenderingContext2D): boolean;`
+- `postRenderWebGL(): boolean;`
+- `effectComplete(): void;`
+- `reset(): void;`
+- `destroy(): void;`
+###### class Phaser.Cameras.Scene2D.Effects.Pan
+- `constructor(camera: Phaser.Cameras.Scene2D.Camera);`
+- `readonly camera: Phaser.Cameras.Scene2D.Camera;`
+- `readonly isRunning: boolean;`
+- `readonly duration: number;`
+- `source: Phaser.Math.Vector2;`
+- `current: Phaser.Math.Vector2;`
+- `destination: Phaser.Math.Vector2;`
+- `ease: Function;`
+- `progress: number;`
+- `start(x: number, y: number, duration?: number, ease?: string | Function, force?: boolean, callback?: Phaser.Types.Cameras.Scene2D.CameraPanCallback, context?: any): Phaser.Cameras.Scene2D.Camera;`
+- `update(time: number, delta: number): void;`
+- `effectComplete(): void;`
+- `reset(): void;`
+- `destroy(): void;`
+###### class Phaser.Cameras.Scene2D.Effects.RotateTo
+- `constructor(camera: Phaser.Cameras.Scene2D.Camera);`
+- `readonly camera: Phaser.Cameras.Scene2D.Camera;`
+- `readonly isRunning: boolean;`
+- `readonly duration: number;`
+- `source: number;`
+- `current: number;`
+- `destination: number;`
+- `ease: Function;`
+- `progress: number;`
+- `clockwise: boolean;`
+- `shortestPath: boolean;`
+- `start(angle: number, shortestPath?: boolean, duration?: number, ease?: string | Function, force?: boolean, callback?: Phaser.Types.Cameras.Scene2D.CameraRotateCallback, context?: any): Phaser.Cameras.Scene2D.Camera;`
+- `update(time: number, delta: number): void;`
+- `effectComplete(): void;`
+- `reset(): void;`
+- `destroy(): void;`
+###### class Phaser.Cameras.Scene2D.Effects.Shake
+- `constructor(camera: Phaser.Cameras.Scene2D.Camera);`
+- `readonly camera: Phaser.Cameras.Scene2D.Camera;`
+- `readonly isRunning: boolean;`
+- `readonly duration: number;`
+- `intensity: Phaser.Math.Vector2;`
+- `progress: number;`
+- `start(duration?: number, intensity?: number | Phaser.Math.Vector2, force?: boolean, callback?: Phaser.Types.Cameras.Scene2D.CameraShakeCallback, context?: any): Phaser.Cameras.Scene2D.Camera;`
+- `preRender(): void;`
+- `update(time: number, delta: number): void;`
+- `effectComplete(): void;`
+- `reset(): void;`
+- `destroy(): void;`
+###### class Phaser.Cameras.Scene2D.Effects.Zoom
+- `constructor(camera: Phaser.Cameras.Scene2D.Camera);`
+- `readonly camera: Phaser.Cameras.Scene2D.Camera;`
+- `readonly isRunning: boolean;`
+- `readonly duration: number;`
+- `source: number;`
+- `destination: number;`
+- `ease: Function;`
+- `progress: number;`
+- `start(zoom: number, duration?: number, ease?: string | Function, force?: boolean, callback?: Phaser.Types.Cameras.Scene2D.CameraZoomCallback, context?: any): Phaser.Cameras.Scene2D.Camera;`
+- `update(time: number, delta: number): void;`
+- `effectComplete(): void;`
+- `reset(): void;`
+- `destroy(): void;`
+
+### class Phaser.Game
+- `constructor(config?: Phaser.Types.Core.GameConfig);`
+- `readonly config: Phaser.Core.Config;`
+- `renderer: Phaser.Renderer.Canvas.CanvasRenderer | Phaser.Renderer.WebGL.WebGLRenderer;`
+- `domContainer: HTMLDivElement;`
+- `canvas: HTMLCanvasElement;`
+- `context: CanvasRenderingContext2D | WebGLRenderingContext;`
+- `readonly isBooted: boolean;`
+- `readonly isRunning: boolean;`
+- `events: Phaser.Events.EventEmitter;`
+- `anims: Phaser.Animations.AnimationManager;`
+- `textures: Phaser.Textures.TextureManager;`
+- `cache: Phaser.Cache.CacheManager;`
+- `registry: Phaser.Data.DataManager;`
+- `input: Phaser.Input.InputManager;`
+- `scene: Phaser.Scenes.SceneManager;`
+- `device: Phaser.DeviceConf;`
+- `scale: Phaser.Scale.ScaleManager;`
+- `sound: Phaser.Sound.NoAudioSoundManager | Phaser.Sound.HTML5AudioSoundManager | Phaser.Sound.WebAudioSoundManager;`
+- `loop: Phaser.Core.TimeStep;`
+- `plugins: Phaser.Plugins.PluginManager;`
+- `readonly hasFocus: boolean;`
+- `isPaused: boolean;`
+- `protected boot(): void;`
+- `protected start(): void;`
+- `step(time: number, delta: number): void;`
+- `headlessStep(time: number, delta: number): void;`
+- `protected onHidden(): void;`
+- `pause(): void;`
+- `protected onVisible(): void;`
+- `resume(): void;`
+- `protected onBlur(): void;`
+- `protected onFocus(): void;`
+- `getFrame(): number;`
+- `getTime(): number;`
+- `destroy(removeCanvas: boolean, noReturn?: boolean): void;`
+
+### namespace Phaser.Curves
+#### class Phaser.Curves.CubicBezier
+- `constructor(p0: Phaser.Math.Vector2 | Phaser.Math.Vector2[], p1: Phaser.Math.Vector2, p2: Phaser.Math.Vector2, p3: Phaser.Math.Vector2);`
+- `p0: Phaser.Math.Vector2;`
+- `p1: Phaser.Math.Vector2;`
+- `p2: Phaser.Math.Vector2;`
+- `p3: Phaser.Math.Vector2;`
+- `getStartPoint<O extends Phaser.Math.Vector2>(out?: O): O;`
+- `getResolution(divisions: number): number;`
+- `getPoint<O extends Phaser.Math.Vector2>(t: number, out?: O): O;`
+- `draw<G extends Phaser.GameObjects.Graphics>(graphics: G, pointsTotal?: number): G;`
+- `toJSON(): Phaser.Types.Curves.JSONCurve;`
+- `static fromJSON(data: Phaser.Types.Curves.JSONCurve): Phaser.Curves.CubicBezier;`
+#### class Phaser.Curves.Curve
+- `constructor(type: string);`
+- `type: string;`
+- `defaultDivisions: number;`
+- `arcLengthDivisions: number;`
+- `cacheArcLengths: number[];`
+- `needsUpdate: boolean;`
+- `active: boolean;`
+- `draw<G extends Phaser.GameObjects.Graphics>(graphics: G, pointsTotal?: number): G;`
+- `getBounds(out?: Phaser.Geom.Rectangle, accuracy?: number): Phaser.Geom.Rectangle;`
+- `getDistancePoints(distance: number): Phaser.Math.Vector2[];`
+- `getEndPoint(out?: Phaser.Math.Vector2): Phaser.Math.Vector2;`
+- `getLength(): number;`
+- `getLengths(divisions?: number): number[];`
+- `getPointAt<O extends Phaser.Math.Vector2>(u: number, out?: O): O;`
+- `getPoints<O extends Phaser.Math.Vector2[]>(divisions?: number, stepRate?: number, out?: O): O;`
+- `getRandomPoint<O extends Phaser.Math.Vector2>(out?: O): O;`
+- `getSpacedPoints(divisions?: number, stepRate?: number, out?: Phaser.Math.Vector2[]): Phaser.Math.Vector2[];`
+- `getStartPoint<O extends Phaser.Math.Vector2>(out?: O): O;`
+- `getTangent<O extends Phaser.Math.Vector2>(t: number, out?: O): O;`
+- `getTangentAt<O extends Phaser.Math.Vector2>(u: number, out?: O): O;`
+- `getTFromDistance(distance: number, divisions?: number): number;`
+- `getUtoTmapping(u: number, distance: number, divisions?: number): number;`
+- `updateArcLengths(): void;`
+#### class Phaser.Curves.Ellipse
+- `constructor(x?: number | Phaser.Types.Curves.EllipseCurveConfig, y?: number, xRadius?: number, yRadius?: number, startAngle?: number, endAngle?: number, clockwise?: boolean, rotation?: number);`
+- `p0: Phaser.Math.Vector2;`
+- `getStartPoint<O extends Phaser.Math.Vector2>(out?: O): O;`
+- `getResolution(divisions: number): number;`
+- `getPoint<O extends Phaser.Math.Vector2>(t: number, out?: O): O;`
+- `setXRadius(value: number): this;`
+- `setYRadius(value: number): this;`
+- `setWidth(value: number): this;`
+- `setHeight(value: number): this;`
+- `setStartAngle(value: number): this;`
+- `setEndAngle(value: number): this;`
+- `setClockwise(value: boolean): this;`
+- `setRotation(value: number): this;`
+- `x: number;`
+- `y: number;`
+- `xRadius: number;`
+- `yRadius: number;`
+- `startAngle: number;`
+- `endAngle: number;`
+- `clockwise: boolean;`
+- `angle: number;`
+- `rotation: number;`
+- `toJSON(): Phaser.Types.Curves.JSONEllipseCurve;`
+- `static fromJSON(data: Phaser.Types.Curves.JSONEllipseCurve): Phaser.Curves.Ellipse;`
+#### class Phaser.Curves.Line
+- `constructor(p0: Phaser.Math.Vector2 | number[], p1?: Phaser.Math.Vector2);`
+- `p0: Phaser.Math.Vector2;`
+- `p1: Phaser.Math.Vector2;`
+- `arcLengthDivisions: number;`
+- `getBounds<O extends Phaser.Geom.Rectangle>(out?: O): O;`
+- `getStartPoint<O extends Phaser.Math.Vector2>(out?: O): O;`
+- `getResolution(divisions?: number): number;`
+- `getPoint<O extends Phaser.Math.Vector2>(t: number, out?: O): O;`
+- `getPointAt<O extends Phaser.Math.Vector2>(u: number, out?: O): O;`
+- `getTangent<O extends Phaser.Math.Vector2>(t?: number, out?: O): O;`
+- `getUtoTmapping(u: number, distance: number, divisions?: number): number;`
+- `draw<G extends Phaser.GameObjects.Graphics>(graphics: G): G;`
+- `toJSON(): Phaser.Types.Curves.JSONCurve;`
+- `static fromJSON(data: Phaser.Types.Curves.JSONCurve): Phaser.Curves.Line;`
+#### class Phaser.Curves.MoveTo
+- `constructor(x?: number, y?: number);`
+- `active: boolean;`
+- `p0: Phaser.Math.Vector2;`
+- `getPoint<O extends Phaser.Math.Vector2>(t: number, out?: O): O;`
+- `getPointAt<O extends Phaser.Math.Vector2>(u: number, out?: O): O;`
+- `getResolution(): number;`
+- `getLength(): number;`
+- `toJSON(): Phaser.Types.Curves.JSONCurve;`
+#### class Phaser.Curves.Path
+- `constructor(x?: number, y?: number);`
+- `name: string;`
+- `defaultDivisions: number;`
+- `curves: Phaser.Curves.Curve[];`
+- `cacheLengths: number[];`
+- `autoClose: boolean;`
+- `startPoint: Phaser.Math.Vector2;`
+- `add(curve: Phaser.Curves.Curve): this;`
+- `circleTo(radius: number, clockwise?: boolean, rotation?: number): this;`
+- `closePath(): this;`
+- `cubicBezierTo(x: number | Phaser.Math.Vector2, y: number | Phaser.Math.Vector2, control1X: number | Phaser.Math.Vector2, control1Y?: number, control2X?: number, control2Y?: number): this;`
+- `quadraticBezierTo(x: number | Phaser.Math.Vector2[], y?: number, controlX?: number, controlY?: number): this;`
+- `draw<G extends Phaser.GameObjects.Graphics>(graphics: Phaser.GameObjects.Graphics, pointsTotal?: number): G;`
+- `ellipseTo(xRadius?: number, yRadius?: number, startAngle?: number, endAngle?: number, clockwise?: boolean, rotation?: number): this;`
+- `fromJSON(data: Phaser.Types.Curves.JSONPath): this;`
+- `getBounds<O extends Phaser.Math.Vector2>(out?: O, accuracy?: number): O;`
+- `getCurveLengths(): number[];`
+- `getCurveAt(t: number): Phaser.Curves.Curve | null;`
+- `getEndPoint<O extends Phaser.Math.Vector2>(out?: O): O;`
+- `getLength(): number;`
+- `getPoint<O extends Phaser.Math.Vector2>(t: number, out?: O): O;`
+- `getPoints(divisions?: number, stepRate?: number): Phaser.Math.Vector2[];`
+- `getRandomPoint<O extends Phaser.Math.Vector2>(out?: O): O;`
+- `getSpacedPoints(divisions?: number): Phaser.Math.Vector2[];`
+- `getStartPoint<O extends Phaser.Math.Vector2>(out?: O): O;`
+- `getTangent<O extends Phaser.Math.Vector2>(t: number, out?: O): O;`
+- `lineTo(x: number | Phaser.Math.Vector2 | Phaser.Types.Math.Vector2Like, y?: number): this;`
+- `splineTo(points: Phaser.Math.Vector2[]): this;`
+- `moveTo(x: number | Phaser.Math.Vector2 | Phaser.Types.Math.Vector2Like, y?: number): this;`
+- `toJSON(): Phaser.Types.Curves.JSONPath;`
+- `updateArcLengths(): void;`
+- `destroy(): void;`
+#### class Phaser.Curves.QuadraticBezier
+- `constructor(p0: Phaser.Math.Vector2 | number[], p1: Phaser.Math.Vector2, p2: Phaser.Math.Vector2);`
+- `p0: Phaser.Math.Vector2;`
+- `p1: Phaser.Math.Vector2;`
+- `p2: Phaser.Math.Vector2;`
+- `getStartPoint<O extends Phaser.Math.Vector2>(out?: O): O;`
+- `getResolution(divisions: number): number;`
+- `getPoint<O extends Phaser.Math.Vector2>(t: number, out?: O): O;`
+- `draw<G extends Phaser.GameObjects.Graphics>(graphics: G, pointsTotal?: number): G;`
+- `toJSON(): Phaser.Types.Curves.JSONCurve;`
+- `static fromJSON(data: Phaser.Types.Curves.JSONCurve): Phaser.Curves.QuadraticBezier;`
+#### class Phaser.Curves.Spline
+- `constructor(points?: Phaser.Math.Vector2[] | number[] | number[][]);`
+- `points: Phaser.Math.Vector2[];`
+- `addPoints(points: Phaser.Math.Vector2[] | number[] | number[][]): this;`
+- `addPoint(x: number, y: number): Phaser.Math.Vector2;`
+- `getStartPoint<O extends Phaser.Math.Vector2>(out?: O): O;`
+- `getResolution(divisions: number): number;`
+- `getPoint<O extends Phaser.Math.Vector2>(t: number, out?: O): O;`
+- `toJSON(): Phaser.Types.Curves.JSONCurve;`
+- `static fromJSON(data: Phaser.Types.Curves.JSONCurve): Phaser.Curves.Spline;`
+
+### namespace Phaser.Data
+#### class Phaser.Data.DataManager
+- `constructor(parent: object, eventEmitter?: Phaser.Events.EventEmitter);`
+- `parent: any;`
+- `events: Phaser.Events.EventEmitter;`
+- `list: {[key: string]:  any};`
+- `values: {[key: string]:  any};`
+- `get(key: string | string[]): any;`
+- `getAll(): {[key: string]:  any};`
+- `query(search: RegExp): {[key: string]:  any};`
+- `set<T extends any>(key: (string|T), data?: any): this;`
+- `inc(key: string, amount?: number): this;`
+- `toggle(key: string): this;`
+- `each(callback: DataEachCallback, context?: any, ...args: any[]): this;`
+- `merge(data: {[key: string]:  any}, overwrite?: boolean): this;`
+- `remove(key: string | string[]): this;`
+- `pop(key: string): any;`
+- `has(key: string): boolean;`
+- `setFreeze(value: boolean): this;`
+- `reset(): this;`
+- `destroy(): void;`
+- `freeze: boolean;`
+- `count: number;`
+
+### namespace Phaser.Display
+#### namespace Phaser.Display.Color
+##### namespace Phaser.Display.Color.Interpolate
+- `function RGBWithRGB(r1: number, g1: number, b1: number, r2: number, g2: number, b2: number, length?: number, index?: number): Phaser.Types.Display.ColorObject;`
+- `function HSVWithHSV(h1: number, s1: number, v1: number, h2: number, s2: number, v2: number, length?: number, index?: number, sign?: number): Phaser.Types.Display.ColorObject;`
+- `function ColorWithColor(color1: Phaser.Display.Color, color2: Phaser.Display.Color, length?: number, index?: number, hsv?: boolean, hsvSign?: number): Phaser.Types.Display.ColorObject;`
+- `function ColorWithRGB(color: Phaser.Display.Color, r: number, g: number, b: number, length?: number, index?: number): Phaser.Types.Display.ColorObject;`
+
+#### class Phaser.Display.Color
+- `constructor(red?: number, green?: number, blue?: number, alpha?: number);`
+- `gl: number[];`
+- `transparent(): Phaser.Display.Color;`
+- `setTo(red: number, green: number, blue: number, alpha?: number, updateHSV?: boolean): Phaser.Display.Color;`
+- `setGLTo(red: number, green: number, blue: number, alpha?: number): Phaser.Display.Color;`
+- `setFromRGB(color: Phaser.Types.Display.InputColorObject): Phaser.Display.Color;`
+- `setFromHSV(h: number, s: number, v: number): Phaser.Display.Color;`
+- `clone(): Phaser.Display.Color;`
+- `gray(shade: number): Phaser.Display.Color;`
+- `random(min?: number, max?: number): Phaser.Display.Color;`
+- `randomGray(min?: number, max?: number): Phaser.Display.Color;`
+- `saturate(amount: number): Phaser.Display.Color;`
+- `desaturate(amount: number): Phaser.Display.Color;`
+- `lighten(amount: number): Phaser.Display.Color;`
+- `darken(amount: number): Phaser.Display.Color;`
+- `brighten(amount: number): Phaser.Display.Color;`
+- `readonly color: number;`
+- `readonly color32: number;`
+- `readonly rgba: string;`
+- `redGL: number;`
+- `greenGL: number;`
+- `blueGL: number;`
+- `alphaGL: number;`
+- `red: number;`
+- `green: number;`
+- `blue: number;`
+- `alpha: number;`
+- `h: number;`
+- `s: number;`
+- `v: number;`
+- `static ColorSpectrum(limit?: number): Phaser.Types.Display.ColorObject[];`
+- `static ColorToRGBA(color: number): Phaser.Types.Display.ColorObject;`
+- `static ComponentToHex(color: number): string;`
+- `static GetColor(red: number, green: number, blue: number): number;`
+- `static GetColor32(red: number, green: number, blue: number, alpha: number): number;`
+- `static HexStringToColor(hex: string, color?: Phaser.Display.Color): Phaser.Display.Color;`
+- `static HSLToColor(h: number, s: number, l: number, color?: Phaser.Display.Color): Phaser.Display.Color;`
+- `static HSVColorWheel(s?: number, v?: number): Phaser.Types.Display.ColorObject[];`
+- `static HSVToRGB(h: number, s: number, v: number, out?: Phaser.Types.Display.ColorObject | Phaser.Display.Color): Phaser.Types.Display.ColorObject | Phaser.Display.Color;`
+- `static HueToComponent(p: number, q: number, t: number): number;`
+- `static IntegerToColor(input: number, color?: Phaser.Display.Color): Phaser.Display.Color;`
+- `static IntegerToRGB(color: number): Phaser.Types.Display.ColorObject;`
+- `static ObjectToColor(input: Phaser.Types.Display.InputColorObject, color?: Phaser.Display.Color): Phaser.Display.Color;`
+- `static RandomRGB(min?: number, max?: number): Phaser.Display.Color;`
+- `static RGBStringToColor(rgb: string, color?: Phaser.Display.Color): Phaser.Display.Color;`
+- `static RGBToHSV(r: number, g: number, b: number, out?: Phaser.Types.Display.HSVColorObject | Phaser.Display.Color): Phaser.Types.Display.HSVColorObject | Phaser.Display.Color;`
+- `static RGBToString(r: number, g: number, b: number, a?: number, prefix?: string): string;`
+- `static ValueToColor(input: string | number | Phaser.Types.Display.InputColorObject, color?: Phaser.Display.Color): Phaser.Display.Color;`
+
+### namespace Phaser.Events
+#### class Phaser.Events.EventEmitter
+- `shutdown(): void;`
+- `destroy(): void;`
+- `eventNames(): (string|symbol)[];`
+- `listeners(event: string | symbol): Function[];`
+- `listenerCount(event: string | symbol): number;`
+- `emit(event: string | symbol, ...args: any[]): boolean;`
+- `on(event: string | symbol, fn: Function, context?: any): this;`
+- `addListener(event: string | symbol, fn: Function, context?: any): this;`
+- `once(event: string | symbol, fn: Function, context?: any): this;`
+- `removeListener(event: string | symbol, fn?: Function, context?: any, once?: boolean): this;`
+- `off(event: string | symbol, fn?: Function, context?: any, once?: boolean): this;`
+- `removeAllListeners(event?: string | symbol): this;`
+
+### namespace Phaser.GameObjects
+#### class Phaser.GameObjects.BitmapText
+- `constructor(scene: Phaser.Scene, x: number, y: number, font: string, text?: string | string[], size?: number, align?: number);`
+- `readonly font: string;`
+- `readonly fontData: Phaser.Types.GameObjects.BitmapText.BitmapFontData;`
+- `wordWrapCharCode: number;`
+- `dropShadowX: number;`
+- `dropShadowY: number;`
+- `dropShadowColor: number;`
+- `dropShadowAlpha: number;`
+- `readonly fromAtlas: boolean;`
+- `setLeftAlign(): this;`
+- `setCenterAlign(): this;`
+- `setRightAlign(): this;`
+- `setFontSize(size: number): this;`
+- `setLetterSpacing(spacing?: number): this;`
+- `setLineSpacing(spacing?: number): this;`
+- `setText(value: string | string[]): this;`
+- `setDropShadow(x?: number, y?: number, color?: number, alpha?: number): this;`
+- `setCharacterTint(start?: number, length?: number, tintMode?: number, topLeft?: number, topRight?: number, bottomLeft?: number, bottomRight?: number): this;`
+- `setWordTint(word: string | number, count?: number, tintMode?: number, topLeft?: number, topRight?: number, bottomLeft?: number, bottomRight?: number): this;`
+- `getTextBounds(round?: boolean): Phaser.Types.GameObjects.BitmapText.BitmapTextSize;`
+- `getCharacterAt(x: number, y: number, camera?: Phaser.Cameras.Scene2D.Camera): Phaser.Types.GameObjects.BitmapText.BitmapTextCharacter;`
+- `updateDisplayOrigin(): this;`
+- `setFont(font: string, size?: number, align?: number): this;`
+- `setMaxWidth(value: number, wordWrapCharCode?: number): this;`
+- `setDisplaySize(width: number, height: number): this;`
+- `align: number;`
+- `text: string;`
+- `fontSize: number;`
+- `letterSpacing: number;`
+- `lineSpacing: number;`
+- `maxWidth: number;`
+- `readonly width: number;`
+- `readonly height: number;`
+- `readonly displayWidth: number;`
+- `readonly displayHeight: number;`
+- `toJSON(): Phaser.Types.GameObjects.BitmapText.JSONBitmapText;`
+- `protected preDestroy(): void;`
+- `static ALIGN_LEFT: number;`
+- `static ALIGN_CENTER: number;`
+- `static ALIGN_RIGHT: number;`
+- `static ParseFromAtlas(scene: Phaser.Scene, fontName: string, textureKey: string, frameKey: string, xmlKey: string, xSpacing?: number, ySpacing?: number): boolean;`
+- `static ParseXMLBitmapFont(xml: XMLDocument, frame: Phaser.Textures.Frame, xSpacing?: number, ySpacing?: number): Phaser.Types.GameObjects.BitmapText.BitmapFontData;`
+- `filterCamera: Phaser.Cameras.Scene2D.Camera;`
+- `readonly filters: Phaser.Types.GameObjects.FiltersInternalExternal | null;`
+- `renderFilters: boolean;`
+- `maxFilterSize: Phaser.Math.Vector2;`
+- `filtersAutoFocus: boolean;`
+- `filtersFocusContext: boolean;`
+- `filtersForceComposite: boolean;`
+- `willRenderFilters(): boolean;`
+- `enableFilters(): this;`
+- `renderWebGLFilters(renderer: Phaser.Renderer.WebGL.WebGLRenderer, gameObject: Phaser.GameObjects.GameObject, drawingContext: Phaser.Renderer.WebGL.DrawingContext, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix, renderStep?: number): Phaser.Types.GameObjects.RenderWebGLStep;`
+- `focusFilters(): this;`
+- `focusFiltersOnCamera(camera: Phaser.Cameras.Scene2D.Camera): this;`
+- `focusFiltersOverride(x?: number, y?: number, width?: number, height?: number): this;`
+- `setFilterSize(width: number, height: number): this;`
+- `setFiltersAutoFocus(value: boolean): this;`
+- `setFiltersFocusContext(value: boolean): this;`
+- `setFiltersForceComposite(value: boolean): this;`
+- `setRenderFilters(value: boolean): this;`
+- `renderWebGLStep(renderer: Phaser.Renderer.WebGL.WebGLRenderer, gameObject: Phaser.GameObjects.GameObject, drawingContext: Phaser.Renderer.WebGL.DrawingContext, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix, renderStep?: number, displayList?: Phaser.GameObjects.GameObject[], displayListIndex?: number): void;`
+- `addRenderStep(fn: Phaser.Types.GameObjects.RenderWebGLStep, index?: number): this;`
+- `clearAlpha(): this;`
+- `setAlpha(topLeft?: number, topRight?: number, bottomLeft?: number, bottomRight?: number): this;`
+- `alpha: number;`
+- `alphaTopLeft: number;`
+- `alphaTopRight: number;`
+- `alphaBottomLeft: number;`
+- `alphaBottomRight: number;`
+- `blendMode: Phaser.BlendModes | string | number;`
+- `setBlendMode(value: string | Phaser.BlendModes | number): this;`
+- `depth: number;`
+- `setDepth(value: number): this;`
+- `setToTop(): this;`
+- `setToBack(): this;`
+- `setAbove(gameObject: Phaser.GameObjects.GameObject): this;`
+- `setBelow(gameObject: Phaser.GameObjects.GameObject): this;`
+- `getCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopLeft<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopRight<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getLeftCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getRightCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomLeft<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomRight<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBounds<O extends Phaser.Geom.Rectangle>(output?: O): O;`
+- `readonly lighting: boolean;`
+- `selfShadow: Object;`
+- `setLighting(enable: boolean): this;`
+- `setSelfShadow(enabled?: boolean | undefined, penumbra?: number, diffuseFlatThreshold?: number): this;`
+- `mask: Phaser.Display.Masks.GeometryMask;`
+- `setMask(mask: Phaser.Display.Masks.GeometryMask): this;`
+- `clearMask(destroyMask?: boolean): this;`
+- `createGeometryMask<G extends Phaser.GameObjects.Graphics, S extends Phaser.GameObjects.Shape>(graphics?: Phaser.GameObjects.Graphics | Phaser.GameObjects.Shape): Phaser.Display.Masks.GeometryMask;`
+- `originX: number;`
+- `originY: number;`
+- `displayOriginX: number;`
+- `displayOriginY: number;`
+- `setOrigin(x?: number, y?: number): this;`
+- `setOriginFromFrame(): this;`
+- `setDisplayOrigin(x?: number, y?: number): this;`
+- `customRenderNodes: object;`
+- `defaultRenderNodes: object;`
+- `renderNodeData: object;`
+- `initRenderNodes(defaultNodes: Map<string, string>): void;`
+- `setRenderNodeRole(key: string, renderNode: string | Phaser.Renderer.WebGL.RenderNodes.RenderNode | null, renderNodeData?: object, copyData?: boolean): this;`
+- `setRenderNodeData(renderNode: string | Phaser.Renderer.WebGL.RenderNodes.RenderNode, key: string, value: any): this;`
+- `scrollFactorX: number;`
+- `scrollFactorY: number;`
+- `setScrollFactor(x: number, y?: number): this;`
+- `texture: Phaser.Textures.Texture | Phaser.Textures.CanvasTexture;`
+- `frame: Phaser.Textures.Frame;`
+- `setTexture(key: string | Phaser.Textures.Texture, frame?: string | number, updateSize?: boolean, updateOrigin?: boolean): this;`
+- `setFrame(frame: string | number | Phaser.Textures.Frame, updateSize?: boolean, updateOrigin?: boolean): this;`
+- `tintTopLeft: number;`
+- `tintTopRight: number;`
+- `tintBottomLeft: number;`
+- `tintBottomRight: number;`
+- `tint2TopLeft: number;`
+- `tint2TopRight: number;`
+- `tint2BottomLeft: number;`
+- `tint2BottomRight: number;`
+- `tintMode: Phaser.TintModes;`
+- `clearTint(): this;`
+- `setTint(topLeft?: number, topRight?: number, bottomLeft?: number, bottomRight?: number): this;`
+- `setTint2(topLeft?: number, topRight?: number, bottomLeft?: number, bottomRight?: number): this;`
+- `setTintMode(mode: number | Phaser.TintModes): this;`
+- `setTintFill(): void;`
+- `tint: number;`
+- `readonly isTinted: boolean;`
+- `readonly hasTransformComponent: boolean;`
+- `x: number;`
+- `y: number;`
+- `z: number;`
+- `w: number;`
+- `scale: number;`
+- `scaleX: number;`
+- `scaleY: number;`
+- `angle: number;`
+- `rotation: number;`
+- `setPosition(x?: number, y?: number, z?: number, w?: number): this;`
+- `copyPosition(source: Phaser.Types.Math.Vector2Like | Phaser.Types.Math.Vector3Like | Phaser.Types.Math.Vector4Like): this;`
+- `setRandomPosition(x?: number, y?: number, width?: number, height?: number): this;`
+- `setRotation(radians?: number): this;`
+- `setAngle(degrees?: number): this;`
+- `setScale(x?: number, y?: number): this;`
+- `setX(value?: number): this;`
+- `setY(value?: number): this;`
+- `setZ(value?: number): this;`
+- `setW(value?: number): this;`
+- `getLocalTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.GameObjects.Components.TransformMatrix;`
+- `getWorldTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.GameObjects.Components.TransformMatrix;`
+- `getLocalPoint(x: number, y: number, point?: Phaser.Math.Vector2, camera?: Phaser.Cameras.Scene2D.Camera): Phaser.Math.Vector2;`
+- `getWorldPoint(point?: Phaser.Math.Vector2, tempMatrix?: Phaser.GameObjects.Components.TransformMatrix, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.Math.Vector2;`
+- `getParentRotation(): number;`
+- `visible: boolean;`
+- `setVisible(value: boolean): this;`
+
+#### namespace Phaser.GameObjects.Components
+##### interface Phaser.GameObjects.Components.Alpha
+- `clearAlpha(): this;`
+- `setAlpha(topLeft?: number, topRight?: number, bottomLeft?: number, bottomRight?: number): this;`
+- `alpha: number;`
+- `alphaTopLeft: number;`
+- `alphaTopRight: number;`
+- `alphaBottomLeft: number;`
+- `alphaBottomRight: number;`
+
+##### interface Phaser.GameObjects.Components.Crop
+- `texture: Phaser.Textures.Texture | Phaser.Textures.CanvasTexture;`
+- `frame: Phaser.Textures.Frame;`
+- `isCropped: boolean;`
+- `setCrop(x?: number | Phaser.Geom.Rectangle, y?: number, width?: number, height?: number): this;`
+
+##### interface Phaser.GameObjects.Components.Depth
+- `depth: number;`
+- `setDepth(value: number): this;`
+- `setToTop(): this;`
+- `setToBack(): this;`
+- `setAbove(gameObject: Phaser.GameObjects.GameObject): this;`
+- `setBelow(gameObject: Phaser.GameObjects.GameObject): this;`
+
+##### interface Phaser.GameObjects.Components.Flip
+- `flipX: boolean;`
+- `flipY: boolean;`
+- `toggleFlipX(): this;`
+- `toggleFlipY(): this;`
+- `setFlipX(value: boolean): this;`
+- `setFlipY(value: boolean): this;`
+- `setFlip(x: boolean, y: boolean): this;`
+- `resetFlip(): this;`
+
+##### interface Phaser.GameObjects.Components.Mask
+- `mask: Phaser.Display.Masks.GeometryMask;`
+- `setMask(mask: Phaser.Display.Masks.GeometryMask): this;`
+- `clearMask(destroyMask?: boolean): this;`
+- `createGeometryMask<G extends Phaser.GameObjects.Graphics, S extends Phaser.GameObjects.Shape>(graphics?: Phaser.GameObjects.Graphics | Phaser.GameObjects.Shape): Phaser.Display.Masks.GeometryMask;`
+
+##### interface Phaser.GameObjects.Components.Origin
+- `originX: number;`
+- `originY: number;`
+- `displayOriginX: number;`
+- `displayOriginY: number;`
+- `setOrigin(x?: number, y?: number): this;`
+- `setOriginFromFrame(): this;`
+- `setDisplayOrigin(x?: number, y?: number): this;`
+- `updateDisplayOrigin(): this;`
+
+##### interface Phaser.GameObjects.Components.ScrollFactor
+- `scrollFactorX: number;`
+- `scrollFactorY: number;`
+- `setScrollFactor(x: number, y?: number): this;`
+
+##### interface Phaser.GameObjects.Components.Tint
+- `tintTopLeft: number;`
+- `tintTopRight: number;`
+- `tintBottomLeft: number;`
+- `tintBottomRight: number;`
+- `tint2TopLeft: number;`
+- `tint2TopRight: number;`
+- `tint2BottomLeft: number;`
+- `tint2BottomRight: number;`
+- `tintMode: Phaser.TintModes;`
+- `clearTint(): this;`
+- `setTint(topLeft?: number, topRight?: number, bottomLeft?: number, bottomRight?: number): this;`
+- `setTint2(topLeft?: number, topRight?: number, bottomLeft?: number, bottomRight?: number): this;`
+- `setTintMode(mode: number | Phaser.TintModes): this;`
+- `setTintFill(): void;`
+- `tint: number;`
+- `readonly isTinted: boolean;`
+
+##### interface Phaser.GameObjects.Components.Transform
+- `readonly hasTransformComponent: boolean;`
+- `x: number;`
+- `y: number;`
+- `z: number;`
+- `w: number;`
+- `scale: number;`
+- `scaleX: number;`
+- `scaleY: number;`
+- `angle: number;`
+- `rotation: number;`
+- `setPosition(x?: number, y?: number, z?: number, w?: number): this;`
+- `copyPosition(source: Phaser.Types.Math.Vector2Like | Phaser.Types.Math.Vector3Like | Phaser.Types.Math.Vector4Like): this;`
+- `setRandomPosition(x?: number, y?: number, width?: number, height?: number): this;`
+- `setRotation(radians?: number): this;`
+- `setAngle(degrees?: number): this;`
+- `setScale(x?: number, y?: number): this;`
+- `setX(value?: number): this;`
+- `setY(value?: number): this;`
+- `setZ(value?: number): this;`
+- `setW(value?: number): this;`
+- `getLocalTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.GameObjects.Components.TransformMatrix;`
+- `getWorldTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.GameObjects.Components.TransformMatrix;`
+- `getLocalPoint(x: number, y: number, point?: Phaser.Math.Vector2, camera?: Phaser.Cameras.Scene2D.Camera): Phaser.Math.Vector2;`
+- `getWorldPoint(point?: Phaser.Math.Vector2, tempMatrix?: Phaser.GameObjects.Components.TransformMatrix, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.Math.Vector2;`
+- `getParentRotation(): number;`
+
+##### interface Phaser.GameObjects.Components.Visible
+- `visible: boolean;`
+- `setVisible(value: boolean): this;`
+
+#### class Phaser.GameObjects.Container
+- `constructor(scene: Phaser.Scene, x?: number, y?: number, children?: Phaser.GameObjects.GameObject[]);`
+- `list: Phaser.GameObjects.GameObject[];`
+- `exclusive: boolean;`
+- `maxSize: number;`
+- `position: number;`
+- `localTransform: Phaser.GameObjects.Components.TransformMatrix;`
+- `scrollFactorX: number;`
+- `scrollFactorY: number;`
+- `readonly originX: number;`
+- `readonly originY: number;`
+- `readonly displayOriginX: number;`
+- `readonly displayOriginY: number;`
+- `setExclusive(value?: boolean): this;`
+- `getBounds(output?: Phaser.Geom.Rectangle): Phaser.Geom.Rectangle;`
+- `pointToContainer(source: Phaser.Types.Math.Vector2Like, output?: Phaser.Types.Math.Vector2Like): Phaser.Types.Math.Vector2Like;`
+- `getBoundsTransformMatrix(): Phaser.GameObjects.Components.TransformMatrix;`
+- `add<T extends Phaser.GameObjects.GameObject>(child: (T|T[])): this;`
+- `addAt<T extends Phaser.GameObjects.GameObject>(child: (T|T[]), index?: number): this;`
+- `getAt<T extends Phaser.GameObjects.GameObject>(index: number): T;`
+- `getIndex<T extends Phaser.GameObjects.GameObject>(child: T): number;`
+- `sort(property: string, handler?: Function): this;`
+- `getByName<T extends Phaser.GameObjects.GameObject>(name: string): T;`
+- `getRandom<T extends Phaser.GameObjects.GameObject>(startIndex?: number, length?: number): T;`
+- `getFirst<T extends Phaser.GameObjects.GameObject>(property: string, value: any, startIndex?: number, endIndex?: number): T;`
+- `getAll<T extends Phaser.GameObjects.GameObject>(property?: string, value?: any, startIndex?: number, endIndex?: number): T[];`
+- `count(property: string, value: any, startIndex?: number, endIndex?: number): number;`
+- `swap<T extends Phaser.GameObjects.GameObject>(child1: T, child2: T): this;`
+- `moveTo<T extends Phaser.GameObjects.GameObject>(child: T, index: number): this;`
+- `moveAbove<T extends Phaser.GameObjects.GameObject>(child1: T, child2: T): this;`
+- `moveBelow<T extends Phaser.GameObjects.GameObject>(child1: T, child2: T): this;`
+- `remove<T extends Phaser.GameObjects.GameObject>(child: (T|T[]), destroyChild?: boolean): this;`
+- `removeAt(index: number, destroyChild?: boolean): this;`
+- `removeBetween(startIndex?: number, endIndex?: number, destroyChild?: boolean): this;`
+- `removeAll(destroyChild?: boolean): this;`
+- `bringToTop<T extends Phaser.GameObjects.GameObject>(child: T): this;`
+- `sendToBack<T extends Phaser.GameObjects.GameObject>(child: T): this;`
+- `moveUp<T extends Phaser.GameObjects.GameObject>(child: T): this;`
+- `moveDown<T extends Phaser.GameObjects.GameObject>(child: T): this;`
+- `reverse(): this;`
+- `shuffle(): this;`
+- `replace<T extends Phaser.GameObjects.GameObject>(oldChild: T, newChild: T, destroyChild?: boolean): this;`
+- `exists<T extends Phaser.GameObjects.GameObject>(child: T): boolean;`
+- `setAll(property: string, value: any, startIndex?: number, endIndex?: number): this;`
+- `each(callback: Function, context?: object, ...args: any[]): this;`
+- `iterate(callback: Function, context?: object, ...args: any[]): this;`
+- `setScrollFactor(x: number, y?: number, updateChildren?: boolean): this;`
+- `readonly length: number;`
+- `readonly first: Phaser.GameObjects.GameObject | null;`
+- `readonly last: Phaser.GameObjects.GameObject | null;`
+- `readonly next: Phaser.GameObjects.GameObject | null;`
+- `readonly previous: Phaser.GameObjects.GameObject | null;`
+- `protected preDestroy(): void;`
+- `protected onChildDestroyed(): void;`
+- `filterCamera: Phaser.Cameras.Scene2D.Camera;`
+- `readonly filters: Phaser.Types.GameObjects.FiltersInternalExternal | null;`
+- `renderFilters: boolean;`
+- `maxFilterSize: Phaser.Math.Vector2;`
+- `filtersAutoFocus: boolean;`
+- `filtersFocusContext: boolean;`
+- `filtersForceComposite: boolean;`
+- `willRenderFilters(): boolean;`
+- `enableFilters(): this;`
+- `renderWebGLFilters(renderer: Phaser.Renderer.WebGL.WebGLRenderer, gameObject: Phaser.GameObjects.GameObject, drawingContext: Phaser.Renderer.WebGL.DrawingContext, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix, renderStep?: number): Phaser.Types.GameObjects.RenderWebGLStep;`
+- `focusFilters(): this;`
+- `focusFiltersOnCamera(camera: Phaser.Cameras.Scene2D.Camera): this;`
+- `focusFiltersOverride(x?: number, y?: number, width?: number, height?: number): this;`
+- `setFilterSize(width: number, height: number): this;`
+- `setFiltersAutoFocus(value: boolean): this;`
+- `setFiltersFocusContext(value: boolean): this;`
+- `setFiltersForceComposite(value: boolean): this;`
+- `setRenderFilters(value: boolean): this;`
+- `renderWebGLStep(renderer: Phaser.Renderer.WebGL.WebGLRenderer, gameObject: Phaser.GameObjects.GameObject, drawingContext: Phaser.Renderer.WebGL.DrawingContext, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix, renderStep?: number, displayList?: Phaser.GameObjects.GameObject[], displayListIndex?: number): void;`
+- `addRenderStep(fn: Phaser.Types.GameObjects.RenderWebGLStep, index?: number): this;`
+- `clearAlpha(): this;`
+- `setAlpha(value?: number): this;`
+- `alpha: number;`
+- `blendMode: Phaser.BlendModes | string | number;`
+- `setBlendMode(value: string | Phaser.BlendModes | number): this;`
+- `width: number;`
+- `height: number;`
+- `displayWidth: number;`
+- `displayHeight: number;`
+- `setSize(width: number, height: number): this;`
+- `setDisplaySize(width: number, height: number): this;`
+- `depth: number;`
+- `setDepth(value: number): this;`
+- `setToTop(): this;`
+- `setToBack(): this;`
+- `setAbove(gameObject: Phaser.GameObjects.GameObject): this;`
+- `setBelow(gameObject: Phaser.GameObjects.GameObject): this;`
+- `mask: Phaser.Display.Masks.GeometryMask;`
+- `setMask(mask: Phaser.Display.Masks.GeometryMask): this;`
+- `clearMask(destroyMask?: boolean): this;`
+- `createGeometryMask<G extends Phaser.GameObjects.Graphics, S extends Phaser.GameObjects.Shape>(graphics?: Phaser.GameObjects.Graphics | Phaser.GameObjects.Shape): Phaser.Display.Masks.GeometryMask;`
+- `readonly hasTransformComponent: boolean;`
+- `x: number;`
+- `y: number;`
+- `z: number;`
+- `w: number;`
+- `scale: number;`
+- `scaleX: number;`
+- `scaleY: number;`
+- `angle: number;`
+- `rotation: number;`
+- `setPosition(x?: number, y?: number, z?: number, w?: number): this;`
+- `copyPosition(source: Phaser.Types.Math.Vector2Like | Phaser.Types.Math.Vector3Like | Phaser.Types.Math.Vector4Like): this;`
+- `setRandomPosition(x?: number, y?: number, width?: number, height?: number): this;`
+- `setRotation(radians?: number): this;`
+- `setAngle(degrees?: number): this;`
+- `setScale(x?: number, y?: number): this;`
+- `setX(value?: number): this;`
+- `setY(value?: number): this;`
+- `setZ(value?: number): this;`
+- `setW(value?: number): this;`
+- `getLocalTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.GameObjects.Components.TransformMatrix;`
+- `getWorldTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.GameObjects.Components.TransformMatrix;`
+- `getLocalPoint(x: number, y: number, point?: Phaser.Math.Vector2, camera?: Phaser.Cameras.Scene2D.Camera): Phaser.Math.Vector2;`
+- `getWorldPoint(point?: Phaser.Math.Vector2, tempMatrix?: Phaser.GameObjects.Components.TransformMatrix, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.Math.Vector2;`
+- `getParentRotation(): number;`
+- `visible: boolean;`
+- `setVisible(value: boolean): this;`
+
+#### class Phaser.GameObjects.GameObjectCreator
+- `constructor(scene: Phaser.Scene);`
+- `dynamicBitmapText(config: Phaser.Types.GameObjects.BitmapText.BitmapTextConfig, addToScene?: boolean): Phaser.GameObjects.DynamicBitmapText;`
+- `bitmapText(config: Phaser.Types.GameObjects.BitmapText.BitmapTextConfig, addToScene?: boolean): Phaser.GameObjects.BitmapText;`
+- `blitter(config: Phaser.Types.GameObjects.Sprite.SpriteConfig, addToScene?: boolean): Phaser.GameObjects.Blitter;`
+- `captureFrame(config: Phaser.Types.GameObjects.GameObjectConfig, addToScene?: boolean): Phaser.GameObjects.CaptureFrame;`
+- `container(config: Phaser.Types.GameObjects.Container.ContainerConfig, addToScene?: boolean): Phaser.GameObjects.Container;`
+- `customContext(config: Phaser.Types.GameObjects.CustomContext.CustomContextConfig, addToScene?: boolean): Phaser.GameObjects.CustomContext;`
+- `protected scene: Phaser.Scene;`
+- `protected systems: Phaser.Scenes.Systems;`
+- `protected events: Phaser.Events.EventEmitter;`
+- `protected displayList: Phaser.GameObjects.DisplayList;`
+- `protected updateList: Phaser.GameObjects.UpdateList;`
+- `static register(factoryType: string, factoryFunction: Function): void;`
+- `static remove(factoryType: string): void;`
+- `gradient(config: Phaser.Types.GameObjects.Gradient.GradientConfig, addToScene?: boolean): Phaser.GameObjects.Gradient;`
+- `graphics(config?: Phaser.Types.GameObjects.Graphics.Options, addToScene?: boolean): Phaser.GameObjects.Graphics;`
+- `group(config: Phaser.Types.GameObjects.Group.GroupConfig | Phaser.Types.GameObjects.Group.GroupCreateConfig): Phaser.GameObjects.Group;`
+- `image(config: Phaser.Types.GameObjects.GameObjectConfig, addToScene?: boolean): Phaser.GameObjects.Image;`
+- `layer(config: Phaser.Types.GameObjects.Sprite.SpriteConfig, addToScene?: boolean): Phaser.GameObjects.Layer;`
+- `mesh2d(config: Phaser.Types.GameObjects.GameObjectConfig, addToScene?: boolean): Phaser.GameObjects.Mesh2D;`
+- `nineslice(config: Phaser.Types.GameObjects.NineSlice.NineSliceConfig, addToScene?: boolean): Phaser.GameObjects.NineSlice;`
+- `noisecell2d(config: Phaser.Types.GameObjects.NoiseCell2D.NoiseCell2DConfig, addToScene?: boolean): Phaser.GameObjects.NoiseCell2D;`
+- `noisecell3d(config: Phaser.Types.GameObjects.NoiseCell3D.NoiseCell3DConfig, addToScene?: boolean): Phaser.GameObjects.NoiseCell3D;`
+- `noisecell4d(config: Phaser.Types.GameObjects.NoiseCell4D.NoiseCell4DConfig, addToScene?: boolean): Phaser.GameObjects.NoiseCell4D;`
+- `noise(config: Phaser.Types.GameObjects.Noise.NoiseConfig, addToScene?: boolean): Phaser.GameObjects.Noise;`
+- `noisesimplex2d(config: Phaser.Types.GameObjects.NoiseSimplex2D.NoiseSimplex2DConfig, addToScene?: boolean): Phaser.GameObjects.NoiseSimplex2D;`
+- `noisesimplex3d(config: Phaser.Types.GameObjects.NoiseSimplex3D.NoiseSimplex3DConfig, addToScene?: boolean): Phaser.GameObjects.NoiseSimplex3D;`
+- `particles(config: Phaser.Types.GameObjects.Particles.ParticleEmitterCreatorConfig, addToScene?: boolean): Phaser.GameObjects.Particles.ParticleEmitter;`
+- `pointlight(config: object, addToScene?: boolean): Phaser.GameObjects.PointLight;`
+- `renderTexture(config: Phaser.Types.GameObjects.RenderTexture.RenderTextureConfig, addToScene?: boolean): Phaser.GameObjects.RenderTexture;`
+- `rope(config: Phaser.Types.GameObjects.Rope.RopeConfig, addToScene?: boolean): Phaser.GameObjects.Rope;`
+- `shader(config: Phaser.Types.GameObjects.Shader.ShaderConfig, addToScene?: boolean): Phaser.GameObjects.Shader;`
+- `sprite(config: Phaser.Types.GameObjects.Sprite.SpriteConfig, addToScene?: boolean): Phaser.GameObjects.Sprite;`
+- `spriteGPULayer(config: Phaser.Types.GameObjects.SpriteGPULayer.SpriteGPULayerConfig, addToScene?: boolean): Phaser.GameObjects.SpriteGPULayer;`
+- `stamp(config: Phaser.Types.GameObjects.Sprite.SpriteConfig, addToScene?: boolean): Phaser.GameObjects.Stamp;`
+- `stencil(config: Phaser.Types.GameObjects.Stencil.StencilConfig, addToScene?: boolean): Phaser.GameObjects.Stencil;`
+- `stencilreference(config: Phaser.Types.GameObjects.StencilReference.StencilReferenceConfig, addToScene?: boolean): Phaser.GameObjects.StencilReference;`
+- `text(config: Phaser.Types.GameObjects.Text.TextConfig, addToScene?: boolean): Phaser.GameObjects.Text;`
+- `tileSprite(config: Phaser.Types.GameObjects.TileSprite.TileSpriteConfig, addToScene?: boolean): Phaser.GameObjects.TileSprite;`
+- `video(config: Phaser.Types.GameObjects.Video.VideoConfig, addToScene?: boolean): Phaser.GameObjects.Video;`
+- `zone(config: Phaser.Types.GameObjects.Zone.ZoneConfig): Phaser.GameObjects.Zone;`
+- `tilemap(config?: Phaser.Types.Tilemaps.TilemapConfig): Phaser.Tilemaps.Tilemap;`
+- `tween(config: Phaser.Types.Tweens.TweenBuilderConfig | Phaser.Types.Tweens.TweenChainBuilderConfig | Phaser.Tweens.Tween | Phaser.Tweens.TweenChain): Phaser.Tweens.Tween;`
+- `tweenchain(config: Phaser.Types.Tweens.TweenBuilderConfig | object): Phaser.Tweens.TweenChain;`
+
+#### class Phaser.GameObjects.GameObjectFactory
+- `constructor(scene: Phaser.Scene);`
+- `path(x: number, y: number): Phaser.Curves.Path;`
+- `dynamicBitmapText(x: number, y: number, font: string, text?: string | string[], size?: number): Phaser.GameObjects.DynamicBitmapText;`
+- `bitmapText(x: number, y: number, font: string, text?: string | string[], size?: number, align?: number): Phaser.GameObjects.BitmapText;`
+- `blitter(x: number, y: number, texture: string | Phaser.Textures.Texture, frame?: string | number): Phaser.GameObjects.Blitter;`
+- `captureFrame(key: string): Phaser.GameObjects.CaptureFrame;`
+- `container(x?: number, y?: number, children?: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[]): Phaser.GameObjects.Container;`
+- `customContext(x?: number, y?: number, children?: Phaser.GameObjects.GameObject[], customContextCallback?: Phaser.Types.GameObjects.CustomContext.CustomContextCallback): Phaser.GameObjects.CustomContext;`
+- `dom(x: number, y: number, element?: HTMLElement | string, style?: string | any, innerText?: string): Phaser.GameObjects.DOMElement;`
+- `extern(): Phaser.GameObjects.Extern;`
+- `protected scene: Phaser.Scene;`
+- `protected systems: Phaser.Scenes.Systems;`
+- `protected events: Phaser.Events.EventEmitter;`
+- `protected displayList: Phaser.GameObjects.DisplayList;`
+- `protected updateList: Phaser.GameObjects.UpdateList;`
+- `existing<G extends (Phaser.GameObjects.GameObject|Phaser.GameObjects.Group|Phaser.GameObjects.Layer)>(child: G): G;`
+- `static register(factoryType: string, factoryFunction: Function): void;`
+- `static remove(factoryType: string): void;`
+- `gradient(config?: string | Phaser.Types.GameObjects.Gradient.GradientQuadConfig, x?: number, y?: number, width?: number, height?: number): Phaser.GameObjects.Gradient;`
+- `graphics(config?: Phaser.Types.GameObjects.Graphics.Options): Phaser.GameObjects.Graphics;`
+- `group(children?: Phaser.GameObjects.GameObject[] | Phaser.Types.GameObjects.Group.GroupConfig | Phaser.Types.GameObjects.Group.GroupConfig[] | Phaser.Types.GameObjects.Group.GroupCreateConfig, config?: Phaser.Types.GameObjects.Group.GroupConfig | Phaser.Types.GameObjects.Group.GroupCreateConfig): Phaser.GameObjects.Group;`
+- `image(x: number, y: number, texture: string | Phaser.Textures.Texture, frame?: string | number): Phaser.GameObjects.Image;`
+- `layer(children?: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[]): Phaser.GameObjects.Layer;`
+- `mesh2d(x: number, y: number, texture: string | Phaser.Textures.Texture, vertices: number[], indices: number[], flipV?: boolean): Phaser.GameObjects.Mesh2D;`
+- `nineslice(x: number, y: number, texture: string | Phaser.Textures.Texture, frame?: string | number, width?: number, height?: number, leftWidth?: number, rightWidth?: number, topHeight?: number, bottomHeight?: number, tileX?: boolean, tileY?: boolean): Phaser.GameObjects.NineSlice;`
+- `noisecell2d(config?: string | Phaser.Types.GameObjects.NoiseCell2D.NoiseCell2DQuadConfig, x?: number, y?: number, width?: number, height?: number): Phaser.GameObjects.NoiseCell2D;`
+- `noisecell3d(config?: string | Phaser.Types.GameObjects.NoiseCell3D.NoiseCell3DQuadConfig, x?: number, y?: number, width?: number, height?: number): Phaser.GameObjects.NoiseCell3D;`
+- `noisecell4d(config?: string | Phaser.Types.GameObjects.NoiseCell4D.NoiseCell4DQuadConfig, x?: number, y?: number, width?: number, height?: number): Phaser.GameObjects.NoiseCell4D;`
+- `noise(config?: string | Phaser.Types.GameObjects.Noise.NoiseQuadConfig, x?: number, y?: number, width?: number, height?: number): Phaser.GameObjects.Noise;`
+- `noisesimplex2d(config?: string | Phaser.Types.GameObjects.NoiseSimplex2D.NoiseSimplex2DQuadConfig, x?: number, y?: number, width?: number, height?: number): Phaser.GameObjects.NoiseSimplex2D;`
+- `noisesimplex3d(config?: string | Phaser.Types.GameObjects.NoiseSimplex3D.NoiseSimplex3DQuadConfig, x?: number, y?: number, width?: number, height?: number): Phaser.GameObjects.NoiseSimplex3D;`
+- `particles(x?: number, y?: number, texture?: string | Phaser.Textures.Texture, config?: Phaser.Types.GameObjects.Particles.ParticleEmitterConfig): Phaser.GameObjects.Particles.ParticleEmitter;`
+- `follower(path: Phaser.Curves.Path, x: number, y: number, texture: string | Phaser.Textures.Texture, frame?: string | number): Phaser.GameObjects.PathFollower;`
+- `pointlight(x: number, y: number, color?: number, radius?: number, intensity?: number, attenuation?: number): Phaser.GameObjects.PointLight;`
+- `renderTexture(x: number, y: number, width?: number, height?: number): Phaser.GameObjects.RenderTexture;`
+- `rope(x: number, y: number, texture: string | Phaser.Textures.Texture, frame?: string | number, points?: Phaser.Types.Math.Vector2Like[], horizontal?: boolean, colors?: number[], alphas?: number[]): Phaser.GameObjects.Rope;`
+- `shader(config: string | Phaser.Types.GameObjects.Shader.ShaderQuadConfig, x?: number, y?: number, width?: number, height?: number, textures?: string[]): Phaser.GameObjects.Shader;`
+- `arc(x?: number, y?: number, radius?: number, startAngle?: number, endAngle?: number, anticlockwise?: boolean, fillColor?: number, fillAlpha?: number): Phaser.GameObjects.Arc;`
+- `circle(x?: number, y?: number, radius?: number, fillColor?: number, fillAlpha?: number): Phaser.GameObjects.Arc;`
+- `curve(x?: number, y?: number, curve?: Phaser.Curves.Curve, fillColor?: number, fillAlpha?: number): Phaser.GameObjects.Curve;`
+- `ellipse(x?: number, y?: number, width?: number, height?: number, fillColor?: number, fillAlpha?: number): Phaser.GameObjects.Ellipse;`
+- `grid(x?: number, y?: number, width?: number, height?: number, cellWidth?: number, cellHeight?: number, fillColor?: number, fillAlpha?: number, outlineFillColor?: number, outlineFillAlpha?: number): Phaser.GameObjects.Grid;`
+- `isobox(x?: number, y?: number, size?: number, height?: number, fillTop?: number, fillLeft?: number, fillRight?: number): Phaser.GameObjects.IsoBox;`
+- `isotriangle(x?: number, y?: number, size?: number, height?: number, reversed?: boolean, fillTop?: number, fillLeft?: number, fillRight?: number): Phaser.GameObjects.IsoTriangle;`
+- `line(x?: number, y?: number, x1?: number, y1?: number, x2?: number, y2?: number, strokeColor?: number, strokeAlpha?: number): Phaser.GameObjects.Line;`
+- `polygon(x?: number, y?: number, points?: any, fillColor?: number, fillAlpha?: number): Phaser.GameObjects.Polygon;`
+- `rectangle(x?: number, y?: number, width?: number, height?: number, fillColor?: number, fillAlpha?: number): Phaser.GameObjects.Rectangle;`
+- `star(x?: number, y?: number, points?: number, innerRadius?: number, outerRadius?: number, fillColor?: number, fillAlpha?: number): Phaser.GameObjects.Star;`
+- `triangle(x?: number, y?: number, x1?: number, y1?: number, x2?: number, y2?: number, x3?: number, y3?: number, fillColor?: number, fillAlpha?: number): Phaser.GameObjects.Triangle;`
+- `sprite(x: number, y: number, texture: string | Phaser.Textures.Texture, frame?: string | number): Phaser.GameObjects.Sprite;`
+- `spriteGPULayer(texture: string | Phaser.Textures.Texture, size?: number): Phaser.GameObjects.SpriteGPULayer;`
+- `stamp(x: number, y: number, texture: string | Phaser.Textures.Texture, frame?: string | number): Phaser.GameObjects.Stamp;`
+- `stencil(x?: number, y?: number, children?: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[], options?: Phaser.Types.GameObjects.Stencil.StencilOptions): Phaser.GameObjects.Stencil;`
+- `stencilreference(targetStencil: Phaser.GameObjects.Stencil, options?: Phaser.Types.GameObjects.Stencil.StencilOptions): Phaser.GameObjects.StencilReference;`
+- `text(x: number, y: number, text: string | string[], style?: Phaser.Types.GameObjects.Text.TextStyle): Phaser.GameObjects.Text;`
+- `tileSprite(x: number, y: number, width: number, height: number, texture: string | Phaser.Textures.Texture, frame?: string | number): Phaser.GameObjects.TileSprite;`
+- `video(x: number, y: number, key?: string): Phaser.GameObjects.Video;`
+- `zone(x: number, y: number, width: number, height: number): Phaser.GameObjects.Zone;`
+- `tilemap(key?: string, tileWidth?: number, tileHeight?: number, width?: number, height?: number, data?: number[][], insertNull?: boolean): Phaser.Tilemaps.Tilemap;`
+- `timeline(config: Phaser.Types.Time.TimelineEventConfig | Phaser.Types.Time.TimelineEventConfig[]): Phaser.Time.Timeline;`
+- `tween(config: Phaser.Types.Tweens.TweenBuilderConfig | Phaser.Types.Tweens.TweenChainBuilderConfig | Phaser.Tweens.Tween | Phaser.Tweens.TweenChain): Phaser.Tweens.Tween;`
+- `tweenchain(config: Phaser.Types.Tweens.TweenBuilderConfig | object): Phaser.Tweens.TweenChain;`
+
+#### class Phaser.GameObjects.Graphics
+- `constructor(scene: Phaser.Scene, options?: Phaser.Types.GameObjects.Graphics.Options);`
+- `displayOriginX: number;`
+- `displayOriginY: number;`
+- `commandBuffer: any[];`
+- `readonly defaultFillColor: number;`
+- `readonly defaultFillAlpha: number;`
+- `readonly defaultStrokeWidth: number;`
+- `readonly defaultStrokeColor: number;`
+- `readonly defaultStrokeAlpha: number;`
+- `pathDetailThreshold: number;`
+- `setDefaultStyles(options: Phaser.Types.GameObjects.Graphics.Styles): this;`
+- `lineStyle(lineWidth: number, color: number, alpha?: number): this;`
+- `fillStyle(color: number, alpha?: number): this;`
+- `fillGradientStyle(topLeft: number, topRight: number, bottomLeft: number, bottomRight: number, alphaTopLeft?: number, alphaTopRight?: number, alphaBottomLeft?: number, alphaBottomRight?: number): this;`
+- `lineGradientStyle(lineWidth: number, topLeft: number, topRight: number, bottomLeft: number, bottomRight: number, alpha?: number): this;`
+- `beginPath(): this;`
+- `closePath(): this;`
+- `fillPath(): this;`
+- `fill(): this;`
+- `strokePath(): this;`
+- `stroke(): this;`
+- `fillCircleShape(circle: Phaser.Geom.Circle): this;`
+- `strokeCircleShape(circle: Phaser.Geom.Circle): this;`
+- `fillCircle(x: number, y: number, radius: number): this;`
+- `strokeCircle(x: number, y: number, radius: number): this;`
+- `fillRectShape(rect: Phaser.Geom.Rectangle): this;`
+- `strokeRectShape(rect: Phaser.Geom.Rectangle): this;`
+- `fillRect(x: number, y: number, width: number, height: number): this;`
+- `strokeRect(x: number, y: number, width: number, height: number): this;`
+- `fillRoundedRect(x: number, y: number, width: number, height: number, radius?: Phaser.Types.GameObjects.Graphics.RoundedRectRadius | number): this;`
+- `strokeRoundedRect(x: number, y: number, width: number, height: number, radius?: Phaser.Types.GameObjects.Graphics.RoundedRectRadius | number): this;`
+- `fillPointShape(point: Phaser.Math.Vector2, size?: number): this;`
+- `fillPoint(x: number, y: number, size?: number): this;`
+- `fillTriangleShape(triangle: Phaser.Geom.Triangle): this;`
+- `strokeTriangleShape(triangle: Phaser.Geom.Triangle): this;`
+- `fillTriangle(x0: number, y0: number, x1: number, y1: number, x2: number, y2: number): this;`
+- `strokeTriangle(x0: number, y0: number, x1: number, y1: number, x2: number, y2: number): this;`
+- `strokeLineShape(line: Phaser.Geom.Line): this;`
+- `lineBetween(x1: number, y1: number, x2: number, y2: number): this;`
+- `lineTo(x: number, y: number): this;`
+- `moveTo(x: number, y: number): this;`
+- `strokePoints(points: Phaser.Math.Vector2[], closeShape?: boolean, closePath?: boolean, endIndex?: number): this;`
+- `fillPoints(points: Phaser.Math.Vector2[], closeShape?: boolean, closePath?: boolean, endIndex?: number): this;`
+- `strokeEllipseShape(ellipse: Phaser.Geom.Ellipse, smoothness?: number): this;`
+- `strokeEllipse(x: number, y: number, width: number, height: number, smoothness?: number): this;`
+- `fillEllipseShape(ellipse: Phaser.Geom.Ellipse, smoothness?: number): this;`
+- `fillEllipse(x: number, y: number, width: number, height: number, smoothness?: number): this;`
+- `arc(x: number, y: number, radius: number, startAngle: number, endAngle: number, anticlockwise?: boolean, overshoot?: number): this;`
+- `slice(x: number, y: number, radius: number, startAngle: number, endAngle: number, anticlockwise?: boolean, overshoot?: number): this;`
+- `save(): this;`
+- `restore(): this;`
+- `translateCanvas(x: number, y: number): this;`
+- `scaleCanvas(x: number, y: number): this;`
+- `rotateCanvas(radians: number): this;`
+- `clear(): this;`
+- `generateTexture(key: string | HTMLCanvasElement, width?: number, height?: number): this;`
+- `protected preDestroy(): void;`
+- `static TargetCamera: Phaser.Cameras.Scene2D.Camera;`
+- `filterCamera: Phaser.Cameras.Scene2D.Camera;`
+- `readonly filters: Phaser.Types.GameObjects.FiltersInternalExternal | null;`
+- `renderFilters: boolean;`
+- `maxFilterSize: Phaser.Math.Vector2;`
+- `filtersAutoFocus: boolean;`
+- `filtersFocusContext: boolean;`
+- `filtersForceComposite: boolean;`
+- `willRenderFilters(): boolean;`
+- `enableFilters(): this;`
+- `renderWebGLFilters(renderer: Phaser.Renderer.WebGL.WebGLRenderer, gameObject: Phaser.GameObjects.GameObject, drawingContext: Phaser.Renderer.WebGL.DrawingContext, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix, renderStep?: number): Phaser.Types.GameObjects.RenderWebGLStep;`
+- `focusFilters(): this;`
+- `focusFiltersOnCamera(camera: Phaser.Cameras.Scene2D.Camera): this;`
+- `focusFiltersOverride(x?: number, y?: number, width?: number, height?: number): this;`
+- `setFilterSize(width: number, height: number): this;`
+- `setFiltersAutoFocus(value: boolean): this;`
+- `setFiltersFocusContext(value: boolean): this;`
+- `setFiltersForceComposite(value: boolean): this;`
+- `setRenderFilters(value: boolean): this;`
+- `renderWebGLStep(renderer: Phaser.Renderer.WebGL.WebGLRenderer, gameObject: Phaser.GameObjects.GameObject, drawingContext: Phaser.Renderer.WebGL.DrawingContext, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix, renderStep?: number, displayList?: Phaser.GameObjects.GameObject[], displayListIndex?: number): void;`
+- `addRenderStep(fn: Phaser.Types.GameObjects.RenderWebGLStep, index?: number): this;`
+- `clearAlpha(): this;`
+- `setAlpha(value?: number): this;`
+- `alpha: number;`
+- `blendMode: Phaser.BlendModes | string | number;`
+- `setBlendMode(value: string | Phaser.BlendModes | number): this;`
+- `depth: number;`
+- `setDepth(value: number): this;`
+- `setToTop(): this;`
+- `setToBack(): this;`
+- `setAbove(gameObject: Phaser.GameObjects.GameObject): this;`
+- `setBelow(gameObject: Phaser.GameObjects.GameObject): this;`
+- `readonly lighting: boolean;`
+- `selfShadow: Object;`
+- `setLighting(enable: boolean): this;`
+- `setSelfShadow(enabled?: boolean | undefined, penumbra?: number, diffuseFlatThreshold?: number): this;`
+- `mask: Phaser.Display.Masks.GeometryMask;`
+- `setMask(mask: Phaser.Display.Masks.GeometryMask): this;`
+- `clearMask(destroyMask?: boolean): this;`
+- `createGeometryMask<G extends Phaser.GameObjects.Graphics, S extends Phaser.GameObjects.Shape>(graphics?: Phaser.GameObjects.Graphics | Phaser.GameObjects.Shape): Phaser.Display.Masks.GeometryMask;`
+- `customRenderNodes: object;`
+- `defaultRenderNodes: object;`
+- `renderNodeData: object;`
+- `initRenderNodes(defaultNodes: Map<string, string>): void;`
+- `setRenderNodeRole(key: string, renderNode: string | Phaser.Renderer.WebGL.RenderNodes.RenderNode | null, renderNodeData?: object, copyData?: boolean): this;`
+- `setRenderNodeData(renderNode: string | Phaser.Renderer.WebGL.RenderNodes.RenderNode, key: string, value: any): this;`
+- `readonly hasTransformComponent: boolean;`
+- `x: number;`
+- `y: number;`
+- `z: number;`
+- `w: number;`
+- `scale: number;`
+- `scaleX: number;`
+- `scaleY: number;`
+- `angle: number;`
+- `rotation: number;`
+- `setPosition(x?: number, y?: number, z?: number, w?: number): this;`
+- `copyPosition(source: Phaser.Types.Math.Vector2Like | Phaser.Types.Math.Vector3Like | Phaser.Types.Math.Vector4Like): this;`
+- `setRandomPosition(x?: number, y?: number, width?: number, height?: number): this;`
+- `setRotation(radians?: number): this;`
+- `setAngle(degrees?: number): this;`
+- `setScale(x?: number, y?: number): this;`
+- `setX(value?: number): this;`
+- `setY(value?: number): this;`
+- `setZ(value?: number): this;`
+- `setW(value?: number): this;`
+- `getLocalTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.GameObjects.Components.TransformMatrix;`
+- `getWorldTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.GameObjects.Components.TransformMatrix;`
+- `getLocalPoint(x: number, y: number, point?: Phaser.Math.Vector2, camera?: Phaser.Cameras.Scene2D.Camera): Phaser.Math.Vector2;`
+- `getWorldPoint(point?: Phaser.Math.Vector2, tempMatrix?: Phaser.GameObjects.Components.TransformMatrix, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.Math.Vector2;`
+- `getParentRotation(): number;`
+- `visible: boolean;`
+- `setVisible(value: boolean): this;`
+- `scrollFactorX: number;`
+- `scrollFactorY: number;`
+- `setScrollFactor(x: number, y?: number): this;`
+
+#### class Phaser.GameObjects.Group
+- `constructor(scene: Phaser.Scene, children?: Phaser.GameObjects.GameObject[] | Phaser.Types.GameObjects.Group.GroupConfig | Phaser.Types.GameObjects.Group.GroupCreateConfig, config?: Phaser.Types.GameObjects.Group.GroupConfig | Phaser.Types.GameObjects.Group.GroupCreateConfig);`
+- `scene: Phaser.Scene;`
+- `children: Set<Phaser.GameObjects.GameObject>;`
+- `isParent: boolean;`
+- `type: string;`
+- `classType: Function;`
+- `name: string;`
+- `active: boolean;`
+- `maxSize: number;`
+- `defaultKey: string;`
+- `defaultFrame: string | number;`
+- `runChildUpdate: boolean;`
+- `createCallback: Phaser.Types.GameObjects.Group.GroupCallback | null;`
+- `removeCallback: Phaser.Types.GameObjects.Group.GroupCallback | null;`
+- `createMultipleCallback: Phaser.Types.GameObjects.Group.GroupMultipleCreateCallback | null;`
+- `addedToScene(): void;`
+- `removedFromScene(): void;`
+- `create(x?: number, y?: number, key?: string, frame?: string | number, visible?: boolean, active?: boolean): any;`
+- `createMultiple(config: Phaser.Types.GameObjects.Group.GroupCreateConfig | Phaser.Types.GameObjects.Group.GroupCreateConfig[]): any[];`
+- `createFromConfig(options: Phaser.Types.GameObjects.Group.GroupCreateConfig): any[];`
+- `preUpdate(time: number, delta: number): void;`
+- `add(child: Phaser.GameObjects.GameObject, addToScene?: boolean): this;`
+- `addMultiple(children: Phaser.GameObjects.GameObject[], addToScene?: boolean): this;`
+- `remove(child: Phaser.GameObjects.GameObject, removeFromScene?: boolean, destroyChild?: boolean): this;`
+- `clear(removeFromScene?: boolean, destroyChild?: boolean): this;`
+- `contains(child: Phaser.GameObjects.GameObject): boolean;`
+- `getChildren(): Phaser.GameObjects.GameObject[];`
+- `getLength(): number;`
+- `getMatching(property?: string, value?: any, startIndex?: number, endIndex?: number): any[];`
+- `getFirst(state?: boolean, createIfNull?: boolean, x?: number, y?: number, key?: string, frame?: string | number, visible?: boolean): any | null;`
+- `getFirstNth(nth: number, state?: boolean, createIfNull?: boolean, x?: number, y?: number, key?: string, frame?: string | number, visible?: boolean): any | null;`
+- `getLast(state?: boolean, createIfNull?: boolean, x?: number, y?: number, key?: string, frame?: string | number, visible?: boolean): any | null;`
+- `getLastNth(nth: number, state?: boolean, createIfNull?: boolean, x?: number, y?: number, key?: string, frame?: string | number, visible?: boolean): any | null;`
+- `get(x?: number, y?: number, key?: string, frame?: string | number, visible?: boolean): any | null;`
+- `getFirstAlive(createIfNull?: boolean, x?: number, y?: number, key?: string, frame?: string | number, visible?: boolean): any;`
+- `getFirstDead(createIfNull?: boolean, x?: number, y?: number, key?: string, frame?: string | number, visible?: boolean): any;`
+- `playAnimation(key: string, startFrame?: string): this;`
+- `isFull(): boolean;`
+- `countActive(value?: boolean): number;`
+- `getTotalUsed(): number;`
+- `getTotalFree(): number;`
+- `setActive(value: boolean): this;`
+- `setName(value: string): this;`
+- `propertyValueSet(key: string, value: number, step?: number, index?: number, direction?: number): this;`
+- `propertyValueInc(key: string, value: number, step?: number, index?: number, direction?: number): this;`
+- `setX(value: number, step?: number): this;`
+- `setY(value: number, step?: number): this;`
+- `setXY(x: number, y?: number, stepX?: number, stepY?: number): this;`
+- `incX(value: number, step?: number): this;`
+- `incY(value: number, step?: number): this;`
+- `incXY(x: number, y?: number, stepX?: number, stepY?: number): this;`
+- `shiftPosition(x: number, y: number, direction?: number): this;`
+- `angle(value: number, step?: number): this;`
+- `rotate(value: number, step?: number): this;`
+- `rotateAround(point: Phaser.Types.Math.Vector2Like, angle: number): this;`
+- `rotateAroundDistance(point: Phaser.Types.Math.Vector2Like, angle: number, distance: number): this;`
+- `setAlpha(value: number, step?: number): this;`
+- `setTint(topLeft: number, topRight?: number, bottomLeft?: number, bottomRight?: number): this;`
+- `setOrigin(originX: number, originY?: number, stepX?: number, stepY?: number): this;`
+- `scaleX(value: number, step?: number): this;`
+- `scaleY(value: number, step?: number): this;`
+- `scaleXY(scaleX: number, scaleY?: number, stepX?: number, stepY?: number): this;`
+- `setDepth(value: number, step?: number): this;`
+- `setBlendMode(value: number): this;`
+- `setHitArea(hitArea: any, hitAreaCallback: Phaser.Types.Input.HitAreaCallback): this;`
+- `shuffle(): this;`
+- `kill(gameObject: Phaser.GameObjects.GameObject): void;`
+- `killAndHide(gameObject: Phaser.GameObjects.GameObject): void;`
+- `setVisible(value: boolean, index?: number, direction?: number): this;`
+- `toggleVisible(): this;`
+- `destroy(destroyChildren?: boolean, removeFromScene?: boolean): void;`
+
+#### class Phaser.GameObjects.Image
+- `constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, frame?: string | number);`
+- `filterCamera: Phaser.Cameras.Scene2D.Camera;`
+- `readonly filters: Phaser.Types.GameObjects.FiltersInternalExternal | null;`
+- `renderFilters: boolean;`
+- `maxFilterSize: Phaser.Math.Vector2;`
+- `filtersAutoFocus: boolean;`
+- `filtersFocusContext: boolean;`
+- `filtersForceComposite: boolean;`
+- `willRenderFilters(): boolean;`
+- `enableFilters(): this;`
+- `renderWebGLFilters(renderer: Phaser.Renderer.WebGL.WebGLRenderer, gameObject: Phaser.GameObjects.GameObject, drawingContext: Phaser.Renderer.WebGL.DrawingContext, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix, renderStep?: number): Phaser.Types.GameObjects.RenderWebGLStep;`
+- `focusFilters(): this;`
+- `focusFiltersOnCamera(camera: Phaser.Cameras.Scene2D.Camera): this;`
+- `focusFiltersOverride(x?: number, y?: number, width?: number, height?: number): this;`
+- `setFilterSize(width: number, height: number): this;`
+- `setFiltersAutoFocus(value: boolean): this;`
+- `setFiltersFocusContext(value: boolean): this;`
+- `setFiltersForceComposite(value: boolean): this;`
+- `setRenderFilters(value: boolean): this;`
+- `renderWebGLStep(renderer: Phaser.Renderer.WebGL.WebGLRenderer, gameObject: Phaser.GameObjects.GameObject, drawingContext: Phaser.Renderer.WebGL.DrawingContext, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix, renderStep?: number, displayList?: Phaser.GameObjects.GameObject[], displayListIndex?: number): void;`
+- `addRenderStep(fn: Phaser.Types.GameObjects.RenderWebGLStep, index?: number): this;`
+- `clearAlpha(): this;`
+- `setAlpha(topLeft?: number, topRight?: number, bottomLeft?: number, bottomRight?: number): this;`
+- `alpha: number;`
+- `alphaTopLeft: number;`
+- `alphaTopRight: number;`
+- `alphaBottomLeft: number;`
+- `alphaBottomRight: number;`
+- `blendMode: Phaser.BlendModes | string | number;`
+- `setBlendMode(value: string | Phaser.BlendModes | number): this;`
+- `depth: number;`
+- `setDepth(value: number): this;`
+- `setToTop(): this;`
+- `setToBack(): this;`
+- `setAbove(gameObject: Phaser.GameObjects.GameObject): this;`
+- `setBelow(gameObject: Phaser.GameObjects.GameObject): this;`
+- `flipX: boolean;`
+- `flipY: boolean;`
+- `toggleFlipX(): this;`
+- `toggleFlipY(): this;`
+- `setFlipX(value: boolean): this;`
+- `setFlipY(value: boolean): this;`
+- `setFlip(x: boolean, y: boolean): this;`
+- `resetFlip(): this;`
+- `getCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopLeft<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopRight<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getLeftCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getRightCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomLeft<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomRight<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBounds<O extends Phaser.Geom.Rectangle>(output?: O): O;`
+- `readonly lighting: boolean;`
+- `selfShadow: Object;`
+- `setLighting(enable: boolean): this;`
+- `setSelfShadow(enabled?: boolean | undefined, penumbra?: number, diffuseFlatThreshold?: number): this;`
+- `mask: Phaser.Display.Masks.GeometryMask;`
+- `setMask(mask: Phaser.Display.Masks.GeometryMask): this;`
+- `clearMask(destroyMask?: boolean): this;`
+- `createGeometryMask<G extends Phaser.GameObjects.Graphics, S extends Phaser.GameObjects.Shape>(graphics?: Phaser.GameObjects.Graphics | Phaser.GameObjects.Shape): Phaser.Display.Masks.GeometryMask;`
+- `originX: number;`
+- `originY: number;`
+- `displayOriginX: number;`
+- `displayOriginY: number;`
+- `setOrigin(x?: number, y?: number): this;`
+- `setOriginFromFrame(): this;`
+- `setDisplayOrigin(x?: number, y?: number): this;`
+- `updateDisplayOrigin(): this;`
+- `customRenderNodes: object;`
+- `defaultRenderNodes: object;`
+- `renderNodeData: object;`
+- `initRenderNodes(defaultNodes: Map<string, string>): void;`
+- `setRenderNodeRole(key: string, renderNode: string | Phaser.Renderer.WebGL.RenderNodes.RenderNode | null, renderNodeData?: object, copyData?: boolean): this;`
+- `setRenderNodeData(renderNode: string | Phaser.Renderer.WebGL.RenderNodes.RenderNode, key: string, value: any): this;`
+- `scrollFactorX: number;`
+- `scrollFactorY: number;`
+- `setScrollFactor(x: number, y?: number): this;`
+- `width: number;`
+- `height: number;`
+- `displayWidth: number;`
+- `displayHeight: number;`
+- `setSizeToFrame(frame?: Phaser.Textures.Frame): this;`
+- `setSize(width: number, height: number): this;`
+- `setDisplaySize(width: number, height: number): this;`
+- `texture: Phaser.Textures.Texture | Phaser.Textures.CanvasTexture;`
+- `frame: Phaser.Textures.Frame;`
+- `isCropped: boolean;`
+- `setCrop(x?: number | Phaser.Geom.Rectangle, y?: number, width?: number, height?: number): this;`
+- `setTexture(key: string, frame?: string | number): this;`
+- `setFrame(frame: string | number | Phaser.Textures.Frame, updateSize?: boolean, updateOrigin?: boolean): this;`
+- `tintTopLeft: number;`
+- `tintTopRight: number;`
+- `tintBottomLeft: number;`
+- `tintBottomRight: number;`
+- `tint2TopLeft: number;`
+- `tint2TopRight: number;`
+- `tint2BottomLeft: number;`
+- `tint2BottomRight: number;`
+- `tintMode: Phaser.TintModes;`
+- `clearTint(): this;`
+- `setTint(topLeft?: number, topRight?: number, bottomLeft?: number, bottomRight?: number): this;`
+- `setTint2(topLeft?: number, topRight?: number, bottomLeft?: number, bottomRight?: number): this;`
+- `setTintMode(mode: number | Phaser.TintModes): this;`
+- `setTintFill(): void;`
+- `tint: number;`
+- `readonly isTinted: boolean;`
+- `readonly hasTransformComponent: boolean;`
+- `x: number;`
+- `y: number;`
+- `z: number;`
+- `w: number;`
+- `scale: number;`
+- `scaleX: number;`
+- `scaleY: number;`
+- `angle: number;`
+- `rotation: number;`
+- `setPosition(x?: number, y?: number, z?: number, w?: number): this;`
+- `copyPosition(source: Phaser.Types.Math.Vector2Like | Phaser.Types.Math.Vector3Like | Phaser.Types.Math.Vector4Like): this;`
+- `setRandomPosition(x?: number, y?: number, width?: number, height?: number): this;`
+- `setRotation(radians?: number): this;`
+- `setAngle(degrees?: number): this;`
+- `setScale(x?: number, y?: number): this;`
+- `setX(value?: number): this;`
+- `setY(value?: number): this;`
+- `setZ(value?: number): this;`
+- `setW(value?: number): this;`
+- `getLocalTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.GameObjects.Components.TransformMatrix;`
+- `getWorldTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.GameObjects.Components.TransformMatrix;`
+- `getLocalPoint(x: number, y: number, point?: Phaser.Math.Vector2, camera?: Phaser.Cameras.Scene2D.Camera): Phaser.Math.Vector2;`
+- `getWorldPoint(point?: Phaser.Math.Vector2, tempMatrix?: Phaser.GameObjects.Components.TransformMatrix, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.Math.Vector2;`
+- `getParentRotation(): number;`
+- `visible: boolean;`
+- `setVisible(value: boolean): this;`
+
+#### class Phaser.GameObjects.Layer
+- `constructor(scene: Phaser.Scene, children?: Phaser.GameObjects.GameObject[]);`
+- `scene: Phaser.Scene;`
+- `systems: Phaser.Scenes.Systems;`
+- `events: Phaser.Events.EventEmitter;`
+- `sortChildrenFlag: boolean;`
+- `setInteractive(): this;`
+- `disableInteractive(): this;`
+- `removeInteractive(): this;`
+- `willRender(camera: Phaser.Cameras.Scene2D.Camera): boolean;`
+- `queueDepthSort(): void;`
+- `depthSort(): void;`
+- `sortByDepth(childA: Phaser.GameObjects.GameObject, childB: Phaser.GameObjects.GameObject): number;`
+- `getChildren(): Phaser.GameObjects.GameObject[];`
+- `eventNames(): (string|symbol)[];`
+- `listeners(event: string | symbol): Function[];`
+- `listenerCount(event: string | symbol): number;`
+- `emit(event: string | symbol, ...args: any[]): boolean;`
+- `on(event: string | symbol, fn: Function, context?: any): this;`
+- `addListener(event: string | symbol, fn: Function, context?: any): this;`
+- `once(event: string | symbol, fn: Function, context?: any): this;`
+- `removeListener(event: string | symbol, fn?: Function, context?: any, once?: boolean): this;`
+- `off(event: string | symbol, fn?: Function, context?: any, once?: boolean): this;`
+- `removeAllListeners(event?: string | symbol): this;`
+- `parent: any;`
+- `list: Phaser.GameObjects.GameObject[];`
+- `position: number;`
+- `addCallback: Function;`
+- `removeCallback: Function;`
+- `_sortKey: string;`
+- `add(child: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[], skipCallback?: boolean): any;`
+- `addAt(child: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[], index?: number, skipCallback?: boolean): Phaser.GameObjects.GameObject[];`
+- `getAt(index: number): Phaser.GameObjects.GameObject | undefined;`
+- `getIndex(child: Phaser.GameObjects.GameObject): number;`
+- `sort(property: string, handler?: Function): Phaser.GameObjects.Layer;`
+- `getByName(name: string): Phaser.GameObjects.GameObject | null;`
+- `getRandom(startIndex?: number, length?: number): Phaser.GameObjects.GameObject | null;`
+- `getFirst(property: string, value: Phaser.GameObjects.GameObject | undefined, startIndex?: number, endIndex?: number): Phaser.GameObjects.GameObject | null;`
+- `getAll(property?: string, value?: any, startIndex?: number, endIndex?: number): Phaser.GameObjects.GameObject[];`
+- `count(property: string, value: Phaser.GameObjects.GameObject): number;`
+- `swap(child1: Phaser.GameObjects.GameObject, child2: Phaser.GameObjects.GameObject): void;`
+- `moveTo(child: Phaser.GameObjects.GameObject, index: number): Phaser.GameObjects.GameObject;`
+- `moveAbove(child1: Phaser.GameObjects.GameObject, child2: Phaser.GameObjects.GameObject): void;`
+- `moveBelow(child1: Phaser.GameObjects.GameObject, child2: Phaser.GameObjects.GameObject): void;`
+- `remove(child: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[], skipCallback?: boolean): Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[];`
+- `removeAt(index: number, skipCallback?: boolean): Phaser.GameObjects.GameObject;`
+- `removeBetween(startIndex?: number, endIndex?: number, skipCallback?: boolean): Phaser.GameObjects.GameObject[];`
+- `removeAll(skipCallback?: boolean): this;`
+- `bringToTop(child: Phaser.GameObjects.GameObject): Phaser.GameObjects.GameObject;`
+- `sendToBack(child: Phaser.GameObjects.GameObject): Phaser.GameObjects.GameObject;`
+- `moveUp(child: Phaser.GameObjects.GameObject): Phaser.GameObjects.GameObject;`
+- `moveDown(child: Phaser.GameObjects.GameObject): Phaser.GameObjects.GameObject;`
+- `reverse(): Phaser.GameObjects.Layer;`
+- `shuffle(): Phaser.GameObjects.Layer;`
+- `replace(oldChild: Phaser.GameObjects.GameObject, newChild: Phaser.GameObjects.GameObject): Phaser.GameObjects.GameObject;`
+- `exists(child: Phaser.GameObjects.GameObject): boolean;`
+- `setAll(property: string, value: any, startIndex?: number, endIndex?: number): void;`
+- `each(callback: EachListCallback<Phaser.GameObjects.GameObject>, context?: any, ...args: any[]): void;`
+- `shutdown(): void;`
+- `readonly length: number;`
+- `readonly first: Phaser.GameObjects.GameObject | null;`
+- `readonly last: Phaser.GameObjects.GameObject | null;`
+- `readonly next: Phaser.GameObjects.GameObject | null;`
+- `readonly previous: Phaser.GameObjects.GameObject | null;`
+- `destroy(fromScene?: boolean): void;`
+- `filterCamera: Phaser.Cameras.Scene2D.Camera;`
+- `readonly filters: Phaser.Types.GameObjects.FiltersInternalExternal | null;`
+- `renderFilters: boolean;`
+- `maxFilterSize: Phaser.Math.Vector2;`
+- `filtersAutoFocus: boolean;`
+- `filtersFocusContext: boolean;`
+- `filtersForceComposite: boolean;`
+- `willRenderFilters(): boolean;`
+- `enableFilters(): this;`
+- `renderWebGLFilters(renderer: Phaser.Renderer.WebGL.WebGLRenderer, gameObject: Phaser.GameObjects.GameObject, drawingContext: Phaser.Renderer.WebGL.DrawingContext, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix, renderStep?: number): Phaser.Types.GameObjects.RenderWebGLStep;`
+- `focusFilters(): this;`
+- `focusFiltersOnCamera(camera: Phaser.Cameras.Scene2D.Camera): this;`
+- `focusFiltersOverride(x?: number, y?: number, width?: number, height?: number): this;`
+- `setFilterSize(width: number, height: number): this;`
+- `setFiltersAutoFocus(value: boolean): this;`
+- `setFiltersFocusContext(value: boolean): this;`
+- `setFiltersForceComposite(value: boolean): this;`
+- `setRenderFilters(value: boolean): this;`
+- `renderWebGLStep(renderer: Phaser.Renderer.WebGL.WebGLRenderer, gameObject: Phaser.GameObjects.GameObject, drawingContext: Phaser.Renderer.WebGL.DrawingContext, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix, renderStep?: number, displayList?: Phaser.GameObjects.GameObject[], displayListIndex?: number): void;`
+- `addRenderStep(fn: Phaser.Types.GameObjects.RenderWebGLStep, index?: number): this;`
+- `clearAlpha(): this;`
+- `setAlpha(value?: number): this;`
+- `alpha: number;`
+- `blendMode: Phaser.BlendModes | string | number;`
+- `setBlendMode(value: string | Phaser.BlendModes | number): this;`
+- `depth: number;`
+- `setDepth(value: number): this;`
+- `setToTop(): this;`
+- `setToBack(): this;`
+- `setAbove(gameObject: Phaser.GameObjects.GameObject): this;`
+- `setBelow(gameObject: Phaser.GameObjects.GameObject): this;`
+- `mask: Phaser.Display.Masks.GeometryMask;`
+- `setMask(mask: Phaser.Display.Masks.GeometryMask): this;`
+- `clearMask(destroyMask?: boolean): this;`
+- `createGeometryMask<G extends Phaser.GameObjects.Graphics, S extends Phaser.GameObjects.Shape>(graphics?: Phaser.GameObjects.Graphics | Phaser.GameObjects.Shape): Phaser.Display.Masks.GeometryMask;`
+- `visible: boolean;`
+- `setVisible(value: boolean): this;`
+
+#### namespace Phaser.GameObjects.Particles
+##### class Phaser.GameObjects.Particles.EmitterColorOp
+- `constructor(key: string);`
+- `r: number[];`
+- `g: number[];`
+- `b: number[];`
+- `getMethod(): number;`
+- `setMethods(): this;`
+- `setEase(ease: string): void;`
+- `easedValueEmit(particle: Phaser.GameObjects.Particles.Particle, key: string): number;`
+- `easeValueUpdate(particle: Phaser.GameObjects.Particles.Particle, key: string, t: number): number;`
+##### class Phaser.GameObjects.Particles.EmitterOp
+- `constructor(key: string, defaultValue: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType | Phaser.Types.GameObjects.Particles.EmitterOpOnUpdateType, emitOnly?: boolean);`
+- `propertyKey: string;`
+- `propertyValue: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType | Phaser.Types.GameObjects.Particles.EmitterOpOnUpdateType;`
+- `defaultValue: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType | Phaser.Types.GameObjects.Particles.EmitterOpOnUpdateType;`
+- `steps: number;`
+- `counter: number;`
+- `yoyo: boolean;`
+- `direction: number;`
+- `start: number | number[];`
+- `current: number;`
+- `end: number;`
+- `ease: Function | null;`
+- `interpolation: Function | null;`
+- `emitOnly: boolean;`
+- `onEmit: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitCallback;`
+- `onUpdate: Phaser.Types.GameObjects.Particles.EmitterOpOnUpdateCallback;`
+- `active: boolean;`
+- `method: number;`
+- `loadConfig(config?: Phaser.Types.GameObjects.Particles.ParticleEmitterConfig, newKey?: string): void;`
+- `toJSON(): object;`
+- `onChange(value: number): this;`
+- `getMethod(): number;`
+- `setMethods(): this;`
+- `has(object: object, key: string): boolean;`
+- `hasBoth(object: object, key1: string, key2: string): boolean;`
+- `hasEither(object: object, key1: string, key2: string): boolean;`
+- `defaultEmit(): number;`
+- `defaultUpdate(particle: Phaser.GameObjects.Particles.Particle, key: string, t: number, value: number): number;`
+- `proxyEmit(particle: Phaser.GameObjects.Particles.Particle, key: string, value?: number): number;`
+- `proxyUpdate(particle: Phaser.GameObjects.Particles.Particle, key: string, t: number, value: number): number;`
+- `staticValueEmit(): number;`
+- `staticValueUpdate(): number;`
+- `randomStaticValueEmit(): number;`
+- `randomRangedValueEmit(particle: Phaser.GameObjects.Particles.Particle, key: string): number;`
+- `randomRangedIntEmit(particle: Phaser.GameObjects.Particles.Particle, key: string): number;`
+- `steppedEmit(): number;`
+- `easedValueEmit(particle: Phaser.GameObjects.Particles.Particle, key: string): number;`
+- `easeValueUpdate(particle: Phaser.GameObjects.Particles.Particle, key: string, t: number): number;`
+- `destroy(): void;`
+##### namespace Phaser.GameObjects.Particles.Events
+- `const COMPLETE: string;`
+- `const DEATH_ZONE: string;`
+- `const EXPLODE: string;`
+- `const START: string;`
+- `const STOP: string;`
+##### class Phaser.GameObjects.Particles.GravityWell
+- `constructor(x?: number | Phaser.Types.GameObjects.Particles.GravityWellConfig, y?: number, power?: number, epsilon?: number, gravity?: number);`
+- `update(particle: Phaser.GameObjects.Particles.Particle, delta: number, step: number): void;`
+- `epsilon: number;`
+- `power: number;`
+- `gravity: number;`
+##### class Phaser.GameObjects.Particles.Particle
+- `constructor(emitter: Phaser.GameObjects.Particles.ParticleEmitter);`
+- `emitter: Phaser.GameObjects.Particles.ParticleEmitter;`
+- `texture: Phaser.Textures.Texture;`
+- `frame: Phaser.Textures.Frame;`
+- `x: number;`
+- `y: number;`
+- `worldPosition: Phaser.Math.Vector2;`
+- `velocityX: number;`
+- `velocityY: number;`
+- `accelerationX: number;`
+- `accelerationY: number;`
+- `maxVelocityX: number;`
+- `maxVelocityY: number;`
+- `bounce: number;`
+- `scaleX: number;`
+- `scaleY: number;`
+- `alpha: number;`
+- `angle: number;`
+- `rotation: number;`
+- `tint: number;`
+- `life: number;`
+- `lifeCurrent: number;`
+- `delayCurrent: number;`
+- `holdCurrent: number;`
+- `lifeT: number;`
+- `data: Phaser.Types.GameObjects.Particles.ParticleData;`
+- `scene: Phaser.Scene;`
+- `anims: Phaser.Animations.AnimationState | null;`
+- `bounds: Phaser.Geom.Rectangle;`
+- `emit(event: string | Symbol, a1?: any, a2?: any, a3?: any, a4?: any, a5?: any): boolean;`
+- `isAlive(): boolean;`
+- `kill(): void;`
+- `setPosition(x?: number, y?: number): void;`
+- `fire(x?: number, y?: number): boolean;`
+- `update(delta: number, step: number, processors: Phaser.GameObjects.Particles.ParticleProcessor[]): boolean;`
+- `computeVelocity(emitter: Phaser.GameObjects.Particles.ParticleEmitter, delta: number, step: number, processors: Phaser.GameObjects.Particles.ParticleProcessor[], t: number): void;`
+- `setSizeToFrame(): void;`
+- `getBounds(matrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.Geom.Rectangle;`
+- `destroy(): void;`
+##### class Phaser.GameObjects.Particles.ParticleBounds
+- `constructor(x: number, y: number, width: number, height: number, collideLeft?: boolean, collideRight?: boolean, collideTop?: boolean, collideBottom?: boolean);`
+- `bounds: Phaser.Geom.Rectangle;`
+- `collideLeft: boolean;`
+- `collideRight: boolean;`
+- `collideTop: boolean;`
+- `collideBottom: boolean;`
+- `update(particle: Phaser.GameObjects.Particles.Particle): void;`
+##### class Phaser.GameObjects.Particles.ParticleEmitter
+- `constructor(scene: Phaser.Scene, x?: number, y?: number, texture?: string | Phaser.Textures.Texture, config?: Phaser.Types.GameObjects.Particles.ParticleEmitterConfig);`
+- `particleClass: Function;`
+- `config: Phaser.Types.GameObjects.Particles.ParticleEmitterConfig;`
+- `ops: Phaser.Types.GameObjects.Particles.ParticleEmitterOps;`
+- `radial: boolean;`
+- `gravityX: number;`
+- `gravityY: number;`
+- `acceleration: boolean;`
+- `moveTo: boolean;`
+- `emitCallback: Phaser.Types.GameObjects.Particles.ParticleEmitterCallback | null;`
+- `emitCallbackScope: any | null;`
+- `deathCallback: Phaser.Types.GameObjects.Particles.ParticleDeathCallback | null;`
+- `deathCallbackScope: any | null;`
+- `maxParticles: number;`
+- `maxAliveParticles: number;`
+- `stopAfter: number;`
+- `duration: number;`
+- `frequency: number;`
+- `emitting: boolean;`
+- `particleBringToTop: boolean;`
+- `timeScale: number;`
+- `emitZones: Phaser.Types.GameObjects.Particles.EmitZoneObject[];`
+- `deathZones: Phaser.GameObjects.Particles.Zones.DeathZone[];`
+- `viewBounds: Phaser.Geom.Rectangle | null;`
+- `follow: Phaser.Types.Math.Vector2Like | null;`
+- `followOffset: Phaser.Math.Vector2;`
+- `trackVisible: boolean;`
+- `frames: Phaser.Textures.Frame[];`
+- `randomFrame: boolean;`
+- `frameQuantity: number;`
+- `anims: string[];`
+- `randomAnim: boolean;`
+- `animQuantity: number;`
+- `skipping: boolean;`
+- `worldMatrix: Phaser.GameObjects.Components.TransformMatrix;`
+- `sortProperty: string;`
+- `sortOrderAsc: boolean;`
+- `sortCallback: Phaser.Types.GameObjects.Particles.ParticleSortCallback | null;`
+- `processors: Phaser.Structs.List<Phaser.GameObjects.Particles.ParticleProcessor>;`
+- `tintMode: Phaser.TintModes;`
+- `addedToScene(): void;`
+- `removedFromScene(): void;`
+- `setConfig(config: Phaser.Types.GameObjects.Particles.ParticleEmitterConfig): this;`
+- `updateConfig(config: Phaser.Types.GameObjects.Particles.ParticleEmitterConfig): this;`
+- `toJSON(): Phaser.Types.GameObjects.JSONGameObject;`
+- `resetCounters(frequency: number, on: boolean): void;`
+- `startFollow(target: Phaser.Types.Math.Vector2Like, offsetX?: number, offsetY?: number, trackVisible?: boolean): this;`
+- `stopFollow(): this;`
+- `getFrame(): Phaser.Textures.Frame;`
+- `setEmitterFrame(frames: any[] | string | number | Phaser.Types.GameObjects.Particles.ParticleEmitterFrameConfig, pickRandom?: boolean, quantity?: number): this;`
+- `getAnim(): string;`
+- `setAnim(anims: string | string[] | Phaser.Types.GameObjects.Particles.ParticleEmitterAnimConfig, pickRandom?: boolean, quantity?: number): this;`
+- `setRadial(value?: boolean): this;`
+- `addParticleBounds(x: number | Phaser.Types.GameObjects.Particles.ParticleEmitterBounds | Phaser.Types.GameObjects.Particles.ParticleEmitterBoundsAlt, y?: number, width?: number, height?: number, collideLeft?: boolean, collideRight?: boolean, collideTop?: boolean, collideBottom?: boolean): Phaser.GameObjects.Particles.ParticleBounds;`
+- `setParticleSpeed(x: number, y?: number): this;`
+- `setParticleScale(x?: number, y?: number): this;`
+- `setParticleGravity(x: number, y: number): this;`
+- `setParticleAlpha(value: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType | Phaser.Types.GameObjects.Particles.EmitterOpOnUpdateType): this;`
+- `setParticleTint(value: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType | Phaser.Types.GameObjects.Particles.EmitterOpOnUpdateType): this;`
+- `setEmitterAngle(value: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType): this;`
+- `setParticleLifespan(value: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType): this;`
+- `setQuantity(quantity: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType): this;`
+- `setFrequency(frequency: number, quantity?: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType): this;`
+- `addDeathZone(config: Phaser.Types.GameObjects.Particles.DeathZoneObject | Phaser.Types.GameObjects.Particles.DeathZoneObject[]): Phaser.GameObjects.Particles.Zones.DeathZone[];`
+- `removeDeathZone(zone: Phaser.GameObjects.Particles.Zones.DeathZone): this;`
+- `clearDeathZones(): this;`
+- `addEmitZone(zone: Phaser.Types.GameObjects.Particles.EmitZoneData | Phaser.Types.GameObjects.Particles.EmitZoneData[]): Phaser.Types.GameObjects.Particles.EmitZoneObject[];`
+- `removeEmitZone(zone: Phaser.GameObjects.Particles.Zones.EdgeZone | Phaser.GameObjects.Particles.Zones.RandomZone): this;`
+- `clearEmitZones(): this;`
+- `getEmitZone(particle: Phaser.GameObjects.Particles.Particle): void;`
+- `getDeathZone(particle: Phaser.GameObjects.Particles.Particle): boolean;`
+- `setEmitZone(zone: number | Phaser.GameObjects.Particles.Zones.EdgeZone | Phaser.GameObjects.Particles.Zones.RandomZone): this;`
+- `addParticleProcessor<T extends Phaser.GameObjects.Particles.ParticleProcessor>(processor: T): T;`
+- `removeParticleProcessor<T extends Phaser.GameObjects.Particles.ParticleProcessor>(processor: T): T | null;`
+- `getProcessors(): Phaser.GameObjects.Particles.ParticleProcessor[];`
+- `createGravityWell(config: Phaser.Types.GameObjects.Particles.GravityWellConfig): Phaser.GameObjects.Particles.GravityWell;`
+- `reserve(count: number): this;`
+- `getAliveParticleCount(): number;`
+- `getDeadParticleCount(): number;`
+- `getParticleCount(): number;`
+- `atLimit(): boolean;`
+- `onParticleEmit(callback: Phaser.Types.GameObjects.Particles.ParticleEmitterCallback, context?: any): this;`
+- `onParticleDeath(callback: Phaser.Types.GameObjects.Particles.ParticleDeathCallback, context?: any): this;`
+- `killAll(): this;`
+- `forEachAlive(callback: Phaser.Types.GameObjects.Particles.ParticleEmitterCallback, context: any): this;`
+- `forEachDead(callback: Phaser.Types.GameObjects.Particles.ParticleEmitterCallback, context: any): this;`
+- `start(advance?: number, duration?: number): this;`
+- `stop(kill?: boolean): this;`
+- `pause(): this;`
+- `resume(): this;`
+- `setSortProperty(property?: string, ascending?: boolean): this;`
+- `setSortCallback(callback?: Phaser.Types.GameObjects.Particles.ParticleSortCallback): this;`
+- `depthSort(): this;`
+- `depthSortCallback(a: object, b: object): number;`
+- `flow(frequency: number, count?: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType, stopAfter?: number): this;`
+- `explode(count?: number, x?: number, y?: number): Phaser.GameObjects.Particles.Particle | undefined;`
+- `emitParticleAt(x?: number, y?: number, count?: number): Phaser.GameObjects.Particles.Particle | undefined;`
+- `emitParticle(count?: number, x?: number, y?: number): Phaser.GameObjects.Particles.Particle | undefined;`
+- `fastForward(time: number, delta?: number): this;`
+- `preUpdate(time: number, delta: number): void;`
+- `overlap(target: Phaser.Geom.Rectangle | Phaser.Physics.Arcade.Body): Phaser.GameObjects.Particles.Particle[];`
+- `getBounds(padding?: number, advance?: number, delta?: number, output?: Phaser.Geom.Rectangle): Phaser.Geom.Rectangle;`
+- `createEmitter(): void;`
+- `particleX: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType | Phaser.Types.GameObjects.Particles.EmitterOpOnUpdateType;`
+- `particleY: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType | Phaser.Types.GameObjects.Particles.EmitterOpOnUpdateType;`
+- `accelerationX: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType;`
+- `accelerationY: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType;`
+- `maxVelocityX: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType;`
+- `maxVelocityY: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType;`
+- `speed: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType;`
+- `speedX: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType;`
+- `speedY: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType;`
+- `moveToX: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType;`
+- `moveToY: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType;`
+- `bounce: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType;`
+- `particleScaleX: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType;`
+- `particleScaleY: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType;`
+- `particleColor: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType;`
+- `colorEase: string;`
+- `particleTint: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType;`
+- `particleAlpha: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType;`
+- `lifespan: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType;`
+- `particleAngle: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType;`
+- `particleRotate: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType;`
+- `quantity: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType;`
+- `delay: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType;`
+- `hold: Phaser.Types.GameObjects.Particles.EmitterOpOnEmitType;`
+- `flowCounter: number;`
+- `frameCounter: number;`
+- `animCounter: number;`
+- `elapsed: number;`
+- `stopCounter: number;`
+- `completeFlag: boolean;`
+- `zoneIndex: number;`
+- `zoneTotal: number;`
+- `currentFrame: number;`
+- `currentAnim: number;`
+- `preDestroy(): void;`
+- `filterCamera: Phaser.Cameras.Scene2D.Camera;`
+- `readonly filters: Phaser.Types.GameObjects.FiltersInternalExternal | null;`
+- `renderFilters: boolean;`
+- `maxFilterSize: Phaser.Math.Vector2;`
+- `filtersAutoFocus: boolean;`
+- `filtersFocusContext: boolean;`
+- `filtersForceComposite: boolean;`
+- `willRenderFilters(): boolean;`
+- `enableFilters(): this;`
+- `renderWebGLFilters(renderer: Phaser.Renderer.WebGL.WebGLRenderer, gameObject: Phaser.GameObjects.GameObject, drawingContext: Phaser.Renderer.WebGL.DrawingContext, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix, renderStep?: number): Phaser.Types.GameObjects.RenderWebGLStep;`
+- `focusFilters(): this;`
+- `focusFiltersOnCamera(camera: Phaser.Cameras.Scene2D.Camera): this;`
+- `focusFiltersOverride(x?: number, y?: number, width?: number, height?: number): this;`
+- `setFilterSize(width: number, height: number): this;`
+- `setFiltersAutoFocus(value: boolean): this;`
+- `setFiltersFocusContext(value: boolean): this;`
+- `setFiltersForceComposite(value: boolean): this;`
+- `setRenderFilters(value: boolean): this;`
+- `renderWebGLStep(renderer: Phaser.Renderer.WebGL.WebGLRenderer, gameObject: Phaser.GameObjects.GameObject, drawingContext: Phaser.Renderer.WebGL.DrawingContext, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix, renderStep?: number, displayList?: Phaser.GameObjects.GameObject[], displayListIndex?: number): void;`
+- `addRenderStep(fn: Phaser.Types.GameObjects.RenderWebGLStep, index?: number): this;`
+- `clearAlpha(): this;`
+- `setAlpha(value?: number): this;`
+- `alpha: number;`
+- `blendMode: Phaser.BlendModes | string | number;`
+- `setBlendMode(value: string | Phaser.BlendModes | number): this;`
+- `depth: number;`
+- `setDepth(value: number): this;`
+- `setToTop(): this;`
+- `setToBack(): this;`
+- `setAbove(gameObject: Phaser.GameObjects.GameObject): this;`
+- `setBelow(gameObject: Phaser.GameObjects.GameObject): this;`
+- `readonly lighting: boolean;`
+- `selfShadow: Object;`
+- `setLighting(enable: boolean): this;`
+- `setSelfShadow(enabled?: boolean | undefined, penumbra?: number, diffuseFlatThreshold?: number): this;`
+- `mask: Phaser.Display.Masks.GeometryMask;`
+- `setMask(mask: Phaser.Display.Masks.GeometryMask): this;`
+- `clearMask(destroyMask?: boolean): this;`
+- `createGeometryMask<G extends Phaser.GameObjects.Graphics, S extends Phaser.GameObjects.Shape>(graphics?: Phaser.GameObjects.Graphics | Phaser.GameObjects.Shape): Phaser.Display.Masks.GeometryMask;`
+- `customRenderNodes: object;`
+- `defaultRenderNodes: object;`
+- `renderNodeData: object;`
+- `initRenderNodes(defaultNodes: Map<string, string>): void;`
+- `setRenderNodeRole(key: string, renderNode: string | Phaser.Renderer.WebGL.RenderNodes.RenderNode | null, renderNodeData?: object, copyData?: boolean): this;`
+- `setRenderNodeData(renderNode: string | Phaser.Renderer.WebGL.RenderNodes.RenderNode, key: string, value: any): this;`
+- `scrollFactorX: number;`
+- `scrollFactorY: number;`
+- `setScrollFactor(x: number, y?: number): this;`
+- `texture: Phaser.Textures.Texture | Phaser.Textures.CanvasTexture;`
+- `frame: Phaser.Textures.Frame;`
+- `setTexture(key: string | Phaser.Textures.Texture, frame?: string | number, updateSize?: boolean, updateOrigin?: boolean): this;`
+- `setFrame(frame: string | number | Phaser.Textures.Frame, updateSize?: boolean, updateOrigin?: boolean): this;`
+- `readonly hasTransformComponent: boolean;`
+- `x: number;`
+- `y: number;`
+- `z: number;`
+- `w: number;`
+- `scale: number;`
+- `scaleX: number;`
+- `scaleY: number;`
+- `angle: number;`
+- `rotation: number;`
+- `setPosition(x?: number, y?: number, z?: number, w?: number): this;`
+- `copyPosition(source: Phaser.Types.Math.Vector2Like | Phaser.Types.Math.Vector3Like | Phaser.Types.Math.Vector4Like): this;`
+- `setRandomPosition(x?: number, y?: number, width?: number, height?: number): this;`
+- `setRotation(radians?: number): this;`
+- `setAngle(degrees?: number): this;`
+- `setScale(x?: number, y?: number): this;`
+- `setX(value?: number): this;`
+- `setY(value?: number): this;`
+- `setZ(value?: number): this;`
+- `setW(value?: number): this;`
+- `getLocalTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.GameObjects.Components.TransformMatrix;`
+- `getWorldTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.GameObjects.Components.TransformMatrix;`
+- `getLocalPoint(x: number, y: number, point?: Phaser.Math.Vector2, camera?: Phaser.Cameras.Scene2D.Camera): Phaser.Math.Vector2;`
+- `getWorldPoint(point?: Phaser.Math.Vector2, tempMatrix?: Phaser.GameObjects.Components.TransformMatrix, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.Math.Vector2;`
+- `getParentRotation(): number;`
+- `visible: boolean;`
+- `setVisible(value: boolean): this;`
+##### class Phaser.GameObjects.Particles.ParticleProcessor
+- `constructor(x?: number, y?: number, active?: boolean);`
+- `emitter: Phaser.GameObjects.Particles.ParticleEmitter;`
+- `x: number;`
+- `y: number;`
+- `active: boolean;`
+- `update(particle: Phaser.GameObjects.Particles.Particle, delta: number, step: number, t: number): void;`
+- `destroy(): void;`
+##### namespace Phaser.GameObjects.Particles.Zones
+###### class Phaser.GameObjects.Particles.Zones.DeathZone
+- `constructor(source: Phaser.Types.GameObjects.Particles.DeathZoneSource, killOnEnter: boolean);`
+- `source: Phaser.Types.GameObjects.Particles.DeathZoneSource;`
+- `killOnEnter: boolean;`
+- `willKill(particle: Phaser.GameObjects.Particles.Particle): boolean;`
+###### class Phaser.GameObjects.Particles.Zones.EdgeZone
+- `constructor(source: Phaser.Types.GameObjects.Particles.EdgeZoneSource, quantity: number, stepRate?: number, yoyo?: boolean, seamless?: boolean, total?: number);`
+- `source: Phaser.Types.GameObjects.Particles.EdgeZoneSource | Phaser.Types.GameObjects.Particles.RandomZoneSource;`
+- `points: Phaser.Math.Vector2[];`
+- `quantity: number;`
+- `stepRate: number;`
+- `yoyo: boolean;`
+- `counter: number;`
+- `seamless: boolean;`
+- `total: number;`
+- `updateSource(): this;`
+- `changeSource(source: Phaser.Types.GameObjects.Particles.EdgeZoneSource): this;`
+- `getPoint(particle: Phaser.GameObjects.Particles.Particle): void;`
+###### class Phaser.GameObjects.Particles.Zones.RandomZone
+- `constructor(source: Phaser.Types.GameObjects.Particles.RandomZoneSource);`
+- `source: Phaser.Types.GameObjects.Particles.RandomZoneSource;`
+- `total: number;`
+- `getPoint(particle: Phaser.GameObjects.Particles.Particle): void;`
+
+#### class Phaser.GameObjects.RenderTexture
+- `constructor(scene: Phaser.Scene, x?: number, y?: number, width?: number, height?: number, forceEven?: boolean);`
+- `camera: Phaser.Cameras.Scene2D.BaseCamera;`
+- `renderMode: 'render' | 'redraw' | 'all';`
+- `readonly isCurrentlyRendering: boolean;`
+- `setSize(width: number, height: number): this;`
+- `resize(width: number, height?: number, forceEven?: boolean): this;`
+- `saveTexture(key: string): Phaser.Textures.DynamicTexture;`
+- `setRenderMode(mode: 'render' | 'redraw' | 'all', preserve?: boolean): this;`
+- `render(): void;`
+- `fill(rgb: number, alpha?: number, x?: number, y?: number, width?: number, height?: number): this;`
+- `clear(x?: number, y?: number, width?: number, height?: number): this;`
+- `stamp(key: string, frame?: string | number, x?: number, y?: number, config?: Phaser.Types.Textures.StampConfig): this;`
+- `erase(entries: any, x?: number, y?: number): this;`
+- `draw(entries: any, x?: number, y?: number, alpha?: number, tint?: number): this;`
+- `capture(entry: Phaser.GameObjects.GameObject, config: Phaser.Types.Textures.CaptureConfig): this;`
+- `repeat(key: string, frame?: string | number, x?: number, y?: number, width?: number, height?: number, config?: Phaser.Types.GameObjects.TileSprite.TileSpriteConfig): this;`
+- `preserve(preserve: boolean): this;`
+- `callback(callback: Function): this;`
+- `snapshotArea(x: number, y: number, width: number, height: number, callback: Phaser.Types.Renderer.Snapshot.SnapshotCallback, type?: string, encoderOptions?: number): this;`
+- `snapshot(callback: Phaser.Types.Renderer.Snapshot.SnapshotCallback, type?: string, encoderOptions?: number): this;`
+- `snapshotPixel(x: number, y: number, callback: Phaser.Types.Renderer.Snapshot.SnapshotCallback): this;`
+- `protected preDestroy(): void;`
+- `filterCamera: Phaser.Cameras.Scene2D.Camera;`
+- `readonly filters: Phaser.Types.GameObjects.FiltersInternalExternal | null;`
+- `renderFilters: boolean;`
+- `maxFilterSize: Phaser.Math.Vector2;`
+- `filtersAutoFocus: boolean;`
+- `filtersFocusContext: boolean;`
+- `filtersForceComposite: boolean;`
+- `willRenderFilters(): boolean;`
+- `enableFilters(): this;`
+- `renderWebGLFilters(renderer: Phaser.Renderer.WebGL.WebGLRenderer, gameObject: Phaser.GameObjects.GameObject, drawingContext: Phaser.Renderer.WebGL.DrawingContext, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix, renderStep?: number): Phaser.Types.GameObjects.RenderWebGLStep;`
+- `focusFilters(): this;`
+- `focusFiltersOnCamera(camera: Phaser.Cameras.Scene2D.Camera): this;`
+- `focusFiltersOverride(x?: number, y?: number, width?: number, height?: number): this;`
+- `setFilterSize(width: number, height: number): this;`
+- `setFiltersAutoFocus(value: boolean): this;`
+- `setFiltersFocusContext(value: boolean): this;`
+- `setFiltersForceComposite(value: boolean): this;`
+- `setRenderFilters(value: boolean): this;`
+- `renderWebGLStep(renderer: Phaser.Renderer.WebGL.WebGLRenderer, gameObject: Phaser.GameObjects.GameObject, drawingContext: Phaser.Renderer.WebGL.DrawingContext, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix, renderStep?: number, displayList?: Phaser.GameObjects.GameObject[], displayListIndex?: number): void;`
+- `addRenderStep(fn: Phaser.Types.GameObjects.RenderWebGLStep, index?: number): this;`
+- `clearAlpha(): this;`
+- `setAlpha(topLeft?: number, topRight?: number, bottomLeft?: number, bottomRight?: number): this;`
+- `alpha: number;`
+- `alphaTopLeft: number;`
+- `alphaTopRight: number;`
+- `alphaBottomLeft: number;`
+- `alphaBottomRight: number;`
+- `blendMode: Phaser.BlendModes | string | number;`
+- `setBlendMode(value: string | Phaser.BlendModes | number): this;`
+- `depth: number;`
+- `setDepth(value: number): this;`
+- `setToTop(): this;`
+- `setToBack(): this;`
+- `setAbove(gameObject: Phaser.GameObjects.GameObject): this;`
+- `setBelow(gameObject: Phaser.GameObjects.GameObject): this;`
+- `flipX: boolean;`
+- `flipY: boolean;`
+- `toggleFlipX(): this;`
+- `toggleFlipY(): this;`
+- `setFlipX(value: boolean): this;`
+- `setFlipY(value: boolean): this;`
+- `setFlip(x: boolean, y: boolean): this;`
+- `resetFlip(): this;`
+- `getCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopLeft<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopRight<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getLeftCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getRightCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomLeft<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomRight<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBounds<O extends Phaser.Geom.Rectangle>(output?: O): O;`
+- `readonly lighting: boolean;`
+- `selfShadow: Object;`
+- `setLighting(enable: boolean): this;`
+- `setSelfShadow(enabled?: boolean | undefined, penumbra?: number, diffuseFlatThreshold?: number): this;`
+- `mask: Phaser.Display.Masks.GeometryMask;`
+- `setMask(mask: Phaser.Display.Masks.GeometryMask): this;`
+- `clearMask(destroyMask?: boolean): this;`
+- `createGeometryMask<G extends Phaser.GameObjects.Graphics, S extends Phaser.GameObjects.Shape>(graphics?: Phaser.GameObjects.Graphics | Phaser.GameObjects.Shape): Phaser.Display.Masks.GeometryMask;`
+- `originX: number;`
+- `originY: number;`
+- `displayOriginX: number;`
+- `displayOriginY: number;`
+- `setOrigin(x?: number, y?: number): this;`
+- `setOriginFromFrame(): this;`
+- `setDisplayOrigin(x?: number, y?: number): this;`
+- `updateDisplayOrigin(): this;`
+- `customRenderNodes: object;`
+- `defaultRenderNodes: object;`
+- `renderNodeData: object;`
+- `initRenderNodes(defaultNodes: Map<string, string>): void;`
+- `setRenderNodeRole(key: string, renderNode: string | Phaser.Renderer.WebGL.RenderNodes.RenderNode | null, renderNodeData?: object, copyData?: boolean): this;`
+- `setRenderNodeData(renderNode: string | Phaser.Renderer.WebGL.RenderNodes.RenderNode, key: string, value: any): this;`
+- `scrollFactorX: number;`
+- `scrollFactorY: number;`
+- `setScrollFactor(x: number, y?: number): this;`
+- `width: number;`
+- `height: number;`
+- `displayWidth: number;`
+- `displayHeight: number;`
+- `setSizeToFrame(frame?: Phaser.Textures.Frame): this;`
+- `setDisplaySize(width: number, height: number): this;`
+- `texture: Phaser.Textures.Texture | Phaser.Textures.CanvasTexture;`
+- `frame: Phaser.Textures.Frame;`
+- `isCropped: boolean;`
+- `setCrop(x?: number | Phaser.Geom.Rectangle, y?: number, width?: number, height?: number): this;`
+- `setTexture(key: string, frame?: string | number): this;`
+- `setFrame(frame: string | number | Phaser.Textures.Frame, updateSize?: boolean, updateOrigin?: boolean): this;`
+- `tintTopLeft: number;`
+- `tintTopRight: number;`
+- `tintBottomLeft: number;`
+- `tintBottomRight: number;`
+- `tint2TopLeft: number;`
+- `tint2TopRight: number;`
+- `tint2BottomLeft: number;`
+- `tint2BottomRight: number;`
+- `tintMode: Phaser.TintModes;`
+- `clearTint(): this;`
+- `setTint(topLeft?: number, topRight?: number, bottomLeft?: number, bottomRight?: number): this;`
+- `setTint2(topLeft?: number, topRight?: number, bottomLeft?: number, bottomRight?: number): this;`
+- `setTintMode(mode: number | Phaser.TintModes): this;`
+- `setTintFill(): void;`
+- `tint: number;`
+- `readonly isTinted: boolean;`
+- `readonly hasTransformComponent: boolean;`
+- `x: number;`
+- `y: number;`
+- `z: number;`
+- `w: number;`
+- `scale: number;`
+- `scaleX: number;`
+- `scaleY: number;`
+- `angle: number;`
+- `rotation: number;`
+- `setPosition(x?: number, y?: number, z?: number, w?: number): this;`
+- `copyPosition(source: Phaser.Types.Math.Vector2Like | Phaser.Types.Math.Vector3Like | Phaser.Types.Math.Vector4Like): this;`
+- `setRandomPosition(x?: number, y?: number, width?: number, height?: number): this;`
+- `setRotation(radians?: number): this;`
+- `setAngle(degrees?: number): this;`
+- `setScale(x?: number, y?: number): this;`
+- `setX(value?: number): this;`
+- `setY(value?: number): this;`
+- `setZ(value?: number): this;`
+- `setW(value?: number): this;`
+- `getLocalTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.GameObjects.Components.TransformMatrix;`
+- `getWorldTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.GameObjects.Components.TransformMatrix;`
+- `getLocalPoint(x: number, y: number, point?: Phaser.Math.Vector2, camera?: Phaser.Cameras.Scene2D.Camera): Phaser.Math.Vector2;`
+- `getWorldPoint(point?: Phaser.Math.Vector2, tempMatrix?: Phaser.GameObjects.Components.TransformMatrix, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.Math.Vector2;`
+- `getParentRotation(): number;`
+- `visible: boolean;`
+- `setVisible(value: boolean): this;`
+
+#### class Phaser.GameObjects.Shader
+- `constructor(scene: Phaser.Scene, config: string | Phaser.Types.GameObjects.Shader.ShaderQuadConfig, x?: number, y?: number, width?: number, height?: number, textures?: string[] | Phaser.Textures.Texture[]);`
+- `textures: Phaser.Textures.Texture[];`
+- `renderNode: Phaser.Renderer.WebGL.RenderNodes.ShaderQuad;`
+- `drawingContext: Phaser.Renderer.WebGL.DrawingContext | null;`
+- `glTexture: Phaser.Renderer.WebGL.Wrappers.WebGLTextureWrapper | null;`
+- `readonly renderToTexture: boolean;`
+- `texture: Phaser.Textures.Texture;`
+- `textureCoordinateTopLeft: Phaser.Math.Vector2;`
+- `textureCoordinateTopRight: Phaser.Math.Vector2;`
+- `textureCoordinateBottomLeft: Phaser.Math.Vector2;`
+- `textureCoordinateBottomRight: Phaser.Math.Vector2;`
+- `getUniform(name: string): any;`
+- `setUniform(name: string, value: any): this;`
+- `setTextures(textures?: string[] | Phaser.Textures.Texture[]): void;`
+- `setRenderToTexture(key?: string): this;`
+- `renderImmediate(): this;`
+- `setupUniforms(setUniform: Function, drawingContext: Phaser.Renderer.WebGL.DrawingContext): void;`
+- `setTextureCoordinates(topLeftX?: number, topLeftY?: number, topRightX?: number, topRightY?: number, bottomLeftX?: number, bottomLeftY?: number, bottomRightX?: number, bottomRightY?: number): this;`
+- `setTextureCoordinatesFromFrame(frame: Phaser.Textures.Frame | string, texture?: Phaser.Textures.Texture | string): void;`
+- `protected preDestroy(): void;`
+- `filterCamera: Phaser.Cameras.Scene2D.Camera;`
+- `readonly filters: Phaser.Types.GameObjects.FiltersInternalExternal | null;`
+- `renderFilters: boolean;`
+- `maxFilterSize: Phaser.Math.Vector2;`
+- `filtersAutoFocus: boolean;`
+- `filtersFocusContext: boolean;`
+- `filtersForceComposite: boolean;`
+- `willRenderFilters(): boolean;`
+- `enableFilters(): this;`
+- `renderWebGLFilters(renderer: Phaser.Renderer.WebGL.WebGLRenderer, gameObject: Phaser.GameObjects.GameObject, drawingContext: Phaser.Renderer.WebGL.DrawingContext, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix, renderStep?: number): Phaser.Types.GameObjects.RenderWebGLStep;`
+- `focusFilters(): this;`
+- `focusFiltersOnCamera(camera: Phaser.Cameras.Scene2D.Camera): this;`
+- `focusFiltersOverride(x?: number, y?: number, width?: number, height?: number): this;`
+- `setFilterSize(width: number, height: number): this;`
+- `setFiltersAutoFocus(value: boolean): this;`
+- `setFiltersFocusContext(value: boolean): this;`
+- `setFiltersForceComposite(value: boolean): this;`
+- `setRenderFilters(value: boolean): this;`
+- `renderWebGLStep(renderer: Phaser.Renderer.WebGL.WebGLRenderer, gameObject: Phaser.GameObjects.GameObject, drawingContext: Phaser.Renderer.WebGL.DrawingContext, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix, renderStep?: number, displayList?: Phaser.GameObjects.GameObject[], displayListIndex?: number): void;`
+- `addRenderStep(fn: Phaser.Types.GameObjects.RenderWebGLStep, index?: number): this;`
+- `blendMode: Phaser.BlendModes | string | number;`
+- `setBlendMode(value: string | Phaser.BlendModes | number): this;`
+- `width: number;`
+- `height: number;`
+- `displayWidth: number;`
+- `displayHeight: number;`
+- `setSize(width: number, height: number): this;`
+- `setDisplaySize(width: number, height: number): this;`
+- `depth: number;`
+- `setDepth(value: number): this;`
+- `setToTop(): this;`
+- `setToBack(): this;`
+- `setAbove(gameObject: Phaser.GameObjects.GameObject): this;`
+- `setBelow(gameObject: Phaser.GameObjects.GameObject): this;`
+- `getCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopLeft<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopRight<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getLeftCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getRightCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomLeft<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomRight<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBounds<O extends Phaser.Geom.Rectangle>(output?: O): O;`
+- `originX: number;`
+- `originY: number;`
+- `displayOriginX: number;`
+- `displayOriginY: number;`
+- `setOrigin(x?: number, y?: number): this;`
+- `setOriginFromFrame(): this;`
+- `setDisplayOrigin(x?: number, y?: number): this;`
+- `updateDisplayOrigin(): this;`
+- `scrollFactorX: number;`
+- `scrollFactorY: number;`
+- `setScrollFactor(x: number, y?: number): this;`
+- `readonly hasTransformComponent: boolean;`
+- `x: number;`
+- `y: number;`
+- `z: number;`
+- `w: number;`
+- `scale: number;`
+- `scaleX: number;`
+- `scaleY: number;`
+- `angle: number;`
+- `rotation: number;`
+- `setPosition(x?: number, y?: number, z?: number, w?: number): this;`
+- `copyPosition(source: Phaser.Types.Math.Vector2Like | Phaser.Types.Math.Vector3Like | Phaser.Types.Math.Vector4Like): this;`
+- `setRandomPosition(x?: number, y?: number, width?: number, height?: number): this;`
+- `setRotation(radians?: number): this;`
+- `setAngle(degrees?: number): this;`
+- `setScale(x?: number, y?: number): this;`
+- `setX(value?: number): this;`
+- `setY(value?: number): this;`
+- `setZ(value?: number): this;`
+- `setW(value?: number): this;`
+- `getLocalTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.GameObjects.Components.TransformMatrix;`
+- `getWorldTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.GameObjects.Components.TransformMatrix;`
+- `getLocalPoint(x: number, y: number, point?: Phaser.Math.Vector2, camera?: Phaser.Cameras.Scene2D.Camera): Phaser.Math.Vector2;`
+- `getWorldPoint(point?: Phaser.Math.Vector2, tempMatrix?: Phaser.GameObjects.Components.TransformMatrix, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.Math.Vector2;`
+- `getParentRotation(): number;`
+- `visible: boolean;`
+- `setVisible(value: boolean): this;`
+
+#### class Phaser.GameObjects.Rectangle
+- `constructor(scene: Phaser.Scene, x: number, y: number, width?: number, height?: number, fillColor?: number, fillAlpha?: number);`
+- `readonly radius: number;`
+- `readonly isRounded: boolean;`
+- `setRounded(radius?: number): this;`
+- `setSize(width: number, height: number): this;`
+- `filterCamera: Phaser.Cameras.Scene2D.Camera;`
+- `readonly filters: Phaser.Types.GameObjects.FiltersInternalExternal | null;`
+- `renderFilters: boolean;`
+- `maxFilterSize: Phaser.Math.Vector2;`
+- `filtersAutoFocus: boolean;`
+- `filtersFocusContext: boolean;`
+- `filtersForceComposite: boolean;`
+- `willRenderFilters(): boolean;`
+- `enableFilters(): this;`
+- `renderWebGLFilters(renderer: Phaser.Renderer.WebGL.WebGLRenderer, gameObject: Phaser.GameObjects.GameObject, drawingContext: Phaser.Renderer.WebGL.DrawingContext, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix, renderStep?: number): Phaser.Types.GameObjects.RenderWebGLStep;`
+- `focusFilters(): this;`
+- `focusFiltersOnCamera(camera: Phaser.Cameras.Scene2D.Camera): this;`
+- `focusFiltersOverride(x?: number, y?: number, width?: number, height?: number): this;`
+- `setFilterSize(width: number, height: number): this;`
+- `setFiltersAutoFocus(value: boolean): this;`
+- `setFiltersFocusContext(value: boolean): this;`
+- `setFiltersForceComposite(value: boolean): this;`
+- `setRenderFilters(value: boolean): this;`
+- `renderWebGLStep(renderer: Phaser.Renderer.WebGL.WebGLRenderer, gameObject: Phaser.GameObjects.GameObject, drawingContext: Phaser.Renderer.WebGL.DrawingContext, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix, renderStep?: number, displayList?: Phaser.GameObjects.GameObject[], displayListIndex?: number): void;`
+- `addRenderStep(fn: Phaser.Types.GameObjects.RenderWebGLStep, index?: number): this;`
+- `clearAlpha(): this;`
+- `setAlpha(value?: number): this;`
+- `alpha: number;`
+- `blendMode: Phaser.BlendModes | string | number;`
+- `setBlendMode(value: string | Phaser.BlendModes | number): this;`
+- `depth: number;`
+- `setDepth(value: number): this;`
+- `setToTop(): this;`
+- `setToBack(): this;`
+- `setAbove(gameObject: Phaser.GameObjects.GameObject): this;`
+- `setBelow(gameObject: Phaser.GameObjects.GameObject): this;`
+- `getCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopLeft<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopRight<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getLeftCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getRightCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomLeft<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomRight<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBounds<O extends Phaser.Geom.Rectangle>(output?: O): O;`
+- `mask: Phaser.Display.Masks.GeometryMask;`
+- `setMask(mask: Phaser.Display.Masks.GeometryMask): this;`
+- `clearMask(destroyMask?: boolean): this;`
+- `createGeometryMask<G extends Phaser.GameObjects.Graphics, S extends Phaser.GameObjects.Shape>(graphics?: Phaser.GameObjects.Graphics | Phaser.GameObjects.Shape): Phaser.Display.Masks.GeometryMask;`
+- `originX: number;`
+- `originY: number;`
+- `displayOriginX: number;`
+- `displayOriginY: number;`
+- `setOrigin(x?: number, y?: number): this;`
+- `setOriginFromFrame(): this;`
+- `setDisplayOrigin(x?: number, y?: number): this;`
+- `updateDisplayOrigin(): this;`
+- `customRenderNodes: object;`
+- `defaultRenderNodes: object;`
+- `renderNodeData: object;`
+- `initRenderNodes(defaultNodes: Map<string, string>): void;`
+- `setRenderNodeRole(key: string, renderNode: string | Phaser.Renderer.WebGL.RenderNodes.RenderNode | null, renderNodeData?: object, copyData?: boolean): this;`
+- `setRenderNodeData(renderNode: string | Phaser.Renderer.WebGL.RenderNodes.RenderNode, key: string, value: any): this;`
+- `scrollFactorX: number;`
+- `scrollFactorY: number;`
+- `setScrollFactor(x: number, y?: number): this;`
+- `readonly hasTransformComponent: boolean;`
+- `x: number;`
+- `y: number;`
+- `z: number;`
+- `w: number;`
+- `scale: number;`
+- `scaleX: number;`
+- `scaleY: number;`
+- `angle: number;`
+- `rotation: number;`
+- `setPosition(x?: number, y?: number, z?: number, w?: number): this;`
+- `copyPosition(source: Phaser.Types.Math.Vector2Like | Phaser.Types.Math.Vector3Like | Phaser.Types.Math.Vector4Like): this;`
+- `setRandomPosition(x?: number, y?: number, width?: number, height?: number): this;`
+- `setRotation(radians?: number): this;`
+- `setAngle(degrees?: number): this;`
+- `setScale(x?: number, y?: number): this;`
+- `setX(value?: number): this;`
+- `setY(value?: number): this;`
+- `setZ(value?: number): this;`
+- `setW(value?: number): this;`
+- `getLocalTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.GameObjects.Components.TransformMatrix;`
+- `getWorldTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.GameObjects.Components.TransformMatrix;`
+- `getLocalPoint(x: number, y: number, point?: Phaser.Math.Vector2, camera?: Phaser.Cameras.Scene2D.Camera): Phaser.Math.Vector2;`
+- `getWorldPoint(point?: Phaser.Math.Vector2, tempMatrix?: Phaser.GameObjects.Components.TransformMatrix, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.Math.Vector2;`
+- `getParentRotation(): number;`
+- `visible: boolean;`
+- `setVisible(value: boolean): this;`
+
+#### class Phaser.GameObjects.Sprite
+- `constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, frame?: string | number);`
+- `anims: Phaser.Animations.AnimationState;`
+- `addedToScene(): void;`
+- `removedFromScene(): void;`
+- `protected preUpdate(time: number, delta: number): void;`
+- `play(key: string | Phaser.Animations.Animation | Phaser.Types.Animations.PlayAnimationConfig, ignoreIfPlaying?: boolean): this;`
+- `playReverse(key: string | Phaser.Animations.Animation | Phaser.Types.Animations.PlayAnimationConfig, ignoreIfPlaying?: boolean): this;`
+- `playAfterDelay(key: string | Phaser.Animations.Animation | Phaser.Types.Animations.PlayAnimationConfig, delay: number): this;`
+- `playAfterRepeat(key: string | Phaser.Animations.Animation | Phaser.Types.Animations.PlayAnimationConfig, repeatCount?: number): this;`
+- `chain(key?: string | Phaser.Animations.Animation | Phaser.Types.Animations.PlayAnimationConfig | string[] | Phaser.Animations.Animation[] | Phaser.Types.Animations.PlayAnimationConfig[]): this;`
+- `stop(): this;`
+- `stopAfterDelay(delay: number): this;`
+- `stopAfterRepeat(repeatCount?: number): this;`
+- `stopOnFrame(frame: Phaser.Animations.AnimationFrame): this;`
+- `toJSON(): Phaser.Types.GameObjects.JSONGameObject;`
+- `filterCamera: Phaser.Cameras.Scene2D.Camera;`
+- `readonly filters: Phaser.Types.GameObjects.FiltersInternalExternal | null;`
+- `renderFilters: boolean;`
+- `maxFilterSize: Phaser.Math.Vector2;`
+- `filtersAutoFocus: boolean;`
+- `filtersFocusContext: boolean;`
+- `filtersForceComposite: boolean;`
+- `willRenderFilters(): boolean;`
+- `enableFilters(): this;`
+- `renderWebGLFilters(renderer: Phaser.Renderer.WebGL.WebGLRenderer, gameObject: Phaser.GameObjects.GameObject, drawingContext: Phaser.Renderer.WebGL.DrawingContext, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix, renderStep?: number): Phaser.Types.GameObjects.RenderWebGLStep;`
+- `focusFilters(): this;`
+- `focusFiltersOnCamera(camera: Phaser.Cameras.Scene2D.Camera): this;`
+- `focusFiltersOverride(x?: number, y?: number, width?: number, height?: number): this;`
+- `setFilterSize(width: number, height: number): this;`
+- `setFiltersAutoFocus(value: boolean): this;`
+- `setFiltersFocusContext(value: boolean): this;`
+- `setFiltersForceComposite(value: boolean): this;`
+- `setRenderFilters(value: boolean): this;`
+- `renderWebGLStep(renderer: Phaser.Renderer.WebGL.WebGLRenderer, gameObject: Phaser.GameObjects.GameObject, drawingContext: Phaser.Renderer.WebGL.DrawingContext, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix, renderStep?: number, displayList?: Phaser.GameObjects.GameObject[], displayListIndex?: number): void;`
+- `addRenderStep(fn: Phaser.Types.GameObjects.RenderWebGLStep, index?: number): this;`
+- `clearAlpha(): this;`
+- `setAlpha(topLeft?: number, topRight?: number, bottomLeft?: number, bottomRight?: number): this;`
+- `alpha: number;`
+- `alphaTopLeft: number;`
+- `alphaTopRight: number;`
+- `alphaBottomLeft: number;`
+- `alphaBottomRight: number;`
+- `blendMode: Phaser.BlendModes | string | number;`
+- `setBlendMode(value: string | Phaser.BlendModes | number): this;`
+- `depth: number;`
+- `setDepth(value: number): this;`
+- `setToTop(): this;`
+- `setToBack(): this;`
+- `setAbove(gameObject: Phaser.GameObjects.GameObject): this;`
+- `setBelow(gameObject: Phaser.GameObjects.GameObject): this;`
+- `flipX: boolean;`
+- `flipY: boolean;`
+- `toggleFlipX(): this;`
+- `toggleFlipY(): this;`
+- `setFlipX(value: boolean): this;`
+- `setFlipY(value: boolean): this;`
+- `setFlip(x: boolean, y: boolean): this;`
+- `resetFlip(): this;`
+- `getCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopLeft<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopRight<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getLeftCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getRightCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomLeft<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomRight<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBounds<O extends Phaser.Geom.Rectangle>(output?: O): O;`
+- `readonly lighting: boolean;`
+- `selfShadow: Object;`
+- `setLighting(enable: boolean): this;`
+- `setSelfShadow(enabled?: boolean | undefined, penumbra?: number, diffuseFlatThreshold?: number): this;`
+- `mask: Phaser.Display.Masks.GeometryMask;`
+- `setMask(mask: Phaser.Display.Masks.GeometryMask): this;`
+- `clearMask(destroyMask?: boolean): this;`
+- `createGeometryMask<G extends Phaser.GameObjects.Graphics, S extends Phaser.GameObjects.Shape>(graphics?: Phaser.GameObjects.Graphics | Phaser.GameObjects.Shape): Phaser.Display.Masks.GeometryMask;`
+- `originX: number;`
+- `originY: number;`
+- `displayOriginX: number;`
+- `displayOriginY: number;`
+- `setOrigin(x?: number, y?: number): this;`
+- `setOriginFromFrame(): this;`
+- `setDisplayOrigin(x?: number, y?: number): this;`
+- `updateDisplayOrigin(): this;`
+- `customRenderNodes: object;`
+- `defaultRenderNodes: object;`
+- `renderNodeData: object;`
+- `initRenderNodes(defaultNodes: Map<string, string>): void;`
+- `setRenderNodeRole(key: string, renderNode: string | Phaser.Renderer.WebGL.RenderNodes.RenderNode | null, renderNodeData?: object, copyData?: boolean): this;`
+- `setRenderNodeData(renderNode: string | Phaser.Renderer.WebGL.RenderNodes.RenderNode, key: string, value: any): this;`
+- `scrollFactorX: number;`
+- `scrollFactorY: number;`
+- `setScrollFactor(x: number, y?: number): this;`
+- `width: number;`
+- `height: number;`
+- `displayWidth: number;`
+- `displayHeight: number;`
+- `setSizeToFrame(frame?: Phaser.Textures.Frame): this;`
+- `setSize(width: number, height: number): this;`
+- `setDisplaySize(width: number, height: number): this;`
+- `texture: Phaser.Textures.Texture | Phaser.Textures.CanvasTexture;`
+- `frame: Phaser.Textures.Frame;`
+- `isCropped: boolean;`
+- `setCrop(x?: number | Phaser.Geom.Rectangle, y?: number, width?: number, height?: number): this;`
+- `setTexture(key: string, frame?: string | number): this;`
+- `setFrame(frame: string | number | Phaser.Textures.Frame, updateSize?: boolean, updateOrigin?: boolean): this;`
+- `tintTopLeft: number;`
+- `tintTopRight: number;`
+- `tintBottomLeft: number;`
+- `tintBottomRight: number;`
+- `tint2TopLeft: number;`
+- `tint2TopRight: number;`
+- `tint2BottomLeft: number;`
+- `tint2BottomRight: number;`
+- `tintMode: Phaser.TintModes;`
+- `clearTint(): this;`
+- `setTint(topLeft?: number, topRight?: number, bottomLeft?: number, bottomRight?: number): this;`
+- `setTint2(topLeft?: number, topRight?: number, bottomLeft?: number, bottomRight?: number): this;`
+- `setTintMode(mode: number | Phaser.TintModes): this;`
+- `setTintFill(): void;`
+- `tint: number;`
+- `readonly isTinted: boolean;`
+- `readonly hasTransformComponent: boolean;`
+- `x: number;`
+- `y: number;`
+- `z: number;`
+- `w: number;`
+- `scale: number;`
+- `scaleX: number;`
+- `scaleY: number;`
+- `angle: number;`
+- `rotation: number;`
+- `setPosition(x?: number, y?: number, z?: number, w?: number): this;`
+- `copyPosition(source: Phaser.Types.Math.Vector2Like | Phaser.Types.Math.Vector3Like | Phaser.Types.Math.Vector4Like): this;`
+- `setRandomPosition(x?: number, y?: number, width?: number, height?: number): this;`
+- `setRotation(radians?: number): this;`
+- `setAngle(degrees?: number): this;`
+- `setScale(x?: number, y?: number): this;`
+- `setX(value?: number): this;`
+- `setY(value?: number): this;`
+- `setZ(value?: number): this;`
+- `setW(value?: number): this;`
+- `getLocalTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.GameObjects.Components.TransformMatrix;`
+- `getWorldTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.GameObjects.Components.TransformMatrix;`
+- `getLocalPoint(x: number, y: number, point?: Phaser.Math.Vector2, camera?: Phaser.Cameras.Scene2D.Camera): Phaser.Math.Vector2;`
+- `getWorldPoint(point?: Phaser.Math.Vector2, tempMatrix?: Phaser.GameObjects.Components.TransformMatrix, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.Math.Vector2;`
+- `getParentRotation(): number;`
+- `visible: boolean;`
+- `setVisible(value: boolean): this;`
+
+#### class Phaser.GameObjects.Text
+- `constructor(scene: Phaser.Scene, x: number, y: number, text: string | string[], style: Phaser.Types.GameObjects.Text.TextStyle);`
+- `renderer: Phaser.Renderer.Canvas.CanvasRenderer | Phaser.Renderer.WebGL.WebGLRenderer;`
+- `canvas: HTMLCanvasElement;`
+- `context: CanvasRenderingContext2D;`
+- `style: Phaser.GameObjects.TextStyle;`
+- `autoRound: boolean;`
+- `splitRegExp: object;`
+- `padding: Phaser.Types.GameObjects.Text.TextPadding;`
+- `width: number;`
+- `height: number;`
+- `lineSpacing: number;`
+- `letterSpacing: number;`
+- `initRTL(): void;`
+- `runWordWrap(text: string): string;`
+- `advancedWordWrap(text: string, context: CanvasRenderingContext2D, wordWrapWidth: number): string;`
+- `basicWordWrap(text: string, context: CanvasRenderingContext2D, wordWrapWidth: number): string;`
+- `getWrappedText(text?: string): string[];`
+- `setText(value: string | string[]): this;`
+- `appendText(value: string | string[], addCR?: boolean): this;`
+- `setStyle(style: object): this;`
+- `setFont(font: string): this;`
+- `setFontFamily(family: string): this;`
+- `setFontSize(size: string | number): this;`
+- `setFontStyle(style: string): this;`
+- `setFixedSize(width: number, height: number): this;`
+- `setBackgroundColor(color: string): this;`
+- `setFill(color: string | CanvasGradient | CanvasPattern): this;`
+- `setColor(color: string | CanvasGradient | CanvasPattern): this;`
+- `setStroke(color: string | CanvasGradient | CanvasPattern, thickness: number): this;`
+- `setShadow(x?: number, y?: number, color?: string, blur?: number, shadowStroke?: boolean, shadowFill?: boolean): this;`
+- `setShadowOffset(x: number, y: number): this;`
+- `setShadowColor(color: string): this;`
+- `setShadowBlur(blur: number): this;`
+- `setShadowStroke(enabled: boolean): this;`
+- `setShadowFill(enabled: boolean): this;`
+- `setWordWrapWidth(width: number | null, useAdvancedWrap?: boolean): this;`
+- `setWordWrapCallback(callback: TextStyleWordWrapCallback, scope?: object): this;`
+- `setAlign(align?: string): this;`
+- `setResolution(value: number): this;`
+- `setLineSpacing(value: number): this;`
+- `setLetterSpacing(value: number): this;`
+- `setPadding(left: number | Phaser.Types.GameObjects.Text.TextPadding, top?: number, right?: number, bottom?: number): this;`
+- `setMaxLines(max?: number): this;`
+- `setRTL(rtl?: boolean): this;`
+- `updateText(): this;`
+- `getTextMetrics(): Phaser.Types.GameObjects.Text.TextMetrics;`
+- `text: string;`
+- `toJSON(): Phaser.Types.GameObjects.JSONGameObject;`
+- `protected preDestroy(): void;`
+- `filterCamera: Phaser.Cameras.Scene2D.Camera;`
+- `readonly filters: Phaser.Types.GameObjects.FiltersInternalExternal | null;`
+- `renderFilters: boolean;`
+- `maxFilterSize: Phaser.Math.Vector2;`
+- `filtersAutoFocus: boolean;`
+- `filtersFocusContext: boolean;`
+- `filtersForceComposite: boolean;`
+- `willRenderFilters(): boolean;`
+- `enableFilters(): this;`
+- `renderWebGLFilters(renderer: Phaser.Renderer.WebGL.WebGLRenderer, gameObject: Phaser.GameObjects.GameObject, drawingContext: Phaser.Renderer.WebGL.DrawingContext, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix, renderStep?: number): Phaser.Types.GameObjects.RenderWebGLStep;`
+- `focusFilters(): this;`
+- `focusFiltersOnCamera(camera: Phaser.Cameras.Scene2D.Camera): this;`
+- `focusFiltersOverride(x?: number, y?: number, width?: number, height?: number): this;`
+- `setFilterSize(width: number, height: number): this;`
+- `setFiltersAutoFocus(value: boolean): this;`
+- `setFiltersFocusContext(value: boolean): this;`
+- `setFiltersForceComposite(value: boolean): this;`
+- `setRenderFilters(value: boolean): this;`
+- `renderWebGLStep(renderer: Phaser.Renderer.WebGL.WebGLRenderer, gameObject: Phaser.GameObjects.GameObject, drawingContext: Phaser.Renderer.WebGL.DrawingContext, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix, renderStep?: number, displayList?: Phaser.GameObjects.GameObject[], displayListIndex?: number): void;`
+- `addRenderStep(fn: Phaser.Types.GameObjects.RenderWebGLStep, index?: number): this;`
+- `clearAlpha(): this;`
+- `setAlpha(topLeft?: number, topRight?: number, bottomLeft?: number, bottomRight?: number): this;`
+- `alpha: number;`
+- `alphaTopLeft: number;`
+- `alphaTopRight: number;`
+- `alphaBottomLeft: number;`
+- `alphaBottomRight: number;`
+- `blendMode: Phaser.BlendModes | string | number;`
+- `setBlendMode(value: string | Phaser.BlendModes | number): this;`
+- `displayWidth: number;`
+- `displayHeight: number;`
+- `setSize(width: number, height: number): this;`
+- `setDisplaySize(width: number, height: number): this;`
+- `texture: Phaser.Textures.Texture | Phaser.Textures.CanvasTexture;`
+- `frame: Phaser.Textures.Frame;`
+- `isCropped: boolean;`
+- `setCrop(x?: number | Phaser.Geom.Rectangle, y?: number, width?: number, height?: number): this;`
+- `depth: number;`
+- `setDepth(value: number): this;`
+- `setToTop(): this;`
+- `setToBack(): this;`
+- `setAbove(gameObject: Phaser.GameObjects.GameObject): this;`
+- `setBelow(gameObject: Phaser.GameObjects.GameObject): this;`
+- `flipX: boolean;`
+- `flipY: boolean;`
+- `toggleFlipX(): this;`
+- `toggleFlipY(): this;`
+- `setFlipX(value: boolean): this;`
+- `setFlipY(value: boolean): this;`
+- `setFlip(x: boolean, y: boolean): this;`
+- `resetFlip(): this;`
+- `getCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopLeft<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopRight<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getLeftCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getRightCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomLeft<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomRight<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBounds<O extends Phaser.Geom.Rectangle>(output?: O): O;`
+- `mask: Phaser.Display.Masks.GeometryMask;`
+- `setMask(mask: Phaser.Display.Masks.GeometryMask): this;`
+- `clearMask(destroyMask?: boolean): this;`
+- `createGeometryMask<G extends Phaser.GameObjects.Graphics, S extends Phaser.GameObjects.Shape>(graphics?: Phaser.GameObjects.Graphics | Phaser.GameObjects.Shape): Phaser.Display.Masks.GeometryMask;`
+- `originX: number;`
+- `originY: number;`
+- `displayOriginX: number;`
+- `displayOriginY: number;`
+- `setOrigin(x?: number, y?: number): this;`
+- `setOriginFromFrame(): this;`
+- `setDisplayOrigin(x?: number, y?: number): this;`
+- `updateDisplayOrigin(): this;`
+- `customRenderNodes: object;`
+- `defaultRenderNodes: object;`
+- `renderNodeData: object;`
+- `initRenderNodes(defaultNodes: Map<string, string>): void;`
+- `setRenderNodeRole(key: string, renderNode: string | Phaser.Renderer.WebGL.RenderNodes.RenderNode | null, renderNodeData?: object, copyData?: boolean): this;`
+- `setRenderNodeData(renderNode: string | Phaser.Renderer.WebGL.RenderNodes.RenderNode, key: string, value: any): this;`
+- `scrollFactorX: number;`
+- `scrollFactorY: number;`
+- `setScrollFactor(x: number, y?: number): this;`
+- `tintTopLeft: number;`
+- `tintTopRight: number;`
+- `tintBottomLeft: number;`
+- `tintBottomRight: number;`
+- `tint2TopLeft: number;`
+- `tint2TopRight: number;`
+- `tint2BottomLeft: number;`
+- `tint2BottomRight: number;`
+- `tintMode: Phaser.TintModes;`
+- `clearTint(): this;`
+- `setTint(topLeft?: number, topRight?: number, bottomLeft?: number, bottomRight?: number): this;`
+- `setTint2(topLeft?: number, topRight?: number, bottomLeft?: number, bottomRight?: number): this;`
+- `setTintMode(mode: number | Phaser.TintModes): this;`
+- `setTintFill(): void;`
+- `tint: number;`
+- `readonly isTinted: boolean;`
+- `readonly hasTransformComponent: boolean;`
+- `x: number;`
+- `y: number;`
+- `z: number;`
+- `w: number;`
+- `scale: number;`
+- `scaleX: number;`
+- `scaleY: number;`
+- `angle: number;`
+- `rotation: number;`
+- `setPosition(x?: number, y?: number, z?: number, w?: number): this;`
+- `copyPosition(source: Phaser.Types.Math.Vector2Like | Phaser.Types.Math.Vector3Like | Phaser.Types.Math.Vector4Like): this;`
+- `setRandomPosition(x?: number, y?: number, width?: number, height?: number): this;`
+- `setRotation(radians?: number): this;`
+- `setAngle(degrees?: number): this;`
+- `setScale(x?: number, y?: number): this;`
+- `setX(value?: number): this;`
+- `setY(value?: number): this;`
+- `setZ(value?: number): this;`
+- `setW(value?: number): this;`
+- `getLocalTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.GameObjects.Components.TransformMatrix;`
+- `getWorldTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.GameObjects.Components.TransformMatrix;`
+- `getLocalPoint(x: number, y: number, point?: Phaser.Math.Vector2, camera?: Phaser.Cameras.Scene2D.Camera): Phaser.Math.Vector2;`
+- `getWorldPoint(point?: Phaser.Math.Vector2, tempMatrix?: Phaser.GameObjects.Components.TransformMatrix, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.Math.Vector2;`
+- `getParentRotation(): number;`
+- `visible: boolean;`
+- `setVisible(value: boolean): this;`
+
+#### class Phaser.GameObjects.TileSprite
+- `constructor(scene: Phaser.Scene, x: number, y: number, width: number, height: number, textureKey: string, frameKey?: string | number);`
+- `dirty: boolean;`
+- `renderer: Phaser.Renderer.Canvas.CanvasRenderer | Phaser.Renderer.WebGL.WebGLRenderer;`
+- `canvas: HTMLCanvasElement | null;`
+- `context: CanvasRenderingContext2D | null;`
+- `fillCanvas: HTMLCanvasElement;`
+- `fillContext: CanvasRenderingContext2D;`
+- `fillPattern: Phaser.Renderer.WebGL.Wrappers.WebGLTextureWrapper | CanvasPattern | null;`
+- `anims: Phaser.Animations.AnimationState;`
+- `addedToScene(): void;`
+- `removedFromScene(): void;`
+- `protected preUpdate(time: number, delta: number): void;`
+- `setFrame(frame: string | number): this;`
+- `setSizeToFrame(): this;`
+- `setTilePosition(x?: number, y?: number): this;`
+- `setTileRotation(radians?: number): void;`
+- `setTileScale(x?: number, y?: number): this;`
+- `setSize(width: number, height: number): this;`
+- `protected preDestroy(): void;`
+- `tilePositionX: number;`
+- `tilePositionY: number;`
+- `tileRotation: number;`
+- `tileScaleX: number;`
+- `tileScaleY: number;`
+- `filterCamera: Phaser.Cameras.Scene2D.Camera;`
+- `readonly filters: Phaser.Types.GameObjects.FiltersInternalExternal | null;`
+- `renderFilters: boolean;`
+- `maxFilterSize: Phaser.Math.Vector2;`
+- `filtersAutoFocus: boolean;`
+- `filtersFocusContext: boolean;`
+- `filtersForceComposite: boolean;`
+- `willRenderFilters(): boolean;`
+- `enableFilters(): this;`
+- `renderWebGLFilters(renderer: Phaser.Renderer.WebGL.WebGLRenderer, gameObject: Phaser.GameObjects.GameObject, drawingContext: Phaser.Renderer.WebGL.DrawingContext, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix, renderStep?: number): Phaser.Types.GameObjects.RenderWebGLStep;`
+- `focusFilters(): this;`
+- `focusFiltersOnCamera(camera: Phaser.Cameras.Scene2D.Camera): this;`
+- `focusFiltersOverride(x?: number, y?: number, width?: number, height?: number): this;`
+- `setFilterSize(width: number, height: number): this;`
+- `setFiltersAutoFocus(value: boolean): this;`
+- `setFiltersFocusContext(value: boolean): this;`
+- `setFiltersForceComposite(value: boolean): this;`
+- `setRenderFilters(value: boolean): this;`
+- `renderWebGLStep(renderer: Phaser.Renderer.WebGL.WebGLRenderer, gameObject: Phaser.GameObjects.GameObject, drawingContext: Phaser.Renderer.WebGL.DrawingContext, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix, renderStep?: number, displayList?: Phaser.GameObjects.GameObject[], displayListIndex?: number): void;`
+- `addRenderStep(fn: Phaser.Types.GameObjects.RenderWebGLStep, index?: number): this;`
+- `clearAlpha(): this;`
+- `setAlpha(topLeft?: number, topRight?: number, bottomLeft?: number, bottomRight?: number): this;`
+- `alpha: number;`
+- `alphaTopLeft: number;`
+- `alphaTopRight: number;`
+- `alphaBottomLeft: number;`
+- `alphaBottomRight: number;`
+- `blendMode: Phaser.BlendModes | string | number;`
+- `setBlendMode(value: string | Phaser.BlendModes | number): this;`
+- `width: number;`
+- `height: number;`
+- `displayWidth: number;`
+- `displayHeight: number;`
+- `setDisplaySize(width: number, height: number): this;`
+- `depth: number;`
+- `setDepth(value: number): this;`
+- `setToTop(): this;`
+- `setToBack(): this;`
+- `setAbove(gameObject: Phaser.GameObjects.GameObject): this;`
+- `setBelow(gameObject: Phaser.GameObjects.GameObject): this;`
+- `flipX: boolean;`
+- `flipY: boolean;`
+- `toggleFlipX(): this;`
+- `toggleFlipY(): this;`
+- `setFlipX(value: boolean): this;`
+- `setFlipY(value: boolean): this;`
+- `setFlip(x: boolean, y: boolean): this;`
+- `resetFlip(): this;`
+- `getCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopLeft<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopRight<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getLeftCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getRightCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomLeft<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomRight<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBounds<O extends Phaser.Geom.Rectangle>(output?: O): O;`
+- `readonly lighting: boolean;`
+- `selfShadow: Object;`
+- `setLighting(enable: boolean): this;`
+- `setSelfShadow(enabled?: boolean | undefined, penumbra?: number, diffuseFlatThreshold?: number): this;`
+- `mask: Phaser.Display.Masks.GeometryMask;`
+- `setMask(mask: Phaser.Display.Masks.GeometryMask): this;`
+- `clearMask(destroyMask?: boolean): this;`
+- `createGeometryMask<G extends Phaser.GameObjects.Graphics, S extends Phaser.GameObjects.Shape>(graphics?: Phaser.GameObjects.Graphics | Phaser.GameObjects.Shape): Phaser.Display.Masks.GeometryMask;`
+- `originX: number;`
+- `originY: number;`
+- `displayOriginX: number;`
+- `displayOriginY: number;`
+- `setOrigin(x?: number, y?: number): this;`
+- `setOriginFromFrame(): this;`
+- `setDisplayOrigin(x?: number, y?: number): this;`
+- `updateDisplayOrigin(): this;`
+- `customRenderNodes: object;`
+- `defaultRenderNodes: object;`
+- `renderNodeData: object;`
+- `initRenderNodes(defaultNodes: Map<string, string>): void;`
+- `setRenderNodeRole(key: string, renderNode: string | Phaser.Renderer.WebGL.RenderNodes.RenderNode | null, renderNodeData?: object, copyData?: boolean): this;`
+- `setRenderNodeData(renderNode: string | Phaser.Renderer.WebGL.RenderNodes.RenderNode, key: string, value: any): this;`
+- `scrollFactorX: number;`
+- `scrollFactorY: number;`
+- `setScrollFactor(x: number, y?: number): this;`
+- `texture: Phaser.Textures.Texture | Phaser.Textures.CanvasTexture;`
+- `frame: Phaser.Textures.Frame;`
+- `setTexture(key: string | Phaser.Textures.Texture, frame?: string | number, updateSize?: boolean, updateOrigin?: boolean): this;`
+- `tintTopLeft: number;`
+- `tintTopRight: number;`
+- `tintBottomLeft: number;`
+- `tintBottomRight: number;`
+- `tint2TopLeft: number;`
+- `tint2TopRight: number;`
+- `tint2BottomLeft: number;`
+- `tint2BottomRight: number;`
+- `tintMode: Phaser.TintModes;`
+- `clearTint(): this;`
+- `setTint(topLeft?: number, topRight?: number, bottomLeft?: number, bottomRight?: number): this;`
+- `setTint2(topLeft?: number, topRight?: number, bottomLeft?: number, bottomRight?: number): this;`
+- `setTintMode(mode: number | Phaser.TintModes): this;`
+- `setTintFill(): void;`
+- `tint: number;`
+- `readonly isTinted: boolean;`
+- `readonly hasTransformComponent: boolean;`
+- `x: number;`
+- `y: number;`
+- `z: number;`
+- `w: number;`
+- `scale: number;`
+- `scaleX: number;`
+- `scaleY: number;`
+- `angle: number;`
+- `rotation: number;`
+- `setPosition(x?: number, y?: number, z?: number, w?: number): this;`
+- `copyPosition(source: Phaser.Types.Math.Vector2Like | Phaser.Types.Math.Vector3Like | Phaser.Types.Math.Vector4Like): this;`
+- `setRandomPosition(x?: number, y?: number, width?: number, height?: number): this;`
+- `setRotation(radians?: number): this;`
+- `setAngle(degrees?: number): this;`
+- `setScale(x?: number, y?: number): this;`
+- `setX(value?: number): this;`
+- `setY(value?: number): this;`
+- `setZ(value?: number): this;`
+- `setW(value?: number): this;`
+- `getLocalTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.GameObjects.Components.TransformMatrix;`
+- `getWorldTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.GameObjects.Components.TransformMatrix;`
+- `getLocalPoint(x: number, y: number, point?: Phaser.Math.Vector2, camera?: Phaser.Cameras.Scene2D.Camera): Phaser.Math.Vector2;`
+- `getWorldPoint(point?: Phaser.Math.Vector2, tempMatrix?: Phaser.GameObjects.Components.TransformMatrix, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.Math.Vector2;`
+- `getParentRotation(): number;`
+- `visible: boolean;`
+- `setVisible(value: boolean): this;`
+
+#### class Phaser.GameObjects.Zone
+- `constructor(scene: Phaser.Scene, x: number, y: number, width?: number, height?: number);`
+- `width: number;`
+- `height: number;`
+- `blendMode: number;`
+- `displayWidth: number;`
+- `displayHeight: number;`
+- `setSize(width: number, height: number, resizeInput?: boolean): this;`
+- `setDisplaySize(width: number, height: number): this;`
+- `setCircleDropZone(radius: number): this;`
+- `setRectangleDropZone(width: number, height: number): this;`
+- `setDropZone(hitArea?: object, hitAreaCallback?: Phaser.Types.Input.HitAreaCallback): this;`
+- `filterCamera: Phaser.Cameras.Scene2D.Camera;`
+- `readonly filters: Phaser.Types.GameObjects.FiltersInternalExternal | null;`
+- `renderFilters: boolean;`
+- `maxFilterSize: Phaser.Math.Vector2;`
+- `filtersAutoFocus: boolean;`
+- `filtersFocusContext: boolean;`
+- `filtersForceComposite: boolean;`
+- `willRenderFilters(): boolean;`
+- `enableFilters(): this;`
+- `renderWebGLFilters(renderer: Phaser.Renderer.WebGL.WebGLRenderer, gameObject: Phaser.GameObjects.GameObject, drawingContext: Phaser.Renderer.WebGL.DrawingContext, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix, renderStep?: number): Phaser.Types.GameObjects.RenderWebGLStep;`
+- `focusFilters(): this;`
+- `focusFiltersOnCamera(camera: Phaser.Cameras.Scene2D.Camera): this;`
+- `focusFiltersOverride(x?: number, y?: number, width?: number, height?: number): this;`
+- `setFilterSize(width: number, height: number): this;`
+- `setFiltersAutoFocus(value: boolean): this;`
+- `setFiltersFocusContext(value: boolean): this;`
+- `setFiltersForceComposite(value: boolean): this;`
+- `setRenderFilters(value: boolean): this;`
+- `renderWebGLStep(renderer: Phaser.Renderer.WebGL.WebGLRenderer, gameObject: Phaser.GameObjects.GameObject, drawingContext: Phaser.Renderer.WebGL.DrawingContext, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix, renderStep?: number, displayList?: Phaser.GameObjects.GameObject[], displayListIndex?: number): void;`
+- `addRenderStep(fn: Phaser.Types.GameObjects.RenderWebGLStep, index?: number): this;`
+- `depth: number;`
+- `setDepth(value: number): this;`
+- `setToTop(): this;`
+- `setToBack(): this;`
+- `setAbove(gameObject: Phaser.GameObjects.GameObject): this;`
+- `setBelow(gameObject: Phaser.GameObjects.GameObject): this;`
+- `getCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopLeft<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopRight<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getLeftCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getRightCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomLeft<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomRight<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBounds<O extends Phaser.Geom.Rectangle>(output?: O): O;`
+- `originX: number;`
+- `originY: number;`
+- `displayOriginX: number;`
+- `displayOriginY: number;`
+- `setOrigin(x?: number, y?: number): this;`
+- `setOriginFromFrame(): this;`
+- `setDisplayOrigin(x?: number, y?: number): this;`
+- `updateDisplayOrigin(): this;`
+- `readonly hasTransformComponent: boolean;`
+- `x: number;`
+- `y: number;`
+- `z: number;`
+- `w: number;`
+- `scale: number;`
+- `scaleX: number;`
+- `scaleY: number;`
+- `angle: number;`
+- `rotation: number;`
+- `setPosition(x?: number, y?: number, z?: number, w?: number): this;`
+- `copyPosition(source: Phaser.Types.Math.Vector2Like | Phaser.Types.Math.Vector3Like | Phaser.Types.Math.Vector4Like): this;`
+- `setRandomPosition(x?: number, y?: number, width?: number, height?: number): this;`
+- `setRotation(radians?: number): this;`
+- `setAngle(degrees?: number): this;`
+- `setScale(x?: number, y?: number): this;`
+- `setX(value?: number): this;`
+- `setY(value?: number): this;`
+- `setZ(value?: number): this;`
+- `setW(value?: number): this;`
+- `getLocalTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.GameObjects.Components.TransformMatrix;`
+- `getWorldTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.GameObjects.Components.TransformMatrix;`
+- `getLocalPoint(x: number, y: number, point?: Phaser.Math.Vector2, camera?: Phaser.Cameras.Scene2D.Camera): Phaser.Math.Vector2;`
+- `getWorldPoint(point?: Phaser.Math.Vector2, tempMatrix?: Phaser.GameObjects.Components.TransformMatrix, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.Math.Vector2;`
+- `getParentRotation(): number;`
+- `scrollFactorX: number;`
+- `scrollFactorY: number;`
+- `setScrollFactor(x: number, y?: number): this;`
+- `visible: boolean;`
+- `setVisible(value: boolean): this;`
+
+### namespace Phaser.Geom
+#### class Phaser.Geom.Rectangle
+- `constructor(x?: number, y?: number, width?: number, height?: number);`
+- `static Area(rect: Phaser.Geom.Rectangle): number;`
+- `static Ceil<O extends Phaser.Geom.Rectangle>(rect: O): O;`
+- `static CeilAll<O extends Phaser.Geom.Rectangle>(rect: O): O;`
+- `static CenterOn<O extends Phaser.Geom.Rectangle>(rect: O, x: number, y: number): O;`
+- `static Clone(source: Phaser.Geom.Rectangle): Phaser.Geom.Rectangle;`
+- `static Contains(rect: Phaser.Geom.Rectangle, x: number, y: number): boolean;`
+- `static ContainsPoint(rect: Phaser.Geom.Rectangle, vec: Phaser.Math.Vector2): boolean;`
+- `static ContainsRect(rectA: Phaser.Geom.Rectangle, rectB: Phaser.Geom.Rectangle): boolean;`
+- `static CopyFrom<O extends Phaser.Geom.Rectangle>(source: Phaser.Geom.Rectangle, dest: O): O;`
+- `static Decompose(rect: Phaser.Geom.Rectangle, out?: any[]): any[];`
+- `static Equals(rect: Phaser.Geom.Rectangle, toCompare: Phaser.Geom.Rectangle): boolean;`
+- `static FitInside<O extends Phaser.Geom.Rectangle>(target: O, source: Phaser.Geom.Rectangle): O;`
+- `static FitOutside<O extends Phaser.Geom.Rectangle>(target: O, source: Phaser.Geom.Rectangle): O;`
+- `static Floor<O extends Phaser.Geom.Rectangle>(rect: O): O;`
+- `static FloorAll<O extends Phaser.Geom.Rectangle>(rect: O): O;`
+- `static FromPoints<O extends Phaser.Geom.Rectangle>(points: any[], out?: O): O;`
+- `static FromXY<O extends Phaser.Geom.Rectangle>(x1: number, y1: number, x2: number, y2: number, out?: O): O;`
+- `static GetAspectRatio(rect: Phaser.Geom.Rectangle): number;`
+- `static GetCenter<O extends Phaser.Math.Vector2>(rect: Phaser.Geom.Rectangle, out?: O): O;`
+- `static GetPoint<O extends Phaser.Math.Vector2>(rectangle: Phaser.Geom.Rectangle, position: number, out?: O): O;`
+- `static GetPoints<O extends Phaser.Math.Vector2[]>(rectangle: Phaser.Geom.Rectangle, quantity: number, stepRate: number, out?: O): O;`
+- `static GetSize<O extends Phaser.Math.Vector2>(rect: Phaser.Geom.Rectangle, out?: O): O;`
+- `static Inflate<O extends Phaser.Geom.Rectangle>(rect: O, x: number, y: number): O;`
+- `static Intersection<O extends Phaser.Geom.Rectangle>(rectA: Phaser.Geom.Rectangle, rectB: Phaser.Geom.Rectangle, out?: Phaser.Geom.Rectangle): O;`
+- `static MarchingAnts<O extends Phaser.Math.Vector2[]>(rect: Phaser.Geom.Rectangle, step?: number, quantity?: number, out?: O): O;`
+- `static MergePoints<O extends Phaser.Geom.Rectangle>(target: O, points: Phaser.Math.Vector2[]): O;`
+- `static MergeRect<O extends Phaser.Geom.Rectangle>(target: O, source: Phaser.Geom.Rectangle): O;`
+- `static MergeXY<O extends Phaser.Geom.Rectangle>(target: O, x: number, y: number): O;`
+- `static Offset<O extends Phaser.Geom.Rectangle>(rect: O, x: number, y: number): O;`
+- `static OffsetPoint<O extends Phaser.Geom.Rectangle>(rect: O, vec: Phaser.Math.Vector2): O;`
+- `static Overlaps(rectA: Phaser.Geom.Rectangle, rectB: Phaser.Geom.Rectangle): boolean;`
+- `static Perimeter(rect: Phaser.Geom.Rectangle): number;`
+- `static PerimeterPoint<O extends Phaser.Math.Vector2>(rectangle: Phaser.Geom.Rectangle, angle: number, out?: O): O;`
+- `static Random<O extends Phaser.Math.Vector2>(rect: Phaser.Geom.Rectangle, out: O): O;`
+- `static RandomOutside<O extends Phaser.Math.Vector2>(outer: Phaser.Geom.Rectangle, inner: Phaser.Geom.Rectangle, out?: O): O;`
+- `readonly type: number;`
+- `x: number;`
+- `y: number;`
+- `width: number;`
+- `height: number;`
+- `contains(x: number, y: number): boolean;`
+- `getPoint<O extends Phaser.Math.Vector2>(position: number, output?: O): O;`
+- `getPoints<O extends Phaser.Math.Vector2[]>(quantity: number, stepRate?: number, output?: O): O;`
+- `getRandomPoint<O extends Phaser.Math.Vector2>(vec?: Phaser.Math.Vector2): O;`
+- `setTo(x: number, y: number, width: number, height: number): this;`
+- `setEmpty(): this;`
+- `setPosition(x: number, y?: number): this;`
+- `setSize(width: number, height?: number): this;`
+- `isEmpty(): boolean;`
+- `getLineA<O extends Phaser.Geom.Line>(line?: O): O;`
+- `getLineB<O extends Phaser.Geom.Line>(line?: O): O;`
+- `getLineC<O extends Phaser.Geom.Line>(line?: O): O;`
+- `getLineD<O extends Phaser.Geom.Line>(line?: O): O;`
+- `left: number;`
+- `right: number;`
+- `top: number;`
+- `bottom: number;`
+- `centerX: number;`
+- `centerY: number;`
+- `static SameDimensions(rect: Phaser.Geom.Rectangle, toCompare: Phaser.Geom.Rectangle): boolean;`
+- `static Scale<O extends Phaser.Geom.Rectangle>(rect: O, x: number, y: number): O;`
+- `static Union<O extends Phaser.Geom.Rectangle>(rectA: Phaser.Geom.Rectangle, rectB: Phaser.Geom.Rectangle, out?: O): O;`
+
+### namespace Phaser.Input
+#### namespace Phaser.Input.Gamepad
+##### class Phaser.Input.Gamepad.Axis
+- `constructor(pad: Phaser.Input.Gamepad.Gamepad, index: number);`
+- `pad: Phaser.Input.Gamepad.Gamepad;`
+- `events: Phaser.Events.EventEmitter;`
+- `index: number;`
+- `value: number;`
+- `threshold: number;`
+- `getValue(): number;`
+- `destroy(): void;`
+##### class Phaser.Input.Gamepad.Button
+- `constructor(pad: Phaser.Input.Gamepad.Gamepad, index: number, isPressed?: boolean);`
+- `pad: Phaser.Input.Gamepad.Gamepad;`
+- `events: Phaser.Events.EventEmitter;`
+- `index: number;`
+- `value: number;`
+- `threshold: number;`
+- `pressed: boolean;`
+- `destroy(): void;`
+##### namespace Phaser.Input.Gamepad.Configs
+###### namespace Phaser.Input.Gamepad.Configs.SNES_USB
+- `const UP: number;`
+- `const DOWN: number;`
+- `const LEFT: number;`
+- `const RIGHT: number;`
+- `const SELECT: number;`
+- `const START: number;`
+- `const B: number;`
+- `const A: number;`
+- `const Y: number;`
+- `const X: number;`
+- `const LEFT_SHOULDER: number;`
+- `const RIGHT_SHOULDER: number;`
+###### namespace Phaser.Input.Gamepad.Configs.DUALSHOCK_4
+- `const UP: number;`
+- `const DOWN: number;`
+- `const LEFT: number;`
+- `const RIGHT: number;`
+- `const SHARE: number;`
+- `const OPTIONS: number;`
+- `const PS: number;`
+- `const TOUCHBAR: number;`
+- `const X: number;`
+- `const CIRCLE: number;`
+- `const SQUARE: number;`
+- `const TRIANGLE: number;`
+- `const L1: number;`
+- `const R1: number;`
+- `const L2: number;`
+- `const R2: number;`
+- `const L3: number;`
+- `const R3: number;`
+- `const LEFT_STICK_H: number;`
+- `const LEFT_STICK_V: number;`
+- `const RIGHT_STICK_H: number;`
+- `const RIGHT_STICK_V: number;`
+###### namespace Phaser.Input.Gamepad.Configs.XBOX_360
+- `const UP: number;`
+- `const DOWN: number;`
+- `const LEFT: number;`
+- `const RIGHT: number;`
+- `const MENU: number;`
+- `const A: number;`
+- `const B: number;`
+- `const X: number;`
+- `const Y: number;`
+- `const LB: number;`
+- `const RB: number;`
+- `const LT: number;`
+- `const RT: number;`
+- `const BACK: number;`
+- `const START: number;`
+- `const LS: number;`
+- `const RS: number;`
+- `const LEFT_STICK_H: number;`
+- `const LEFT_STICK_V: number;`
+- `const RIGHT_STICK_H: number;`
+- `const RIGHT_STICK_V: number;`
+##### namespace Phaser.Input.Gamepad.Events
+- `const BUTTON_DOWN: string;`
+- `const BUTTON_UP: string;`
+- `const CONNECTED: string;`
+- `const DISCONNECTED: string;`
+- `const GAMEPAD_BUTTON_DOWN: string;`
+- `const GAMEPAD_BUTTON_UP: string;`
+##### class Phaser.Input.Gamepad.Gamepad
+- `constructor(manager: Phaser.Input.Gamepad.GamepadPlugin, pad: Phaser.Types.Input.Gamepad.Pad);`
+- `manager: Phaser.Input.Gamepad.GamepadPlugin;`
+- `pad: any;`
+- `id: string;`
+- `index: number;`
+- `buttons: Phaser.Input.Gamepad.Button[];`
+- `axes: Phaser.Input.Gamepad.Axis[];`
+- `vibration: GamepadHapticActuator;`
+- `leftStick: Phaser.Math.Vector2;`
+- `rightStick: Phaser.Math.Vector2;`
+- `getAxisTotal(): number;`
+- `getAxisValue(index: number): number;`
+- `setAxisThreshold(value: number): void;`
+- `getButtonTotal(): number;`
+- `getButtonValue(index: number): number;`
+- `isButtonDown(index: number): boolean;`
+- `destroy(): void;`
+- `connected: boolean;`
+- `timestamp: number;`
+- `left: boolean;`
+- `right: boolean;`
+- `up: boolean;`
+- `down: boolean;`
+- `A: boolean;`
+- `Y: boolean;`
+- `X: boolean;`
+- `B: boolean;`
+- `L1: number;`
+- `L2: number;`
+- `R1: number;`
+- `R2: number;`
+##### class Phaser.Input.Gamepad.GamepadPlugin
+- `constructor(sceneInputPlugin: Phaser.Input.InputPlugin);`
+- `scene: Phaser.Scene;`
+- `settings: Phaser.Types.Scenes.SettingsObject;`
+- `sceneInputPlugin: Phaser.Input.InputPlugin;`
+- `enabled: boolean;`
+- `target: any;`
+- `gamepads: Phaser.Input.Gamepad.Gamepad[];`
+- `isActive(): boolean;`
+- `disconnectAll(): void;`
+- `getAll(): Phaser.Input.Gamepad.Gamepad[];`
+- `getPad(index: number): Phaser.Input.Gamepad.Gamepad;`
+- `total: number;`
+- `pad1: Phaser.Input.Gamepad.Gamepad;`
+- `pad2: Phaser.Input.Gamepad.Gamepad;`
+- `pad3: Phaser.Input.Gamepad.Gamepad;`
+- `pad4: Phaser.Input.Gamepad.Gamepad;`
+
+#### class Phaser.Input.InputPlugin
+- `constructor(scene: Phaser.Scene);`
+- `gamepad: Phaser.Input.Gamepad.GamepadPlugin | null;`
+- `scene: Phaser.Scene;`
+- `systems: Phaser.Scenes.Systems;`
+- `settings: Phaser.Types.Scenes.SettingsObject;`
+- `manager: Phaser.Input.InputManager;`
+- `enabled: boolean;`
+- `displayList: Phaser.GameObjects.DisplayList;`
+- `cameras: Phaser.Cameras.Scene2D.CameraManager;`
+- `mouse: Phaser.Input.Mouse.MouseManager | null;`
+- `topOnly: boolean;`
+- `pollRate: number;`
+- `dragDistanceThreshold: number;`
+- `dragTimeThreshold: number;`
+- `isActive(): boolean;`
+- `setCursor(interactiveObject: Phaser.Types.Input.InteractiveObject): void;`
+- `resetCursor(): void;`
+- `updatePoll(time: number, delta: number): boolean;`
+- `clear(gameObject: Phaser.GameObjects.GameObject, skipQueue?: boolean): Phaser.GameObjects.GameObject;`
+- `disable(gameObject: Phaser.GameObjects.GameObject, resetCursor?: boolean): this;`
+- `enable(gameObject: Phaser.GameObjects.GameObject, hitArea?: Phaser.Types.Input.InputConfiguration | any, hitAreaCallback?: Phaser.Types.Input.HitAreaCallback, dropZone?: boolean): this;`
+- `hitTestPointer(pointer: Phaser.Input.Pointer): Phaser.GameObjects.GameObject[];`
+- `getDragState(pointer: Phaser.Input.Pointer): number;`
+- `setDragState(pointer: Phaser.Input.Pointer, state: number): void;`
+- `forceDownState(pointer: Phaser.Input.Pointer, gameObject: Phaser.GameObjects.GameObject): void;`
+- `forceUpState(pointer: Phaser.Input.Pointer, gameObject: Phaser.GameObjects.GameObject): void;`
+- `forceOverState(pointer: Phaser.Input.Pointer, gameObject: Phaser.GameObjects.GameObject): void;`
+- `forceOutState(pointer: Phaser.Input.Pointer, gameObject: Phaser.GameObjects.GameObject): void;`
+- `forceState(pointer: Phaser.Input.Pointer, gameObject: Phaser.GameObjects.GameObject, gameObjectEvent: string, inputPluginEvent: string, setCursor?: boolean): void;`
+- `setDraggable(gameObjects: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[], value?: boolean): this;`
+- `makePixelPerfect(alphaTolerance?: number): Function;`
+- `setHitArea(gameObjects: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[], hitArea?: Phaser.Types.Input.InputConfiguration | Phaser.Types.Input.HitAreaCallback | any, hitAreaCallback?: Phaser.Types.Input.HitAreaCallback): this;`
+- `setHitAreaCircle(gameObjects: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[], x: number, y: number, radius: number, callback?: Phaser.Types.Input.HitAreaCallback): this;`
+- `setHitAreaEllipse(gameObjects: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[], x: number, y: number, width: number, height: number, callback?: Phaser.Types.Input.HitAreaCallback): this;`
+- `setHitAreaFromTexture(gameObjects: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[], callback?: Phaser.Types.Input.HitAreaCallback): this;`
+- `setHitAreaRectangle(gameObjects: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[], x: number, y: number, width: number, height: number, callback?: Phaser.Types.Input.HitAreaCallback): this;`
+- `setHitAreaTriangle(gameObjects: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[], x1: number, y1: number, x2: number, y2: number, x3: number, y3: number, callback?: Phaser.Types.Input.HitAreaCallback): this;`
+- `enableDebug(gameObject: Phaser.GameObjects.GameObject, color?: number): this;`
+- `removeDebug(gameObject: Phaser.GameObjects.GameObject): this;`
+- `setPollAlways(): this;`
+- `setPollOnMove(): this;`
+- `setPollRate(value: number): this;`
+- `setGlobalTopOnly(value: boolean): this;`
+- `setTopOnly(value: boolean): this;`
+- `sortGameObjects(gameObjects: Phaser.GameObjects.GameObject[], pointer: Phaser.Input.Pointer): Phaser.GameObjects.GameObject[];`
+- `sortDropZones(gameObjects: Phaser.GameObjects.GameObject[]): Phaser.GameObjects.GameObject[];`
+- `stopPropagation(): this;`
+- `addPointer(quantity?: number): Phaser.Input.Pointer[];`
+- `setDefaultCursor(cursor: string): this;`
+- `resetPointers(): void;`
+- `readonly x: number;`
+- `readonly y: number;`
+- `readonly isOver: boolean;`
+- `readonly mousePointer: Phaser.Input.Pointer;`
+- `readonly activePointer: Phaser.Input.Pointer;`
+- `readonly pointer1: Phaser.Input.Pointer;`
+- `readonly pointer2: Phaser.Input.Pointer;`
+- `readonly pointer3: Phaser.Input.Pointer;`
+- `readonly pointer4: Phaser.Input.Pointer;`
+- `readonly pointer5: Phaser.Input.Pointer;`
+- `readonly pointer6: Phaser.Input.Pointer;`
+- `readonly pointer7: Phaser.Input.Pointer;`
+- `readonly pointer8: Phaser.Input.Pointer;`
+- `readonly pointer9: Phaser.Input.Pointer;`
+- `readonly pointer10: Phaser.Input.Pointer;`
+- `keyboard: Phaser.Input.Keyboard.KeyboardPlugin | null;`
+
+#### namespace Phaser.Input.Keyboard
+##### class Phaser.Input.Keyboard.KeyboardPlugin
+- `constructor(sceneInputPlugin: Phaser.Input.InputPlugin);`
+- `game: Phaser.Game;`
+- `scene: Phaser.Scene;`
+- `settings: Phaser.Types.Scenes.SettingsObject;`
+- `sceneInputPlugin: Phaser.Input.InputPlugin;`
+- `manager: Phaser.Input.Keyboard.KeyboardManager;`
+- `enabled: boolean;`
+- `keys: Phaser.Input.Keyboard.Key[];`
+- `combos: Phaser.Input.Keyboard.KeyCombo[];`
+- `isActive(): boolean;`
+- `addCapture(keycode: string | number | number[] | any[]): this;`
+- `removeCapture(keycode: string | number | number[] | any[]): this;`
+- `getCaptures(): number[];`
+- `enableGlobalCapture(): this;`
+- `disableGlobalCapture(): this;`
+- `clearCaptures(): this;`
+- `createCursorKeys(): Phaser.Types.Input.Keyboard.CursorKeys;`
+- `addKeys(keys: object | string, enableCapture?: boolean, emitOnRepeat?: boolean): object;`
+- `addKey(key: Phaser.Input.Keyboard.Key | string | number, enableCapture?: boolean, emitOnRepeat?: boolean): Phaser.Input.Keyboard.Key;`
+- `removeKey(key: Phaser.Input.Keyboard.Key | string | number, destroy?: boolean, removeCapture?: boolean): this;`
+- `removeAllKeys(destroy?: boolean, removeCapture?: boolean): this;`
+- `createCombo(keys: string | number[] | object[], config?: Phaser.Types.Input.Keyboard.KeyComboConfig): Phaser.Input.Keyboard.KeyCombo;`
+- `checkDown(key: Phaser.Input.Keyboard.Key, duration?: number): boolean;`
+- `resetKeys(): this;`
+
+##### class Phaser.Input.Keyboard.Key
+- `constructor(plugin: Phaser.Input.Keyboard.KeyboardPlugin, keyCode: number);`
+- `plugin: Phaser.Input.Keyboard.KeyboardPlugin;`
+- `keyCode: number;`
+- `originalEvent: KeyboardEvent;`
+- `enabled: boolean;`
+- `isDown: boolean;`
+- `isUp: boolean;`
+- `altKey: boolean;`
+- `ctrlKey: boolean;`
+- `shiftKey: boolean;`
+- `metaKey: boolean;`
+- `location: number;`
+- `timeDown: number;`
+- `duration: number;`
+- `timeUp: number;`
+- `emitOnRepeat: boolean;`
+- `repeats: number;`
+- `setEmitOnRepeat(value: boolean): this;`
+- `onDown(event: KeyboardEvent): void;`
+- `onUp(event: KeyboardEvent): void;`
+- `reset(): this;`
+- `getDuration(): number;`
+- `destroy(): void;`
+
+##### namespace Phaser.Input.Keyboard.KeyCodes
+- `var BACKSPACE: number;`
+- `var TAB: number;`
+- `var ENTER: number;`
+- `var SHIFT: number;`
+- `var CTRL: number;`
+- `var ALT: number;`
+- `var PAUSE: number;`
+- `var CAPS_LOCK: number;`
+- `var ESC: number;`
+- `var SPACE: number;`
+- `var PAGE_UP: number;`
+- `var PAGE_DOWN: number;`
+- `var END: number;`
+- `var HOME: number;`
+- `var LEFT: number;`
+- `var UP: number;`
+- `var RIGHT: number;`
+- `var DOWN: number;`
+- `var PRINT_SCREEN: number;`
+- `var INSERT: number;`
+- `var DELETE: number;`
+- `var ZERO: number;`
+- `var ONE: number;`
+- `var TWO: number;`
+- `var THREE: number;`
+- `var FOUR: number;`
+- `var FIVE: number;`
+- `var SIX: number;`
+- `var SEVEN: number;`
+- `var EIGHT: number;`
+- `var NINE: number;`
+- `var NUMPAD_ZERO: number;`
+- `var NUMPAD_ONE: number;`
+- `var NUMPAD_TWO: number;`
+- `var NUMPAD_THREE: number;`
+- `var NUMPAD_FOUR: number;`
+- `var NUMPAD_FIVE: number;`
+- `var NUMPAD_SIX: number;`
+- `var NUMPAD_SEVEN: number;`
+- `var NUMPAD_EIGHT: number;`
+- `var NUMPAD_NINE: number;`
+- `var NUMPAD_ADD: number;`
+- `var NUMPAD_SUBTRACT: number;`
+- `var A: number;`
+- `var B: number;`
+- `var C: number;`
+- `var D: number;`
+- `var E: number;`
+- `var F: number;`
+- `var G: number;`
+- `var H: number;`
+- `var I: number;`
+- `var J: number;`
+- `var K: number;`
+- `var L: number;`
+- `var M: number;`
+- `var N: number;`
+- `var O: number;`
+- `var P: number;`
+- `var Q: number;`
+- `var R: number;`
+- `var S: number;`
+- `var T: number;`
+- `var U: number;`
+- `var V: number;`
+- `var W: number;`
+- `var X: number;`
+- `var Y: number;`
+- `var Z: number;`
+- `var F1: number;`
+- `var F2: number;`
+- `var F3: number;`
+- `var F4: number;`
+- `var F5: number;`
+- `var F6: number;`
+- `var F7: number;`
+- `var F8: number;`
+- `var F9: number;`
+- `var F10: number;`
+- `var F11: number;`
+- `var F12: number;`
+- `var SEMICOLON: number;`
+- `var PLUS: number;`
+- `var COMMA: number;`
+- `var MINUS: number;`
+- `var PERIOD: number;`
+- `var FORWARD_SLASH: number;`
+- `var BACK_SLASH: number;`
+- `var QUOTES: number;`
+- `var BACKTICK: number;`
+- `var OPEN_BRACKET: number;`
+- `var CLOSED_BRACKET: number;`
+- `var SEMICOLON_FIREFOX: number;`
+- `var COLON: number;`
+- `var COMMA_FIREFOX_WINDOWS: number;`
+- `var COMMA_FIREFOX: number;`
+- `var BRACKET_RIGHT_FIREFOX: number;`
+- `var BRACKET_LEFT_FIREFOX: number;`
+
+### namespace Phaser.Loader
+#### class Phaser.Loader.LoaderPlugin
+- `constructor(scene: Phaser.Scene);`
+- `animation(key: string | Phaser.Types.Loader.FileTypes.JSONFileConfig | Phaser.Types.Loader.FileTypes.JSONFileConfig[], url?: string, dataKey?: string, xhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `aseprite(key: string | Phaser.Types.Loader.FileTypes.AsepriteFileConfig | Phaser.Types.Loader.FileTypes.AsepriteFileConfig[], textureURL?: string | string[], atlasURL?: object | string, textureXhrSettings?: Phaser.Types.Loader.XHRSettingsObject, atlasXhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `atlas(key: string | Phaser.Types.Loader.FileTypes.AtlasJSONFileConfig | Phaser.Types.Loader.FileTypes.AtlasJSONFileConfig[], textureURL?: string | string[], atlasURL?: object | string, textureXhrSettings?: Phaser.Types.Loader.XHRSettingsObject, atlasXhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `atlasXML(key: string | Phaser.Types.Loader.FileTypes.AtlasXMLFileConfig | Phaser.Types.Loader.FileTypes.AtlasXMLFileConfig[], textureURL?: string | string[], atlasURL?: string, textureXhrSettings?: Phaser.Types.Loader.XHRSettingsObject, atlasXhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `audio(key: string | Phaser.Types.Loader.FileTypes.AudioFileConfig | Phaser.Types.Loader.FileTypes.AudioFileConfig[], urls?: string | string[] | Phaser.Types.Loader.FileTypes.AudioFileURLConfig | Phaser.Types.Loader.FileTypes.AudioFileURLConfig[], config?: any, xhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `audioSprite(key: string | Phaser.Types.Loader.FileTypes.AudioSpriteFileConfig | Phaser.Types.Loader.FileTypes.AudioSpriteFileConfig[], jsonURL: string, audioURL?: string | string[], audioConfig?: any, audioXhrSettings?: Phaser.Types.Loader.XHRSettingsObject, jsonXhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `binary(key: string | Phaser.Types.Loader.FileTypes.BinaryFileConfig | Phaser.Types.Loader.FileTypes.BinaryFileConfig[], url?: string, dataType?: any, xhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `bitmapFont(key: string | Phaser.Types.Loader.FileTypes.BitmapFontFileConfig | Phaser.Types.Loader.FileTypes.BitmapFontFileConfig[], textureURL?: string | string[], fontDataURL?: string, textureXhrSettings?: Phaser.Types.Loader.XHRSettingsObject, fontDataXhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `texture(key: string | Phaser.Types.Loader.FileTypes.CompressedTextureFileConfig | Phaser.Types.Loader.FileTypes.CompressedTextureFileConfig[], url?: Phaser.Types.Loader.FileTypes.CompressedTextureFileConfig, xhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `css(key: string | Phaser.Types.Loader.FileTypes.CSSFileConfig | Phaser.Types.Loader.FileTypes.CSSFileConfig[], url?: string, xhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `font(key: string | Phaser.Types.Loader.FileTypes.FontFileConfig | Phaser.Types.Loader.FileTypes.FontFileConfig[], url?: string, format?: string, descriptors?: object, xhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `glsl(key: string | Phaser.Types.Loader.FileTypes.GLSLFileConfig | Phaser.Types.Loader.FileTypes.GLSLFileConfig[], url?: string, xhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `html(key: string | Phaser.Types.Loader.FileTypes.HTMLFileConfig | Phaser.Types.Loader.FileTypes.HTMLFileConfig[], url?: string, xhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `htmlTexture(key: string | Phaser.Types.Loader.FileTypes.HTMLTextureFileConfig | Phaser.Types.Loader.FileTypes.HTMLTextureFileConfig[], url?: string, width?: number, height?: number, xhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `image(key: string | Phaser.Types.Loader.FileTypes.ImageFileConfig | Phaser.Types.Loader.FileTypes.ImageFileConfig[], url?: string | string[], xhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `json(key: string | Phaser.Types.Loader.FileTypes.JSONFileConfig | Phaser.Types.Loader.FileTypes.JSONFileConfig[], url?: object | string, dataKey?: string, xhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `multiatlas(key: string | Phaser.Types.Loader.FileTypes.MultiAtlasFileConfig | Phaser.Types.Loader.FileTypes.MultiAtlasFileConfig[], atlasURL?: string, path?: string, baseURL?: string, atlasXhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `scripts(key: string | Phaser.Types.Loader.FileTypes.MultiScriptFileConfig | Phaser.Types.Loader.FileTypes.MultiScriptFileConfig[], url?: string[], extension?: string, xhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `pack(key: string | Phaser.Types.Loader.FileTypes.PackFileConfig | Phaser.Types.Loader.FileTypes.PackFileConfig[], url?: string, dataKey?: string, xhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `atlasPCT(key: string | Phaser.Types.Loader.FileTypes.PCTAtlasFileConfig | Phaser.Types.Loader.FileTypes.PCTAtlasFileConfig[], atlasURL?: string, path?: string, baseURL?: string, atlasXhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `plugin(key: string | Phaser.Types.Loader.FileTypes.PluginFileConfig | Phaser.Types.Loader.FileTypes.PluginFileConfig[], url?: string | Function, start?: boolean, mapping?: string, xhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `sceneFile(key: string | Phaser.Types.Loader.FileTypes.SceneFileConfig | Phaser.Types.Loader.FileTypes.SceneFileConfig[], url?: string, xhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `scenePlugin(key: string | Phaser.Types.Loader.FileTypes.ScenePluginFileConfig | Phaser.Types.Loader.FileTypes.ScenePluginFileConfig[], url?: string | Function, systemKey?: string, sceneKey?: string, xhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `script(key: string | Phaser.Types.Loader.FileTypes.ScriptFileConfig | Phaser.Types.Loader.FileTypes.ScriptFileConfig[], url?: string, type?: string, xhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `spritesheet(key: string | Phaser.Types.Loader.FileTypes.SpriteSheetFileConfig | Phaser.Types.Loader.FileTypes.SpriteSheetFileConfig[], url?: string, frameConfig?: Phaser.Types.Loader.FileTypes.ImageFrameConfig, xhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `svg(key: string | Phaser.Types.Loader.FileTypes.SVGFileConfig | Phaser.Types.Loader.FileTypes.SVGFileConfig[], url?: string, svgConfig?: Phaser.Types.Loader.FileTypes.SVGSizeConfig, xhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `text(key: string | Phaser.Types.Loader.FileTypes.TextFileConfig | Phaser.Types.Loader.FileTypes.TextFileConfig[], url?: string, xhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `tilemapCSV(key: string | Phaser.Types.Loader.FileTypes.TilemapCSVFileConfig | Phaser.Types.Loader.FileTypes.TilemapCSVFileConfig[], url?: string, xhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `tilemapImpact(key: string | Phaser.Types.Loader.FileTypes.TilemapImpactFileConfig | Phaser.Types.Loader.FileTypes.TilemapImpactFileConfig[], url?: string, xhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `tilemapTiledJSON(key: string | Phaser.Types.Loader.FileTypes.TilemapJSONFileConfig | Phaser.Types.Loader.FileTypes.TilemapJSONFileConfig[], url?: object | string, xhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `unityAtlas(key: string | Phaser.Types.Loader.FileTypes.UnityAtlasFileConfig | Phaser.Types.Loader.FileTypes.UnityAtlasFileConfig[], textureURL?: string | string[], atlasURL?: string, textureXhrSettings?: Phaser.Types.Loader.XHRSettingsObject, atlasXhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `video(key: string | Phaser.Types.Loader.FileTypes.VideoFileConfig | Phaser.Types.Loader.FileTypes.VideoFileConfig[], urls?: string | string[] | Phaser.Types.Loader.FileTypes.VideoFileURLConfig | Phaser.Types.Loader.FileTypes.VideoFileURLConfig[], noAudio?: boolean): this;`
+- `xml(key: string | Phaser.Types.Loader.FileTypes.XMLFileConfig | Phaser.Types.Loader.FileTypes.XMLFileConfig[], url?: string, xhrSettings?: Phaser.Types.Loader.XHRSettingsObject): this;`
+- `scene: Phaser.Scene;`
+- `systems: Phaser.Scenes.Systems;`
+- `cacheManager: Phaser.Cache.CacheManager;`
+- `textureManager: Phaser.Textures.TextureManager;`
+- `protected sceneManager: Phaser.Scenes.SceneManager;`
+- `prefix: string;`
+- `path: string;`
+- `baseURL: string;`
+- `maxParallelDownloads: number;`
+- `xhr: Phaser.Types.Loader.XHRSettingsObject;`
+- `crossOrigin: string;`
+- `imageLoadType: string;`
+- `localSchemes: string[];`
+- `totalToLoad: number;`
+- `progress: number;`
+- `list: Set<Phaser.Loader.File>;`
+- `inflight: Set<Phaser.Loader.File>;`
+- `queue: Set<Phaser.Loader.File>;`
+- `totalFailed: number;`
+- `totalComplete: number;`
+- `readonly state: number;`
+- `maxRetries: number;`
+- `setBaseURL(url?: string): this;`
+- `setPath(path?: string): this;`
+- `setPrefix(prefix?: string): this;`
+- `setCORS(crossOrigin?: string): this;`
+- `addFile(file: Phaser.Loader.File | Phaser.Loader.File[]): void;`
+- `keyExists(file: Phaser.Loader.File): boolean;`
+- `addPack(pack: any, packKey?: string): boolean;`
+- `removePack(packKey: string | object, dataKey?: string): void;`
+- `isLoading(): boolean;`
+- `isReady(): boolean;`
+- `start(): void;`
+- `updateProgress(): void;`
+- `update(): void;`
+- `nextFile(file: Phaser.Loader.File, success: boolean): void;`
+- `fileProcessComplete(file: Phaser.Loader.File): void;`
+- `loadComplete(): void;`
+- `flagForRemoval(file: Phaser.Loader.File): void;`
+- `saveJSON(data: any, filename?: string): this;`
+- `save(data: any, filename?: string, filetype?: string): this;`
+- `reset(): void;`
+
+### namespace Phaser.Math
+#### namespace Phaser.Math.Angle
+- `function Between(x1: number, y1: number, x2: number, y2: number): number;`
+- `function BetweenPoints(point1: Phaser.Types.Math.Vector2Like, point2: Phaser.Types.Math.Vector2Like): number;`
+- `function BetweenPointsY(point1: Phaser.Types.Math.Vector2Like, point2: Phaser.Types.Math.Vector2Like): number;`
+- `function BetweenY(x1: number, y1: number, x2: number, y2: number): number;`
+- `function CounterClockwise(angle: number): number;`
+- `function GetClockwiseDistance(angle1: number, angle2: number): number;`
+- `function GetCounterClockwiseDistance(angle1: number, angle2: number): number;`
+- `function GetShortestDistance(angle1: number, angle2: number): number;`
+- `function Normalize(angle: number): number;`
+- `function Random(): number;`
+- `function RandomDegrees(): number;`
+- `function Reverse(angle: number): number;`
+- `function RotateTo(currentAngle: number, targetAngle: number, lerp?: number): number;`
+- `function ShortestBetween(angle1: number, angle2: number): number;`
+- `function Wrap(angle: number): number;`
+- `function WrapDegrees(angle: number): number;`
+- `function Average(values: number[]): number;`
+- `function Bernstein(n: number, i: number): number;`
+- `function Between(min: number, max: number): number;`
+- `function CatmullRom(t: number, p0: number, p1: number, p2: number, p3: number): number;`
+- `function CeilTo(value: number, place?: number, base?: number): number;`
+- `function Clamp(value: number, min: number, max: number): number;`
+- `var TAU: number;`
+- `var PI_OVER_2: number;`
+- `var EPSILON: number;`
+- `var DEG_TO_RAD: number;`
+- `var RAD_TO_DEG: number;`
+- `var RND: Phaser.Math.RandomDataGenerator;`
+- `var MIN_SAFE_INTEGER: number;`
+- `var MAX_SAFE_INTEGER: number;`
+- `function DegToRad(degrees: number): number;`
+- `function Difference(a: number, b: number): number;`
+#### namespace Phaser.Math.Distance
+- `function Between(x1: number, y1: number, x2: number, y2: number): number;`
+- `function BetweenPoints(a: Phaser.Types.Math.Vector2Like, b: Phaser.Types.Math.Vector2Like): number;`
+- `function BetweenPointsSquared(a: Phaser.Types.Math.Vector2Like, b: Phaser.Types.Math.Vector2Like): number;`
+- `function Chebyshev(x1: number, y1: number, x2: number, y2: number): number;`
+- `function Power(x1: number, y1: number, x2: number, y2: number, pow?: number): number;`
+- `function Snake(x1: number, y1: number, x2: number, y2: number): number;`
+- `function Squared(x1: number, y1: number, x2: number, y2: number): number;`
+#### namespace Phaser.Math.Easing
+##### namespace Phaser.Math.Easing.Back
+- `function In(v: number, overshoot?: number): number;`
+- `function InOut(v: number, overshoot?: number): number;`
+- `function Out(v: number, overshoot?: number): number;`
+##### namespace Phaser.Math.Easing.Bounce
+- `function In(v: number): number;`
+- `function InOut(v: number): number;`
+- `function Out(v: number): number;`
+##### namespace Phaser.Math.Easing.Circular
+- `function In(v: number): number;`
+- `function InOut(v: number): number;`
+- `function Out(v: number): number;`
+##### namespace Phaser.Math.Easing.Cubic
+- `function In(v: number): number;`
+- `function InOut(v: number): number;`
+- `function Out(v: number): number;`
+##### namespace Phaser.Math.Easing.Elastic
+- `function In(v: number, amplitude?: number, period?: number): number;`
+- `function InOut(v: number, amplitude?: number, period?: number): number;`
+- `function Out(v: number, amplitude?: number, period?: number): number;`
+##### namespace Phaser.Math.Easing.Expo
+- `function In(v: number): number;`
+- `function InOut(v: number): number;`
+- `function Out(v: number): number;`
+- `function Linear(v: number): number;`
+##### namespace Phaser.Math.Easing.Quadratic
+- `function In(v: number): number;`
+- `function InOut(v: number): number;`
+- `function Out(v: number): number;`
+##### namespace Phaser.Math.Easing.Quartic
+- `function In(v: number): number;`
+- `function InOut(v: number): number;`
+- `function Out(v: number): number;`
+##### namespace Phaser.Math.Easing.Quintic
+- `function In(v: number): number;`
+- `function InOut(v: number): number;`
+- `function Out(v: number): number;`
+##### namespace Phaser.Math.Easing.Sine
+- `function In(v: number): number;`
+- `function InOut(v: number): number;`
+- `function Out(v: number): number;`
+##### namespace Phaser.Math.Easing.Stepped
+- `function Stepped(v: number, steps?: number): number;`
+#### class Phaser.Math.Euler
+- `constructor(x?: number, y?: number, z?: number, order?: string);`
+- `x: number;`
+- `y: number;`
+- `z: number;`
+- `order: string;`
+- `set(x: number, y: number, z: number, order?: string): Phaser.Math.Euler;`
+- `copy(euler: Phaser.Math.Euler): Phaser.Math.Euler;`
+- `setFromQuaternion(quaternion: Phaser.Math.Quaternion, order?: string, update?: boolean): Phaser.Math.Euler;`
+- `setFromRotationMatrix(matrix: Phaser.Math.Matrix4, order?: string, update?: boolean): Phaser.Math.Euler;`
+- `function Factorial(value: number): number;`
+- `function FloatBetween(min: number, max: number): number;`
+- `function FloorTo(value: number, place?: number, base?: number): number;`
+- `function FromPercent(percent: number, min: number, max?: number): number;`
+#### namespace Phaser.Math.Fuzzy
+- `function Ceil(value: number, epsilon?: number): number;`
+- `function Equal(a: number, b: number, epsilon?: number): boolean;`
+- `function Floor(value: number, epsilon?: number): number;`
+- `function GreaterThan(a: number, b: number, epsilon?: number): boolean;`
+- `function LessThan(a: number, b: number, epsilon?: number): boolean;`
+- `function GetCentroid<O extends Phaser.Math.Vector2>(points: Phaser.Types.Math.Vector2Like[], out?: O): O;`
+- `function GetSpeed(distance: number, time: number): number;`
+- `function GetVec2Bounds<O extends Phaser.Geom.Rectangle>(points: Phaser.Types.Math.Vector2Like[], out?: O): O;`
+- `function Hash(vector: number | number[], algorithm?: number): number;`
+- `function HashCell(vector: number | number[], config?: Phaser.Types.Math.HashCellConfig): number;`
+- `function HashSimplex(vector: number | number[], config?: Phaser.Types.Math.HashSimplexConfig): number;`
+#### namespace Phaser.Math.Interpolation
+- `function Bezier(v: number[], k: number): number;`
+- `function CatmullRom(v: number[], k: number): number;`
+- `function CubicBezier(t: number, p0: number, p1: number, p2: number, p3: number): number;`
+- `function Linear(v: number[], k: number): number;`
+- `function QuadraticBezier(t: number, p0: number, p1: number, p2: number): number;`
+- `function SmootherStep(t: number, min: number, max: number): number;`
+- `function SmoothStep(t: number, min: number, max: number): number;`
+- `function IsEven(value: number): boolean;`
+- `function IsEvenStrict(value: number): boolean;`
+- `function Linear(p0: number, p1: number, t: number): number;`
+- `function LinearXY(vector1: Phaser.Math.Vector2, vector2: Phaser.Math.Vector2, t?: number): Phaser.Math.Vector2;`
+#### class Phaser.Math.Matrix3
+- `constructor(m?: Phaser.Math.Matrix3);`
+- `val: Float32Array;`
+- `clone(): Phaser.Math.Matrix3;`
+- `set(src: Phaser.Math.Matrix3): Phaser.Math.Matrix3;`
+- `copy(src: Phaser.Math.Matrix3): Phaser.Math.Matrix3;`
+- `fromMat4(m: Phaser.Math.Matrix4): Phaser.Math.Matrix3;`
+- `fromArray(a: any[]): Phaser.Math.Matrix3;`
+- `identity(): Phaser.Math.Matrix3;`
+- `transpose(): Phaser.Math.Matrix3;`
+- `invert(): Phaser.Math.Matrix3;`
+- `adjoint(): Phaser.Math.Matrix3;`
+- `determinant(): number;`
+- `multiply(src: Phaser.Math.Matrix3): Phaser.Math.Matrix3;`
+- `translate(v: Phaser.Math.Vector2 | Phaser.Math.Vector3 | Phaser.Math.Vector4): Phaser.Math.Matrix3;`
+- `rotate(rad: number): Phaser.Math.Matrix3;`
+- `scale(v: Phaser.Math.Vector2 | Phaser.Math.Vector3 | Phaser.Math.Vector4): Phaser.Math.Matrix3;`
+- `fromQuat(q: Phaser.Math.Quaternion): Phaser.Math.Matrix3;`
+- `normalFromMat4(m: Phaser.Math.Matrix4): Phaser.Math.Matrix3;`
+#### class Phaser.Math.Matrix4
+- `constructor(m?: Phaser.Math.Matrix4);`
+- `val: Float32Array;`
+- `clone(): Phaser.Math.Matrix4;`
+- `set(src: Phaser.Math.Matrix4): this;`
+- `setValues(m00: number, m01: number, m02: number, m03: number, m10: number, m11: number, m12: number, m13: number, m20: number, m21: number, m22: number, m23: number, m30: number, m31: number, m32: number, m33: number): this;`
+- `copy(src: Phaser.Math.Matrix4): this;`
+- `fromArray(a: number[]): this;`
+- `zero(): Phaser.Math.Matrix4;`
+- `transform(position: Phaser.Math.Vector3, scale: Phaser.Math.Vector3, rotation: Phaser.Math.Quaternion): this;`
+- `xyz(x: number, y: number, z: number): this;`
+- `scaling(x: number, y: number, z: number): this;`
+- `identity(): this;`
+- `transpose(): this;`
+- `getInverse(m: Phaser.Math.Matrix4): this;`
+- `invert(): this;`
+- `adjoint(): this;`
+- `determinant(): number;`
+- `multiply(src: Phaser.Math.Matrix4): this;`
+- `multiplyLocal(src: Phaser.Math.Matrix4): this;`
+- `premultiply(m: Phaser.Math.Matrix4): this;`
+- `multiplyMatrices(a: Phaser.Math.Matrix4, b: Phaser.Math.Matrix4): this;`
+- `translate(v: Phaser.Math.Vector3 | Phaser.Math.Vector4): this;`
+- `translateXYZ(x: number, y: number, z: number): this;`
+- `scale(v: Phaser.Math.Vector3 | Phaser.Math.Vector4): this;`
+- `scaleXYZ(x: number, y: number, z: number): this;`
+- `makeRotationAxis(axis: Phaser.Math.Vector3 | Phaser.Math.Vector4, angle: number): this;`
+- `rotate(rad: number, axis: Phaser.Math.Vector3): this;`
+- `rotateX(rad: number): this;`
+- `rotateY(rad: number): this;`
+- `rotateZ(rad: number): this;`
+- `fromRotationTranslation(q: Phaser.Math.Quaternion, v: Phaser.Math.Vector3): this;`
+- `fromQuat(q: Phaser.Math.Quaternion): this;`
+- `frustum(left: number, right: number, bottom: number, top: number, near: number, far: number): this;`
+- `perspective(fovy: number, aspect: number, near: number, far: number): this;`
+- `perspectiveLH(width: number, height: number, near: number, far: number): this;`
+- `ortho(left: number, right: number, bottom: number, top: number, near: number, far: number): this;`
+- `lookAtRH(eye: Phaser.Math.Vector3, target: Phaser.Math.Vector3, up: Phaser.Math.Vector3): this;`
+- `lookAt(eye: Phaser.Math.Vector3, center: Phaser.Math.Vector3, up: Phaser.Math.Vector3): this;`
+- `yawPitchRoll(yaw: number, pitch: number, roll: number): this;`
+- `setWorldMatrix(rotation: Phaser.Math.Vector3, position: Phaser.Math.Vector3, scale: Phaser.Math.Vector3, viewMatrix?: Phaser.Math.Matrix4, projectionMatrix?: Phaser.Math.Matrix4): this;`
+- `multiplyToMat4(src: Phaser.Math.Matrix4, out: Phaser.Math.Matrix4): Phaser.Math.Matrix4;`
+- `fromRotationXYTranslation(rotation: Phaser.Math.Vector3, position: Phaser.Math.Vector3, translateFirst: boolean): this;`
+- `getMaxScaleOnAxis(): number;`
+- `function MaxAdd(value: number, amount: number, max: number): number;`
+- `function Median(values: number[]): number;`
+- `function MinSub(value: number, amount: number, min: number): number;`
+- `function Percent(value: number, min: number, max?: number, upperMax?: number): number;`
+#### namespace Phaser.Math.Pow2
+- `function GetPowerOfTwo(value: number): number;`
+- `function IsSize(width: number, height: number): boolean;`
+- `function IsValue(value: number): boolean;`
+#### class Phaser.Math.Quaternion
+- `constructor(x?: number, y?: number, z?: number, w?: number);`
+- `onChangeCallback: Function;`
+- `x: number;`
+- `y: number;`
+- `z: number;`
+- `w: number;`
+- `copy(src: Phaser.Math.Quaternion | Phaser.Math.Vector4): Phaser.Math.Quaternion;`
+- `set(x?: number | object, y?: number, z?: number, w?: number, update?: boolean): Phaser.Math.Quaternion;`
+- `add(v: Phaser.Math.Quaternion | Phaser.Math.Vector4): Phaser.Math.Quaternion;`
+- `subtract(v: Phaser.Math.Quaternion | Phaser.Math.Vector4): Phaser.Math.Quaternion;`
+- `scale(scale: number): Phaser.Math.Quaternion;`
+- `length(): number;`
+- `lengthSq(): number;`
+- `normalize(): Phaser.Math.Quaternion;`
+- `dot(v: Phaser.Math.Quaternion | Phaser.Math.Vector4): number;`
+- `lerp(v: Phaser.Math.Quaternion | Phaser.Math.Vector4, t?: number): Phaser.Math.Quaternion;`
+- `rotationTo(a: Phaser.Math.Vector3, b: Phaser.Math.Vector3): Phaser.Math.Quaternion;`
+- `setAxes(view: Phaser.Math.Vector3, right: Phaser.Math.Vector3, up: Phaser.Math.Vector3): Phaser.Math.Quaternion;`
+- `identity(): Phaser.Math.Quaternion;`
+- `setAxisAngle(axis: Phaser.Math.Vector3, rad: number): Phaser.Math.Quaternion;`
+- `multiply(b: Phaser.Math.Quaternion | Phaser.Math.Vector4): Phaser.Math.Quaternion;`
+- `slerp(b: Phaser.Math.Quaternion | Phaser.Math.Vector4, t: number): Phaser.Math.Quaternion;`
+- `invert(): Phaser.Math.Quaternion;`
+- `conjugate(): Phaser.Math.Quaternion;`
+- `rotateX(rad: number): Phaser.Math.Quaternion;`
+- `rotateY(rad: number): Phaser.Math.Quaternion;`
+- `rotateZ(rad: number): Phaser.Math.Quaternion;`
+- `calculateW(): Phaser.Math.Quaternion;`
+- `setFromEuler(euler: Phaser.Math.Euler, update?: boolean): Phaser.Math.Quaternion;`
+- `setFromRotationMatrix(mat4: Phaser.Math.Matrix4): Phaser.Math.Quaternion;`
+- `fromMat3(mat: Phaser.Math.Matrix3): Phaser.Math.Quaternion;`
+- `function RadToDeg(radians: number): number;`
+#### class Phaser.Math.RandomDataGenerator
+- `constructor(seeds?: string | string[]);`
+- `signs: number[];`
+- `init(seeds: string | string[]): void;`
+- `sow(seeds: string[]): void;`
+- `integer(): number;`
+- `frac(): number;`
+- `real(): number;`
+- `integerInRange(min: number, max: number): number;`
+- `between(min: number, max: number): number;`
+- `realInRange(min: number, max: number): number;`
+- `normal(): number;`
+- `uuid(): string;`
+- `pick<T>(array: T[]): T;`
+- `sign(): number;`
+- `weightedPick<T>(array: T[]): T;`
+- `timestamp(min: number, max: number): number;`
+- `angle(): number;`
+- `rotation(): number;`
+- `state(state?: string): string;`
+- `shuffle<T>(array?: T[]): T[];`
+- `function RandomXY(vector: Phaser.Math.Vector2, scale?: number): Phaser.Math.Vector2;`
+- `function RandomXYZ(vec3: Phaser.Math.Vector3, radius?: number): Phaser.Math.Vector3;`
+- `function RandomXYZW(vec4: Phaser.Math.Vector4, scale?: number): Phaser.Math.Vector4;`
+- `function Rotate<T extends Phaser.Types.Math.Vector2Like>(point: T, angle: number): T;`
+- `function RotateAround<T extends Phaser.Types.Math.Vector2Like>(point: T, x: number, y: number, angle: number): T;`
+- `function RotateAroundDistance<T extends Phaser.Types.Math.Vector2Like>(point: T, x: number, y: number, angle: number, distance: number): T;`
+- `function RotateTo<T extends Phaser.Types.Math.Vector2Like>(point: T, x: number, y: number, angle: number, distance: number): T;`
+- `function RotateVec3(vec: Phaser.Math.Vector3, axis: Phaser.Math.Vector3, radians: number): Phaser.Math.Vector3;`
+- `function RoundAwayFromZero(value: number): number;`
+- `function RoundTo(value: number, place?: number, base?: number): number;`
+- `function SmootherStep(x: number, min: number, max: number): number;`
+- `function SmoothStep(x: number, min: number, max: number): number;`
+#### namespace Phaser.Math.Snap
+- `function Ceil(value: number, gap: number, start?: number, divide?: boolean): number;`
+- `function Floor(value: number, gap: number, start?: number, divide?: boolean): number;`
+- `function To(value: number, gap: number, start?: number, divide?: boolean): number;`
+- `function ToXY(index: number, width: number, height: number, out?: Phaser.Math.Vector2): Phaser.Math.Vector2;`
+- `function TransformXY(x: number, y: number, positionX: number, positionY: number, rotation: number, scaleX: number, scaleY: number, output?: Phaser.Types.Math.Vector2Like): Phaser.Types.Math.Vector2Like;`
+#### class Phaser.Math.Vector2
+- `constructor(x?: number | Phaser.Types.Math.Vector2Like, y?: number);`
+- `x: number;`
+- `y: number;`
+- `clone(): Phaser.Math.Vector2;`
+- `copy(src: Phaser.Types.Math.Vector2Like): Phaser.Math.Vector2;`
+- `setFromObject(obj: Phaser.Types.Math.Vector2Like): Phaser.Math.Vector2;`
+- `set(x: number, y?: number): Phaser.Math.Vector2;`
+- `setTo(x: number, y?: number): Phaser.Math.Vector2;`
+- `ceil(): Phaser.Math.Vector2;`
+- `floor(): Phaser.Math.Vector2;`
+- `invert(): Phaser.Math.Vector2;`
+- `setToPolar(angle: number, length?: number): Phaser.Math.Vector2;`
+- `equals(v: Phaser.Types.Math.Vector2Like): boolean;`
+- `fuzzyEquals(v: Phaser.Types.Math.Vector2Like, epsilon?: number): boolean;`
+- `angle(): number;`
+- `setAngle(angle: number): Phaser.Math.Vector2;`
+- `add(src: Phaser.Types.Math.Vector2Like): Phaser.Math.Vector2;`
+- `subtract(src: Phaser.Types.Math.Vector2Like): Phaser.Math.Vector2;`
+- `multiply(src: Phaser.Types.Math.Vector2Like): Phaser.Math.Vector2;`
+- `scale(value: number): Phaser.Math.Vector2;`
+- `divide(src: Phaser.Types.Math.Vector2Like): Phaser.Math.Vector2;`
+- `negate(): Phaser.Math.Vector2;`
+- `distance(src: Phaser.Types.Math.Vector2Like): number;`
+- `distanceSq(src: Phaser.Types.Math.Vector2Like): number;`
+- `length(): number;`
+- `setLength(length: number): Phaser.Math.Vector2;`
+- `lengthSq(): number;`
+- `normalize(): Phaser.Math.Vector2;`
+- `normalizeRightHand(): Phaser.Math.Vector2;`
+- `normalizeLeftHand(): Phaser.Math.Vector2;`
+- `dot(src: Phaser.Types.Math.Vector2Like): number;`
+- `cross(src: Phaser.Types.Math.Vector2Like): number;`
+- `lerp(src: Phaser.Types.Math.Vector2Like, t?: number): Phaser.Math.Vector2;`
+- `transformMat3(mat: Phaser.Math.Matrix3): Phaser.Math.Vector2;`
+- `transformMat4(mat: Phaser.Math.Matrix4): Phaser.Math.Vector2;`
+- `reset(): Phaser.Math.Vector2;`
+- `limit(max: number): Phaser.Math.Vector2;`
+- `reflect(normal: Phaser.Math.Vector2): Phaser.Math.Vector2;`
+- `mirror(axis: Phaser.Math.Vector2): Phaser.Math.Vector2;`
+- `rotate(delta: number): Phaser.Math.Vector2;`
+- `project(src: Phaser.Math.Vector2): Phaser.Math.Vector2;`
+- `projectUnit(vecB: Phaser.Math.Vector2, out?: Phaser.Math.Vector2): Phaser.Math.Vector2;`
+- `static readonly ZERO: Phaser.Math.Vector2;`
+- `static readonly RIGHT: Phaser.Math.Vector2;`
+- `static readonly LEFT: Phaser.Math.Vector2;`
+- `static readonly UP: Phaser.Math.Vector2;`
+- `static readonly DOWN: Phaser.Math.Vector2;`
+- `static readonly ONE: Phaser.Math.Vector2;`
+#### class Phaser.Math.Vector3
+- `constructor(x?: number, y?: number, z?: number);`
+- `x: number;`
+- `y: number;`
+- `z: number;`
+- `up(): Phaser.Math.Vector3;`
+- `min(v: Phaser.Math.Vector3): Phaser.Math.Vector3;`
+- `max(v: Phaser.Math.Vector3): Phaser.Math.Vector3;`
+- `clone(): Phaser.Math.Vector3;`
+- `addVectors(a: Phaser.Math.Vector3, b: Phaser.Math.Vector3): Phaser.Math.Vector3;`
+- `subVectors(a: Phaser.Math.Vector3, b: Phaser.Math.Vector3): Phaser.Math.Vector3;`
+- `crossVectors(a: Phaser.Math.Vector3, b: Phaser.Math.Vector3): Phaser.Math.Vector3;`
+- `equals(v: Phaser.Math.Vector3): boolean;`
+- `copy(src: Phaser.Math.Vector2 | Phaser.Math.Vector3): Phaser.Math.Vector3;`
+- `set(x: number | object, y?: number, z?: number): Phaser.Math.Vector3;`
+- `setFromMatrixPosition(mat4: Phaser.Math.Matrix4): Phaser.Math.Vector3;`
+- `setFromMatrixColumn(mat4: Phaser.Math.Matrix4, index: number): Phaser.Math.Vector3;`
+- `fromArray(array: number[], offset?: number): Phaser.Math.Vector3;`
+- `add(v: Phaser.Math.Vector2 | Phaser.Math.Vector3): Phaser.Math.Vector3;`
+- `addScalar(s: number): Phaser.Math.Vector3;`
+- `addScale(v: Phaser.Math.Vector2 | Phaser.Math.Vector3, scale: number): Phaser.Math.Vector3;`
+- `subtract(v: Phaser.Math.Vector2 | Phaser.Math.Vector3): Phaser.Math.Vector3;`
+- `multiply(v: Phaser.Math.Vector2 | Phaser.Math.Vector3): Phaser.Math.Vector3;`
+- `scale(scale: number): Phaser.Math.Vector3;`
+- `divide(v: Phaser.Math.Vector2 | Phaser.Math.Vector3): Phaser.Math.Vector3;`
+- `negate(): Phaser.Math.Vector3;`
+- `distance(v: Phaser.Math.Vector2 | Phaser.Math.Vector3): number;`
+- `distanceSq(v: Phaser.Math.Vector2 | Phaser.Math.Vector3): number;`
+- `length(): number;`
+- `lengthSq(): number;`
+- `normalize(): Phaser.Math.Vector3;`
+- `dot(v: Phaser.Math.Vector3): number;`
+- `cross(v: Phaser.Math.Vector3): Phaser.Math.Vector3;`
+- `lerp(v: Phaser.Math.Vector3, t?: number): Phaser.Math.Vector3;`
+- `applyMatrix3(mat3: Phaser.Math.Matrix3): Phaser.Math.Vector3;`
+- `applyMatrix4(mat4: Phaser.Math.Matrix4): Phaser.Math.Vector3;`
+- `transformMat3(mat: Phaser.Math.Matrix3): Phaser.Math.Vector3;`
+- `transformMat4(mat: Phaser.Math.Matrix4): Phaser.Math.Vector3;`
+- `transformCoordinates(mat: Phaser.Math.Matrix4): Phaser.Math.Vector3;`
+- `transformQuat(q: Phaser.Math.Quaternion): Phaser.Math.Vector3;`
+- `project(mat: Phaser.Math.Matrix4): Phaser.Math.Vector3;`
+- `projectViewMatrix(viewMatrix: Phaser.Math.Matrix4, projectionMatrix: Phaser.Math.Matrix4): Phaser.Math.Vector3;`
+- `unprojectViewMatrix(projectionMatrix: Phaser.Math.Matrix4, worldMatrix: Phaser.Math.Matrix4): Phaser.Math.Vector3;`
+- `unproject(viewport: Phaser.Math.Vector4, invProjectionView: Phaser.Math.Matrix4): Phaser.Math.Vector3;`
+- `reset(): Phaser.Math.Vector3;`
+- `static readonly ZERO: Phaser.Math.Vector3;`
+- `static readonly RIGHT: Phaser.Math.Vector3;`
+- `static readonly LEFT: Phaser.Math.Vector3;`
+- `static readonly UP: Phaser.Math.Vector3;`
+- `static readonly DOWN: Phaser.Math.Vector3;`
+- `static readonly FORWARD: Phaser.Math.Vector3;`
+- `static readonly BACK: Phaser.Math.Vector3;`
+- `static readonly ONE: Phaser.Math.Vector3;`
+#### class Phaser.Math.Vector4
+- `constructor(x?: number, y?: number, z?: number, w?: number);`
+- `x: number;`
+- `y: number;`
+- `z: number;`
+- `w: number;`
+- `clone(): Phaser.Math.Vector4;`
+- `copy(src: Phaser.Math.Vector4): Phaser.Math.Vector4;`
+- `equals(v: Phaser.Math.Vector4): boolean;`
+- `set(x: number | object, y: number, z: number, w: number): Phaser.Math.Vector4;`
+- `add(v: Phaser.Math.Vector2 | Phaser.Math.Vector3 | Phaser.Math.Vector4): Phaser.Math.Vector4;`
+- `subtract(v: Phaser.Math.Vector2 | Phaser.Math.Vector3 | Phaser.Math.Vector4): Phaser.Math.Vector4;`
+- `scale(scale: number): Phaser.Math.Vector4;`
+- `length(): number;`
+- `lengthSq(): number;`
+- `normalize(): Phaser.Math.Vector4;`
+- `dot(v: Phaser.Math.Vector4): number;`
+- `lerp(v: Phaser.Math.Vector4, t?: number): Phaser.Math.Vector4;`
+- `multiply(v: Phaser.Math.Vector2 | Phaser.Math.Vector3 | Phaser.Math.Vector4): Phaser.Math.Vector4;`
+- `divide(v: Phaser.Math.Vector2 | Phaser.Math.Vector3 | Phaser.Math.Vector4): Phaser.Math.Vector4;`
+- `distance(v: Phaser.Math.Vector2 | Phaser.Math.Vector3 | Phaser.Math.Vector4): number;`
+- `distanceSq(v: Phaser.Math.Vector2 | Phaser.Math.Vector3 | Phaser.Math.Vector4): number;`
+- `negate(): Phaser.Math.Vector4;`
+- `transformMat4(mat: Phaser.Math.Matrix4): Phaser.Math.Vector4;`
+- `transformQuat(q: Phaser.Math.Quaternion): Phaser.Math.Vector4;`
+- `reset(): Phaser.Math.Vector4;`
+- `function Within(a: number, b: number, tolerance: number): boolean;`
+- `function Wrap(value: number, min: number, max: number): number;`
+
+### namespace Phaser.Types
+#### namespace Phaser.Types.Animations
+- `key?: string;`
+- `frames?: string | Phaser.Types.Animations.AnimationFrame[];`
+- `sortFrames?: boolean;`
+- `defaultTextureKey?: string;`
+- `frameRate?: number;`
+- `duration?: number;`
+- `skipMissedFrames?: boolean;`
+- `delay?: number;`
+- `repeat?: number;`
+- `repeatDelay?: number;`
+- `yoyo?: boolean;`
+- `showBeforeDelay?: boolean;`
+- `showOnStart?: boolean;`
+- `hideOnComplete?: boolean;`
+- `randomFrame?: boolean;`
+
+- `start?: number;`
+- `end?: number;`
+- `first?: boolean | number;`
+- `outputArray?: Phaser.Types.Animations.AnimationFrame[];`
+- `frames?: boolean | number[];`
+
+#### namespace Phaser.Types.Core
+- `width?: number | string;`
+- `height?: number | string;`
+- `zoom?: number;`
+- `type?: number;`
+- `stableSort?: number | boolean;`
+- `parent?: HTMLElement | string | null;`
+- `canvas?: HTMLCanvasElement;`
+- `canvasStyle?: string;`
+- `customEnvironment?: boolean;`
+- `context?: CanvasRenderingContext2D;`
+- `scene?: Phaser.Types.Scenes.SceneType | Phaser.Types.Scenes.SceneType[];`
+- `seed?: string[];`
+- `title?: string;`
+- `url?: string;`
+- `version?: string;`
+- `autoFocus?: boolean;`
+- `input?: boolean | Phaser.Types.Core.InputConfig;`
+- `disableContextMenu?: boolean;`
+- `banner?: boolean | Phaser.Types.Core.BannerConfig;`
+- `dom?: Phaser.Types.Core.DOMContainerConfig;`
+- `fps?: Phaser.Types.Core.FPSConfig;`
+- `render?: Phaser.Types.Core.RenderConfig;`
+- `callbacks?: Phaser.Types.Core.CallbacksConfig;`
+- `loader?: Phaser.Types.Core.LoaderConfig;`
+- `images?: Phaser.Types.Core.ImagesConfig;`
+- `physics?: Phaser.Types.Core.PhysicsConfig;`
+- `plugins?: Phaser.Types.Core.PluginObject | Phaser.Types.Core.PluginObjectItem[];`
+- `scale?: Phaser.Types.Core.ScaleConfig;`
+- `audio?: Phaser.Types.Core.AudioConfig;`
+- `backgroundColor?: string | number;`
+- `antialias?: boolean;`
+- `antialiasGL?: boolean;`
+- `desynchronized?: boolean;`
+- `pixelArt?: boolean;`
+- `smoothPixelArt?: boolean;`
+- `roundPixels?: boolean;`
+- `selfShadow?: boolean;`
+- `pathDetailThreshold?: number;`
+- `transparent?: boolean;`
+- `clearBeforeRender?: boolean;`
+- `preserveDrawingBuffer?: boolean;`
+- `premultipliedAlpha?: boolean;`
+- `skipUnreadyShaders?: boolean;`
+- `failIfMajorPerformanceCaveat?: boolean;`
+- `powerPreference?: string;`
+- `batchSize?: number;`
+- `maxLights?: number;`
+- `maxTextures?: number;`
+- `mipmapFilter?: string;`
+- `mipmapRegeneration?: boolean;`
+- `autoMobileTextures?: boolean;`
+- `expandParent?: boolean;`
+- `mode?: Phaser.Scale.ScaleModeType;`
+- `min?: WidthHeight;`
+- `max?: WidthHeight;`
+- `autoRound?: boolean;`
+- `autoCenter?: Phaser.Scale.CenterType;`
+- `resizeInterval?: number;`
+- `fullscreenTarget?: HTMLElement | string | null;`
+
+#### namespace Phaser.Types.GameObjects
+##### namespace Phaser.Types.GameObjects.BitmapText
+- `x: number;`
+- `y: number;`
+- `width: number;`
+- `height: number;`
+- `centerX: number;`
+- `centerY: number;`
+- `xOffset: number;`
+- `yOffset: number;`
+- `u0: number;`
+- `v0: number;`
+- `u1: number;`
+- `v1: number;`
+- `data: object;`
+- `kerning: {[key: string]: number};`
+- `font: string;`
+- `size: number;`
+- `lineHeight: number;`
+- `retroFont: boolean;`
+- `chars: {[key: number]:  Phaser.Types.GameObjects.BitmapText.BitmapFontCharacterData};`
+- `i: number;`
+- `idx: number;`
+- `char: string;`
+- `code: number;`
+- `x: number;`
+- `y: number;`
+- `w: number;`
+- `h: number;`
+- `t: number;`
+- `r: number;`
+- `b: number;`
+- `line: number;`
+- `glyph: Phaser.Types.GameObjects.BitmapText.BitmapFontCharacterData;`
+- `font?: string;`
+- `text?: string;`
+- `size?: number | false;`
+- `shortest: number;`
+- `longest: number;`
+- `height: number;`
+- `lengths: number[];`
+- `global: Phaser.Types.GameObjects.BitmapText.GlobalBitmapTextSize;`
+- `local: Phaser.Types.GameObjects.BitmapText.LocalBitmapTextSize;`
+- `lines: Phaser.Types.GameObjects.BitmapText.BitmapTextLines;`
+- `characters: Phaser.Types.GameObjects.BitmapText.BitmapTextCharacter[];`
+- `words: Phaser.Types.GameObjects.BitmapText.BitmapTextWord[];`
+- `scale: number;`
+- `scaleX: number;`
+- `scaleY: number;`
+- `wrappedText: string;`
+- `x: number;`
+- `y: number;`
+- `w: number;`
+- `h: number;`
+- `i: number;`
+- `word: string;`
+- `parent: Phaser.GameObjects.DynamicBitmapText;`
+- `tint: Phaser.Types.GameObjects.BitmapText.TintConfig;`
+- `tintMode: Phaser.TintModes;`
+- `index: number;`
+- `charCode: number;`
+- `x: number;`
+- `y: number;`
+- `scale: number;`
+- `rotation: number;`
+- `data: any;`
+- `type DisplayCallback = (display: Phaser.Types.GameObjects.BitmapText.DisplayCallbackConfig)=>Phaser.Types.GameObjects.BitmapText.DisplayCallbackConfig;`
+- `x: number;`
+- `y: number;`
+- `width: number;`
+- `height: number;`
+- `font: string;`
+- `text: string;`
+- `fontSize: number;`
+- `letterSpacing: number;`
+- `lineSpacing: number;`
+- `align: number;`
+- `x: number;`
+- `y: number;`
+- `width: number;`
+- `height: number;`
+- `image: string;`
+- `"offset.x": number;`
+- `"offset.y": number;`
+- `width: number;`
+- `height: number;`
+- `chars: string;`
+- `charsPerRow: number;`
+- `"spacing.x": number;`
+- `"spacing.y": number;`
+- `lineSpacing: number;`
+- `topLeft: number;`
+- `topRight: number;`
+- `bottomLeft: number;`
+- `bottomRight: number;`
+
+##### namespace Phaser.Types.GameObjects.Text
+- `fontFamily?: string;`
+- `fontSize?: number | string;`
+- `fontStyle?: string;`
+- `font?: string;`
+- `backgroundColor?: string;`
+- `color?: string | CanvasGradient | CanvasPattern;`
+- `stroke?: string | CanvasGradient | CanvasPattern;`
+- `strokeThickness?: number;`
+- `shadow?: Phaser.Types.GameObjects.Text.TextShadow;`
+- `padding?: Phaser.Types.GameObjects.Text.TextPadding;`
+- `align?: string;`
+- `maxLines?: number;`
+- `fixedWidth?: number;`
+- `fixedHeight?: number;`
+- `resolution?: number;`
+- `rtl?: boolean;`
+- `testString?: string;`
+- `baselineX?: number;`
+- `baselineY?: number;`
+- `wordWrap?: Phaser.Types.GameObjects.Text.TextWordWrap;`
+- `metrics?: Phaser.Types.GameObjects.Text.TextMetrics;`
+- `lineSpacing?: number;`
+- `letterSpacing?: number;`
+
+#### namespace Phaser.Types.Tilemaps
+- `key?: string;`
+- `data?: number[][];`
+- `tileWidth?: number;`
+- `tileHeight?: number;`
+- `width?: number;`
+- `height?: number;`
+- `insertNull?: boolean;`
+
+#### namespace Phaser.Types.Tweens
+- `targets: any;`
+- `delay?: number | Function;`
+- `duration?: number;`
+- `ease?: string | Function;`
+- `easeParams?: any[];`
+- `hold?: number;`
+- `repeat?: number;`
+- `repeatDelay?: number;`
+- `yoyo?: boolean;`
+- `flipX?: boolean;`
+- `flipY?: boolean;`
+- `completeDelay?: string | number | Function | object | any[];`
+- `loop?: string | number | Function | object | any[];`
+- `loopDelay?: string | number | Function | object | any[];`
+- `paused?: boolean;`
+- `props?: {[key: string]:  (number|string|Phaser.Types.Tweens.GetEndCallback|Phaser.Types.Tweens.TweenPropConfig)};`
+- `callbackScope?: any;`
+- `onComplete?: Phaser.Types.Tweens.TweenOnCompleteCallback;`
+- `onCompleteParams?: any[];`
+- `onLoop?: Phaser.Types.Tweens.TweenOnLoopCallback;`
+- `onLoopParams?: any[];`
+- `onRepeat?: Phaser.Types.Tweens.TweenOnRepeatCallback;`
+- `onRepeatParams?: any[];`
+- `onStart?: Phaser.Types.Tweens.TweenOnStartCallback;`
+- `onStartParams?: any[];`
+- `onStop?: Phaser.Types.Tweens.TweenOnStopCallback;`
+- `onStopParams?: any[];`
+- `onUpdate?: Phaser.Types.Tweens.TweenOnUpdateCallback;`
+- `onUpdateParams?: any[];`
+- `onYoyo?: Phaser.Types.Tweens.TweenOnYoyoCallback;`
+- `onYoyoParams?: any[];`
+- `onActive?: Phaser.Types.Tweens.TweenOnActiveCallback;`
+- `onActiveParams?: any[];`
+- `onPause?: Phaser.Types.Tweens.TweenOnPauseCallback;`
+- `onPauseParams?: any[];`
+- `onResume?: Phaser.Types.Tweens.TweenOnResumeCallback;`
+- `onResumeParams?: any[];`
+- `persist?: boolean;`
+- `interpolation?: string | Function;`
+
+### namespace Phaser.Physics
+#### namespace Phaser.Physics.Arcade
+##### class Phaser.Physics.Arcade.ArcadePhysics
+- `constructor(scene: Phaser.Scene);`
+- `scene: Phaser.Scene;`
+- `systems: Phaser.Scenes.Systems;`
+- `config: Phaser.Types.Physics.Arcade.ArcadeWorldConfig;`
+- `world: Phaser.Physics.Arcade.World;`
+- `add: Phaser.Physics.Arcade.Factory;`
+- `enableUpdate(): void;`
+- `disableUpdate(): void;`
+- `getConfig(): Phaser.Types.Physics.Arcade.ArcadeWorldConfig;`
+- `nextCategory(): number;`
+- `overlap(object1: Phaser.Types.Physics.Arcade.ArcadeColliderType, object2?: Phaser.Types.Physics.Arcade.ArcadeColliderType, overlapCallback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, processCallback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, callbackContext?: any): boolean;`
+- `collide(object1: Phaser.Types.Physics.Arcade.ArcadeColliderType, object2?: Phaser.Types.Physics.Arcade.ArcadeColliderType, collideCallback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, processCallback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, callbackContext?: any): boolean;`
+- `collideTiles(sprite: Phaser.GameObjects.GameObject, tiles: Phaser.Tilemaps.Tile[], collideCallback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, processCallback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, callbackContext?: any): boolean;`
+- `overlapTiles(sprite: Phaser.GameObjects.GameObject, tiles: Phaser.Tilemaps.Tile[], overlapCallback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, processCallback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, callbackContext?: any): boolean;`
+- `pause(): Phaser.Physics.Arcade.World;`
+- `resume(): Phaser.Physics.Arcade.World;`
+- `accelerateTo(gameObject: Phaser.GameObjects.GameObject, x: number, y: number, speed?: number, xSpeedMax?: number, ySpeedMax?: number): number;`
+- `accelerateToObject(gameObject: Phaser.GameObjects.GameObject, destination: Phaser.GameObjects.GameObject, speed?: number, xSpeedMax?: number, ySpeedMax?: number): number;`
+- `closest<Target extends Phaser.Physics.Arcade.Body|Phaser.Physics.Arcade.StaticBody|Phaser.GameObjects.GameObject>(source: Phaser.Types.Math.Vector2Like, targets?: Target[]): Target | null;`
+- `furthest(source: any, targets?: Phaser.Physics.Arcade.Body[] | Phaser.Physics.Arcade.StaticBody[] | Phaser.GameObjects.GameObject[]): Phaser.Physics.Arcade.Body | Phaser.Physics.Arcade.StaticBody | Phaser.GameObjects.GameObject | null;`
+- `moveTo(gameObject: Phaser.GameObjects.GameObject, x: number, y: number, speed?: number, maxTime?: number): number;`
+- `moveToObject(gameObject: Phaser.GameObjects.GameObject, destination: object, speed?: number, maxTime?: number): number;`
+- `velocityFromAngle(angle: number, speed?: number, vec2?: Phaser.Math.Vector2): Phaser.Math.Vector2;`
+- `velocityFromRotation(rotation: number, speed?: number, vec2?: Phaser.Math.Vector2): Phaser.Math.Vector2;`
+- `overlapRect(x: number, y: number, width: number, height: number, includeDynamic?: boolean, includeStatic?: boolean): Phaser.Physics.Arcade.Body[] | Phaser.Physics.Arcade.StaticBody[];`
+- `overlapCirc(x: number, y: number, radius: number, includeDynamic?: boolean, includeStatic?: boolean): Phaser.Physics.Arcade.Body[] | Phaser.Physics.Arcade.StaticBody[];`
+- `shutdown(): void;`
+- `destroy(): void;`
+
+##### class Phaser.Physics.Arcade.Sprite
+- `constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, frame?: string | number);`
+- `body: Phaser.Physics.Arcade.Body | Phaser.Physics.Arcade.StaticBody | null;`
+- `filterCamera: Phaser.Cameras.Scene2D.Camera;`
+- `readonly filters: Phaser.Types.GameObjects.FiltersInternalExternal | null;`
+- `renderFilters: boolean;`
+- `maxFilterSize: Phaser.Math.Vector2;`
+- `filtersAutoFocus: boolean;`
+- `filtersFocusContext: boolean;`
+- `filtersForceComposite: boolean;`
+- `willRenderFilters(): boolean;`
+- `enableFilters(): this;`
+- `renderWebGLFilters(renderer: Phaser.Renderer.WebGL.WebGLRenderer, gameObject: Phaser.GameObjects.GameObject, drawingContext: Phaser.Renderer.WebGL.DrawingContext, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix, renderStep?: number): Phaser.Types.GameObjects.RenderWebGLStep;`
+- `focusFilters(): this;`
+- `focusFiltersOnCamera(camera: Phaser.Cameras.Scene2D.Camera): this;`
+- `focusFiltersOverride(x?: number, y?: number, width?: number, height?: number): this;`
+- `setFilterSize(width: number, height: number): this;`
+- `setFiltersAutoFocus(value: boolean): this;`
+- `setFiltersFocusContext(value: boolean): this;`
+- `setFiltersForceComposite(value: boolean): this;`
+- `setRenderFilters(value: boolean): this;`
+- `renderWebGLStep(renderer: Phaser.Renderer.WebGL.WebGLRenderer, gameObject: Phaser.GameObjects.GameObject, drawingContext: Phaser.Renderer.WebGL.DrawingContext, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix, renderStep?: number, displayList?: Phaser.GameObjects.GameObject[], displayListIndex?: number): void;`
+- `addRenderStep(fn: Phaser.Types.GameObjects.RenderWebGLStep, index?: number): this;`
+- `clearAlpha(): this;`
+- `setAlpha(topLeft?: number, topRight?: number, bottomLeft?: number, bottomRight?: number): this;`
+- `alpha: number;`
+- `alphaTopLeft: number;`
+- `alphaTopRight: number;`
+- `alphaBottomLeft: number;`
+- `alphaBottomRight: number;`
+- `blendMode: Phaser.BlendModes | string | number;`
+- `setBlendMode(value: string | Phaser.BlendModes | number): this;`
+- `depth: number;`
+- `setDepth(value: number): this;`
+- `setToTop(): this;`
+- `setToBack(): this;`
+- `setAbove(gameObject: Phaser.GameObjects.GameObject): this;`
+- `setBelow(gameObject: Phaser.GameObjects.GameObject): this;`
+- `flipX: boolean;`
+- `flipY: boolean;`
+- `toggleFlipX(): this;`
+- `toggleFlipY(): this;`
+- `setFlipX(value: boolean): this;`
+- `setFlipY(value: boolean): this;`
+- `setFlip(x: boolean, y: boolean): this;`
+- `resetFlip(): this;`
+- `getCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopLeft<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopRight<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getLeftCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getRightCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomLeft<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomRight<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBounds<O extends Phaser.Geom.Rectangle>(output?: O): O;`
+- `readonly lighting: boolean;`
+- `selfShadow: Object;`
+- `setLighting(enable: boolean): this;`
+- `setSelfShadow(enabled?: boolean | undefined, penumbra?: number, diffuseFlatThreshold?: number): this;`
+- `mask: Phaser.Display.Masks.GeometryMask;`
+- `setMask(mask: Phaser.Display.Masks.GeometryMask): this;`
+- `clearMask(destroyMask?: boolean): this;`
+- `createGeometryMask<G extends Phaser.GameObjects.Graphics, S extends Phaser.GameObjects.Shape>(graphics?: Phaser.GameObjects.Graphics | Phaser.GameObjects.Shape): Phaser.Display.Masks.GeometryMask;`
+- `originX: number;`
+- `originY: number;`
+- `displayOriginX: number;`
+- `displayOriginY: number;`
+- `setOrigin(x?: number, y?: number): this;`
+- `setOriginFromFrame(): this;`
+- `setDisplayOrigin(x?: number, y?: number): this;`
+- `updateDisplayOrigin(): this;`
+- `customRenderNodes: object;`
+- `defaultRenderNodes: object;`
+- `renderNodeData: object;`
+- `initRenderNodes(defaultNodes: Map<string, string>): void;`
+- `setRenderNodeRole(key: string, renderNode: string | Phaser.Renderer.WebGL.RenderNodes.RenderNode | null, renderNodeData?: object, copyData?: boolean): this;`
+- `setRenderNodeData(renderNode: string | Phaser.Renderer.WebGL.RenderNodes.RenderNode, key: string, value: any): this;`
+- `scrollFactorX: number;`
+- `scrollFactorY: number;`
+- `setScrollFactor(x: number, y?: number): this;`
+- `width: number;`
+- `height: number;`
+- `displayWidth: number;`
+- `displayHeight: number;`
+- `setSizeToFrame(frame?: Phaser.Textures.Frame): this;`
+- `setSize(width: number, height: number): this;`
+- `setDisplaySize(width: number, height: number): this;`
+- `texture: Phaser.Textures.Texture | Phaser.Textures.CanvasTexture;`
+- `frame: Phaser.Textures.Frame;`
+- `isCropped: boolean;`
+- `setCrop(x?: number | Phaser.Geom.Rectangle, y?: number, width?: number, height?: number): this;`
+- `setTexture(key: string, frame?: string | number): this;`
+- `setFrame(frame: string | number | Phaser.Textures.Frame, updateSize?: boolean, updateOrigin?: boolean): this;`
+- `tintTopLeft: number;`
+- `tintTopRight: number;`
+- `tintBottomLeft: number;`
+- `tintBottomRight: number;`
+- `tint2TopLeft: number;`
+- `tint2TopRight: number;`
+- `tint2BottomLeft: number;`
+- `tint2BottomRight: number;`
+- `tintMode: Phaser.TintModes;`
+- `clearTint(): this;`
+- `setTint(topLeft?: number, topRight?: number, bottomLeft?: number, bottomRight?: number): this;`
+- `setTint2(topLeft?: number, topRight?: number, bottomLeft?: number, bottomRight?: number): this;`
+- `setTintMode(mode: number | Phaser.TintModes): this;`
+- `setTintFill(): void;`
+- `tint: number;`
+- `readonly isTinted: boolean;`
+- `readonly hasTransformComponent: boolean;`
+- `x: number;`
+- `y: number;`
+- `z: number;`
+- `w: number;`
+- `scale: number;`
+- `scaleX: number;`
+- `scaleY: number;`
+- `angle: number;`
+- `rotation: number;`
+- `setPosition(x?: number, y?: number, z?: number, w?: number): this;`
+- `copyPosition(source: Phaser.Types.Math.Vector2Like | Phaser.Types.Math.Vector3Like | Phaser.Types.Math.Vector4Like): this;`
+- `setRandomPosition(x?: number, y?: number, width?: number, height?: number): this;`
+- `setRotation(radians?: number): this;`
+- `setAngle(degrees?: number): this;`
+- `setScale(x?: number, y?: number): this;`
+- `setX(value?: number): this;`
+- `setY(value?: number): this;`
+- `setZ(value?: number): this;`
+- `setW(value?: number): this;`
+- `getLocalTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.GameObjects.Components.TransformMatrix;`
+- `getWorldTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.GameObjects.Components.TransformMatrix;`
+- `getLocalPoint(x: number, y: number, point?: Phaser.Math.Vector2, camera?: Phaser.Cameras.Scene2D.Camera): Phaser.Math.Vector2;`
+- `getWorldPoint(point?: Phaser.Math.Vector2, tempMatrix?: Phaser.GameObjects.Components.TransformMatrix, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.Math.Vector2;`
+- `getParentRotation(): number;`
+- `visible: boolean;`
+- `setVisible(value: boolean): this;`
+- `setAcceleration(x: number, y?: number): this;`
+- `setAccelerationX(value: number): this;`
+- `setAccelerationY(value: number): this;`
+- `setAngularVelocity(value: number): this;`
+- `setAngularAcceleration(value: number): this;`
+- `setAngularDrag(value: number): this;`
+- `setBounce(x: number, y?: number): this;`
+- `setBounceX(value: number): this;`
+- `setBounceY(value: number): this;`
+- `setCollideWorldBounds(value?: boolean, bounceX?: number, bounceY?: number, onWorldBounds?: boolean): this;`
+- `setCollisionCategory(category: number): this;`
+- `willCollideWith(category: number): boolean;`
+- `addCollidesWith(category: number): this;`
+- `removeCollidesWith(category: number): this;`
+- `setCollidesWith(categories: number | number[]): this;`
+- `resetCollisionCategory(): this;`
+- `setDebug(showBody: boolean, showVelocity: boolean, bodyColor: number): this;`
+- `setDebugBodyColor(value: number): this;`
+- `debugShowBody: boolean;`
+- `debugShowVelocity: boolean;`
+- `debugBodyColor: number;`
+- `setDrag(x: number, y?: number): this;`
+- `setDragX(value: number): this;`
+- `setDragY(value: number): this;`
+- `setDamping(value: boolean): this;`
+- `setDirectControl(value?: boolean): this;`
+- `enableBody(reset?: boolean, x?: number, y?: number, enableGameObject?: boolean, showGameObject?: boolean): this;`
+- `disableBody(disableGameObject?: boolean, hideGameObject?: boolean): this;`
+- `refreshBody(): this;`
+- `setFriction(x: number, y?: number): this;`
+- `setFrictionX(x: number): this;`
+- `setFrictionY(y: number): this;`
+- `setGravity(x: number, y?: number): this;`
+- `setGravityX(x: number): this;`
+- `setGravityY(y: number): this;`
+- `setImmovable(value?: boolean): this;`
+- `setMass(value: number): this;`
+- `setPushable(value?: boolean): this;`
+- `setOffset(x: number, y?: number): this;`
+- `setBodySize(width: number, height: number, center?: boolean): this;`
+- `setCircle(radius: number, offsetX?: number, offsetY?: number): this;`
+- `setVelocity(x: number, y?: number): this;`
+- `setVelocityX(x: number): this;`
+- `setVelocityY(y: number): this;`
+- `setMaxVelocity(x: number, y?: number): this;`
+
+##### class Phaser.Physics.Arcade.Body
+- `constructor(world: Phaser.Physics.Arcade.World, gameObject?: Phaser.GameObjects.GameObject);`
+- `world: Phaser.Physics.Arcade.World;`
+- `gameObject: Phaser.GameObjects.GameObject;`
+- `readonly isBody: boolean;`
+- `transform: object;`
+- `debugShowBody: boolean;`
+- `debugShowVelocity: boolean;`
+- `debugBodyColor: number;`
+- `enable: boolean;`
+- `isCircle: boolean;`
+- `radius: number;`
+- `offset: Phaser.Math.Vector2;`
+- `position: Phaser.Math.Vector2;`
+- `prev: Phaser.Math.Vector2;`
+- `prevFrame: Phaser.Math.Vector2;`
+- `allowRotation: boolean;`
+- `rotation: number;`
+- `preRotation: number;`
+- `readonly width: number;`
+- `readonly height: number;`
+- `sourceWidth: number;`
+- `sourceHeight: number;`
+- `halfWidth: number;`
+- `halfHeight: number;`
+- `center: Phaser.Math.Vector2;`
+- `velocity: Phaser.Math.Vector2;`
+- `readonly newVelocity: Phaser.Math.Vector2;`
+- `deltaMax: Phaser.Math.Vector2;`
+- `acceleration: Phaser.Math.Vector2;`
+- `allowDrag: boolean;`
+- `drag: Phaser.Math.Vector2;`
+- `allowGravity: boolean;`
+- `gravity: Phaser.Math.Vector2;`
+- `bounce: Phaser.Math.Vector2;`
+- `worldBounce: Phaser.Math.Vector2 | null;`
+- `customBoundsRectangle: Phaser.Geom.Rectangle;`
+- `onWorldBounds: boolean;`
+- `onCollide: boolean;`
+- `onOverlap: boolean;`
+- `maxVelocity: Phaser.Math.Vector2;`
+- `maxSpeed: number;`
+- `friction: Phaser.Math.Vector2;`
+- `useDamping: boolean;`
+- `angularVelocity: number;`
+- `angularAcceleration: number;`
+- `angularDrag: number;`
+- `maxAngular: number;`
+- `mass: number;`
+- `angle: number;`
+- `speed: number;`
+- `facing: number;`
+- `immovable: boolean;`
+- `pushable: boolean;`
+- `slideFactor: Phaser.Math.Vector2;`
+- `moves: boolean;`
+- `customSeparateX: boolean;`
+- `customSeparateY: boolean;`
+- `overlapX: number;`
+- `overlapY: number;`
+- `overlapR: number;`
+- `embedded: boolean;`
+- `collideWorldBounds: boolean;`
+- `checkCollision: Phaser.Types.Physics.Arcade.ArcadeBodyCollision;`
+- `touching: Phaser.Types.Physics.Arcade.ArcadeBodyCollision;`
+- `wasTouching: Phaser.Types.Physics.Arcade.ArcadeBodyCollision;`
+- `blocked: Phaser.Types.Physics.Arcade.ArcadeBodyCollision;`
+- `syncBounds: boolean;`
+- `readonly physicsType: number;`
+- `collisionCategory: number;`
+- `collisionMask: number;`
+- `directControl: boolean;`
+- `updateBounds(): void;`
+- `updateCenter(): void;`
+- `updateFromGameObject(): void;`
+- `resetFlags(clear?: boolean): void;`
+- `preUpdate(willStep: boolean, delta: number): void;`
+- `update(delta: number): void;`
+- `postUpdate(): void;`
+- `setBoundsRectangle(bounds?: Phaser.Geom.Rectangle | undefined): this;`
+- `checkWorldBounds(): boolean;`
+- `setOffset(x: number, y?: number): Phaser.Physics.Arcade.Body;`
+- `setGameObject(gameObject: Phaser.GameObjects.GameObject, enable?: boolean): Phaser.Physics.Arcade.Body;`
+- `setSize(width?: number, height?: number, center?: boolean): Phaser.Physics.Arcade.Body;`
+- `setCircle(radius: number, offsetX?: number, offsetY?: number): Phaser.Physics.Arcade.Body;`
+- `reset(x: number, y: number): void;`
+- `stop(): Phaser.Physics.Arcade.Body;`
+- `getBounds(obj: Phaser.Types.Physics.Arcade.ArcadeBodyBounds): Phaser.Types.Physics.Arcade.ArcadeBodyBounds;`
+- `hitTest(x: number, y: number): boolean;`
+- `onFloor(): boolean;`
+- `onCeiling(): boolean;`
+- `onWall(): boolean;`
+- `deltaAbsX(): number;`
+- `deltaAbsY(): number;`
+- `deltaX(): number;`
+- `deltaY(): number;`
+- `deltaXFinal(): number;`
+- `deltaYFinal(): number;`
+- `deltaZ(): number;`
+- `destroy(): void;`
+- `drawDebug(graphic: Phaser.GameObjects.Graphics): void;`
+- `willDrawDebug(): boolean;`
+- `setDirectControl(value?: boolean): Phaser.Physics.Arcade.Body;`
+- `setCollideWorldBounds(value?: boolean, bounceX?: number, bounceY?: number, onWorldBounds?: boolean): Phaser.Physics.Arcade.Body;`
+- `setVelocity(x: number, y?: number): Phaser.Physics.Arcade.Body;`
+- `setVelocityX(value: number): Phaser.Physics.Arcade.Body;`
+- `setVelocityY(value: number): Phaser.Physics.Arcade.Body;`
+- `setMaxVelocity(x: number, y?: number): Phaser.Physics.Arcade.Body;`
+- `setMaxVelocityX(value: number): Phaser.Physics.Arcade.Body;`
+- `setMaxVelocityY(value: number): Phaser.Physics.Arcade.Body;`
+- `setMaxSpeed(value: number): Phaser.Physics.Arcade.Body;`
+- `setSlideFactor(x: number, y?: number): Phaser.Physics.Arcade.Body;`
+- `setBounce(x: number, y?: number): Phaser.Physics.Arcade.Body;`
+- `setBounceX(value: number): Phaser.Physics.Arcade.Body;`
+- `setBounceY(value: number): Phaser.Physics.Arcade.Body;`
+- `setAcceleration(x: number, y?: number): Phaser.Physics.Arcade.Body;`
+- `setAccelerationX(value: number): Phaser.Physics.Arcade.Body;`
+- `setAccelerationY(value: number): Phaser.Physics.Arcade.Body;`
+- `setAllowDrag(value?: boolean): Phaser.Physics.Arcade.Body;`
+- `setAllowGravity(value?: boolean): Phaser.Physics.Arcade.Body;`
+- `setAllowRotation(value?: boolean): Phaser.Physics.Arcade.Body;`
+- `setDrag(x: number, y?: number): Phaser.Physics.Arcade.Body;`
+- `setDamping(value: boolean): Phaser.Physics.Arcade.Body;`
+- `setDragX(value: number): Phaser.Physics.Arcade.Body;`
+- `setDragY(value: number): Phaser.Physics.Arcade.Body;`
+- `setGravity(x: number, y?: number): Phaser.Physics.Arcade.Body;`
+- `setGravityX(value: number): Phaser.Physics.Arcade.Body;`
+- `setGravityY(value: number): Phaser.Physics.Arcade.Body;`
+- `setFriction(x: number, y?: number): Phaser.Physics.Arcade.Body;`
+- `setFrictionX(value: number): Phaser.Physics.Arcade.Body;`
+- `setFrictionY(value: number): Phaser.Physics.Arcade.Body;`
+- `setAngularVelocity(value: number): Phaser.Physics.Arcade.Body;`
+- `setAngularAcceleration(value: number): Phaser.Physics.Arcade.Body;`
+- `setAngularDrag(value: number): Phaser.Physics.Arcade.Body;`
+- `setMass(value: number): Phaser.Physics.Arcade.Body;`
+- `setImmovable(value?: boolean): Phaser.Physics.Arcade.Body;`
+- `setEnable(value?: boolean): Phaser.Physics.Arcade.Body;`
+- `processX(x: number, vx?: number, left?: boolean, right?: boolean): void;`
+- `processY(y: number, vy?: number, up?: boolean, down?: boolean): void;`
+- `x: number;`
+- `y: number;`
+- `readonly left: number;`
+- `readonly right: number;`
+- `readonly top: number;`
+- `readonly bottom: number;`
+- `setCollisionCategory(category: number): this;`
+- `willCollideWith(category: number): boolean;`
+- `addCollidesWith(category: number): this;`
+- `removeCollidesWith(category: number): this;`
+- `setCollidesWith(categories: number | number[]): this;`
+- `resetCollisionCategory(): this;`
+
+##### namespace Phaser.Physics.Arcade.Components
+###### interface Phaser.Physics.Arcade.Components.Acceleration
+- `setAcceleration(x: number, y?: number): this;`
+- `setAccelerationX(value: number): this;`
+- `setAccelerationY(value: number): this;`
+###### interface Phaser.Physics.Arcade.Components.Angular
+- `setAngularVelocity(value: number): this;`
+- `setAngularAcceleration(value: number): this;`
+- `setAngularDrag(value: number): this;`
+###### interface Phaser.Physics.Arcade.Components.Bounce
+- `setBounce(x: number, y?: number): this;`
+- `setBounceX(value: number): this;`
+- `setBounceY(value: number): this;`
+- `setCollideWorldBounds(value?: boolean, bounceX?: number, bounceY?: number, onWorldBounds?: boolean): this;`
+###### interface Phaser.Physics.Arcade.Components.Collision
+- `setCollisionCategory(category: number): this;`
+- `willCollideWith(category: number): boolean;`
+- `addCollidesWith(category: number): this;`
+- `removeCollidesWith(category: number): this;`
+- `setCollidesWith(categories: number | number[]): this;`
+- `resetCollisionCategory(): this;`
+###### interface Phaser.Physics.Arcade.Components.Debug
+- `setDebug(showBody: boolean, showVelocity: boolean, bodyColor: number): this;`
+- `setDebugBodyColor(value: number): this;`
+- `debugShowBody: boolean;`
+- `debugShowVelocity: boolean;`
+- `debugBodyColor: number;`
+###### interface Phaser.Physics.Arcade.Components.Drag
+- `setDrag(x: number, y?: number): this;`
+- `setDragX(value: number): this;`
+- `setDragY(value: number): this;`
+- `setDamping(value: boolean): this;`
+###### interface Phaser.Physics.Arcade.Components.Enable
+- `setDirectControl(value?: boolean): this;`
+- `enableBody(reset?: boolean, x?: number, y?: number, enableGameObject?: boolean, showGameObject?: boolean): this;`
+- `disableBody(disableGameObject?: boolean, hideGameObject?: boolean): this;`
+- `refreshBody(): this;`
+###### interface Phaser.Physics.Arcade.Components.Friction
+- `setFriction(x: number, y?: number): this;`
+- `setFrictionX(x: number): this;`
+- `setFrictionY(y: number): this;`
+###### interface Phaser.Physics.Arcade.Components.Gravity
+- `setGravity(x: number, y?: number): this;`
+- `setGravityX(x: number): this;`
+- `setGravityY(y: number): this;`
+###### interface Phaser.Physics.Arcade.Components.Immovable
+- `setImmovable(value?: boolean): this;`
+###### interface Phaser.Physics.Arcade.Components.Mass
+- `setMass(value: number): this;`
+###### interface Phaser.Physics.Arcade.Components.OverlapCirc
+###### interface Phaser.Physics.Arcade.Components.OverlapRect
+###### interface Phaser.Physics.Arcade.Components.Pushable
+- `setPushable(value?: boolean): this;`
+###### interface Phaser.Physics.Arcade.Components.Size
+- `setOffset(x: number, y?: number): this;`
+- `setSize(width: number, height: number, center?: boolean): this;`
+- `setBodySize(width: number, height: number, center?: boolean): this;`
+- `setCircle(radius: number, offsetX?: number, offsetY?: number): this;`
+###### interface Phaser.Physics.Arcade.Components.Velocity
+- `setVelocity(x: number, y?: number): this;`
+- `setVelocityX(x: number): this;`
+- `setVelocityY(y: number): this;`
+- `setMaxVelocity(x: number, y?: number): this;`
+
+##### class Phaser.Physics.Arcade.Factory
+- `constructor(world: Phaser.Physics.Arcade.World);`
+- `world: Phaser.Physics.Arcade.World;`
+- `scene: Phaser.Scene;`
+- `sys: Phaser.Scenes.Systems;`
+- `collider(object1: Phaser.Types.Physics.Arcade.ArcadeColliderType, object2: Phaser.Types.Physics.Arcade.ArcadeColliderType, collideCallback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, processCallback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, callbackContext?: any): Phaser.Physics.Arcade.Collider;`
+- `overlap(object1: Phaser.Types.Physics.Arcade.ArcadeColliderType, object2: Phaser.Types.Physics.Arcade.ArcadeColliderType, collideCallback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, processCallback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, callbackContext?: any): Phaser.Physics.Arcade.Collider;`
+- `existing<G extends Phaser.GameObjects.GameObject>(gameObject: G, isStatic?: boolean): G;`
+- `staticImage(x: number, y: number, texture: string | Phaser.Textures.Texture, frame?: string | number): Phaser.Types.Physics.Arcade.ImageWithStaticBody;`
+- `image(x: number, y: number, texture: string | Phaser.Textures.Texture, frame?: string | number): Phaser.Types.Physics.Arcade.ImageWithDynamicBody;`
+- `staticSprite(x: number, y: number, texture: string | Phaser.Textures.Texture, frame?: string | number): Phaser.Types.Physics.Arcade.SpriteWithStaticBody;`
+- `sprite(x: number, y: number, key: string, frame?: string | number): Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;`
+- `staticGroup(children?: Phaser.GameObjects.GameObject[] | Phaser.Types.GameObjects.Group.GroupConfig | Phaser.Types.GameObjects.Group.GroupCreateConfig, config?: Phaser.Types.GameObjects.Group.GroupConfig | Phaser.Types.GameObjects.Group.GroupCreateConfig): Phaser.Physics.Arcade.StaticGroup;`
+- `group(children?: Phaser.GameObjects.GameObject[] | Phaser.Types.Physics.Arcade.PhysicsGroupConfig | Phaser.Types.GameObjects.Group.GroupCreateConfig, config?: Phaser.Types.Physics.Arcade.PhysicsGroupConfig | Phaser.Types.GameObjects.Group.GroupCreateConfig): Phaser.Physics.Arcade.Group;`
+- `body(x: number, y: number, width?: number, height?: number): Phaser.Physics.Arcade.Body;`
+- `staticBody(x: number, y: number, width?: number, height?: number): Phaser.Physics.Arcade.StaticBody;`
+- `destroy(): void;`
+
+##### class Phaser.Physics.Arcade.World
+- `constructor(scene: Phaser.Scene, config: Phaser.Types.Physics.Arcade.ArcadeWorldConfig);`
+- `scene: Phaser.Scene;`
+- `bodies: Set<Phaser.Physics.Arcade.Body>;`
+- `staticBodies: Set<Phaser.Physics.Arcade.StaticBody>;`
+- `pendingDestroy: Set<(Phaser.Physics.Arcade.Body|Phaser.Physics.Arcade.StaticBody)>;`
+- `colliders: Phaser.Structs.ProcessQueue<Phaser.Physics.Arcade.Collider>;`
+- `gravity: Phaser.Math.Vector2;`
+- `bounds: Phaser.Geom.Rectangle;`
+- `checkCollision: Phaser.Types.Physics.Arcade.CheckCollisionObject;`
+- `readonly fps: number;`
+- `fixedStep: boolean;`
+- `readonly stepsLastFrame: number;`
+- `timeScale: number;`
+- `OVERLAP_BIAS: number;`
+- `TILE_BIAS: number;`
+- `forceX: boolean;`
+- `isPaused: boolean;`
+- `drawDebug: boolean;`
+- `debugGraphic: Phaser.GameObjects.Graphics;`
+- `defaults: Phaser.Types.Physics.Arcade.ArcadeWorldDefaults;`
+- `maxEntries: number;`
+- `useTree: boolean;`
+- `tree: Phaser.Structs.RTree;`
+- `staticTree: Phaser.Structs.RTree;`
+- `treeMinMax: Phaser.Types.Physics.Arcade.ArcadeWorldTreeMinMax;`
+- `tileFilterOptions: Phaser.Types.Tilemaps.FilteringOptions;`
+- `enable(object: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[] | Phaser.GameObjects.Group | Phaser.GameObjects.Group[], bodyType?: number): void;`
+- `enableBody(object: Phaser.GameObjects.GameObject, bodyType?: number): Phaser.GameObjects.GameObject;`
+- `add(body: Phaser.Physics.Arcade.Body | Phaser.Physics.Arcade.StaticBody): Phaser.Physics.Arcade.Body | Phaser.Physics.Arcade.StaticBody;`
+- `disable(object: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[] | Phaser.GameObjects.Group | Phaser.GameObjects.Group[]): void;`
+- `disableBody(body: Phaser.Physics.Arcade.Body | Phaser.Physics.Arcade.StaticBody): void;`
+- `remove(body: Phaser.Physics.Arcade.Body | Phaser.Physics.Arcade.StaticBody): void;`
+- `createDebugGraphic(): Phaser.GameObjects.Graphics;`
+- `setBounds(x: number, y: number, width: number, height: number, checkLeft?: boolean, checkRight?: boolean, checkUp?: boolean, checkDown?: boolean): Phaser.Physics.Arcade.World;`
+- `setBoundsCollision(left?: boolean, right?: boolean, up?: boolean, down?: boolean): Phaser.Physics.Arcade.World;`
+- `pause(): Phaser.Physics.Arcade.World;`
+- `resume(): Phaser.Physics.Arcade.World;`
+- `addCollider(object1: Phaser.Types.Physics.Arcade.ArcadeColliderType, object2: Phaser.Types.Physics.Arcade.ArcadeColliderType, collideCallback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, processCallback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, callbackContext?: any): Phaser.Physics.Arcade.Collider;`
+- `addOverlap(object1: Phaser.Types.Physics.Arcade.ArcadeColliderType, object2: Phaser.Types.Physics.Arcade.ArcadeColliderType, collideCallback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, processCallback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, callbackContext?: any): Phaser.Physics.Arcade.Collider;`
+- `removeCollider(collider: Phaser.Physics.Arcade.Collider): Phaser.Physics.Arcade.World;`
+- `setFPS(framerate: number): this;`
+- `update(time: number, delta: number): void;`
+- `step(delta: number): void;`
+- `singleStep(): void;`
+- `postUpdate(): void;`
+- `updateMotion(body: Phaser.Physics.Arcade.Body, delta: number): void;`
+- `computeAngularVelocity(body: Phaser.Physics.Arcade.Body, delta: number): void;`
+- `computeVelocity(body: Phaser.Physics.Arcade.Body, delta: number): void;`
+- `separate(body1: Phaser.Physics.Arcade.Body, body2: Phaser.Physics.Arcade.Body, processCallback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, callbackContext?: any, overlapOnly?: boolean): boolean;`
+- `separateCircle(body1: Phaser.Physics.Arcade.Body, body2: Phaser.Physics.Arcade.Body, overlapOnly?: boolean): boolean;`
+- `intersects(body1: Phaser.Physics.Arcade.Body, body2: Phaser.Physics.Arcade.Body): boolean;`
+- `circleBodyIntersects(circle: Phaser.Physics.Arcade.Body, body: Phaser.Physics.Arcade.Body): boolean;`
+- `overlap(object1: Phaser.Types.Physics.Arcade.ArcadeColliderType, object2?: Phaser.Types.Physics.Arcade.ArcadeColliderType, overlapCallback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, processCallback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, callbackContext?: any): boolean;`
+- `collide(object1: Phaser.Types.Physics.Arcade.ArcadeColliderType, object2?: Phaser.Types.Physics.Arcade.ArcadeColliderType, collideCallback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, processCallback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, callbackContext?: any): boolean;`
+- `canCollide(body1: Phaser.Types.Physics.Arcade.ArcadeColliderType, body2: Phaser.Types.Physics.Arcade.ArcadeColliderType): boolean;`
+- `collideTiles(sprite: Phaser.GameObjects.GameObject, tiles: Phaser.Tilemaps.Tile[], collideCallback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, processCallback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, callbackContext?: any): boolean;`
+- `overlapTiles(sprite: Phaser.GameObjects.GameObject, tiles: Phaser.Tilemaps.Tile[], overlapCallback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, processCallback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, callbackContext?: any): boolean;`
+- `collideSpriteVsTilemapLayer(sprite: Phaser.GameObjects.GameObject, tilemapLayer: Phaser.Tilemaps.TilemapLayer, collideCallback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, processCallback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, callbackContext?: any, overlapOnly?: boolean): boolean;`
+- `wrap(object: any, padding?: number): void;`
+- `wrapArray(objects: any[], padding?: number): void;`
+- `wrapObject(object: any, padding?: number): void;`
+- `shutdown(): void;`
+- `destroy(): void;`
+
+### namespace Phaser.Plugins
+#### class Phaser.Plugins.BasePlugin
+- `constructor(pluginManager: Phaser.Plugins.PluginManager);`
+- `protected pluginManager: Phaser.Plugins.PluginManager;`
+- `protected game: Phaser.Game;`
+- `init(data?: any | undefined): void;`
+- `start(): void;`
+- `stop(): void;`
+- `destroy(): void;`
+#### namespace Phaser.Plugins.DefaultPlugins
+- `var Global: any[];`
+- `var CoreScene: any[];`
+- `var DefaultScene: any[];`
+#### namespace Phaser.Plugins.PluginCache
+- `function register(key: string, plugin: Function, mapping: string, custom?: boolean): void;`
+- `function registerCustom(key: string, plugin: Function, mapping: string, data: any | undefined): void;`
+- `function hasCore(key: string): boolean;`
+- `function hasCustom(key: string): boolean;`
+- `function getCore(key: string): Phaser.Types.Plugins.CorePluginContainer;`
+- `function getCustom(key: string): Phaser.Types.Plugins.CustomPluginContainer;`
+- `function getCustomClass(key: string): Function;`
+- `function remove(key: string): void;`
+- `function removeCustom(key: string): void;`
+- `function destroyCorePlugins(): void;`
+- `function destroyCustomPlugins(): void;`
+#### class Phaser.Plugins.PluginManager
+- `constructor(game: Phaser.Game);`
+- `game: Phaser.Game;`
+- `plugins: Phaser.Types.Plugins.GlobalPlugin[];`
+- `scenePlugins: string[];`
+- `protected boot(): void;`
+- `protected addToScene(sys: Phaser.Scenes.Systems, globalPlugins: any[], scenePlugins: any[]): void;`
+- `protected getDefaultScenePlugins(): string[];`
+- `installScenePlugin(key: string, plugin: Function, mapping?: string, addToScene?: Phaser.Scene, fromLoader?: boolean): void;`
+- `install(key: string, plugin: Function, start?: boolean, mapping?: string, data?: any): Phaser.Plugins.BasePlugin | null;`
+- `protected getIndex(key: string): number;`
+- `protected getEntry(key: string): Phaser.Types.Plugins.GlobalPlugin;`
+- `isActive(key: string): boolean;`
+- `start(key: string, runAs?: string): Phaser.Plugins.BasePlugin | null;`
+- `stop(key: string): this;`
+- `get(key: string, autoStart?: boolean): Phaser.Plugins.BasePlugin | Function | null;`
+- `getClass(key: string): Phaser.Plugins.BasePlugin;`
+- `removeGlobalPlugin(key: string): void;`
+- `removeScenePlugin(key: string): void;`
+- `registerGameObject(key: string, factoryCallback?: Function, creatorCallback?: Function): void;`
+- `removeGameObject(key: string, removeFromFactory?: boolean, removeFromCreator?: boolean): void;`
+- `registerFileType(key: string, callback: Function, addToScene?: Phaser.Scene): void;`
+- `destroy(): void;`
+#### class Phaser.Plugins.ScenePlugin
+- `constructor(scene: Phaser.Scene, pluginManager: Phaser.Plugins.PluginManager, pluginKey: string);`
+- `protected scene: Phaser.Scene | null;`
+- `protected systems: Phaser.Scenes.Systems | null;`
+- `readonly pluginKey: string;`
+- `boot(): void;`
+- `destroy(): void;`
+
+### namespace Phaser.Renderer
+#### namespace Phaser.Renderer.WebGL
+### namespace Phaser.Scale
+#### enum Phaser.Scale.Center
+- `NO_CENTER,`
+- `CENTER_BOTH,`
+- `CENTER_HORIZONTALLY,`
+- `CENTER_VERTICALLY,`
+- `type CenterType = Phaser.Scale.Center;`
+#### enum Phaser.Scale.Orientation
+- `LANDSCAPE,`
+- `LANDSCAPE_SECONDARY,`
+- `PORTRAIT,`
+- `PORTRAIT_SECONDARY,`
+- `type OrientationType = Phaser.Scale.Orientation;`
+#### enum Phaser.Scale.ScaleModes
+- `NONE,`
+- `WIDTH_CONTROLS_HEIGHT,`
+- `HEIGHT_CONTROLS_WIDTH,`
+- `FIT,`
+- `ENVELOP,`
+- `RESIZE,`
+- `EXPAND,`
+- `type ScaleModeType = Phaser.Scale.ScaleModes;`
+#### enum Phaser.Scale.Zoom
+- `NO_ZOOM,`
+- `ZOOM_2X,`
+- `ZOOM_4X,`
+- `MAX_ZOOM,`
+- `type ZoomType = Phaser.Scale.Zoom;`
+#### namespace Phaser.Scale.Events
+- `const ENTER_FULLSCREEN: string;`
+- `const FULLSCREEN_FAILED: string;`
+- `const FULLSCREEN_UNSUPPORTED: string;`
+- `const LEAVE_FULLSCREEN: string;`
+- `const ORIENTATION_CHANGE: string;`
+- `const RESIZE: string;`
+#### class Phaser.Scale.ScaleManager
+- `constructor(game: Phaser.Game);`
+- `readonly game: Phaser.Game;`
+- `canvas: HTMLCanvasElement;`
+- `canvasBounds: Phaser.Geom.Rectangle;`
+- `parent: any | null;`
+- `parentIsWindow: boolean;`
+- `parentSize: Phaser.Structs.Size;`
+- `gameSize: Phaser.Structs.Size;`
+- `baseSize: Phaser.Structs.Size;`
+- `displaySize: Phaser.Structs.Size;`
+- `scaleMode: Phaser.Scale.ScaleModeType;`
+- `zoom: number;`
+- `readonly _resetZoom: boolean;`
+- `displayScale: Phaser.Math.Vector2;`
+- `autoRound: boolean;`
+- `autoCenter: Phaser.Scale.CenterType;`
+- `orientation: Phaser.Scale.OrientationType;`
+- `fullscreen: Phaser.Device.Fullscreen;`
+- `fullscreenTarget: any | null;`
+- `dirty: boolean;`
+- `resizeInterval: number;`
+- `protected preBoot(): void;`
+- `protected boot(): void;`
+- `protected parseConfig(config: Phaser.Types.Core.GameConfig): void;`
+- `getParent(config: Phaser.Types.Core.GameConfig): void;`
+- `getParentBounds(): boolean;`
+- `lockOrientation(orientation: string): boolean;`
+- `setParentSize(width: number, height: number): this;`
+- `setGameSize(width: number, height: number): this;`
+- `resize(width: number, height: number): this;`
+- `setZoom(value: number): this;`
+- `setMaxZoom(): this;`
+- `setSnap(snapWidth?: number, snapHeight?: number): this;`
+- `refresh(previousWidth?: number, previousHeight?: number): this;`
+- `updateOrientation(): void;`
+- `updateScale(): void;`
+- `getMaxZoom(): number;`
+- `updateCenter(): void;`
+- `updateBounds(): void;`
+- `transformX(pageX: number): number;`
+- `transformY(pageY: number): number;`
+- `startFullscreen(fullscreenOptions?: object): void;`
+- `getFullscreenTarget(): object;`
+- `removeFullscreenTarget(): void;`
+- `stopFullscreen(): void;`
+- `leaveFullScreenSuccessHandler(): void;`
+- `toggleFullscreen(fullscreenOptions?: object): void;`
+- `startListeners(): void;`
+- `protected onFullScreenChange(): void;`
+- `onFullScreenError(): void;`
+- `getViewPort(camera?: Phaser.Cameras.Scene2D.Camera, out?: Phaser.Geom.Rectangle): Phaser.Geom.Rectangle;`
+- `step(time: number, delta: number): void;`
+- `stopListeners(): void;`
+- `destroy(): void;`
+- `readonly isFullscreen: boolean;`
+- `readonly width: number;`
+- `readonly height: number;`
+- `readonly isPortrait: boolean;`
+- `readonly isLandscape: boolean;`
+- `readonly isGamePortrait: boolean;`
+- `readonly isGameLandscape: boolean;`
+- `const NO_CENTER: number;`
+- `const CENTER_BOTH: number;`
+- `const CENTER_HORIZONTALLY: number;`
+- `const CENTER_VERTICALLY: number;`
+- `const LANDSCAPE: string;`
+- `const PORTRAIT: string;`
+- `const NONE: number;`
+- `const WIDTH_CONTROLS_HEIGHT: number;`
+- `const HEIGHT_CONTROLS_WIDTH: number;`
+- `const FIT: number;`
+- `const ENVELOP: number;`
+- `const RESIZE: number;`
+- `const EXPAND: number;`
+- `const NO_ZOOM: number;`
+- `const ZOOM_2X: number;`
+- `const ZOOM_4X: number;`
+- `const MAX_ZOOM: number;`
+
+### namespace Phaser.Scenes
+#### class Phaser.Scenes.SceneManager
+- `constructor(game: Phaser.Game, sceneConfig: object);`
+- `game: Phaser.Game;`
+- `keys: Record<string, Phaser.Scene>;`
+- `scenes: Phaser.Scene[];`
+- `readonly isProcessing: boolean;`
+- `readonly isBooted: boolean;`
+- `customViewports: number;`
+- `systemScene: Phaser.Scene;`
+- `processQueue(): void;`
+- `add(key: string, sceneConfig: Phaser.Types.Scenes.SceneType, autoStart?: boolean, data?: object): Phaser.Scene | null;`
+- `remove(key: string): this;`
+- `update(time: number, delta: number): void;`
+- `render(renderer: Phaser.Renderer.Canvas.CanvasRenderer | Phaser.Renderer.WebGL.WebGLRenderer): void;`
+- `getScenes<T extends Phaser.Scene[]>(isActive?: boolean, inReverse?: boolean): T;`
+- `getScene<T extends Phaser.Scene>(key: (T|string)): T;`
+- `isActive<T extends Phaser.Scene>(key: (T|string)): boolean;`
+- `isPaused<T extends Phaser.Scene>(key: (T|string)): boolean;`
+- `isVisible<T extends Phaser.Scene>(key: (T|string)): boolean;`
+- `isSleeping<T extends Phaser.Scene>(key: (T|string)): boolean;`
+- `pause<T extends Phaser.Scene>(key: (T|string), data?: object): this;`
+- `resume<T extends Phaser.Scene>(key: (T|string), data?: object): this;`
+- `sleep<T extends Phaser.Scene>(key: (T|string), data?: object): this;`
+- `wake<T extends Phaser.Scene>(key: (T|string), data?: object): this;`
+- `run<T extends Phaser.Scene>(key: (T|string), data?: object): this;`
+- `start<T extends Phaser.Scene>(key: (T|string), data?: object): this;`
+- `stop<T extends Phaser.Scene>(key: (T|string), data?: object): this;`
+- `switch<T extends Phaser.Scene>(from: (T|string), to: (T|string), data?: object): this;`
+- `getAt<T extends Phaser.Scene>(index: number): T;`
+- `getIndex<T extends Phaser.Scene>(key: (T|string)): number;`
+- `bringToTop<T extends Phaser.Scene>(key: (T|string)): this;`
+- `sendToBack<T extends Phaser.Scene>(key: (T|string)): this;`
+- `moveDown<T extends Phaser.Scene>(key: (T|string)): this;`
+- `moveUp<T extends Phaser.Scene>(key: (T|string)): this;`
+- `moveAbove<T extends Phaser.Scene>(keyA: (T|string), keyB: (T|string)): this;`
+- `moveBelow<T extends Phaser.Scene>(keyA: (T|string), keyB: (T|string)): this;`
+- `swapPosition<T extends Phaser.Scene>(keyA: (T|string), keyB: (T|string)): this;`
+- `dump(): void;`
+- `destroy(): void;`
+
+#### class Phaser.Scenes.ScenePlugin
+- `constructor(scene: Phaser.Scene);`
+- `scene: Phaser.Scene;`
+- `systems: Phaser.Scenes.Systems;`
+- `settings: Phaser.Types.Scenes.SettingsObject;`
+- `key: string;`
+- `manager: Phaser.Scenes.SceneManager;`
+- `transitionProgress: number;`
+- `start<T extends Phaser.Scene>(key?: (T|string), data?: object): this;`
+- `restart(data?: object): this;`
+- `transition(config: Phaser.Types.Scenes.SceneTransitionConfig): boolean;`
+- `add(key: string, sceneConfig: Phaser.Types.Scenes.SceneType, autoStart?: boolean, data?: object): Phaser.Scene | null;`
+- `launch<T extends Phaser.Scene>(key: (T|string), data?: object): this;`
+- `run<T extends Phaser.Scene>(key: (T|string), data?: object): this;`
+- `pause<T extends Phaser.Scene>(key?: (T|string), data?: object): this;`
+- `resume<T extends Phaser.Scene>(key?: (T|string), data?: object): this;`
+- `sleep<T extends Phaser.Scene>(key?: (T|string), data?: object): this;`
+- `wake<T extends Phaser.Scene>(key?: (T|string), data?: object): this;`
+- `switch<T extends Phaser.Scene>(key: (T|string), data?: any): this;`
+- `stop<T extends Phaser.Scene>(key?: (T|string), data?: any): this;`
+- `setActive<T extends Phaser.Scene>(value: boolean, key?: (T|string), data?: object): this;`
+- `setVisible<T extends Phaser.Scene>(value: boolean, key?: (T|string)): this;`
+- `isSleeping<T extends Phaser.Scene>(key?: (T|string)): boolean;`
+- `isActive<T extends Phaser.Scene>(key?: (T|string)): boolean;`
+- `isPaused<T extends Phaser.Scene>(key?: (T|string)): boolean;`
+- `isVisible<T extends Phaser.Scene>(key?: (T|string)): boolean;`
+- `swapPosition<T extends Phaser.Scene>(keyA: (T|string), keyB?: (T|string)): this;`
+- `moveAbove<T extends Phaser.Scene>(keyA: (T|string), keyB?: (T|string)): this;`
+- `moveBelow<T extends Phaser.Scene>(keyA: (T|string), keyB?: (T|string)): this;`
+- `remove<T extends Phaser.Scene>(key?: (T|string)): this;`
+- `moveUp<T extends Phaser.Scene>(key?: (T|string)): this;`
+- `moveDown<T extends Phaser.Scene>(key?: (T|string)): this;`
+- `bringToTop<T extends Phaser.Scene>(key?: (T|string)): this;`
+- `sendToBack<T extends Phaser.Scene>(key?: (T|string)): this;`
+- `get<T extends Phaser.Scene>(key: (T|string)): T;`
+- `getStatus<T extends Phaser.Scene>(key: (T|string)): number;`
+- `getIndex<T extends Phaser.Scene>(key?: (T|string)): number;`
+
+### class Phaser.Scene
+- `constructor(config?: string | Phaser.Types.Scenes.SettingsConfig);`
+- `sys: Phaser.Scenes.Systems;`
+- `game: Phaser.Game;`
+- `anims: Phaser.Animations.AnimationManager;`
+- `cache: Phaser.Cache.CacheManager;`
+- `registry: Phaser.Data.DataManager;`
+- `sound: Phaser.Sound.NoAudioSoundManager | Phaser.Sound.HTML5AudioSoundManager | Phaser.Sound.WebAudioSoundManager;`
+- `textures: Phaser.Textures.TextureManager;`
+- `events: Phaser.Events.EventEmitter;`
+- `cameras: Phaser.Cameras.Scene2D.CameraManager;`
+- `add: Phaser.GameObjects.GameObjectFactory;`
+- `make: Phaser.GameObjects.GameObjectCreator;`
+- `scene: Phaser.Scenes.ScenePlugin;`
+- `children: Phaser.GameObjects.DisplayList;`
+- `lights: Phaser.GameObjects.LightsManager;`
+- `data: Phaser.Data.DataManager;`
+- `input: Phaser.Input.InputPlugin;`
+- `load: Phaser.Loader.LoaderPlugin;`
+- `time: Phaser.Time.Clock;`
+- `tweens: Phaser.Tweens.TweenManager;`
+- `physics: Phaser.Physics.Arcade.ArcadePhysics;`
+- `matter: Phaser.Physics.Matter.MatterPhysics;`
+- `scale: Phaser.Scale.ScaleManager;`
+- `plugins: Phaser.Plugins.PluginManager;`
+- `renderer: Phaser.Renderer.Canvas.CanvasRenderer | Phaser.Renderer.WebGL.WebGLRenderer;`
+- `update(time: number, delta: number): void;`
+
+### namespace Phaser.Sound
+#### class Phaser.Sound.BaseSound
+- `constructor(manager: Phaser.Sound.BaseSoundManager, key: string, config?: Phaser.Types.Sound.SoundConfig);`
+- `manager: Phaser.Sound.BaseSoundManager;`
+- `readonly key: string;`
+- `readonly isPlaying: boolean;`
+- `readonly isPaused: boolean;`
+- `readonly totalRate: number;`
+- `readonly duration: number;`
+- `readonly totalDuration: number;`
+- `readonly markers: {[key: string]:  Phaser.Types.Sound.SoundMarker};`
+- `readonly currentMarker: Phaser.Types.Sound.SoundMarker;`
+- `pendingRemove: boolean;`
+- `addMarker(marker: Phaser.Types.Sound.SoundMarker): boolean;`
+- `updateMarker(marker: Phaser.Types.Sound.SoundMarker): boolean;`
+- `removeMarker(markerName: string): Phaser.Types.Sound.SoundMarker | null;`
+- `play(markerName?: string | Phaser.Types.Sound.SoundConfig, config?: Phaser.Types.Sound.SoundConfig): boolean;`
+- `pause(): boolean;`
+- `resume(): boolean;`
+- `stop(): boolean;`
+- `applyConfig(): void;`
+- `resetConfig(): void;`
+- `update(time: number, delta: number): void;`
+- `calculateRate(): void;`
+- `destroy(): void;`
+
+#### class Phaser.Sound.BaseSoundManager
+- `constructor(game: Phaser.Game);`
+- `readonly game: Phaser.Game;`
+- `readonly jsonCache: Phaser.Cache.BaseCache;`
+- `mute: boolean;`
+- `volume: number;`
+- `pauseOnBlur: boolean;`
+- `readonly locked: boolean;`
+- `gameLostFocus: boolean;`
+- `listenerPosition: Phaser.Math.Vector2;`
+- `add(key: string, config?: Phaser.Types.Sound.SoundConfig): Phaser.Sound.BaseSound;`
+- `addAudioSprite(key: string, config?: Phaser.Types.Sound.SoundConfig): Phaser.Sound.NoAudioSound | Phaser.Sound.HTML5AudioSound | Phaser.Sound.WebAudioSound;`
+- `get<T extends Phaser.Sound.BaseSound>(key: string): T;`
+- `getAll<T extends Phaser.Sound.BaseSound>(key?: string): T[];`
+- `getAllPlaying<T extends Phaser.Sound.BaseSound>(): T[];`
+- `play(key: string, extra?: Phaser.Types.Sound.SoundConfig | Phaser.Types.Sound.SoundMarker): boolean;`
+- `playAudioSprite(key: string, spriteName: string, config?: Phaser.Types.Sound.SoundConfig): boolean;`
+- `remove(sound: Phaser.Sound.BaseSound): boolean;`
+- `removeAll(): void;`
+- `removeByKey(key: string): number;`
+- `pauseAll(): void;`
+- `resumeAll(): void;`
+- `setListenerPosition(x?: number, y?: number): void;`
+- `stopAll(): void;`
+- `stopByKey(key: string): number;`
+- `isPlaying(key: string | undefined): boolean;`
+- `protected unlock(): void;`
+- `protected onBlur(): void;`
+- `protected onFocus(): void;`
+- `protected update(time: number, delta: number): void;`
+- `destroy(): void;`
+- `setRate(value: number): this;`
+- `rate: number;`
+- `setDetune(value: number): this;`
+- `detune: number;`
+
+#### class Phaser.Sound.WebAudioSound
+- `constructor(manager: Phaser.Sound.WebAudioSoundManager, key: string, config?: Phaser.Types.Sound.SoundConfig);`
+- `audioBuffer: AudioBuffer;`
+- `source: AudioBufferSourceNode | null;`
+- `loopSource: AudioBufferSourceNode | null;`
+- `muteNode: GainNode;`
+- `volumeNode: GainNode;`
+- `pannerNode: StereoPannerNode | null;`
+- `spatialNode: PannerNode | null;`
+- `spatialSource: Phaser.Types.Math.Vector2Like | null;`
+- `playTime: number;`
+- `startTime: number;`
+- `loopTime: number;`
+- `rateUpdates: any[];`
+- `readonly hasEnded: boolean;`
+- `readonly hasLooped: boolean;`
+- `play(markerName?: string | Phaser.Types.Sound.SoundConfig, config?: Phaser.Types.Sound.SoundConfig): boolean;`
+- `pause(): boolean;`
+- `resume(): boolean;`
+- `stop(): boolean;`
+- `createAndStartLoopBufferSource(): void;`
+- `createBufferSource(): AudioBufferSourceNode;`
+- `stopAndRemoveBufferSource(): void;`
+- `stopAndRemoveLoopBufferSource(): void;`
+- `applyConfig(): void;`
+- `x: number;`
+- `y: number;`
+- `update(): void;`
+- `destroy(): void;`
+- `calculateRate(): void;`
+- `getCurrentTime(): void;`
+- `getLoopTime(): void;`
+- `rate: number;`
+- `setRate(value: number): this;`
+- `detune: number;`
+- `setDetune(value: number): this;`
+- `mute: boolean;`
+- `setMute(value: boolean): this;`
+- `volume: number;`
+- `setVolume(value: number): this;`
+- `seek: number;`
+- `setSeek(value: number): this;`
+- `loop: boolean;`
+- `setLoop(value: boolean): this;`
+- `pan: number;`
+- `setPan(value: number): this;`
+
+#### class Phaser.Sound.WebAudioSoundManager
+- `constructor(game: Phaser.Game);`
+- `context: AudioContext;`
+- `masterMuteNode: GainNode;`
+- `masterVolumeNode: GainNode;`
+- `destination: AudioNode;`
+- `createAudioContext(game: Phaser.Game): AudioContext;`
+- `setAudioContext(context: AudioContext): this;`
+- `add(key: string, config?: Phaser.Types.Sound.SoundConfig): Phaser.Sound.WebAudioSound;`
+- `decodeAudio(audioKey?: Phaser.Types.Sound.DecodeAudioConfig[] | string, audioData?: ArrayBuffer | string): void;`
+- `setListenerPosition(x?: number, y?: number): void;`
+- `unlock(): void;`
+- `protected onBlur(): void;`
+- `protected onFocus(): void;`
+- `protected update(time: number, delta: number): void;`
+- `destroy(): void;`
+- `setMute(value: boolean): Phaser.Sound.WebAudioSoundManager;`
+- `mute: boolean;`
+- `setVolume(value: number): Phaser.Sound.WebAudioSoundManager;`
+- `volume: number;`
+
+### namespace Phaser.Structs
+#### class Phaser.Structs.List
+- `constructor(parent: any);`
+- `parent: any;`
+- `list: T[];`
+- `position: number;`
+- `addCallback: Function;`
+- `removeCallback: Function;`
+- `_sortKey: string;`
+- `add(child: any | any[], skipCallback?: boolean): any;`
+- `addAt(child: (T|T[]), index?: number, skipCallback?: boolean): (T|T[]);`
+- `getAt(index: number): T;`
+- `getIndex(child: T): number;`
+- `sort(property: string, handler?: Function): T[];`
+- `getByName(name: string): T | null;`
+- `getRandom(startIndex?: number, length?: number): T | null;`
+- `getFirst(property: string, value: any, startIndex?: number, endIndex?: number): T | null;`
+- `getAll(property?: string, value?: any, startIndex?: number, endIndex?: number): T[];`
+- `count(property: string, value: T): number;`
+- `swap(child1: T, child2: T): void;`
+- `moveTo(child: T, index: number): T;`
+- `moveAbove(child1: T, child2: T): void;`
+- `moveBelow(child1: T, child2: T): void;`
+- `remove(child: any, skipCallback?: boolean): any;`
+- `removeAt(index: number, skipCallback?: boolean): T;`
+- `removeBetween(startIndex?: number, endIndex?: number, skipCallback?: boolean): T[];`
+- `removeAll(skipCallback?: boolean): this;`
+- `bringToTop(child: T): T;`
+- `sendToBack(child: T): T;`
+- `moveUp(child: T): T;`
+- `moveDown(child: T): T;`
+- `reverse(): Phaser.Structs.List<T>;`
+- `shuffle(): Phaser.Structs.List<T>;`
+- `replace(oldChild: T, newChild: T): T;`
+- `exists(child: T): boolean;`
+- `setAll(property: string, value: T, startIndex?: number, endIndex?: number): void;`
+- `each(callback: EachListCallback<T>, context?: any, ...args: any[]): void;`
+- `shutdown(): void;`
+- `destroy(): void;`
+- `readonly length: number;`
+- `readonly first: T;`
+- `readonly last: T;`
+- `readonly next: T;`
+- `readonly previous: T;`
+
+#### class Phaser.Structs.Map
+- `constructor(elements: V[]);`
+- `entries: {[key: string]:  V};`
+- `size: number;`
+- `setAll<K, V>(elements: V[]): this;`
+- `set(key: K, value: V): Phaser.Structs.Map<K, V>;`
+- `get(key: K): V;`
+- `getArray(): V[];`
+- `has(key: K): boolean;`
+- `delete(key: K): Phaser.Structs.Map<K, V>;`
+- `clear(): Phaser.Structs.Map<K, V>;`
+- `keys(): K[];`
+- `values(): V[];`
+- `dump(): void;`
+- `each(callback: EachMapCallback<V>): Phaser.Structs.Map<K, V>;`
+- `contains(value: V): boolean;`
+- `merge(map: Phaser.Structs.Map<K, V>, override?: boolean): Phaser.Structs.Map<K, V>;`
+
+### namespace Phaser.Textures
+#### class Phaser.Textures.CanvasTexture
+- `constructor(manager: Phaser.Textures.TextureManager, key: string, source: HTMLCanvasElement, width: number, height: number);`
+- `readonly canvas: HTMLCanvasElement;`
+- `readonly context: CanvasRenderingContext2D;`
+- `readonly width: number;`
+- `readonly height: number;`
+- `imageData: ImageData;`
+- `data: Uint8ClampedArray;`
+- `pixels: Uint32Array;`
+- `buffer: ArrayBuffer;`
+- `update(): Phaser.Textures.CanvasTexture;`
+- `draw(x: number, y: number, source: HTMLImageElement | HTMLCanvasElement, update?: boolean): Phaser.Textures.CanvasTexture;`
+- `drawFrame(key: string, frame?: string | number, x?: number, y?: number, update?: boolean): Phaser.Textures.CanvasTexture;`
+- `setPixel(x: number, y: number, red: number, green: number, blue: number, alpha?: number): this;`
+- `putData(imageData: ImageData, x: number, y: number, dirtyX?: number, dirtyY?: number, dirtyWidth?: number, dirtyHeight?: number): this;`
+- `getData(x: number, y: number, width: number, height: number): ImageData;`
+- `getPixel(x: number, y: number, out?: Phaser.Display.Color): Phaser.Display.Color;`
+- `getPixels(x?: number, y?: number, width?: number, height?: number): Phaser.Types.Textures.PixelConfig[][];`
+- `getIndex(x: number, y: number): number;`
+- `refresh(): Phaser.Textures.CanvasTexture;`
+- `getCanvas(): HTMLCanvasElement;`
+- `getContext(): CanvasRenderingContext2D;`
+- `clear(x?: number, y?: number, width?: number, height?: number, update?: boolean): Phaser.Textures.CanvasTexture;`
+- `setSize(width: number, height?: number): Phaser.Textures.CanvasTexture;`
+- `destroy(): void;`
+
+#### class Phaser.Textures.Frame
+- `constructor(texture: Phaser.Textures.Texture, name: number | string, sourceIndex: number, x: number, y: number, width: number, height: number);`
+- `texture: Phaser.Textures.Texture;`
+- `name: string;`
+- `source: Phaser.Textures.TextureSource;`
+- `sourceIndex: number;`
+- `cutX: number;`
+- `cutY: number;`
+- `cutWidth: number;`
+- `cutHeight: number;`
+- `x: number;`
+- `y: number;`
+- `width: number;`
+- `height: number;`
+- `halfWidth: number;`
+- `halfHeight: number;`
+- `centerX: number;`
+- `centerY: number;`
+- `pivotX: number;`
+- `pivotY: number;`
+- `customPivot: boolean;`
+- `rotated: boolean;`
+- `autoRound: number;`
+- `customData: object;`
+- `u0: number;`
+- `v0: number;`
+- `u1: number;`
+- `v1: number;`
+- `setCutPosition(x?: number, y?: number): this;`
+- `setCutSize(width: number, height: number): this;`
+- `setSize(width: number, height: number, x?: number, y?: number): this;`
+- `setTrim(actualWidth: number, actualHeight: number, destX: number, destY: number, destWidth: number, destHeight: number): this;`
+- `setScale9(x: number, y: number, width: number, height: number): this;`
+- `setCropUVs(crop: object, x: number, y: number, width: number, height: number, flipX: boolean, flipY: boolean): object;`
+- `updateCropUVs(crop: object, flipX: boolean, flipY: boolean): object;`
+- `setUVs(width: number, height: number, u0: number, v0: number, u1: number, v1: number): this;`
+- `updateUVs(): this;`
+- `updateUVsInverted(): this;`
+- `clone(): Phaser.Textures.Frame;`
+- `destroy(): void;`
+- `readonly glTexture: Phaser.Renderer.WebGL.Wrappers.WebGLTextureWrapper;`
+- `readonly realWidth: number;`
+- `readonly realHeight: number;`
+- `readonly radius: number;`
+- `readonly trimmed: boolean;`
+- `readonly scale9: boolean;`
+- `readonly is3Slice: boolean;`
+- `readonly canvasData: object;`
+
+#### class Phaser.Textures.Texture
+- `constructor(manager: Phaser.Textures.TextureManager, key: string, source: HTMLImageElement | HTMLCanvasElement | HTMLImageElement[] | HTMLCanvasElement[] | Phaser.Renderer.WebGL.Wrappers.WebGLTextureWrapper, width?: number, height?: number);`
+- `manager: Phaser.Textures.TextureManager;`
+- `key: string;`
+- `source: Phaser.Textures.TextureSource[];`
+- `dataSource: any[];`
+- `frames: object;`
+- `customData: object;`
+- `firstFrame: string;`
+- `frameTotal: number;`
+- `smoothPixelArt: boolean | null;`
+- `add(name: number | string, sourceIndex: number, x: number, y: number, width: number, height: number): Phaser.Textures.Frame | null;`
+- `remove(name: string): boolean;`
+- `has(name: string): boolean;`
+- `get(name?: string | number): Phaser.Textures.Frame;`
+- `getTextureSourceIndex(source: Phaser.Textures.TextureSource): number;`
+- `getFramesFromTextureSource(sourceIndex: number, includeBase?: boolean): Phaser.Textures.Frame[];`
+- `getFrameBounds(sourceIndex?: number): Phaser.Types.Math.RectangleLike;`
+- `getFrameNames(includeBase?: boolean): string[];`
+- `getSourceImage(name?: string | number): HTMLImageElement | HTMLCanvasElement | Phaser.GameObjects.RenderTexture;`
+- `getDataSourceImage(name?: string | number): HTMLImageElement | HTMLCanvasElement;`
+- `setSource(data: Phaser.Textures.TextureSource | Phaser.Types.Textures.TextureSource | Phaser.Textures.TextureSource[] | Phaser.Types.Textures.TextureSource[], startIndex?: number, renew?: boolean, width?: number, height?: number): void;`
+- `setDataSource(data: Phaser.Types.Textures.TextureSource | Phaser.Types.Textures.TextureSource[], startIndex?: number, renew?: boolean, width?: number, height?: number): void;`
+- `setFilter(filterMode: Phaser.Textures.FilterMode): void;`
+- `setSmoothPixelArt(value: boolean | null): void;`
+- `setWrap(wrapModeS: Phaser.Textures.WrapMode, wrapModeT?: Phaser.Textures.WrapMode): void;`
+- `destroy(): void;`
+
+#### class Phaser.Textures.TextureManager
+- `constructor(game: Phaser.Game);`
+- `game: Phaser.Game;`
+- `readonly name: string;`
+- `list: object;`
+- `readonly stamp: Phaser.GameObjects.Stamp;`
+- `stampCrop: Phaser.Geom.Rectangle;`
+- `readonly tileSprite: Phaser.GameObjects.TileSprite;`
+- `silentWarnings: boolean;`
+- `checkKey(key: string): boolean;`
+- `remove(key: string | Phaser.Textures.Texture): Phaser.Textures.TextureManager;`
+- `removeKey(key: string): Phaser.Textures.TextureManager;`
+- `addBase64(key: string, data: any): this;`
+- `getBase64(key: string, frame?: string | number, type?: string, encoderOptions?: number): string;`
+- `addImage(key: string, source: HTMLImageElement, dataSource?: HTMLImageElement | HTMLCanvasElement): Phaser.Textures.Texture | null;`
+- `addGLTexture(key: string, glTexture: Phaser.Renderer.WebGL.Wrappers.WebGLTextureWrapper): Phaser.Textures.Texture | null;`
+- `addCompressedTexture(key: string, textureData: Phaser.Types.Textures.CompressedTextureData, atlasData?: object): Phaser.Textures.Texture | null;`
+- `addRenderTexture(key: string, renderTexture: Phaser.GameObjects.RenderTexture): Phaser.Textures.Texture | null;`
+- `createCanvas(key: string, width?: number, height?: number): Phaser.Textures.CanvasTexture | null;`
+- `addCanvas(key: string, source: HTMLCanvasElement, skipCache?: boolean): Phaser.Textures.CanvasTexture | null;`
+- `addDynamicTexture(key: string | Phaser.Textures.DynamicTexture, width?: number, height?: number, forceEven?: boolean): Phaser.Textures.DynamicTexture | null;`
+- `addAtlas(key: string, source: HTMLImageElement | HTMLImageElement[] | Phaser.Textures.Texture, data: object | object[], dataSource?: HTMLImageElement | HTMLCanvasElement | HTMLImageElement[] | HTMLCanvasElement[]): Phaser.Textures.Texture | null;`
+- `addAtlasJSONArray(key: string, source: HTMLImageElement | HTMLImageElement[] | Phaser.Textures.Texture, data: object | object[], dataSource?: HTMLImageElement | HTMLCanvasElement | HTMLImageElement[] | HTMLCanvasElement[]): Phaser.Textures.Texture | null;`
+- `addAtlasJSONHash(key: string, source: HTMLImageElement | HTMLImageElement[] | Phaser.Textures.Texture, data: object | object[], dataSource?: HTMLImageElement | HTMLCanvasElement | HTMLImageElement[] | HTMLCanvasElement[]): Phaser.Textures.Texture | null;`
+- `addAtlasPCT(key: string, source: HTMLImageElement | HTMLImageElement[] | Phaser.Textures.Texture, data: object, dataSource?: HTMLImageElement | HTMLCanvasElement | HTMLImageElement[] | HTMLCanvasElement[]): Phaser.Textures.Texture | null;`
+- `addAtlasXML(key: string, source: HTMLImageElement | Phaser.Textures.Texture, data: object, dataSource?: HTMLImageElement | HTMLCanvasElement | HTMLImageElement[] | HTMLCanvasElement[]): Phaser.Textures.Texture | null;`
+- `addUnityAtlas(key: string, source: HTMLImageElement, data: object, dataSource?: HTMLImageElement | HTMLCanvasElement | HTMLImageElement[] | HTMLCanvasElement[]): Phaser.Textures.Texture | null;`
+- `addSpriteSheet(key: string, source: HTMLImageElement | Phaser.Textures.Texture, config: Phaser.Types.Textures.SpriteSheetConfig, dataSource?: HTMLImageElement | HTMLCanvasElement): Phaser.Textures.Texture | null;`
+- `addSpriteSheetFromAtlas(key: string, config: Phaser.Types.Textures.SpriteSheetFromAtlasConfig): Phaser.Textures.Texture | null;`
+- `addUint8Array(key: string, data: Uint8Array, width: number, height: number): Phaser.Textures.Texture | null;`
+- `addFlatColor(key: string, width: number, height: number, color?: number, alpha?: number): Phaser.Textures.Texture | null;`
+- `create(key: string, source: Phaser.Types.Textures.TextureSource | Phaser.Types.Textures.TextureSource[], width?: number, height?: number): Phaser.Textures.Texture | null;`
+- `exists(key: string): boolean;`
+- `get(key: string | Phaser.Textures.Texture | Phaser.Textures.Frame): Phaser.Textures.Texture;`
+- `cloneFrame(key: string, frame: string | number): Phaser.Textures.Frame;`
+- `getFrame(key: string, frame?: string | number): Phaser.Textures.Frame;`
+- `parseFrame(key: string | any[] | object | Phaser.Textures.Texture | Phaser.Textures.Frame): Phaser.Textures.Frame;`
+- `getTextureKeys(): string[];`
+- `getPixel(x: number, y: number, key: string, frame?: string | number): Phaser.Display.Color | null;`
+- `getPixelAlpha(x: number, y: number, key: string, frame?: string | number): number;`
+- `setTexture(gameObject: Phaser.GameObjects.GameObject, key: string, frame?: string | number): Phaser.GameObjects.GameObject;`
+- `renameTexture(currentKey: string, newKey: string): boolean;`
+- `each(callback: EachTextureCallback, scope: object, ...args: any[]): void;`
+- `resetStamp(alpha?: number, tint?: number): Phaser.GameObjects.Image;`
+- `resetTileSprite(alpha?: number, tint?: number): Phaser.GameObjects.TileSprite;`
+- `destroy(): void;`
+
+### namespace Phaser.Tilemaps
+#### namespace Phaser.Tilemaps.Parsers
+- `function FromOrientationString(orientation?: string): Phaser.Tilemaps.OrientationType;`
+##### namespace Phaser.Tilemaps.Parsers.Impact
+- `function ParseTileLayers(json: object, insertNull: boolean): Phaser.Tilemaps.LayerData[];`
+- `function ParseTilesets(json: object): any[];`
+- `function ParseWeltmeister(name: string, json: object, insertNull: boolean): Phaser.Tilemaps.MapData | null;`
+- `function Parse(name: string, mapFormat: number, data: number[][] | string | object, tileWidth: number, tileHeight: number, insertNull: boolean): Phaser.Tilemaps.MapData;`
+- `function Parse2DArray(name: string, data: number[][], tileWidth: number, tileHeight: number, insertNull: boolean): Phaser.Tilemaps.MapData;`
+- `function ParseCSV(name: string, data: string, tileWidth: number, tileHeight: number, insertNull: boolean): Phaser.Tilemaps.MapData;`
+##### namespace Phaser.Tilemaps.Parsers.Tiled
+- `function AssignTileProperties(mapData: Phaser.Tilemaps.MapData): void;`
+- `function Base64Decode(data: object): any[];`
+- `function BuildTilesetIndex(mapData: Phaser.Tilemaps.MapData | Phaser.Tilemaps.Tilemap): any[];`
+- `function CreateGroupLayer(json: object, group?: object, parentState?: object): object;`
+- `function ParseGID(gid: number): Phaser.Types.Tilemaps.GIDData;`
+- `function ParseImageLayers(json: object): any[];`
+- `function ParseJSONTiled(name: string, source: object, insertNull: boolean): Phaser.Tilemaps.MapData | null;`
+- `function ParseObject(tiledObject: object, offsetX?: number, offsetY?: number): object;`
+- `function ParseObjectLayers(json: object): any[];`
+- `function ParseTileLayers(json: object, insertNull: boolean): Phaser.Tilemaps.LayerData[];`
+- `function ParseTilesets(json: object): object;`
+- `function ParseWangsets(wangsets: object[], datas: object): void;`
+
+#### class Phaser.Tilemaps.Tile
+- `constructor(layer: Phaser.Tilemaps.LayerData, index: number, x: number, y: number, width: number, height: number, baseWidth: number, baseHeight: number);`
+- `layer: Phaser.Tilemaps.LayerData;`
+- `index: number;`
+- `x: number;`
+- `y: number;`
+- `width: number;`
+- `height: number;`
+- `right: number;`
+- `bottom: number;`
+- `baseWidth: number;`
+- `baseHeight: number;`
+- `pixelX: number;`
+- `pixelY: number;`
+- `properties: any;`
+- `rotation: number;`
+- `collideLeft: boolean;`
+- `collideRight: boolean;`
+- `collideUp: boolean;`
+- `collideDown: boolean;`
+- `faceLeft: boolean;`
+- `faceRight: boolean;`
+- `faceTop: boolean;`
+- `faceBottom: boolean;`
+- `collisionCallback: Function;`
+- `collisionCallbackContext: object;`
+- `tint: number;`
+- `tint2: number;`
+- `tintMode: Phaser.TintModes;`
+- `physics: object;`
+- `containsPoint(x: number, y: number): boolean;`
+- `copy(tile: Phaser.Tilemaps.Tile): this;`
+- `getCollisionGroup(): object | null;`
+- `getTileData(): object | null;`
+- `getLeft(camera?: Phaser.Cameras.Scene2D.Camera): number;`
+- `getRight(camera?: Phaser.Cameras.Scene2D.Camera): number;`
+- `getTop(camera?: Phaser.Cameras.Scene2D.Camera): number;`
+- `getBottom(camera?: Phaser.Cameras.Scene2D.Camera): number;`
+- `getBounds(camera?: Phaser.Cameras.Scene2D.Camera, output?: Phaser.Geom.Rectangle): Phaser.Geom.Rectangle | object;`
+- `getCenterX(camera?: Phaser.Cameras.Scene2D.Camera): number;`
+- `getCenterY(camera?: Phaser.Cameras.Scene2D.Camera): number;`
+- `intersects(x: number, y: number, right: number, bottom: number): boolean;`
+- `isInteresting(collides: boolean, faces: boolean): boolean;`
+- `resetCollision(recalculateFaces?: boolean): this;`
+- `resetFaces(): this;`
+- `setCollision(left: boolean, right?: boolean, up?: boolean, down?: boolean, recalculateFaces?: boolean): this;`
+- `setCollisionCallback(callback: Function, context: object): this;`
+- `setSize(tileWidth: number, tileHeight: number, baseWidth: number, baseHeight: number): this;`
+- `updatePixelXY(): this;`
+- `destroy(): void;`
+- `readonly canCollide: boolean;`
+- `readonly collides: boolean;`
+- `readonly hasInterestingFace: boolean;`
+- `readonly tileset: Phaser.Tilemaps.Tileset | null;`
+- `readonly tilemapLayer: Phaser.Tilemaps.TilemapLayer | null;`
+- `readonly tilemap: Phaser.Tilemaps.Tilemap | null;`
+- `clearAlpha(): this;`
+- `setAlpha(value?: number): this;`
+- `alpha: number;`
+- `flipX: boolean;`
+- `flipY: boolean;`
+- `toggleFlipX(): this;`
+- `toggleFlipY(): this;`
+- `setFlipX(value: boolean): this;`
+- `setFlipY(value: boolean): this;`
+- `setFlip(x: boolean, y: boolean): this;`
+- `resetFlip(): this;`
+- `visible: boolean;`
+- `setVisible(value: boolean): this;`
+
+#### class Phaser.Tilemaps.Tilemap
+- `constructor(scene: Phaser.Scene, mapData: Phaser.Tilemaps.MapData);`
+- `scene: Phaser.Scene;`
+- `tileWidth: number;`
+- `tileHeight: number;`
+- `width: number;`
+- `height: number;`
+- `orientation: string;`
+- `renderOrder: string;`
+- `format: number;`
+- `version: number;`
+- `properties: object | object[];`
+- `widthInPixels: number;`
+- `heightInPixels: number;`
+- `imageCollections: Phaser.Tilemaps.ImageCollection[];`
+- `images: any[];`
+- `layers: Phaser.Tilemaps.LayerData[];`
+- `tiles: any[];`
+- `tilesets: Phaser.Tilemaps.Tileset[];`
+- `objects: Phaser.Tilemaps.ObjectLayer[];`
+- `currentLayerIndex: number;`
+- `hexSideLength: number;`
+- `setRenderOrder(renderOrder: number | string): this;`
+- `addTilesetImage(tilesetName: string, key?: string, tileWidth?: number, tileHeight?: number, tileMargin?: number, tileSpacing?: number, gid?: number, tileOffset?: object): Phaser.Tilemaps.Tileset | null;`
+- `copy(srcTileX: number, srcTileY: number, width: number, height: number, destTileX: number, destTileY: number, recalculateFaces?: boolean, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tilemap | null;`
+- `createBlankLayer(name: string, tileset: string | string[] | Phaser.Tilemaps.Tileset | Phaser.Tilemaps.Tileset[], x?: number, y?: number, width?: number, height?: number, tileWidth?: number, tileHeight?: number): Phaser.Tilemaps.TilemapLayer | null;`
+- `createLayer(layerID: number | string, tileset: string | string[] | Phaser.Tilemaps.Tileset | Phaser.Tilemaps.Tileset[], x?: number, y?: number, gpu?: boolean): Phaser.Tilemaps.TilemapLayer | Phaser.Tilemaps.TilemapGPULayer;`
+- `createFromObjects(objectLayerName: string, config: Phaser.Types.Tilemaps.CreateFromObjectLayerConfig | Phaser.Types.Tilemaps.CreateFromObjectLayerConfig[], useTileset?: boolean): Phaser.GameObjects.GameObject[];`
+- `createFromTiles(indexes: number | any[], replacements: number | any[] | undefined, spriteConfig?: Phaser.Types.GameObjects.Sprite.SpriteConfig, scene?: Phaser.Scene, camera?: Phaser.Cameras.Scene2D.Camera, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.GameObjects.Sprite[] | null;`
+- `fill(index: number, tileX?: number, tileY?: number, width?: number, height?: number, recalculateFaces?: boolean, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tilemap | null;`
+- `filterObjects(objectLayer: Phaser.Tilemaps.ObjectLayer | string, callback: TilemapFilterCallback, context?: object): Phaser.Types.Tilemaps.TiledObject[] | null;`
+- `filterTiles(callback: Function, context?: object, tileX?: number, tileY?: number, width?: number, height?: number, filteringOptions?: Phaser.Types.Tilemaps.FilteringOptions, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tile[] | null;`
+- `findByIndex(index: number, skip?: number, reverse?: boolean, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tile | null;`
+- `findObject(objectLayer: Phaser.Tilemaps.ObjectLayer | string, callback: TilemapFindCallback, context?: object): Phaser.Types.Tilemaps.TiledObject | null;`
+- `findTile(callback: FindTileCallback, context?: object, tileX?: number, tileY?: number, width?: number, height?: number, filteringOptions?: Phaser.Types.Tilemaps.FilteringOptions, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tile | null;`
+- `forEachTile(callback: EachTileCallback, context?: object, tileX?: number, tileY?: number, width?: number, height?: number, filteringOptions?: Phaser.Types.Tilemaps.FilteringOptions, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tilemap | null;`
+- `getImageIndex(name: string): number;`
+- `getImageLayerNames(): string[];`
+- `getIndex(location: any[], name: string): number;`
+- `getLayer(layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.LayerData | null;`
+- `getObjectLayer(name?: string): Phaser.Tilemaps.ObjectLayer | null;`
+- `getObjectLayerNames(): string[];`
+- `getLayerIndex(layer?: string | number | Phaser.Tilemaps.TilemapLayer): number;`
+- `getLayerIndexByName(name: string): number;`
+- `getTileAt(tileX: number, tileY: number, nonNull?: boolean, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tile | null;`
+- `getTileAtWorldXY(worldX: number, worldY: number, nonNull?: boolean, camera?: Phaser.Cameras.Scene2D.Camera, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tile | null;`
+- `getTileLayerNames(): string[];`
+- `getTilesWithin(tileX?: number, tileY?: number, width?: number, height?: number, filteringOptions?: Phaser.Types.Tilemaps.FilteringOptions, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tile[] | null;`
+- `getTilesWithinShape(shape: Phaser.Geom.Circle | Phaser.Geom.Line | Phaser.Geom.Rectangle | Phaser.Geom.Triangle, filteringOptions?: Phaser.Types.Tilemaps.FilteringOptions, camera?: Phaser.Cameras.Scene2D.Camera, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tile[] | null;`
+- `getTilesWithinWorldXY(worldX: number, worldY: number, width: number, height: number, filteringOptions?: Phaser.Types.Tilemaps.FilteringOptions, camera?: Phaser.Cameras.Scene2D.Camera, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tile[] | null;`
+- `getTileset(name: string): Phaser.Tilemaps.Tileset | null;`
+- `getTilesetIndex(name: string): number;`
+- `hasTileAt(tileX: number, tileY: number, layer?: string | number | Phaser.Tilemaps.TilemapLayer): boolean | null;`
+- `hasTileAtWorldXY(worldX: number, worldY: number, camera?: Phaser.Cameras.Scene2D.Camera, layer?: string | number | Phaser.Tilemaps.TilemapLayer): boolean | null;`
+- `layer: Phaser.Tilemaps.LayerData;`
+- `putTileAt(tile: number | Phaser.Tilemaps.Tile, tileX: number, tileY: number, recalculateFaces?: boolean, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tile | null;`
+- `putTileAtWorldXY(tile: number | Phaser.Tilemaps.Tile, worldX: number, worldY: number, recalculateFaces?: boolean, camera?: Phaser.Cameras.Scene2D.Camera, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tile | null;`
+- `putTilesAt(tile: number[] | number[][] | Phaser.Tilemaps.Tile[] | Phaser.Tilemaps.Tile[][], tileX: number, tileY: number, recalculateFaces?: boolean, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tilemap | null;`
+- `randomize(tileX?: number, tileY?: number, width?: number, height?: number, indexes?: number[], layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tilemap | null;`
+- `calculateFacesAt(tileX: number, tileY: number, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tilemap | null;`
+- `calculateFacesWithin(tileX?: number, tileY?: number, width?: number, height?: number, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tilemap | null;`
+- `removeLayer(layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tilemap | null;`
+- `destroyLayer(layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tilemap | null;`
+- `removeAllLayers(): this;`
+- `removeTile(tiles: Phaser.Tilemaps.Tile | Phaser.Tilemaps.Tile[], replaceIndex?: number, recalculateFaces?: boolean): Phaser.Tilemaps.Tile[];`
+- `removeTileAt(tileX: number, tileY: number, replaceWithNull?: boolean, recalculateFaces?: boolean, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tile | null;`
+- `removeTileAtWorldXY(worldX: number, worldY: number, replaceWithNull?: boolean, recalculateFaces?: boolean, camera?: Phaser.Cameras.Scene2D.Camera, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tile | null;`
+- `renderDebug(graphics: Phaser.GameObjects.Graphics, styleConfig?: Phaser.Types.Tilemaps.StyleConfig, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tilemap | null;`
+- `renderDebugFull(graphics: Phaser.GameObjects.Graphics, styleConfig?: Phaser.Types.Tilemaps.StyleConfig): this;`
+- `replaceByIndex(findIndex: number, newIndex: number, tileX?: number, tileY?: number, width?: number, height?: number, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tilemap | null;`
+- `setCollision(indexes: number | any[], collides?: boolean, recalculateFaces?: boolean, layer?: string | number | Phaser.Tilemaps.TilemapLayer, updateLayer?: boolean): Phaser.Tilemaps.Tilemap | null;`
+- `setCollisionBetween(start: number, stop: number, collides?: boolean, recalculateFaces?: boolean, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tilemap | null;`
+- `setCollisionByProperty(properties: object, collides?: boolean, recalculateFaces?: boolean, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tilemap | null;`
+- `setCollisionByExclusion(indexes: number[], collides?: boolean, recalculateFaces?: boolean, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tilemap | null;`
+- `setCollisionFromCollisionGroup(collides?: boolean, recalculateFaces?: boolean, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tilemap | null;`
+- `setTileIndexCallback(indexes: number | number[], callback: Function, callbackContext: object, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tilemap | null;`
+- `setTileLocationCallback(tileX: number, tileY: number, width: number, height: number, callback: Function, callbackContext?: object, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tilemap | null;`
+- `setLayer(layer?: string | number | Phaser.Tilemaps.TilemapLayer): this;`
+- `setBaseTileSize(tileWidth: number, tileHeight: number): this;`
+- `setLayerTileSize(tileWidth: number, tileHeight: number, layer?: string | number | Phaser.Tilemaps.TilemapLayer): this;`
+- `shuffle(tileX?: number, tileY?: number, width?: number, height?: number, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tilemap | null;`
+- `swapByIndex(tileA: number, tileB: number, tileX?: number, tileY?: number, width?: number, height?: number, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tilemap | null;`
+- `tileToWorldX(tileX: number, camera?: Phaser.Cameras.Scene2D.Camera, layer?: string | number | Phaser.Tilemaps.TilemapLayer): number | null;`
+- `tileToWorldY(tileY: number, camera?: Phaser.Cameras.Scene2D.Camera, layer?: string | number | Phaser.Tilemaps.TilemapLayer): number | null;`
+- `tileToWorldXY(tileX: number, tileY: number, vec2?: Phaser.Math.Vector2, camera?: Phaser.Cameras.Scene2D.Camera, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Math.Vector2 | null;`
+- `getTileCorners(tileX: number, tileY: number, camera?: Phaser.Cameras.Scene2D.Camera, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Math.Vector2[] | null;`
+- `weightedRandomize(weightedIndexes: object[], tileX?: number, tileY?: number, width?: number, height?: number, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Tilemaps.Tilemap | null;`
+- `worldToTileX(worldX: number, snapToFloor?: boolean, camera?: Phaser.Cameras.Scene2D.Camera, layer?: string | number | Phaser.Tilemaps.TilemapLayer): number | null;`
+- `worldToTileY(worldY: number, snapToFloor?: boolean, camera?: Phaser.Cameras.Scene2D.Camera, layer?: string | number | Phaser.Tilemaps.TilemapLayer): number | null;`
+- `worldToTileXY(worldX: number, worldY: number, snapToFloor?: boolean, vec2?: Phaser.Math.Vector2, camera?: Phaser.Cameras.Scene2D.Camera, layer?: string | number | Phaser.Tilemaps.TilemapLayer): Phaser.Math.Vector2 | null;`
+- `destroy(): void;`
+
+#### class Phaser.Tilemaps.TilemapLayer
+- `constructor(scene: Phaser.Scene, tilemap: Phaser.Tilemaps.Tilemap, layerIndex: number, tileset: string | string[] | Phaser.Tilemaps.Tileset | Phaser.Tilemaps.Tileset[], x?: number, y?: number);`
+- `tileset: Phaser.Tilemaps.Tileset[];`
+- `readonly tilesDrawn: number;`
+- `readonly tilesTotal: number;`
+- `culledTiles: Phaser.Tilemaps.Tile[];`
+- `skipCull: boolean;`
+- `cullPaddingX: number;`
+- `cullPaddingY: number;`
+- `cullCallback: Function;`
+- `setRenderOrder(renderOrder: number | string): this;`
+- `cull(camera?: Phaser.Cameras.Scene2D.Camera): Phaser.Tilemaps.Tile[];`
+- `setSkipCull(value?: boolean): this;`
+- `setCullPadding(paddingX?: number, paddingY?: number): this;`
+- `setTint(tint?: number, tileX?: number, tileY?: number, width?: number, height?: number, filteringOptions?: Phaser.Types.Tilemaps.FilteringOptions): this;`
+- `setTint2(tint2?: number, tileX?: number, tileY?: number, width?: number, height?: number, filteringOptions?: Phaser.Types.Tilemaps.FilteringOptions): this;`
+- `setTintMode(tintMode?: Phaser.TintModes, tileX?: number, tileY?: number, width?: number, height?: number, filteringOptions?: Phaser.Types.Tilemaps.FilteringOptions): this;`
+- `destroy(removeFromTilemap?: boolean): void;`
+- `filterCamera: Phaser.Cameras.Scene2D.Camera;`
+- `readonly filters: Phaser.Types.GameObjects.FiltersInternalExternal | null;`
+- `renderFilters: boolean;`
+- `maxFilterSize: Phaser.Math.Vector2;`
+- `filtersAutoFocus: boolean;`
+- `filtersFocusContext: boolean;`
+- `filtersForceComposite: boolean;`
+- `willRenderFilters(): boolean;`
+- `enableFilters(): this;`
+- `renderWebGLFilters(renderer: Phaser.Renderer.WebGL.WebGLRenderer, gameObject: Phaser.GameObjects.GameObject, drawingContext: Phaser.Renderer.WebGL.DrawingContext, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix, renderStep?: number): Phaser.Types.GameObjects.RenderWebGLStep;`
+- `focusFilters(): this;`
+- `focusFiltersOnCamera(camera: Phaser.Cameras.Scene2D.Camera): this;`
+- `focusFiltersOverride(x?: number, y?: number, width?: number, height?: number): this;`
+- `setFilterSize(width: number, height: number): this;`
+- `setFiltersAutoFocus(value: boolean): this;`
+- `setFiltersFocusContext(value: boolean): this;`
+- `setFiltersForceComposite(value: boolean): this;`
+- `setRenderFilters(value: boolean): this;`
+- `renderWebGLStep(renderer: Phaser.Renderer.WebGL.WebGLRenderer, gameObject: Phaser.GameObjects.GameObject, drawingContext: Phaser.Renderer.WebGL.DrawingContext, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix, renderStep?: number, displayList?: Phaser.GameObjects.GameObject[], displayListIndex?: number): void;`
+- `addRenderStep(fn: Phaser.Types.GameObjects.RenderWebGLStep, index?: number): this;`
+- `clearAlpha(): this;`
+- `setAlpha(topLeft?: number, topRight?: number, bottomLeft?: number, bottomRight?: number): this;`
+- `alpha: number;`
+- `alphaTopLeft: number;`
+- `alphaTopRight: number;`
+- `alphaBottomLeft: number;`
+- `alphaBottomRight: number;`
+- `blendMode: Phaser.BlendModes | string | number;`
+- `setBlendMode(value: string | Phaser.BlendModes | number): this;`
+- `width: number;`
+- `height: number;`
+- `displayWidth: number;`
+- `displayHeight: number;`
+- `setSize(width: number, height: number): this;`
+- `setDisplaySize(width: number, height: number): this;`
+- `depth: number;`
+- `setDepth(value: number): this;`
+- `setToTop(): this;`
+- `setToBack(): this;`
+- `setAbove(gameObject: Phaser.GameObjects.GameObject): this;`
+- `setBelow(gameObject: Phaser.GameObjects.GameObject): this;`
+- `timeElapsed: number;`
+- `timeElapsedResetPeriod: number;`
+- `timePaused: boolean;`
+- `setTimerResetPeriod(period: number): this;`
+- `setTimerPaused(paused?: boolean): this;`
+- `resetTimer(ms?: number): this;`
+- `updateTimer(time: number, delta: number): this;`
+- `flipX: boolean;`
+- `flipY: boolean;`
+- `toggleFlipX(): this;`
+- `toggleFlipY(): this;`
+- `setFlipX(value: boolean): this;`
+- `setFlipY(value: boolean): this;`
+- `setFlip(x: boolean, y: boolean): this;`
+- `resetFlip(): this;`
+- `getCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopLeft<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getTopRight<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getLeftCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getRightCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomLeft<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomCenter<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBottomRight<O extends Phaser.Types.Math.Vector2Like>(output?: O, includeParent?: boolean): O;`
+- `getBounds<O extends Phaser.Geom.Rectangle>(output?: O): O;`
+- `readonly lighting: boolean;`
+- `selfShadow: Object;`
+- `setLighting(enable: boolean): this;`
+- `setSelfShadow(enabled?: boolean | undefined, penumbra?: number, diffuseFlatThreshold?: number): this;`
+- `mask: Phaser.Display.Masks.GeometryMask;`
+- `setMask(mask: Phaser.Display.Masks.GeometryMask): this;`
+- `clearMask(destroyMask?: boolean): this;`
+- `createGeometryMask<G extends Phaser.GameObjects.Graphics, S extends Phaser.GameObjects.Shape>(graphics?: Phaser.GameObjects.Graphics | Phaser.GameObjects.Shape): Phaser.Display.Masks.GeometryMask;`
+- `setOrigin(x?: number, y?: number): this;`
+- `setOriginFromFrame(): this;`
+- `setDisplayOrigin(x?: number, y?: number): this;`
+- `updateDisplayOrigin(): this;`
+- `customRenderNodes: object;`
+- `defaultRenderNodes: object;`
+- `renderNodeData: object;`
+- `initRenderNodes(defaultNodes: Map<string, string>): void;`
+- `setRenderNodeRole(key: string, renderNode: string | Phaser.Renderer.WebGL.RenderNodes.RenderNode | null, renderNodeData?: object, copyData?: boolean): this;`
+- `setRenderNodeData(renderNode: string | Phaser.Renderer.WebGL.RenderNodes.RenderNode, key: string, value: any): this;`
+- `scrollFactorX: number;`
+- `scrollFactorY: number;`
+- `setScrollFactor(x: number, y?: number): this;`
+- `readonly hasTransformComponent: boolean;`
+- `x: number;`
+- `y: number;`
+- `z: number;`
+- `w: number;`
+- `scale: number;`
+- `scaleX: number;`
+- `scaleY: number;`
+- `angle: number;`
+- `rotation: number;`
+- `setPosition(x?: number, y?: number, z?: number, w?: number): this;`
+- `copyPosition(source: Phaser.Types.Math.Vector2Like | Phaser.Types.Math.Vector3Like | Phaser.Types.Math.Vector4Like): this;`
+- `setRandomPosition(x?: number, y?: number, width?: number, height?: number): this;`
+- `setRotation(radians?: number): this;`
+- `setAngle(degrees?: number): this;`
+- `setScale(x?: number, y?: number): this;`
+- `setX(value?: number): this;`
+- `setY(value?: number): this;`
+- `setZ(value?: number): this;`
+- `setW(value?: number): this;`
+- `getLocalTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.GameObjects.Components.TransformMatrix;`
+- `getWorldTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.GameObjects.Components.TransformMatrix;`
+- `getLocalPoint(x: number, y: number, point?: Phaser.Math.Vector2, camera?: Phaser.Cameras.Scene2D.Camera): Phaser.Math.Vector2;`
+- `getWorldPoint(point?: Phaser.Math.Vector2, tempMatrix?: Phaser.GameObjects.Components.TransformMatrix, parentMatrix?: Phaser.GameObjects.Components.TransformMatrix): Phaser.Math.Vector2;`
+- `getParentRotation(): number;`
+- `visible: boolean;`
+- `setVisible(value: boolean): this;`
+- `setCollisionCategory(category: number): this;`
+- `willCollideWith(category: number): boolean;`
+- `addCollidesWith(category: number): this;`
+- `removeCollidesWith(category: number): this;`
+- `setCollidesWith(categories: number | number[]): this;`
+- `resetCollisionCategory(): this;`
+
+#### class Phaser.Tilemaps.Tileset
+- `constructor(name: string, firstgid: number, tileWidth?: number, tileHeight?: number, tileMargin?: number, tileSpacing?: number, tileProperties?: object, tileData?: object, tileOffset?: object);`
+- `name: string;`
+- `firstgid: number;`
+- `readonly tileWidth: number;`
+- `readonly tileHeight: number;`
+- `readonly tileMargin: number;`
+- `readonly tileSpacing: number;`
+- `tileProperties: object;`
+- `tileData: object;`
+- `tileOffset: Phaser.Math.Vector2;`
+- `readonly image: Phaser.Textures.Texture | null;`
+- `readonly glTexture: Phaser.Renderer.WebGL.Wrappers.WebGLTextureWrapper | null;`
+- `readonly rows: number;`
+- `readonly columns: number;`
+- `readonly total: number;`
+- `readonly texCoordinates: object[];`
+- `animationSearchThreshold: number;`
+- `readonly maxAnimationLength: number;`
+- `getTileProperties(tileIndex: number): object | undefined | null;`
+- `getTileData(tileIndex: number): object | undefined;`
+- `getTileCollisionGroup(tileIndex: number): object | null;`
+- `containsTileIndex(tileIndex: number): boolean;`
+- `getAnimatedTileId(tileIndex: number, milliseconds: number): number | null;`
+- `getTileTextureCoordinates(tileIndex: number): object | null;`
+- `setImage(texture: Phaser.Textures.Texture): Phaser.Tilemaps.Tileset;`
+- `setTileSize(tileWidth?: number, tileHeight?: number): Phaser.Tilemaps.Tileset;`
+- `setSpacing(margin?: number, spacing?: number): Phaser.Tilemaps.Tileset;`
+- `updateTileData(imageWidth: number, imageHeight: number, offsetX?: number, offsetY?: number): Phaser.Tilemaps.Tileset;`
+- `getAnimationDataTexture(renderer: Phaser.Renderer.WebGL.WebGLRenderer): Phaser.Renderer.WebGL.Wrappers.WebGLTextureWrapper;`
+- `getAnimationDataIndexMap(renderer: Phaser.Renderer.WebGL.WebGLRenderer): Map<number, number>;`
+- `createAnimationDataTexture(renderer: Phaser.Renderer.WebGL.WebGLRenderer): Phaser.Renderer.WebGL.Wrappers.WebGLTextureWrapper;`
+
+### namespace Phaser.Time
+#### class Phaser.Time.Clock
+- `constructor(scene: Phaser.Scene);`
+- `scene: Phaser.Scene;`
+- `systems: Phaser.Scenes.Systems;`
+- `now: number;`
+- `startTime: number;`
+- `timeScale: number;`
+- `paused: boolean;`
+- `addEvent(config: Phaser.Time.TimerEvent | Phaser.Types.Time.TimerEventConfig): Phaser.Time.TimerEvent;`
+- `delayedCall(delay: number, callback: Function, args?: any[], callbackScope?: any): Phaser.Time.TimerEvent;`
+- `clearPendingEvents(): this;`
+- `removeEvent(events: Phaser.Time.TimerEvent | Phaser.Time.TimerEvent[]): this;`
+- `removeAllEvents(): this;`
+- `preUpdate(): void;`
+- `update(time: number, delta: number): void;`
+
+#### class Phaser.Time.Timeline
+- `constructor(scene: Phaser.Scene, config?: Phaser.Types.Time.TimelineEventConfig | Phaser.Types.Time.TimelineEventConfig[]);`
+- `scene: Phaser.Scene;`
+- `systems: Phaser.Scenes.Systems;`
+- `elapsed: number;`
+- `timeScale: number;`
+- `paused: boolean;`
+- `complete: boolean;`
+- `totalComplete: number;`
+- `loop: number;`
+- `iteration: number;`
+- `events: Phaser.Types.Time.TimelineEvent[];`
+- `preUpdate(time: number, delta: number): void;`
+- `update(time: number, delta: number): void;`
+- `play(fromStart?: boolean): this;`
+- `pause(): this;`
+- `repeat(amount?: number | boolean): this;`
+- `resume(): this;`
+- `stop(): this;`
+- `reset(loop?: boolean): this;`
+- `add(config: Phaser.Types.Time.TimelineEventConfig | Phaser.Types.Time.TimelineEventConfig[]): this;`
+- `clear(): this;`
+- `isPlaying(): boolean;`
+- `getProgress(): number;`
+- `destroy(): void;`
+
+#### class Phaser.Time.TimerEvent
+- `constructor(config: Phaser.Types.Time.TimerEventConfig);`
+- `readonly delay: number;`
+- `readonly repeat: number;`
+- `repeatCount: number;`
+- `readonly loop: boolean;`
+- `callback: Function;`
+- `callbackScope: object;`
+- `args: any[];`
+- `timeScale: number;`
+- `startAt: number;`
+- `elapsed: number;`
+- `paused: boolean;`
+- `hasDispatched: boolean;`
+- `reset(config: Phaser.Types.Time.TimerEventConfig): Phaser.Time.TimerEvent;`
+- `getProgress(): number;`
+- `getOverallProgress(): number;`
+- `getRepeatCount(): number;`
+- `getElapsed(): number;`
+- `getElapsedSeconds(): number;`
+- `getRemaining(): number;`
+- `getRemainingSeconds(): number;`
+- `getOverallRemaining(): number;`
+- `getOverallRemainingSeconds(): number;`
+- `remove(dispatchCallback?: boolean): void;`
+- `destroy(): void;`
+
+### namespace Phaser.Tweens
+#### class Phaser.Tweens.Tween
+- `constructor(parent: Phaser.Tweens.TweenManager, targets: object[]);`
+- `targets: object[];`
+- `totalTargets: number;`
+- `readonly isSeeking: boolean;`
+- `readonly isInfinite: boolean;`
+- `elapsed: number;`
+- `totalElapsed: number;`
+- `duration: number;`
+- `progress: number;`
+- `totalDuration: number;`
+- `totalProgress: number;`
+- `isNumberTween: boolean;`
+- `add(targetIndex: number, key: string, getEnd: Phaser.Types.Tweens.GetEndCallback, getStart: Phaser.Types.Tweens.GetStartCallback, getActive: Phaser.Types.Tweens.GetActiveCallback | undefined, ease: Function, delay: Function, duration: number, yoyo: boolean, hold: number, repeat: number, repeatDelay: number, flipX: boolean, flipY: boolean, interpolation: Function | undefined, interpolationData: num …`
+- `addFrame(targetIndex: number, texture: string, frame: string | number, delay: Function, duration: number, hold: number, repeat: number, repeatDelay: number, flipX: boolean, flipY: boolean): Phaser.Tweens.TweenFrameData;`
+- `getValue(index?: number): number | null;`
+- `hasTarget(target: object): boolean;`
+- `updateTo(key: string, value: number, startToCurrent?: boolean): this;`
+- `restart(): this;`
+- `nextState(): boolean;`
+- `onCompleteHandler(): void;`
+- `play(): this;`
+- `seek(amount?: number, delta?: number, emit?: boolean): this;`
+- `initTweenData(isSeeking?: boolean): void;`
+- `reset(skipInit?: boolean): this;`
+- `update(delta: number): boolean;`
+- `forward(ms: number): this;`
+- `rewind(ms: number): this;`
+- `dispatchEvent(event: Phaser.Types.Tweens.Event, callback?: Phaser.Types.Tweens.TweenCallbackTypes): void;`
+- `destroy(): void;`
+
+#### class Phaser.Tweens.TweenChain
+- `constructor(parent: Phaser.Tweens.TweenManager | Phaser.Tweens.TweenChain);`
+- `currentTween: Phaser.Tweens.Tween;`
+- `currentIndex: number;`
+- `init(): this;`
+- `add(tweens: Phaser.Types.Tweens.TweenBuilderConfig[] | object[]): this;`
+- `hasTarget(target: object): boolean;`
+- `restart(): this;`
+- `reset(tween: Phaser.Tweens.Tween): this;`
+- `nextState(): boolean;`
+- `play(): this;`
+- `resetTweens(): void;`
+- `update(delta: number): boolean;`
+- `nextTween(): boolean;`
+- `setCurrentTween(index: number): void;`
+- `dispatchEvent(event: Phaser.Types.Tweens.Event, callback?: Phaser.Types.Tweens.TweenCallbackTypes): void;`
+- `destroy(): void;`
+
+#### class Phaser.Tweens.TweenManager
+- `constructor(scene: Phaser.Scene);`
+- `scene: Phaser.Scene;`
+- `events: Phaser.Events.EventEmitter;`
+- `timeScale: number;`
+- `paused: boolean;`
+- `processing: boolean;`
+- `tweens: Phaser.Tweens.Tween[];`
+- `time: number;`
+- `startTime: number;`
+- `nextTime: number;`
+- `prevTime: number;`
+- `maxLag: number;`
+- `lagSkip: number;`
+- `gap: number;`
+- `create(config: Phaser.Types.Tweens.TweenBuilderConfig | Phaser.Types.Tweens.TweenBuilderConfig[] | object | object[]): Phaser.Tweens.Tween | Phaser.Tweens.Tween[];`
+- `add(config: Phaser.Types.Tweens.TweenBuilderConfig | Phaser.Types.Tweens.TweenChainBuilderConfig | Phaser.Tweens.Tween | Phaser.Tweens.TweenChain): Phaser.Tweens.Tween;`
+- `addMultiple(configs: Phaser.Types.Tweens.TweenBuilderConfig[] | object[]): Phaser.Tweens.Tween[];`
+- `chain(tweens: Phaser.Types.Tweens.TweenChainBuilderConfig | object): Phaser.Tweens.TweenChain;`
+- `getChainedTweens(tween: Phaser.Tweens.Tween): Phaser.Tweens.Tween[];`
+- `has(tween: Phaser.Tweens.Tween): boolean;`
+- `existing(tween: Phaser.Tweens.Tween): this;`
+- `addCounter(config: Phaser.Types.Tweens.NumberTweenBuilderConfig): Phaser.Tweens.Tween;`
+- `stagger(value: number | number[], config?: Phaser.Types.Tweens.StaggerConfig): Function;`
+- `setLagSmooth(limit?: number, skip?: number): this;`
+- `setFps(fps?: number): this;`
+- `getDelta(tick?: boolean): number;`
+- `tick(): this;`
+- `update(): void;`
+- `step(tick?: boolean): void;`
+- `remove(tween: Phaser.Tweens.Tween): this;`
+- `reset(tween: Phaser.Tweens.Tween): this;`
+- `makeActive(tween: Phaser.Tweens.Tween): this;`
+- `each(callback: Function, scope?: object, ...args: any[]): this;`
+- `getTweens(): Phaser.Tweens.Tween[];`
+- `getTweensOf(target: object | object[]): Phaser.Tweens.Tween[];`
+- `getGlobalTimeScale(): number;`
+- `setGlobalTimeScale(value: number): this;`
+- `isTweening(target: object): boolean;`
+- `killAll(): this;`
+- `killTweensOf(target: object | any[]): this;`
+- `pauseAll(): this;`
+- `resumeAll(): this;`
+- `shutdown(): void;`
+- `destroy(): void;`
+
+### namespace Phaser.Utils
+#### namespace Phaser.Utils.Array
+- `function Add(array: any[], item: any | any[], limit?: number, callback?: Function, context?: object): any[];`
+- `function AddAt(array: any[], item: any | any[], index?: number, limit?: number, callback?: Function, context?: object): any[];`
+- `function BringToTop(array: any[], item: any): any;`
+- `function CountAllMatching(array: any[], property: string, value: any, startIndex?: number, endIndex?: number): number;`
+- `function Each(array: any[], callback: Function, context: object, ...args: any[]): any[];`
+- `function EachInRange(array: any[], callback: Function, context: object, startIndex: number, endIndex: number, ...args: any[]): any[];`
+- `function FindClosestInSorted(value: number, array: any[], key?: string): number | any;`
+- `function Flatten(array: any[], output?: any[]): any[];`
+- `function GetAll(array: any[], property?: string, value?: any, startIndex?: number, endIndex?: number): any[];`
+- `function GetFirst(array: any[], property?: string, value?: any, startIndex?: number, endIndex?: number): object | null;`
+- `function GetRandom<T>(array: T[], startIndex?: number, length?: number): T;`
+##### namespace Phaser.Utils.Array.Matrix
+- `function CheckMatrix<T>(matrix?: T[][]): boolean;`
+- `function MatrixToString<T>(matrix?: T[][]): string;`
+- `function ReverseColumns<T>(matrix?: T[][]): T[][];`
+- `function ReverseRows<T>(matrix?: T[][]): T[][];`
+- `function Rotate180<T>(matrix?: T[][]): T[][];`
+- `function RotateLeft<T>(matrix?: T[][], amount?: number): T[][];`
+- `function RotateMatrix<T>(matrix?: T[][], direction?: number | string): T[][];`
+- `function RotateRight<T>(matrix?: T[][], amount?: number): T[][];`
+- `function Translate<T>(matrix?: T[][], x?: number, y?: number): T[][];`
+- `function TransposeMatrix<T>(array?: T[][]): T[][];`
+- `function MoveAbove(array: any[], item1: any, item2: any): any[];`
+- `function MoveBelow(array: any[], item1: any, item2: any): any[];`
+- `function MoveDown(array: any[], item: any): any[];`
+- `function MoveTo(array: any[], item: any, index: number): any;`
+- `function MoveUp(array: any[], item: any): any[];`
+- `function NumberArray(start: number, end: number, prefix?: string, suffix?: string): number[] | string[];`
+- `function NumberArrayStep(start?: number, end?: number, step?: number): number[];`
+- `function QuickSelect(arr: any[], k: number, left?: number, right?: number, compare?: Function): void;`
+- `function Range(a: any[], b: any[], options?: object): any[];`
+- `function Remove(array: any[], item: any | any[], callback?: Function, context?: object): any | any[];`
+- `function RemoveAt(array: any[], index: number, callback?: Function, context?: object): any;`
+- `function RemoveBetween(array: any[], startIndex: number, endIndex: number, callback?: Function, context?: object): any[];`
+- `function RemoveRandomElement(array: any[], start?: number, length?: number): object;`
+- `function Replace(array: any[], oldChild: any, newChild: any): boolean;`
+- `function RotateLeft(array: any[], total?: number): any;`
+- `function RotateRight(array: any[], total?: number): any;`
+- `function SafeRange(array: any[], startIndex: number, endIndex: number, throwError?: boolean): boolean;`
+- `function SendToBack(array: any[], item: any): any;`
+- `function SetAll(array: any[], property: string, value: any, startIndex?: number, endIndex?: number): any[];`
+- `function Shuffle<T>(array: T[]): T[];`
+- `function SortByDigits(array: string[]): string[];`
+- `function SpliceOne(array: any[], index: number): any;`
+- `function StableSort(array: any[], compare?: Function): any[];`
+- `function Swap(array: any[], item1: any, item2: any): any[];`
+
+#### namespace Phaser.Utils.String
+- `function Format(string: string, values: any[]): string;`
+- `function Pad(str: string | number | object, len?: number, pad?: string, dir?: number): string;`
+- `function RemoveAt(string: string, index: number): string;`
+- `function Reverse(string: string): string;`
+- `function UppercaseFirst(str: string): string;`
+- `function UUID(): string;`
+
