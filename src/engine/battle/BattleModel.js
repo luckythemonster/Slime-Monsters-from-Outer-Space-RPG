@@ -557,13 +557,7 @@ export class BattleModel {
     this.emit({ type: 'sfx', name: 'item' });
     this.text(`${actor.name} uses ${it.name}.`);
     for (const t of targets) {
-      if (eff.revive && t.ko) {
-        t.ko = false;
-        t.hp = Math.max(1, Math.floor((t.maxHp * eff.revive) / 100));
-        this.emit({ type: 'status', target: t.uid, status: 'KO', on: false });
-        this.emit({ type: 'heal', target: t.uid, amount: t.hp, revive: true });
-        this.updateMood(t);
-      }
+      if (eff.revive && t.ko) this.revive(t, Math.floor((t.maxHp * eff.revive) / 100));
       if (eff.hp) this.healHp(t, eff.hp);
       if (eff.amp) this.changeAmp(t, eff.amp);
       if (eff.ampAll) this.changeAmp(t, eff.ampAll === 'max' ? t.maxAmp : eff.ampAll);
@@ -769,6 +763,17 @@ export class BattleModel {
     this.updateMood(target);
     this.hook('onDefeat', target.uid);
     this.checkEnd();
+    return true;
+  }
+
+  /** Stand a KO'd member back up at `hp` (the Hotdish; the Chorus's finale). No-op on the living. */
+  revive(target, hp = 1) {
+    if (!target || !target.ko || !target.present) return false;
+    target.ko = false;
+    target.hp = Math.max(1, Math.min(target.maxHp, Math.floor(hp)));
+    this.emit({ type: 'status', target: target.uid, status: 'KO', on: false });
+    this.emit({ type: 'heal', target: target.uid, amount: target.hp, revive: true });
+    this.updateMood(target);
     return true;
   }
 

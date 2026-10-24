@@ -712,6 +712,13 @@ group('script: ep0_rehearsal', (check) => {
   m3.start();
   for (const id of ['lucky', 'phoenix', 'brian']) m3.damage(m3.find(id), 999, { by: 'chorus' });
   check(m3.result === 'win' && m3.flags.kraaangFired, 'wipe → forced KRAAANG → win');
+  // Cannot be lost means the band walks out of the rehearsal: a wipe stands everyone back up at 1 HP.
+  check(['lucky', 'phoenix', 'brian'].every((id) => !m3.find(id).ko && m3.find(id).hp >= 1), `the wiped band stands back up (${['lucky', 'phoenix', 'brian'].map((id) => `${id}:${m3.find(id).hp}`)})`);
+  check(m3.events.filter((e) => e.type === 'status' && e.status === 'KO' && !e.on).length === 3 && m3.events.filter((e) => e.type === 'heal' && e.revive).length === 3, 'three revive events for the scene');
+  const st3 = new GameState({ characters, items, equipment, start }, null);
+  st3.newGame(); st3.party.add('phoenix'); st3.party.add('brian');
+  applyResults(st3, m3);
+  check(st3.party.members.every((mm) => mm.hp >= 1 && !mm.status.includes('KO')), `applyResults after the wipe: nobody leaves at 0 HP (${st3.party.members.map((mm) => `${mm.id}:${mm.hp}`)})`);
 });
 
 // ---------------------------------------------------------------------------------------------

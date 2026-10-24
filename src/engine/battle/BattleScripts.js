@@ -3,7 +3,7 @@
 //   { onStart(m), onRound(m, n), onTurnStart(m, actor), onAction(m, actor, action), onToon(m, level),
 //     onHpBelow(m, who, pct), onDefeat(m, who), onLeave(m, who, how), onWipe(m), hpBelow: [{ who, pct }] }
 // Hooks mutate the model through its API (text/say/caption/toast/join/spawn/transform/inflict/damage/
-// setMeter/lockInput/leave/finish/forceNoise/wait) and may also return extra presentation events.
+// setMeter/lockInput/leave/revive/finish/forceNoise/wait) and may also return extra presentation events.
 // Pure module: no Phaser.
 
 const CAP = (m, text) => m.caption(text);
@@ -94,6 +94,9 @@ function ep0_rehearsal() {
       m.emit({ type: 'sfx', name: 'feedback' });
       m.say('brian', "I can't work like this! I hate this weird, creative shit! Can't we just play normal music?!", { portrait: 'brian_red' });
     }
+    // Cannot be lost: whoever the wipe (or the possessed Ryan) put down stands back up at 1 HP, so the
+    // rehearsal never hands THE SET a band that is already out.
+    for (const c of m.party()) if (c.ko && c.controllable && !c.auto) m.revive(c, 1);
     m.flags.kraaangFired = true;
     m.flags.brianFried = true;
     m.suspendEnd = false;
