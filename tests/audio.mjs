@@ -51,7 +51,7 @@ check('sfx: every ARCHITECTURE.md name has a recipe', REQUIRED_SFX.every((n) => 
 const CH1_SFX = ['caption_tick', 'count_click', 'eject', 'static_burst', 'crash', 'pedal_stomp', 'coffee_spill', 'sparks', 'roof_peel',
   'wall_blow', 'mohawk_pop', 'intercom_buzz', 'glitch', 'thud', 'door_slam', 'unplug', 'pop_x3', 'amp_hum', 'krathoom', 'doom', 'crack',
   'thud_word', 'thud_low', 'van_keys', 'tear', 'toon_up', 'gears', 'splash', 'phone_ring', 'click', 'drone_whine', 'stick_click', 'power_chord',
-  'hair_back', 'rubble', 'chair', 'jukebox_1', 'jukebox_2', 'jukebox_3', 'jukebox_4'];
+  'hair_back', 'rubble', 'chair', 'jukebox_1', 'jukebox_2', 'jukebox_3', 'jukebox_4', 'wind'];
 check('sfx: every Chapter 1 cue has a recipe and is listed in SFX_NAMES', CH1_SFX.every((n) => typeof SFX[n] === 'function' && SFX_NAMES.includes(n)),
   { missing: CH1_SFX.filter((n) => typeof SFX[n] !== 'function' || !SFX_NAMES.includes(n)) });
 check('sfx: SFX_NAMES has no duplicates and names only real recipes', new Set(SFX_NAMES).size === SFX_NAMES.length && SFX_NAMES.every((n) => typeof SFX[n] === 'function'));

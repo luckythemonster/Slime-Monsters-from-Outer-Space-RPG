@@ -532,6 +532,15 @@ function jukebox(s, { when, volume, pitch, dest }, notes, root) {
 /** DESIGN.md calls the THUD word `thud_low`; it is the same recipe as `thud_word`. */
 SFX.thud_low = SFX.thud_word;
 
+/**
+ * Wind (the alley's and the rubble's map `ambient`): 1.2 s of band-passed noise sweeping up with a slow
+ * swell. ExploreScene re-fires it 300 ms before the reported end, so consecutive gusts overlap into a loop.
+ */
+SFX.wind = function wind(s, { when, volume, pitch, dest }) {
+  s.noise({ when, duration: 1.2, volume: 0.18 * volume, filter: { type: 'bandpass', freq: 500 * pitch, freqTo: 900 * pitch, sweep: 1.2, Q: 0.7 }, env: E(0.4, 0.3, 0.6, 0.4), dest });
+  return 1.6; // gate 1.2 s + 0.4 s release
+};
+
 /** Every SFX name: ARCHITECTURE.md's twenty, then the Chapter 1 additions. */
 export const SFX_NAMES = Object.freeze([
   'cursor', 'confirm', 'cancel', 'text_blip', 'hit', 'crit', 'miss', 'squelch', 'slime_pop', 'kraaang',
@@ -539,7 +548,7 @@ export const SFX_NAMES = Object.freeze([
   'caption_tick', 'count_click', 'stick_click', 'eject', 'static_burst', 'crash', 'pedal_stomp', 'coffee_spill', 'sparks', 'roof_peel',
   'wall_blow', 'mohawk_pop', 'intercom_buzz', 'glitch', 'thud', 'door_slam', 'unplug', 'pop_x3', 'amp_hum', 'krathoom', 'doom', 'crack',
   'thud_word', 'thud_low', 'van_keys', 'tear', 'toon_up', 'gears', 'splash', 'phone_ring', 'click', 'drone_whine', 'power_chord', 'hair_back', 'rubble',
-  'chair', 'jukebox_1', 'jukebox_2', 'jukebox_3', 'jukebox_4',
+  'chair', 'jukebox_1', 'jukebox_2', 'jukebox_3', 'jukebox_4', 'wind',
 ]);
 
 export default SFX;

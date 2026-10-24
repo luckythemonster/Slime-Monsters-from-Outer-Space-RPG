@@ -53,6 +53,7 @@
   ],
 
   "ep0_aftermath": [
+    { "music": null },
     { "teleport": { "map": "palmers_rubble", "x": 16, "y": 9, "facing": "right" } },
     { "sfx": "cymbal" },
     { "setEntity": { "id": "phoenix", "x": 17, "y": 9, "facing": "right" } },

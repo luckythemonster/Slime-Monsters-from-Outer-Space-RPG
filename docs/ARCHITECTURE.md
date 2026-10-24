@@ -158,7 +158,7 @@ Maps are authored as ASCII rows with a legend, so humans and agents can draw the
   "name": "Alley behind Palmer's",
   "tileset": "minneapolis",          // manifest tileset name
   "music": "snow",                    // song id, or null
-  "ambient": "wind",                  // optional looping SFX id
+  "ambient": "wind",                  // optional looping SFX id (re-fired 300 ms before the recipe's reported end)
   "battleBackground": "street",       // default battle backdrop for on-map encounters
   "legend": { "#": "brick_wall", ".": "snow", "=": "sidewalk", "D": "dumpster", "W": "window_lit" },
   "layers": {
@@ -284,7 +284,8 @@ export default {
 ```
 Note tokens: `C4`..`B8`, `.` rest, `=` hold previous, `C4~` slide into, `C4!` accent (louder). The sequencer
 schedules 100 ms ahead on a 25 ms timer, using `audioCtx.currentTime`. Music API: `audio.playMusic(id, {fade})`,
-`audio.stopMusic({fade})`, `audio.sfx(name)`, `audio.setVolume(music, sfx)`. The engine takes the AudioContext
+`audio.stopMusic({fade})`, `audio.sfx(name)`, `audio.setVolume(music, sfx)`; every `fade` is in **seconds**
+(the `{"music"}` script command passes 0.3). The engine takes the AudioContext
 from Phaser (`scene.sound.context`) and connects to `scene.sound.destination` so Phaser's unlock-on-first-input and
 mute apply. If Phaser falls back to no-audio, create our own context and resume it on first keydown.
 
@@ -398,6 +399,10 @@ explore.runSpecialScene(key, data)                // → Promise (e.g. 'Freefall
 explore.camera(effectObj)                         // same object shape as the {"camera": …} script command
 explore.gameOver(text) / explore.toTitle()        // close widgets, stop sub-scenes and Explore, start GameOver / Title
 ```
+Explore's own create fade-in counts as a transition (`explore.transitioning`): no steps, triggers, menu or
+encounters until the screen is lit, then the enter hooks run. On WAKE (a sub-scene returned) Explore restores
+the song that was current when it launched the sub-scene — a script's cue, or silence after `{"music": null}` —
+never `mapDef.music`; RESUME (the pause menu closed) leaves the music alone.
 Movement is **grid-locked 4-direction tile stepping** (FF/Pokémon style) with smooth interpolation:
 walk 7 tiles/s, run 11 tiles/s; input is buffered so holding a key chains steps. The player never occupies
 a solid tile or an entity's tile. `Debug.press('up')` therefore moves exactly one tile, which tests rely on.

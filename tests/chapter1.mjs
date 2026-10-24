@@ -320,7 +320,7 @@ async function main() {
       if (l0 === 'EJECT') return 0;
       if (l0 === 'Nap') return 0;
       if (l0 === 'MUST PLAY FAST') return 2;
-      if (/^INITIAL HERE/.test(l0)) return 2; // PAGE 2 (row 0 is the prompt)
+      if (/^INITIAL HERE/.test(l0)) return labels.findIndex((l) => /^PAGE 2/.test(l)); // the prompt may take two rows
       if (l0 === 'Pothole Blues') return 2;
       if (l0 === 'RAGE') return 1; // PLEAD
       if (l0 === 'Yes' && labels[1] === 'No') return 1;

@@ -55,6 +55,9 @@ export default class ExploreScene extends Phaser.Scene {
     this.overlay = null;
     this.lights = [];
     this.fx = { shake: null, objects: [] };
+    /** Song id (or null for silence) that was current when a sub-scene was launched; undefined = none pending. */
+    this.musicBeforeSub = undefined;
+    this.ambientTimer = null;
   }
 
   get state() { return services.state; }
@@ -69,26 +72,34 @@ export default class ExploreScene extends Phaser.Scene {
     const data = this.gameData;
     this.runner = new EventRunner({ scripts: data.scripts, state: st, explore: this, characters: data.characters, speakers: data.speakers, shops: data.shops });
     this.cameras.main.roundPixels = true;
-    this.onResume = () => {
+    services.input.consume(); // a confirm held from the title menu must not leak into the first frame
+    this.onResume = () => { services.input.consume(); }; // pause menu: never changes music
+    this.onWake = () => {
+      // Battle / Freefall returned: put back what was playing when we slept (a script's own cue, or the
+      // silence after {"music": null}), not the map's default song.
       services.input.consume();
-      if (this.mapDef && this.mapDef.music) audioCall('playMusic', this.mapDef.music, { fade: 0.3 });
+      const id = this.musicBeforeSub === undefined ? ((this.mapDef && this.mapDef.music) || null) : this.musicBeforeSub;
+      this.musicBeforeSub = undefined;
+      if (id) audioCall('playMusic', id, { fade: 0.3 }); else audioCall('stopMusic', { fade: 0.3 });
     };
     this.events.on(Phaser.Scenes.Events.RESUME, this.onResume);
-    this.events.on(Phaser.Scenes.Events.WAKE, this.onResume);
+    this.events.on(Phaser.Scenes.Events.WAKE, this.onWake);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => this.cleanup());
     if (PARAMS.debug) {
       this.debugText = this.add.text(2, 2, '', { fontFamily: PIXEL_FONT, fontSize: '8px', color: '#39ff8a', resolution: 1 })
         .setScrollFactor(0).setDepth(DEPTH.OVER + 50);
     }
     this.loadMap(d.map || st.map, d.x ?? st.x, d.y ?? st.y, d.facing || st.facing);
-    services.ui.fade('in', scaleMs(FADE_MS)).then(() => this.enterMap());
+    this.transitioning = true; // the fade-in is not play time: no steps, triggers, menu or encounters on a black screen
+    services.ui.fade('in', scaleMs(FADE_MS)).then(() => { this.transitioning = false; this.enterMap(); });
   }
 
   /** Scene shutdown: Phaser destroys the display list itself, so only drop references here. */
   cleanup() {
     this.runner.destroy();
+    this.stopAmbient();
     this.events.off(Phaser.Scenes.Events.RESUME, this.onResume);
-    this.events.off(Phaser.Scenes.Events.WAKE, this.onResume);
+    this.events.off(Phaser.Scenes.Events.WAKE, this.onWake);
     this.entities.clear();
     this.followers = [];
     this.zones = [];
@@ -104,6 +115,7 @@ export default class ExploreScene extends Phaser.Scene {
   // ---- map lifecycle ---------------------------------------------------------------------------
 
   clearMap() {
+    this.stopAmbient();
     for (const t of this.tweens.getTweens()) t.stop();
     for (const e of this.entities.values()) e.destroy();
     for (const f of this.followers) if (f.active) f.destroy();
@@ -147,7 +159,27 @@ export default class ExploreScene extends Phaser.Scene {
     this.queuedDir = null;
     if (def.music) audioCall('playMusic', def.music, { fade: 0.5 });
     else audioCall('stopMusic', { fade: 0.5 });
+    this.startAmbient(def.ambient);
     this.events.emit('mapload', mapId);
+  }
+
+  /**
+   * A map's `ambient` (ARCHITECTURE §4): a looping SFX. The recipe reports its length, so it is re-fired
+   * 300 ms before it ends; the scene clock pauses while Explore sleeps for a battle, and so does the loop.
+   */
+  startAmbient(id) {
+    this.stopAmbient();
+    if (!id) return;
+    const fire = () => {
+      const d = audioCall('sfx', id);
+      if (!(d > 0)) { this.stopAmbient(); return; } // unknown recipe (the engine warned) or the silent shim
+      this.ambientTimer = this.time.delayedCall(Math.max(100, d * 1000 - 300), fire);
+    };
+    fire();
+  }
+
+  stopAmbient() {
+    if (this.ambientTimer) { this.ambientTimer.remove(); this.ambientTimer = null; }
   }
 
   /**
@@ -377,7 +409,7 @@ export default class ExploreScene extends Phaser.Scene {
     if (!this.player) return;
     const frozen = this.inputLocked;
     if (!frozen) for (const e of this.entities.values()) if (e !== this.player) e.updateBehavior(time);
-    if (frozen) return;
+    if (this.inputLocked) return; // re-read: a behavior above may have started an encounter (lockInput) this frame
 
     const input = services.input;
     if (input.justPressed('menu')) { this.openMenu(); return; }
@@ -547,6 +579,8 @@ export default class ExploreScene extends Phaser.Scene {
       let result;
       this.events.once(Phaser.Scenes.Events.WAKE, () => resolve(result));
       const onDone = (r) => { result = r; this.scene.wake(); };
+      const a = services.audio;
+      this.musicBeforeSub = a ? (a.currentMusic ?? null) : null; // restored by onWake
       this.scene.launch(key, { ...data, onDone });
       this.scene.bringToTop('UI');
       this.scene.sleep();
@@ -595,6 +629,8 @@ export default class ExploreScene extends Phaser.Scene {
       if (fx.shake !== undefined) this.shake(scaleMs(fx.shake || 300), fx.intensity ?? 0.01, fx.px).then(done);
       else if (fx.flash !== undefined) { cam.once(CamEvents.FLASH_COMPLETE, done); cam.flash(scaleMs(fx.flash || 150), r, g, b, true); }
       else if (fx.fade === 'out') { cam.once(CamEvents.FADE_OUT_COMPLETE, done); cam.fadeOut(scaleMs(fx.ms || FADE_MS), r, g, b); }
+      // A camera that is not faded out has nothing to fade in from (Fade.start would cut to black first).
+      else if (fx.fade === 'in' && !cam.fadeEffect.isRunning && cam.fadeEffect.alpha === 0) done();
       else if (fx.fade === 'in') { cam.once(CamEvents.FADE_IN_COMPLETE, done); cam.fadeIn(scaleMs(fx.ms || FADE_MS), r, g, b); }
       else if (fx.pan) { cam.stopFollow(); cam.once(CamEvents.PAN_COMPLETE, done); cam.pan(fx.pan.x, fx.pan.y, scaleMs(fx.pan.ms || 500), 'Sine.easeInOut', true); }
       else if (fx.follow) { const e = this.entities.get(fx.follow) || this.follower(fx.follow); if (e) cam.startFollow(e, true, 1, 1); done(); }

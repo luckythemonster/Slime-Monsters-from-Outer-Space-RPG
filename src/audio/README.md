@@ -157,7 +157,8 @@ Chapter 1 SFX (40 after the original 20): `caption_tick`, `count_click`, `stick_
 Dad talks), `glitch`, `thud`, `door_slam`, `unplug`, `pop_x3`, `amp_hum`, `krathoom`, `doom` / `crack` / `thud_word`
 (the three Eternity words: 40 / 50 / 30 Hz thumps with noise tails; `thud_low` is DESIGN.md's name for `thud_word`),
 `van_keys`, `tear`, `toon_up`, `gears`, `splash`, `phone_ring`, `click`, `drone_whine`, `power_chord`, `hair_back`,
-`rubble`, `chair`, `jukebox_1..4` (2 s house-system previews). Every recipe returns the seconds until it is
+`rubble`, `chair`, `jukebox_1..4` (2 s house-system previews), `wind` (a 1.2 s gust; a map's `"ambient": "wind"`
+loops it). Every recipe returns the seconds until it is
 silent; `tests/audio.mjs` renders each one and fails if anything is still sounding 150 ms after that.
 
 ### More tips (learned writing the Chapter 1 cues)

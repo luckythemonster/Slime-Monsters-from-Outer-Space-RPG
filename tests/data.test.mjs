@@ -12,7 +12,9 @@ import { evaluate, evaluateWith, tokenize } from '../src/engine/Conditions.js';
 import { Party } from '../src/engine/Party.js';
 import { Inventory } from '../src/engine/Inventory.js';
 import { GameState } from '../src/engine/GameState.js';
-import { COMMANDS, isExpression, resolveValue } from '../src/engine/EventRunner.js';
+import { COMMANDS, EventRunner, PROMPT_COLS, isExpression, resolveValue } from '../src/engine/EventRunner.js';
+import { services } from '../src/engine/services.js';
+import { wrapWords } from '../src/ui/theme.js';
 import { expandVars } from '../src/engine/TextVars.js';
 import { normalizeShop, stockFor, sellPrice, buyPrice } from '../src/engine/Shop.js';
 
@@ -349,6 +351,45 @@ group('scripts', (check) => {
     walk(cmds, sid, labels);
   }
   check(Object.keys(scripts).length > 0, 'at least one script');
+  // Captions have no wrap: each '\n'-separated line must fit its card (tape: 30 + 8n + 16 + the 6 px tape
+  // overhang <= 256 -> 25 cols; flyer: 10 px pitch inside a 248 px card -> 23; plain: 8n <= 256 -> 32).
+  const CAPTION_COLS = { tape: 25, flyer: 23, plain: 32 };
+  const captions = (cmds, sid) => {
+    for (const cmd of cmds || []) {
+      if (cmd.caption !== undefined) {
+        const style = cmd.style || 'plain';
+        for (const line of String(cmd.caption).split('\n')) check(line.length <= CAPTION_COLS[style], `script ${sid}: ${style} caption line "${line}" is ${line.length} > ${CAPTION_COLS[style]} cols`);
+      }
+      if (cmd.save && typeof cmd.save === 'object' && typeof cmd.save.prompt === 'string') check(wrapWords(cmd.save.prompt, PROMPT_COLS).length <= 2, `script ${sid}: save prompt "${cmd.save.prompt}" needs more than two ${PROMPT_COLS}-col rows`);
+      if (cmd.then) captions(cmd.then, sid);
+      if (cmd.else) captions(cmd.else, sid);
+      if (cmd.onWin) captions(cmd.onWin, sid);
+      if (cmd.onLose) captions(cmd.onLose, sid);
+      if (cmd.choice) for (const opt of cmd.choice) captions(opt.then || [], sid);
+    }
+  };
+  for (const [sid, cmds] of Object.entries(scripts)) captions(cmds, sid);
+  for (const [id, m] of Object.entries(maps)) for (const e of m.entities || []) if (e.type === 'save' && typeof e.prompt === 'string') check(wrapWords(e.prompt, PROMPT_COLS).length <= 2, `map ${id}/${e.id}: save prompt needs more than two rows`);
+});
+
+// ---------------------------------------------------------------------------------------------
+group('eventrunner', (check) => {
+  // {"music"} hands AudioEngine a fade in SECONDS (ARCHITECTURE §7); 300 would be a five-minute ramp.
+  const calls = [];
+  const saved = services.audio;
+  services.audio = { playMusic: (id, o) => calls.push(['play', id, o]), stopMusic: (o) => calls.push(['stop', null, o]) };
+  try {
+    const runner = new EventRunner({ scripts: {}, state: {}, explore: {}, characters: {} });
+    runner.cmd_music('snow');
+    runner.cmd_music(null);
+  } finally {
+    services.audio = saved;
+  }
+  check(calls.length === 2 && calls[0][0] === 'play' && calls[0][1] === 'snow' && calls[1][0] === 'stop', `music calls ${JSON.stringify(calls)}`);
+  for (const [, , o] of calls) check(o && typeof o.fade === 'number' && o.fade > 0 && o.fade <= 5, `music fade ${JSON.stringify(o)} is in seconds (<= 5)`);
+  // The clipboard prompt wraps instead of truncating: every Chapter 1 prompt fits two 26-column rows.
+  check(wrapWords('INITIAL HERE TO ACKNOWLEDGE RHYTHM SECTION', PROMPT_COLS, 2).join('|') === 'INITIAL HERE TO|ACKNOWLEDGE RHYTHM SECTION', 'rhythm section prompt wraps whole');
+  check(wrapWords('INITIAL HERE TO END CHAPTER 1', PROMPT_COLS, 2).join('|') === 'INITIAL HERE TO END|CHAPTER 1', 'chapter end prompt keeps its 1');
 });
 
 // ---------------------------------------------------------------------------------------------

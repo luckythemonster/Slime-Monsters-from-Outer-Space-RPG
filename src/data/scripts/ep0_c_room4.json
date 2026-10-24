@@ -84,6 +84,7 @@
   ],
 
   "ep0_ultimatum": [
+    { "music": null },
     { "spawn": { "id": "kraaang_cs", "type": "object", "sprite": "word_kraaang", "w": 6, "x": 4, "y": 1, "solid": false } },
     { "sfx": "kraaang" },
     { "camera": { "shake": 300, "intensity": 0.02 } },

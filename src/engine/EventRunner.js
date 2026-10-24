@@ -5,6 +5,7 @@ import { services } from './services.js';
 import { evaluate, evaluateWith, contextFor, tokenize } from './Conditions.js';
 import { expandVars } from './TextVars.js';
 import { runShop } from './Shop.js';
+import { wrapWords } from '../ui/theme.js';
 import { PARAMS, SAVE_SLOTS, scaleMs } from '../config.js';
 
 /** Every command key the runner understands (data tests validate scripts against this). */
@@ -19,6 +20,10 @@ const END = Symbol('end');
 
 /** Default clipboard prompt (DESIGN.md "Controls & save"). */
 export const SAVE_PROMPT = 'INITIAL HERE?';
+/** Clipboard menu geometry: a 240 px window at x 8 holds 8 px pad + 10 px cursor gutter + 26 x 8 px columns (= 234 <= 240). */
+export const PROMPT_COLS = 26;
+/** Slot hint window: 240 px wide, 28 columns, at most two rows (ListMenu wraps hints). */
+const HINT_COLS = 28;
 
 /** Pick the command key out of a command object. */
 export function commandKey(cmd) {
@@ -333,8 +338,9 @@ export class EventRunner {
   cmd_music(id) {
     const a = this.audio;
     if (!a) return;
-    if (id === null || id === undefined || id === '') { if (typeof a.stopMusic === 'function') a.stopMusic({ fade: 300 }); }
-    else if (typeof a.playMusic === 'function') a.playMusic(id, { fade: 300 });
+    // AudioEngine fades are in seconds (ARCHITECTURE §7), like every other playMusic/stopMusic caller.
+    if (id === null || id === undefined || id === '') { if (typeof a.stopMusic === 'function') a.stopMusic({ fade: 0.3 }); }
+    else if (typeof a.playMusic === 'function') a.playMusic(id, { fade: 0.3 });
   }
 
   cmd_sfx(name) { this.sfx(name); }
@@ -392,9 +398,10 @@ export class EventRunner {
       const lv = peek.level;
       const map = (services.data && services.data.maps && services.data.maps[peek.map] && services.data.maps[peek.map].name) || peek.map || '?';
       const names = (peek.party || []).map((id) => (chars[id] ? chars[id].name : id)).join(' ');
+      const full = `${map} - ${names}`;
       rows.push({
         label: `PAGE ${slot}  CH${peek.chapter || 1} ${time}${lv ? ` LV${lv}` : ''}`,
-        hint: `${map} - ${names}`.slice(0, 28),
+        hint: wrapWords(full, HINT_COLS).length <= 2 ? full : map, // longer than the two hint rows: the map name alone
       });
     }
     return rows;
@@ -407,9 +414,12 @@ export class EventRunner {
   async cmd_save(arg) {
     if (arg && typeof arg === 'object' && arg.auto) { this.autosave(); return; }
     const prompt = (arg && typeof arg === 'object' && arg.prompt) || SAVE_PROMPT;
-    const rows = [{ label: this.text(prompt).slice(0, 28), disabled: true }, ...this.slotRows(), { label: 'DECLINE', hint: 'Not today.' }];
-    const idx = await this.ui.menu(rows, { x: 8, y: 96, width: 240, cancelable: true, selected: Math.min(SAVE_SLOTS, this.activeSlot()) });
-    const slot = idx >= 1 && idx <= SAVE_SLOTS ? idx : 0;
+    // The prompt keeps every word: it wraps onto up to two disabled rows above the pages.
+    const promptRows = wrapWords(this.text(prompt), PROMPT_COLS, 2).map((label) => ({ label, disabled: true }));
+    const first = promptRows.length;
+    const rows = [...promptRows, ...this.slotRows(), { label: 'DECLINE', hint: 'Not today.' }];
+    const idx = await this.ui.menu(rows, { x: 8, y: 96, width: 240, cancelable: true, selected: first - 1 + Math.min(SAVE_SLOTS, this.activeSlot()) });
+    const slot = idx >= first && idx < first + SAVE_SLOTS ? idx - first + 1 : 0;
     if (!slot) {
       await this.ui.say({ text: 'The clipboard does not move.', who: 'narrator' });
       return;
