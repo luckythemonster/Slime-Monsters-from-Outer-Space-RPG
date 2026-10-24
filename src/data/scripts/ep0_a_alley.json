@@ -1,6 +1,12 @@
 {
   "ep0_crash": [
     {
+      "sprite": {
+        "who": "player",
+        "sheet": "lucky"
+      }
+    },
+    {
       "music": null
     },
     {

@@ -79,7 +79,7 @@ All maps use the §4 JSON format (ASCII rows + legend). Coordinates are tile coo
 Twelve maps including the scene. Every map lists `"encounters": { "rate": 0, "pool": [] }`.
 
 ### `pod_bay` — 16×14
-**Layout.** Steel floor, catwalk along the top row, three drop pods along the bottom (pod 2 open at (7,11), Lucky inside). Intercom speaker 2×2 on the north wall at (7,2). Viewport (12,2) onto Planet California, a planet made of billboards (`window_stars` animated tile). Vending machine (2,3), plaque (4,2). Pod 3 nameplate (11,11). **Spawn** (7,11) facing up. Lucky uses the `lucky_ball` 16×16 sheet here (rolls; 2-frame squish idle).
+**Layout.** Steel floor, catwalk along the top row, three drop pods along the bottom (pod 2 open at (7,11), Lucky inside). Intercom speaker 2×2 on the north wall at (7,2). Viewport (12,2) onto Planet California, a planet made of billboards (`window_stars` animated tile). Vending machine (2,3), plaque (4,2). Pod 3 nameplate (11,11). **Spawn** (7,11) facing up. Lucky uses the `lucky_ball` 16×16 sheet here (CS-01 swaps it in; rolls; 2-frame squish idle) until the crash puts the `lucky` sheet back.
 **Interactables.** Speaker → CS-02. Pod 2 EJECT (6,11) → CS-03. Laser guitar case in the pod (8,11): "The only thing from home worth the fuel." (equips Beat-Up Guitar; one toast: "EQUIP is in the menu."). Pod 3 nameplate: "RESERVED — RUBEN, B." → Lucky: "…They're late. They're always late." (`flags.readBillyPod`). Vending: "DENTAL PLAN: SOLD OUT. DEMOGRAPHIC: SOLD OUT. WATER: $40." Plaque: "EMPLOYEE OF THE QUARTER: DAD (41 CONSECUTIVE)." Viewport: "One billboard says WORK IS LOVE. Lucky has never seen it turned off."
 **Triggers.** Four once-only floor bands (rows 4, 6, 8, 10 across x 3..12) keep Dad going (CS-01 extras). **Enemies:** none.
 
@@ -142,7 +142,7 @@ Same footprint: walls → `rubble` tiles, north rows → `sky_hole` tiles (night
 Every cutscene is a numbered list of §5.1 commands in shorthand: `say who "text"` = `{"say":"text","who":"who"}`, `set a, b` = `{"set":{"flags.a":true,"flags.b":true}}`, etc. Commands **not** in §5.1 are marked **[EXT]** and appear in *Engine extensions required* with their fallback. Text markup used: `\n`, `{pause:ms}`, `{speed:…}`, `{color:…}`, `{shake}`, and **[EXT]** `{var:name}` (substitutes `vars.name`). Portraits are named `<who>_<mood>`; `say` without a portrait uses the character's default. Ryan's spoken lines use `who: "ryan"` (plain box, name tag, portrait `ryan_stoic`); his thoughts use `who: "ryan_caption"`.
 
 ### CS-01 `ep0_pod_intro` (`pod_bay.onFirstEnter`) — Toon 1
-1. `music dental_plan`; `camera fade in 600`.
+1. `sprite player lucky_ball` (the rolled-up drop form); `music dental_plan`; `camera fade in 600`.
 2. `say dad portrait:dad_grille` "I just don't understand the whole nonbinary thing."
 3. `say dad` "Why can't you pick a tangible demographic to market yourself to?"
 4. `say dad` "If you'd just join The Vanguard, you could be financially successful and oppress people with a dental plan!"
@@ -151,7 +151,7 @@ Every cutscene is a numbered list of §5.1 commands in shorthand: `say who "text
 Floor-band triggers `ep0_dad_1..4` (once each; `condition: !flags.podSpeakerSlapped`): `say dad` "Your mother and I paid for the compression. The least you could do is market yourself." / "There's an opening in Demographic Alignment. You'd report to me." / "Billy's parents say Billy 'found themself.' In a storage unit." / "…I can see the speaker light." Twins with `condition: flags.podSpeakerSlapped`: `say dad` "{speed:slow}mmf. mmmf."
 
 ### CS-02 `ep0_speaker` (interact, speaker) — Toon 3
-1. `face player up`; `anim player lucky_ball_pseudopod wait:true`; `sfx squelch`; `sprite speaker speaker_slimed`.
+1. `sprite player lucky_ball` (a no-op after CS-01; keeps a warp honest); `face player up`; `anim player lucky_ball_pseudopod wait:true`; `sfx squelch`; `sprite speaker speaker_slimed`; `face player up` (the arm stays on the grille, Lucky is a ball again).
 2. **[EXT]** `ui.collapse` — the FF-gradient Dad window collapses vertically 56→0 px in 4 frames mid-sentence (fallback: a normal page end). Implemented as `say dad "{speed:slow}I'm not finished, Lucky. The quarterly—"` followed by `{"sfx":"squelch"}` with the box's `collapse: true` option.
 3. `say lucky` "Better."; `set flags.podSpeakerSlapped`; `music null`; `sfx intercom_buzz` stops.
 
@@ -162,7 +162,7 @@ Floor-band triggers `ep0_dad_1..4` (once each; `condition: !flags.podSpeakerSlap
 4. On return (the Freefall scene calls back): `teleport alley 9 8 facing:down` (the crater; `alley.onFirstEnter` runs CS-04).
 
 ### CS-04 `ep0_crash` (`alley.onFirstEnter`) — Toon 2 → 1
-1. Black; `music null`; ambient `wind`; `camera fade in 400` on Phoenix at (12,6) with the trash bag (`phoenix` sheet, `trash_bag` frame).
+1. `sprite player lucky` (back from the ball); black; `music null`; ambient `wind`; `camera fade in 400` on Phoenix at (12,6) with the trash bag (`phoenix` sheet, `trash_bag` frame).
 2. `say phoenix` "{speed:slow}…"
 3. `sfx crash`; `camera shake 900 0.03`; `camera flash 120`; `spawn crater sprite:crater 9 8`; `spawn crash_fx sprite:crash_word 10 4` (Toon 2: CRASH is an object); `move crash_fx "RRR" wait:true` — each dumpster it passes swaps to `dumpster_down` (`sprite dumpster_1 dumpster_down` ×4 between steps); `despawn crash_fx`.
 4. `sprite player lucky_puddle`; `wait 900`; `anim phoenix phoenix_glasses_push wait:true`.
@@ -876,7 +876,7 @@ Names are the `name:` keys in `tools/sprites`, `tools/tiles`, `tools/ui`; animat
 | Sheet | Anims (frames) | Variants |
 |---|---|---|
 | `lucky` (shipped: walk ×3 dirs, idle ×4, melt 2) | add: `reform` 4 (pop-pop-pop), `channel` 2 (glowing arm), `stomp` 2, `bristle` 2 (standing spikes), `puddle` 1 | `lucky_rage` (magenta, shipped), `lucky_deflated` (shipped), `lucky_bruised` (shipped), `lucky_plaster` (shipped), `lucky_glow` (new: p→`#ff9ae6`, g→`#f8f8f8`), `lucky_bristle` = `bristle` anim on `lucky` |
-| `lucky_ball` (16×16) | idle 2 (compressed, pulsing), `pseudopod` 3 (the slap, reaches up 8 px) | — |
+| `lucky_ball` (16×16) | idle_down/up/left 2 each (compressed, pulsing squish), walk 4 (one rolling loop for every facing: spikes top, left, under, right), `pseudopod` 3 (rise, full reach to the frame top, splat) | — |
 | `lucky_fall` (24×16) | glide 2, bank_left 1, bank_right 1, glide_shades 2, bank_left_shades 1, bank_right_shades 1 | — |
 | `phoenix` (shipped: walk, idle) | add: `trash_bag` 1, `glasses_push` 2, `puddle` 1, `bass_mute` 1 | `phoenix_plaster` (shipped) |
 | `brian` (shipped: walk, idle, pace 2, point 1, rage 2, stuff_cables 2) | add: `strum` 2, `phone` 1 | `brian_red` (shipped) |

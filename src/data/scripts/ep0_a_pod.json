@@ -1,5 +1,6 @@
 {
   "ep0_pod_intro": [
+    { "sprite": { "who": "player", "sheet": "lucky_ball" } },
     { "music": "dental_plan" },
     { "sfx": "intercom_buzz" },
     { "anim": { "who": "speaker", "key": "obj_intercom_talk", "wait": false } },
@@ -41,10 +42,12 @@
       { "set": { "flags.speakerChecked": true } },
       { "end": true }
     ] },
+    { "sprite": { "who": "player", "sheet": "lucky_ball" } },
     { "face": { "who": "player", "dir": "up" } },
-    { "anim": { "who": "player", "key": "lucky_channel", "wait": true } },
+    { "anim": { "who": "player", "key": "lucky_ball_pseudopod", "wait": true } },
     { "sfx": "squelch" },
     { "anim": { "who": "speaker", "key": "obj_intercom_squelched", "wait": false } },
+    { "face": { "who": "player", "dir": "up" } },
     { "say": "{speed:slow}I'm not finished, Lucky. The quarterly—", "who": "dad", "collapse": true },
     { "sfx": "squelch" },
     { "say": "Better.", "who": "lucky" },
