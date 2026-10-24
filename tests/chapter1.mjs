@@ -292,6 +292,7 @@ async function main() {
       { name: 'ch1_10c_ultimatum', when: (p) => say(p).portrait === 'brian_stroke' && say(p).state === 'complete' },
       { name: 'ch1_w_insert_flyer', when: (p) => !!(p.ui && p.ui.kinds && p.ui.kinds.includes('insert') && say(p).state === 'complete') },
       { name: 'ch1_b11_set', when: (p) => battleMenu(p, 'ep0_palmers_set') },
+      { name: 'ch1_b11a_choice', when: (p) => !!menu(p) && menu(p).labels[0] === '[Keep fighting it]' },
       { name: 'ch1_b11b_eternity', when: (p) => !!(p.battle && p.battle.id === 'ep0_palmers_set' && p.battle.party.some((c) => c.id === 'ryan' && c.form === 'eternity')), delay: 200 },
       { name: 'ch1_13b_rubble_rage', when: (p) => p.snap.map === 'palmers_rubble' && say(p).portrait === 'lucky_rage' && say(p).state === 'complete' },
       { name: 'ch1_w_insert_itinerary', when: (p) => !!(p.ui && p.ui.kinds && p.ui.kinds.includes('insert') && say(p).state === 'complete' && p.snap.map === 'palmers_rubble') },
@@ -314,6 +315,7 @@ async function main() {
     /** Menus are picked by label. `uiPlan` entries are consumed in order when they match; otherwise the defaults. */
     const uiPlan = [];
     let titleChoice = 1;
+    let eternityChoices = 0; // THE SET's [Keep fighting it] / [Let go] windows seen
     const defaultPick = (labels) => {
       const l0 = labels[0] || '';
       if (l0 === 'New Game') return titleChoice;
@@ -322,6 +324,7 @@ async function main() {
       if (l0 === 'MUST PLAY FAST') return 2;
       if (/^INITIAL HERE/.test(l0)) return labels.findIndex((l) => /^PAGE 2/.test(l)); // the prompt may take two rows
       if (l0 === 'Pothole Blues') return 2;
+      if (l0 === '[Keep fighting it]') { eternityChoices += 1; return 1; } // [Let go]: the honest run's one choice for Ryan
       if (l0 === 'RAGE') return 1; // PLEAD
       if (l0 === 'Yes' && labels[1] === 'No') return 1;
       notes.push(`menu with no policy: ${JSON.stringify(labels)}; picked 0`);
@@ -345,12 +348,20 @@ async function main() {
       notes.push(`could not reach menu row ${idx} of ${JSON.stringify(m.labels)}`);
       await press('confirm');
     };
+    /** Every dialogue page the driver dismissed: { text, who, portrait, map } (THE SET's captions and the quit are checked by line). */
+    const seen = [];
+    let lastSeenKey = null;
+    const flatText = (t) => String(t || '').replace(/[\n\f]+/g, ' ').replace(/\s+/g, ' ').trim();
+    const seenLine = (who, text) => seen.some((l) => l.who === who && l.text.includes(text));
     const handleUi = async (p) => {
       const top = p.ui.top;
       if (!top) { await sleep(POLL_MS); return; }
       if (top.type === 'say') {
-        if (top.state === 'complete' || top.state === 'typing') await press('confirm');
-        else await sleep(20);
+        if (top.state === 'complete' || top.state === 'typing') {
+          const key = `${top.who}|${top.page}|${top.text}`;
+          if (key !== lastSeenKey) { lastSeenKey = key; seen.push({ text: flatText(top.text), who: top.who, portrait: top.portrait, map: p.snap.map }); }
+          await press('confirm');
+        } else await sleep(20);
       } else if (top.type === 'menu') {
         if (top.state === 'open') await navList(top, pickFor(top));
         else await sleep(20);
@@ -426,6 +437,7 @@ async function main() {
         const p = await probe();
         last = p;
         await takeWanted(p);
+        if (!p.uiBusy) lastSeenKey = null; // a new box may repeat the last line word for word
         if (p.scene === 'GameOver') {
           if (!allowGameOver) throw new GameOverSignal(label);
           await press('confirm');
@@ -778,12 +790,18 @@ async function main() {
       check('S12 jukebox played (7/8 Shuffle)', p.snap.flags.jukeboxPlayed === true, p.snap.flags);
       p = await walk('D LLLLLLLL UUUUUUUU RRRRRRRRRRR DD', 'to the stage edge');
       check('S12 at (19,6) beside the stage', at(p, 19, 6), pos(p));
+      // THE SET puts Ryan's one choice ([Keep fighting it] / [Let go]) in a `choice` window: the honest run lets go.
+      // The window is driven by label (defaultPick); chooseIndex is what an autoAdvance pick would take.
+      await ev(() => { window.__slime.chooseIndex = 1; return true; });
       // One bare press, not walk(): the stage trigger chains CS-16 → THE SET → CS-17 → the save → the title with
       // no idle-on-map moment before CONTINUE, so walk()'s driveIdle would play the whole ending here.
       await press('right');
       p = await drive('CS-16 → THE SET → CS-17 aftermath', (q) => q.snap.map === 'palmers_rubble' && q.snap.flags.eternityDone === true);
     });
     check('S12 THE SET: onStage, mohawkOff, eternityArmed, eternityFired, eternityDone', ['onStage', 'mohawkOff', 'eternityArmed', 'eternityFired', 'eternityDone'].every((f) => p.snap.flags[f] === true), p.snap.flags);
+    check('S12 THE SET asked once after "[I\'ve been fighting the possession.]" and the run let go (letGo, eternityChoice letGo)', eternityChoices === 1 && seenLine('ryan_caption', "fighting the possession") && p.snap.flags.letGo === true && p.snap.flags.eternityChoice === 'letGo', { eternityChoices, letGo: p.snap.flags.letGo, eternityChoice: p.snap.flags.eternityChoice });
+    check('S12 THE SET: no holding captions on [Let go]', !seenLine('ryan_caption', 'Holding it') && !seenLine('ryan_caption', "I couldn't"), seen.filter((l) => l.who === 'ryan_caption').map((l) => l.text));
+    await ev(() => { window.__slime.chooseIndex = 0; return true; });
     check('S12 THE SET reward: +100 XP (Lucky 206, L7) and the Price-Tag Leather Jacket', member(p.snap, 'lucky').xp === 206 && member(p.snap, 'lucky').level === 7 && has(p.snap, 'price_tag_jacket'), { lucky: member(p.snap, 'lucky'), inv: p.snap.inventory });
 
     // ==== S13: the rubble, the quit, NEXT: THE POTATO BELT → Title → CONTINUE ===========================
@@ -791,6 +809,9 @@ async function main() {
     p = await drive('CS-17: the quit', (q) => q.snap.flags.ryanQuit === true);
     notes.push(`quit settled: titleSeen=${p.titleSeen} exploreSeen=${p.exploreSeen} runner=${p.runner} map=${p.snap.map}`);
     check('S13 PLEAD picked (vars.quitResponse 1); Ryan gone; luckyRageLocked', p.snap.vars.quitResponse === 1 && p.snap.flags.ryanQuit === true && p.snap.flags.luckyRageLocked === true && party(p.snap) === 'lucky,phoenix', { vars: p.snap.vars, party: party(p.snap) });
+    const quitCaps = seen.filter((l) => l.map === 'palmers_rubble' && l.who === 'ryan_caption').map((l) => l.text).filter((t, i, a) => i === 0 || t !== a[i - 1]); // recorded once per page: collapse repeats
+    check('S13 the quit lands on complicity: [I could have killed…] [That wasn\'t the goo.] [That was me.], then "I quit."', quitCaps.join('|').includes("[I could have killed every person in this room.]|[That wasn't the goo.]|[That was me.]") && seenLine('ryan', 'I quit.') && !seenLine('ryan_caption', "I didn't let go"), quitCaps);
+    check('S13 PLEAD carries the complicity line after "One more show."', seen.findIndex((l) => l.who === 'narrator' && l.text === 'He already let go once. That was the show.') > seen.findIndex((l) => l.who === 'lucky' && l.text.includes('One more show')), seen.filter((l) => l.map === 'palmers_rubble').map((l) => `${l.who}: ${l.text}`));
     const exploresBeforeEnd = p.exploreSeen; // CONTINUE starts a fresh Explore scene; the rubble teleport before the title did not
     uiPlan.push({ match: (l) => l[0] === 'New Game', pick: 1 });
     p = await drive('CS-17 stinger → NEXT → save → Title → CONTINUE', (q) => q.scene === 'Explore' && q.exploreSeen > exploresBeforeEnd && q.snap.flags.ch1Complete === true && q.snap.map === 'palmers_rubble' && q.idle);
