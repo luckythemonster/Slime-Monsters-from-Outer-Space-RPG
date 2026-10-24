@@ -66,6 +66,13 @@ STEM_RANGES = {  # basic-pitch frequency windows per stem (Hz)
     "bass": (30.0, 500.0),
     "other": (60.0, 2500.0),
 }
+# basic-pitch thresholds per stem: (onset, frame, minimum note ms). The separated vocal is quiet and
+# shouted, so it gets lower thresholds; lower still mostly adds fragments inside the same syllables.
+STEM_THRESHOLDS = {
+    "vocals": (0.4, 0.25, 80),
+    "bass": (0.5, 0.3, 70),
+    "other": (0.5, 0.3, 70),
+}
 
 
 def log(msg: str) -> None:
@@ -348,9 +355,10 @@ def transcribe_pitched(path: Path, stem: str, grid: Grid) -> list[dict]:
     from basic_pitch.inference import predict
 
     lo, hi = STEM_RANGES[stem]
+    onset_thr, frame_thr, min_ms = STEM_THRESHOLDS[stem]
     _out, _midi, events = predict(
-        str(path), model_or_model_path=ICASSP_2022_MODEL_PATH, onset_threshold=0.5, frame_threshold=0.3,
-        minimum_note_length=70, minimum_frequency=lo, maximum_frequency=hi, melodia_trick=True,
+        str(path), model_or_model_path=ICASSP_2022_MODEL_PATH, onset_threshold=onset_thr, frame_threshold=frame_thr,
+        minimum_note_length=min_ms, minimum_frequency=lo, maximum_frequency=hi, melodia_trick=True,
     )
     notes = []
     for ev in events:
@@ -384,11 +392,12 @@ def transcribe_drums(path: Path, grid: Grid) -> list[dict]:
     hits = []
     for i, t in enumerate(onsets):
         step = grid.step(float(t))
-        total = low[i] + mid[i] + high[i] + 1e-12
         classes = []
-        if low_n[i] > 0.18 and low[i] / total > 0.25:
+        # each band is normalized to its own 90th percentile, so a bright snare (more energy above 5 kHz
+        # than in the mid band) still counts as a snare and a kick with a click still counts as a kick
+        if low_n[i] > 0.18 and low_n[i] >= 0.35 * max(mid_n[i], high_n[i]):
             classes.append("kick")
-        if mid_n[i] > 0.22 and mid[i] / total > 0.2 and mid[i] > low[i] * 0.4:
+        if mid_n[i] > 0.22 and mid_n[i] >= 0.35 * max(low_n[i], high_n[i]):
             classes.append("snare")
         if high_n[i] > 0.12:
             ring = high_late[i] / (high[i] + 1e-12)
@@ -628,8 +637,18 @@ def main() -> None:
     log(f"key {key['key']} ({key['confidence']}), tuning {tuning:+.2f} st; sections: " + " ".join(f"{s['label']}@{s['bar']}x{s['bars']}" for s in sections))
 
     tracks: dict[str, list[dict]] = {}
+    retuned = abs(tuning) >= 0.22
+    if retuned:
+        log(f"guitar sits {tuning * 100:+.0f} cents off A440: shifting the pitched stems onto the grid before transcription")
     for stem in ("vocals", "bass", "other"):
-        tracks[stem] = transcribe_pitched(stems[stem], stem, grid)
+        src_path = stems[stem]
+        if retuned:
+            src_path = work / f"{stem}_retuned.wav"
+            y, sr_ = librosa.load(str(stems[stem]), sr=SR, mono=True)
+            if float(np.sqrt(np.mean(y * y))) > 1e-4:
+                y = librosa.effects.pitch_shift(y, sr=sr_, n_steps=-tuning)
+            sf.write(str(src_path), y.astype(np.float32), sr_)
+        tracks[stem] = transcribe_pitched(src_path, stem, grid)
         log(f"{stem}: {len(tracks[stem])} notes")
     hits = transcribe_drums(stems["drums"], grid)
     log(f"drums: {len(hits)} hits")
@@ -657,7 +676,7 @@ def main() -> None:
         "downbeat_phase": beat_info["downbeat_phase"], "pickup_beats": (4 - beat_info["downbeat_phase"]) % 4,
         "first_beat_time": round(float(grid.beats[0]), 3), "grid_beat_of_first_tracked_beat": grid.grid0,
         "bars": total_bars, "ticks_per_beat": TICKS_PER_BEAT, "steps_per_beat": STEPS_PER_BEAT,
-        "key": key["key"], "key_confidence": key["confidence"], "chroma": key["chroma"], "tuning_semitones": round(tuning, 2),
+        "key": key["key"], "key_confidence": key["confidence"], "chroma": key["chroma"], "tuning_semitones": round(tuning, 2), "retuned_before_transcription": retuned,
         "sections": sections,
         "stems": {
             "vocals": stem_stats(tracks["vocals"]), "guitar": stem_stats(tracks["other"]), "bass": stem_stats(tracks["bass"]),

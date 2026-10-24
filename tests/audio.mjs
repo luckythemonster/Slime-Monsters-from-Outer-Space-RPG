@@ -67,6 +67,9 @@ const REQUIRED_ALIASES = {
   palmers_set: 'pocket', the_set: 'pocket', eternity: 'rhythm_achieved', rubble: 'plaster_dust', victory: 'win_sting', gameover: 'game_over',
   palmers: 'six_inch_stage', battle_noise: 'battle',
 };
+// Band covers (the Dead Planet Demos, transcribed + arranged by tools/audio_to_midi.py and tools/midi_to_song.py)
+const BAND_SONGS = ['band_spud_nothin', 'band_they_came_from_the_sky', 'band_hunger', 'band_red_star_vanguard', 'band_eclipse_of_liberation', 'band_monsters'];
+check('songs: every band cover is in songs/index.js', BAND_SONGS.every((id) => SONGS[id]), { missing: BAND_SONGS.filter((id) => !SONGS[id]) });
 check('aliases: every alias names a registered song and no alias shadows a song id',
   ALIASES && Object.entries(ALIASES).every(([a, id]) => SONGS[id] && !SONGS[a]), { bad: Object.entries(ALIASES || {}).filter(([a, id]) => !SONGS[id] || SONGS[a]) });
 check('aliases: the other design docs\' cue names are all mapped', Object.entries(REQUIRED_ALIASES).every(([a, id]) => ALIASES && ALIASES[a] === id),
@@ -151,6 +154,22 @@ if (compiled.northern_garage) {
   check('northern_garage: hat every beat at 0.1 and one triangle note every two bars, nothing else',
     c.bpm === 60 && c.channels.length === 2 && SONGS.northern_garage.channels.noise.volume === 0.1 && drumSteps('northern_garage', 'noise', 'h').length === c.bars * 4
       && chan('northern_garage', 'tri').events.length === c.bars / 2);
+}
+for (const id of BAND_SONGS) {
+  if (!compiled[id]) continue;
+  const c = compiled[id], song = SONGS[id];
+  const notes = (name) => (chan(id, name) ? chan(id, name).events.filter((e) => e.note).length : 0);
+  const kicks = drumSteps(id, 'noise', 'k').length, snares = drumSteps(id, 'noise', 's').length;
+  const hats = chan(id, 'hats') ? chan(id, 'hats').events.length : 0;
+  const patternCount = Object.values(song.channels).reduce((n, ch) => n + Object.keys(ch.patterns).length, 0);
+  // a cover: 4/4 on a 16th grid, a punk tempo, 16-96 bars that loop, a melody on pulse1, a riff on pulse2, a bass
+  // on the triangle, kick and snare on the kit, hats on their own channel, patterns deduped (fewer than bars x channels)
+  check(`${id}: 4/4 at ${c.bpm} BPM, ${c.bars} bars looping, lead/riff/bass/kit all present (${notes('pulse1')}/${notes('pulse2')}/${notes('tri')} notes, ${kicks}k ${snares}s ${hats}h)`,
+    c.beatsPerBar === 4 && c.stepsPerBeat === 4 && c.bpm >= 110 && c.bpm <= 220 && c.loop && c.bars >= 16 && c.bars <= 96 && c.bars % 4 === 0
+      && notes('pulse1') >= c.bars && notes('pulse2') >= c.bars * 2 && notes('tri') >= c.bars * 2 && kicks >= c.bars && snares >= c.bars / 2 && hats >= c.bars * 2
+      && song.channels.pulse1.wave === 'pulse' && song.channels.pulse2.wave === 'pulse' && song.channels.pulse2.duty === 0.25 && song.channels.tri.wave === 'triangle'
+      && patternCount < c.bars * Object.keys(song.channels).length && (song.loopStart || 0) < c.bars / 2,
+    { bpm: c.bpm, bars: c.bars, patternCount, kicks, snares, hats, loopStart: c.loopStart });
 }
 for (const id of ['win_sting', 'level_up', 'game_over']) {
   if (!compiled[id]) continue;

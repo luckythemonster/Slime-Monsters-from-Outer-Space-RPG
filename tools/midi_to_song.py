@@ -218,6 +218,11 @@ def chord_roots(notes: list[dict], n_steps: int) -> list[int | None]:
                 votes[pc] += r["vel"] * (1.5 if st == b * 4 else 1.0)
                 lowest[pc] = min(lowest.get(pc, 999), r["pitch"])
             pc = max(votes, key=votes.get)
+            # power chords: when the fifth out-votes the root (the low string is often the weaker
+            # transcription), the pitch class a fifth below with a comparable vote is the root
+            below = (pc - 7) % 12
+            if below in votes and votes[below] >= 0.4 * votes[pc]:
+                pc = below
             prev = lowest[pc]
             roots[b] = prev
             sounding_until = max(n["step"] + n["len"] for n in strong)
@@ -270,6 +275,27 @@ def bass_from_roots(roots: list[int | None], lo: int, hi: int) -> list[int | Non
         line[s + 2] = (p + 12 if (b % 4 == 3 and same_next and p + 12 <= hi + 5) else p)
         line[s + 3] = -1
     return line
+
+
+def fill_short_rests(line: list[int | None], max_gap: int = 8) -> list[int | None]:
+    """Hold a note through a rest of up to max_gap steps that is followed by another note: the
+    triangle is the bed that keeps the engine's output from falling to digital silence between
+    downstrokes (src/audio/README.md tip 13)."""
+    out = list(line)
+    n = len(out)
+    i = 0
+    while i < n:
+        if out[i] is None:
+            j = i
+            while j < n and out[j] is None:
+                j += 1
+            if 0 < i and j < n and j - i <= max_gap and out[i - 1] is not None:
+                for k in range(i, j):
+                    out[k] = -1
+            i = j
+        else:
+            i += 1
+    return out
 
 
 def bass_agrees(bass: list[dict], roots: list[int | None]) -> float:
@@ -340,6 +366,31 @@ def drum_lines(hits: list[dict], n_steps: int, regular_hats: bool, section_bars:
                     if hats[j] == ".":
                         hats[j] = "h"
     return kit, hats
+
+
+ROCK = list("k...s...k...s...")
+DBEAT = list("k.k.s...k.k.s...")
+
+
+def regular_kit(kit: list[str], section_bars: set[int]) -> list[str]:
+    """Replace each bar's kick/snare with a canonical punk pattern chosen by its hit density
+    (d-beat for 6+ hits, straight rock otherwise), keeping fills (3+ snares in a row), empty bars and
+    crashes. For loose, non-click drummers whose hits do not quantize cleanly."""
+    out = list(kit)
+    n_bars = len(kit) // STEPS_PER_BAR
+    for b in range(n_bars):
+        a = b * STEPS_PER_BAR
+        bar = kit[a:a + STEPS_PER_BAR]
+        hits = sum(1 for t in bar if t in ("k", "s", "c"))
+        snares = "".join("s" if t == "s" else "." for t in bar)
+        if "sss" in snares or hits < 1:
+            continue
+        pat = DBEAT if hits >= 6 else ROCK
+        for j, t in enumerate(pat):
+            out[a + j] = t
+        if bar[0] == "c" or b in section_bars:
+            out[a] = "c"
+    return out
 
 
 # ---------------------------------------------------------------------------
@@ -455,7 +506,11 @@ def build_song(args: argparse.Namespace) -> tuple[str, dict]:
 
     # --- lines -----------------------------------------------------------------
     lead_oct = args.lead_octave
-    roots = chord_roots(guitar, n_steps)
+    roots_from = args.roots_from
+    if roots_from == "auto":
+        roots_from = "bass" if len(bass) > len(guitar) * 1.1 else "guitar"
+    roots = chord_roots(bass if roots_from == "bass" else guitar, n_steps)
+    roots_src = f"chord roots from the {roots_from} stem"
     instrumental = len(vocals) < max(8, n_bars // 4)
     if instrumental:
         lead = mono_line(guitar, n_steps, 64, 88, octave_shift=lead_oct, min_vel_frac=0.5, pick="high", unit=4)
@@ -466,15 +521,28 @@ def build_song(args: argparse.Namespace) -> tuple[str, dict]:
     riff = riff_from_roots(roots, 52, 63, drive=not args.no_drive)
     agree = bass_agrees(bass, roots)
     bass_notes = len(bass)
-    if bass_notes >= n_bars * 1.5 and agree >= 0.5:
+    if roots_from == "bass" or (bass_notes >= n_bars * 1.5 and agree >= 0.5):
         tri = mono_line(bass, n_steps, 40, 59, pick="low", min_vel_frac=0.25, unit=2)
         tri = retrigger(tri, 2, 4)
-        tri_src = f"bass stem ({bass_notes} notes, {agree:.0%} on the guitar root)"
+        tri_src = f"bass stem ({bass_notes} notes, {agree:.0%} on the chord root)"
     else:
         tri = bass_from_roots(roots, 40, 51)
-        tri_src = f"guitar roots an octave down (bass stem: {bass_notes} notes, {agree:.0%} on the guitar root)"
+        tri_src = f"chord roots an octave down (bass stem: {bass_notes} notes, {agree:.0%} on the chord root)"
+    tri = fill_short_rests(tri, 8)
     section_bars = {s["bar"] for s in info.get("sections", [])}
     kit, hats = drum_lines(drums, n_steps, not args.no_regular_hats, section_bars)
+    if args.kit == "regular":
+        kit = regular_kit(kit, section_bars)
+    lead_vocal_only = list(lead)
+    filled_bars: set[int] = set()
+    if args.fill_lead == "riff" and not instrumental:
+        # a bar with no vocal: pulse1 doubles the riff an octave up (the chip version of a guitar overdub)
+        for b in range(n_bars):
+            a = b * STEPS_PER_BAR
+            if all(v in (None, -1) for v in lead[a:a + STEPS_PER_BAR]) and any(v not in (None, -1) for v in riff[a:a + STEPS_PER_BAR]):
+                for j in range(a, a + STEPS_PER_BAR):
+                    lead[j] = None if riff[j] is None else (-1 if riff[j] == -1 else fold(riff[j] + 12, 64, 79))
+                filled_bars.add(b)
 
     # --- bars with content ----------------------------------------------------------
     bar_tok = {}
@@ -494,7 +562,7 @@ def build_song(args: argparse.Namespace) -> tuple[str, dict]:
         chosen = list(range(first, last + 1))
         labels = ["*"] * len(chosen)
     else:
-        busy = {b for b in range(n_bars) if sum(1 for t in kit[b * STEPS_PER_BAR:(b + 1) * STEPS_PER_BAR] if t != ".") >= 3}
+        busy = {b for b in range(n_bars) if sum(1 for t in kit[b * STEPS_PER_BAR:(b + 1) * STEPS_PER_BAR] + hats[b * STEPS_PER_BAR:(b + 1) * STEPS_PER_BAR] if t != ".") >= 3}
         chosen, labels = choose_bars(info.get("sections", []), first, last, args.max_bars, busy)
     # a bar starting with '=' on a channel is fine for the engine only when the previous bar in `order`
     # sounded that note; restate the note at the bar line instead so patterns stay self-contained.
@@ -532,6 +600,9 @@ def build_song(args: argparse.Namespace) -> tuple[str, dict]:
             entry[c] = names[c][tok]
         order.append((b, lab, entry))
     use_hats = bool(patterns["hats"])
+    n_filled = sum(1 for b in chosen if b in filled_bars)
+    if n_filled:
+        lead_src += f"; riff an octave up in the {n_filled} of {len(chosen)} bars without a vocal"
     loop_start = args.loop_start if args.loop_start is not None else 0
 
     # --- main riff: the most repeated 2-bar guitar root sequence ---------------------------
@@ -560,7 +631,7 @@ def build_song(args: argparse.Namespace) -> tuple[str, dict]:
         f" * {args.id} — \"{title}\" (band cover; a chiptune arrangement of the demo recording).",
         f" * Draft generated by tools/midi_to_song.py from {midi_path.relative_to(Path.cwd()) if midi_path.is_relative_to(Path.cwd()) else midi_path.name},",
         f" * then hand-tuned. Transcription: {bpm} BPM, key {key}, {info.get('duration_s', '?')} s, sections {sec_txt}.",
-        f" * pulse1 = {lead_src}; pulse2 = guitar riff (roots, 8th drive with the fifth); tri = {tri_src};",
+        f" * pulse1 = {lead_src}; pulse2 = riff ({roots_src}, 8th downstrokes with the fifth); tri = {tri_src};",
         f" * noise = kit, hats = closed/open hats. Arrangement ({len(order)} bars): {'; '.join(used)}.",
     ]
     if main_riff:
@@ -665,7 +736,7 @@ def build_song(args: argparse.Namespace) -> tuple[str, dict]:
         "lead_onsets_reproduced": coverage(vocals if not instrumental else guitar, lead, 2 if not instrumental else 4),
         "guitar_notes_on_root_or_fifth": root_agreement(),
         "kick_snare_hits_kept": drum_agreement(),
-        "lead_vs_vocals_pitch_class_cosine": cosine(pc_hist(lead), pc_hist_notes(vocals)) if not instrumental else None,
+        "lead_vs_vocals_pitch_class_cosine": cosine(pc_hist(lead_vocal_only), pc_hist_notes(vocals)) if not instrumental else None,
         "riff_vs_guitar_pitch_class_cosine": cosine(pc_hist(riff), pc_hist_notes(guitar)),
         "tri_vs_bass_pitch_class_cosine": cosine(pc_hist(tri), pc_hist_notes(bass)) if bass else None,
     }
@@ -693,6 +764,9 @@ def main() -> None:
     ap.add_argument("--no-drive", action="store_true", help="no 8th-note root/fifth drive on held guitar chords")
     ap.add_argument("--no-regular-hats", action="store_true")
     ap.add_argument("--loop-start", type=int)
+    ap.add_argument("--fill-lead", choices=["riff", "none"], default="riff", help="what pulse1 plays in bars with no vocal (default: the riff an octave up)")
+    ap.add_argument("--roots-from", choices=["auto", "guitar", "bass"], default="auto", help="which stem gives the chord roots (auto: the bass when it has more notes than the guitar)")
+    ap.add_argument("--kit", choices=["detected", "regular"], default="detected", help="regular: canonical rock/d-beat kick-snare per bar by hit density (for loose drummers)")
     ap.add_argument("--print-summary", action="store_true")
     args = ap.parse_args()
     js, summary = build_song(args)

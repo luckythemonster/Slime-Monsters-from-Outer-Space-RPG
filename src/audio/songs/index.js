@@ -27,12 +27,20 @@ import plaster_dust from './plaster_dust.js';
 import win_sting from './win_sting.js';
 import level_up from './level_up.js';
 import game_over from './game_over.js';
+// Band covers: chiptune arrangements of the Dead Planet Demos (music/README.md; transcriptions in music/midi/)
+import band_spud_nothin from './band_spud_nothin.js';
+import band_they_came_from_the_sky from './band_they_came_from_the_sky.js';
+import band_hunger from './band_hunger.js';
+import band_red_star_vanguard from './band_red_star_vanguard.js';
+import band_eclipse_of_liberation from './band_eclipse_of_liberation.js';
+import band_monsters from './band_monsters.js';
 
 export const SONGS = Object.freeze({
   title, snow, battle,
   dental_plan, flying_squirrel, pothole, unpaid_bills, ask_the_universe, northern_garage,
   west_bank, normal_music, sticker_hallway, four_dollars, six_inch_stage, six_inch_stage_ext, pocket,
   rhythm_achieved, plaster_dust, win_sting, level_up, game_over,
+  band_spud_nothin, band_they_came_from_the_sky, band_hunger, band_red_star_vanguard, band_eclipse_of_liberation, band_monsters,
 });
 
 export const ALIASES = Object.freeze({
