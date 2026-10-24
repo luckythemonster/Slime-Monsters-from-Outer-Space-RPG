@@ -1,11 +1,16 @@
-// Small notification window at the top centre: slides in, holds, slides out.
+// Small notification window at the top centre: slides in, holds, slides out. Text longer than the
+// screen wraps onto extra 12 px rows (never wider than the 8 px screen margin allows).
 import Window from './Window.js';
-import { CHAR_W, COLORS, DEPTH, SCREEN_W, textStyle } from './theme.js';
+import { CHAR_W, COLORS, DEPTH, FONT_SIZE, LINE_H, SCREEN_W, textStyle, wrapWords } from './theme.js';
 
 const PAD = 8;
 const H = 24;
 const SLIDE_MS = 120;
 const REST_Y = 8;
+const MAX_COLS = Math.floor((SCREEN_W - 16 - PAD * 2) / CHAR_W); // 28
+
+/** Word-wrap a toast to MAX_COLS columns. */
+export function wrapToast(text) { return wrapWords(text, MAX_COLS); }
 
 export default class Toast {
   constructor(ui) {
@@ -24,12 +29,15 @@ export default class Toast {
       this.state = 'open';
       const ui = this.ui;
       const instant = ui.textInstant;
-      const label = String(text ?? '');
-      const w = Math.max(16, label.length * CHAR_W + PAD * 2);
+      const lines = wrapToast(text);
+      const label = lines.join('\n');
+      const w = Math.max(16, Math.max(...lines.map((l) => l.length)) * CHAR_W + PAD * 2);
+      const h = H + (lines.length - 1) * LINE_H;
+      this.h = h;
       const x = Math.round((SCREEN_W - w) / 2);
-      this.win = new Window(ui, x, REST_Y, w, H, { depth: DEPTH.TOAST });
+      this.win = new Window(ui, x, REST_Y, w, h, { depth: DEPTH.TOAST });
       this.win.open(true);
-      this.text = ui.add.text(x + PAD, REST_Y + PAD, label, textStyle(COLORS.text)).setDepth(DEPTH.TOAST + 2);
+      this.text = ui.add.text(x + PAD, REST_Y + PAD, label, textStyle(COLORS.text, { lineSpacing: LINE_H - FONT_SIZE - 2 })).setDepth(DEPTH.TOAST + 2);
       const hold = instant ? Math.min(ms, 100) : Math.max(0, ms | 0);
       const slide = instant ? 0 : SLIDE_MS;
       const startHold = () => {
@@ -39,12 +47,12 @@ export default class Toast {
         });
       };
       if (slide > 0) {
-        this.win.y = -H;
-        this.win.baseY = -H;
-        this.text.y = -H + PAD;
+        this.win.y = -h;
+        this.win.baseY = -h;
+        this.text.y = -h + PAD;
         this._tween = ui.tweens.add({
           targets: [this.win, this.text],
-          y: `+=${REST_Y + H}`,
+          y: `+=${REST_Y + h}`,
           duration: slide,
           ease: 'Linear',
           onComplete: () => {
@@ -65,7 +73,7 @@ export default class Toast {
     if (slide > 0) {
       this._tween = this.ui.tweens.add({
         targets: [this.win, this.text],
-        y: `-=${REST_Y + H}`,
+        y: `-=${REST_Y + (this.h || H)}`,
         duration: slide,
         ease: 'Linear',
         onComplete: () => { this._tween = null; this._finish(); },

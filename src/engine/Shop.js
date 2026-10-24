@@ -118,7 +118,7 @@ export async function runShop(shopId, { shops, state, ui, audio }) {
       const rows = ids.map((id) => {
         const d = defOf(id) || { name: id, desc: '' };
         const price = buyPrice(d);
-        return { id, price, label: `${pad(d.name, 20)}${pad(money(price), 5)}`, hint: `${d.desc || ''}`.slice(0, 28), disabled: price > state.money };
+        return { id, price, label: `${pad(d.name, 20)}${pad(money(price), 5)}`, hint: `${d.desc || ''}`.slice(0, 56), disabled: price > state.money };
       });
       const i = await ui.menu(rows, { x: 8, y: 32, cancelable: true, selected: sel });
       if (i < 0) return;

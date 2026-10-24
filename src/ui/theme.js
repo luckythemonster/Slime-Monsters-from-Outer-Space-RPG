@@ -64,6 +64,26 @@ export function textStyle(color = COLORS.text, extra = {}) {
   return { fontFamily: FONT_FAMILY, fontSize: `${FONT_SIZE}px`, color, resolution: 1, ...extra };
 }
 
+/**
+ * Word-wrap plain text to `cols` monospace columns, at most `maxLines` lines (the rest is dropped; a
+ * single word longer than a line is cut). Explicit '\n' always breaks. Used by toasts and menu hints.
+ * @returns {string[]}
+ */
+export function wrapWords(text, cols, maxLines = Infinity) {
+  const lines = [];
+  for (const para of String(text ?? '').split('\n')) {
+    let line = '';
+    for (const word of para.split(' ')) {
+      if (!word) continue;
+      if (!line) line = word.slice(0, cols);
+      else if (line.length + 1 + word.length <= cols) line += ` ${word}`;
+      else { lines.push(line); line = word.slice(0, cols); }
+    }
+    lines.push(line);
+  }
+  return (lines.length ? lines : ['']).slice(0, maxLines);
+}
+
 /** Resolve a markup colour name or '#rrggbb' to a CSS colour; null/unknown -> fallback. */
 export function resolveColor(name, fallback = COLORS.text) {
   if (!name) return fallback;

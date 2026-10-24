@@ -2,7 +2,7 @@
 // pointing at the selection, disabled items drawn gray and skipped by the cursor, and an optional
 // hint window below. Resolves the chosen index, or cancelIndex / -1 on cancel when cancelable.
 import Window from './Window.js';
-import { CHAR_W, LINE_H, COLORS, DEPTH, SCREEN_W, SCREEN_H, textStyle, sfx } from './theme.js';
+import { CHAR_W, LINE_H, FONT_SIZE, COLORS, DEPTH, SCREEN_W, SCREEN_H, textStyle, sfx, wrapWords } from './theme.js';
 import { UI_KEY } from './atlas.js';
 
 const PAD = 8;
@@ -88,16 +88,19 @@ export default class ListMenu {
     this.cursor = ui.add.image(0, 0, UI_KEY, 'cursor').setOrigin(0, 0).setDepth(this.depth + 3);
     if (this.hasHints) {
       // The hint window is at least as wide as the menu, grows to fit the longest hint and is
-      // kept inside the 8 px screen margin (hints longer than that are truncated).
+      // kept inside the 8 px screen margin; a hint longer than that wraps onto a second row.
       const maxHint = Math.max(...this.items.map((i) => (i.hint || '').length));
       const hw = Math.min(SCREEN_W - 16, Math.max(this.w, maxHint * CHAR_W + PAD * 2));
+      const cols = Math.max(1, Math.floor((hw - PAD * 2) / CHAR_W));
+      const rows = this.items.some((i) => wrapWords(i.hint || '', cols).length > 1) ? 2 : 1;
+      const hh = HINT_H + (rows - 1) * LINE_H;
       const hx = Math.max(8, Math.min(this.x, SCREEN_W - 8 - hw));
       let hy = this.y + this.h;
-      if (hy + HINT_H > SCREEN_H) hy = this.y - HINT_H;
-      this.hint = { x: hx, y: hy, w: hw };
-      this.hintWin = new Window(ui, hx, hy, hw, HINT_H, { depth: this.depth });
+      if (hy + hh > SCREEN_H) hy = this.y - hh;
+      this.hint = { x: hx, y: hy, w: hw, cols, rows };
+      this.hintWin = new Window(ui, hx, hy, hw, hh, { depth: this.depth });
       await this.hintWin.open(true);
-      this.hintText = ui.add.text(hx + PAD, hy + PAD, '', textStyle(COLORS.text)).setDepth(this.depth + 2);
+      this.hintText = ui.add.text(hx + PAD, hy + PAD, '', textStyle(COLORS.text, { lineSpacing: LINE_H - FONT_SIZE - 2 })).setDepth(this.depth + 2);
     }
     this._placeCursor();
     this.state = 'open';
@@ -115,10 +118,7 @@ export default class ListMenu {
     const c = i % this.cols;
     const r = Math.floor(i / this.cols);
     this.cursor.setPosition(this.x + PAD + c * (this.colW + COL_GAP), this.y + PAD + r * LINE_H + TEXT_DY);
-    if (this.hintText) {
-      const maxChars = Math.max(0, Math.floor((this.hint.w - PAD * 2) / CHAR_W));
-      this.hintText.setText((this.items[i].hint || '').slice(0, maxChars));
-    }
+    if (this.hintText) this.hintText.setText(wrapWords(this.items[i].hint || '', this.hint.cols, this.hint.rows).join('\n'));
   }
 
   /** Move along rows (dr) or columns (dc), wrapping and skipping disabled items. */

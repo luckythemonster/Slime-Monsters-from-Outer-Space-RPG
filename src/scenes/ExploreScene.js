@@ -390,15 +390,18 @@ export default class ExploreScene extends Phaser.Scene {
       if (e.type === 'enemy') { this.onEnemyTouch(e, { initiator: 'player', emote: false }); return; }
       if (e.type === 'npc' && !e.moving) e.faceToward(this.player);
       if (e.def.script) { this.runner.run(e.def.script, { entity: e }); return; }
-      if (e.type === 'save') {
-        this.runner.run([
-          { sfx: 'sneeze' },
-          { say: 'Bajonka holds out the clipboard.', who: 'narrator' },
-          { save: { prompt: e.def.prompt || SAVE_PROMPT } },
-        ], { entity: e, scriptId: 'bajonka_save' });
-        return;
-      }
+      if (e.type === 'save') { this.runSave(e); return; }
     }
+  }
+
+  /** Bajonka's clipboard for a `save` entity (interact, or SAVE in the pause menu next to her). */
+  runSave(e) {
+    this.player.faceToward(e);
+    return this.runner.run([
+      { sfx: 'sneeze' },
+      { say: 'Bajonka holds out the clipboard.', who: 'narrator' },
+      { save: { prompt: e.def.prompt || SAVE_PROMPT } },
+    ], { entity: e, scriptId: 'bajonka_save' });
   }
 
   /** Called by Entity when it turns without moving (keeps the save position's facing current). */

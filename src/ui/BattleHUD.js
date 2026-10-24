@@ -491,12 +491,17 @@ export default class BattleHUD {
 
   // ---- menus -------------------------------------------------------------------------------------
 
-  /** Command window: 2×3 grid STRUM/RIFF/NOISE | ITEM/TUNE/BAIL. Resolves the command id or null. */
+  /**
+   * Command window: 2×3 grid STRUM/RIFF/NOISE | ITEM/TUNE/BAIL. `selected` is an index into `commands`
+   * (the order the model lists them), mapped onto the grid so the cursor comes back on the command
+   * the player used last. Resolves the command id or null.
+   */
   async commandMenu(commands, selected = 0) {
     const L = LAYOUT.command;
-    const items = [commands[0], commands[3], commands[1], commands[4], commands[2], commands[5]].map((c) => ({ ...c }));
+    const order = [0, 3, 1, 4, 2, 5];
+    const items = order.map((i) => ({ ...commands[i] }));
     const menu = new CursorMenu(this, {
-      x: L.x, y: L.y, w: L.w, h: L.h, items, cols: 2, rows: 3, selected, cancelable: false, win: this.commandWin,
+      x: L.x, y: L.y, w: L.w, h: L.h, items, cols: 2, rows: 3, selected: Math.max(0, order.indexOf(selected)), cancelable: false, win: this.commandWin,
       rowH: L.rowH, colW: L.colW, textDy: 0, // rows y 168 / 184 / 200, cursor columns x 16 / 64
       onHover: (it) => { if (it.disabled && it.reason) this.showMessage(it.reason); else this.clearMessage(); },
     });
