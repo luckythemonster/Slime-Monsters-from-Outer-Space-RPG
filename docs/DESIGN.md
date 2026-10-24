@@ -124,8 +124,8 @@ Open garage door (7..8,13) onto snow and pines; the kit (32×32 object) at (7,6)
 **Triggers.** Room 3 proximity (16..18,6..7) `once` → CS-09. Room 4 door exit `condition: flags.ryanArrived`. **Enemies:** none.
 
 ### `room4` — 14×12
-**Layout.** Door (3,10). Kit NE (10..12,2..4) as a 32×32 object plus a cymbal tile. Lucky's stickered amp (2,5); Phoenix's amp (2,7); mic stand (7,6); the Puddle Couch (11..13,9); mini-fridge (13,6); a wall of band tallies north. Conditional dressing: Brian's pedalboard (6,8) and iced coffee (8,8) while `monthLater && !brianQuit`; `pedalboard_fried` after `pedalboardFried`; the contract on the snare during CS-12; a ceiling-drip object (10,1) after `auditionDone` (the freeze gag). **Spawn** (4,9) facing right.
-**Interactables.** Lucky's amp: "Forty-one stickers. Nine are political. Brian counted." Kit: "The size of a sedan. The ride cymbal is tinny. Don't tell him." Fridge: "Nobody has ever opened it." Tallies: "RAT FIGHT WAS HERE. (They toured?)" / "THE DENIM BOYS: ROOM 4 FOREVER (crossed out: NOW ROOM 2)." Iced coffee: "Boutique. Nine dollars. It has a name. The name is Brian." Pedalboard: "$2,000 of pristine, never-stepped-on tone." → fried: "It smells like a fuse and oat milk."
+**Layout.** Door (3,10). Kit NE (10..12,2..4) as a 32×32 object plus a cymbal tile. Lucky's stickered amp (2,5); Phoenix's amp (2,7); mic stand (7,6); the Puddle Couch (11..13,9); mini-fridge (13,6); a wall of band tallies north. Conditional dressing: Brian's pedalboard (6,8) and iced coffee (8,8) while `monthLater && !brianQuit` (both only exist inside CS-13/CS-14, and the pedalboard leaves with Brian as the `fried_pedalboard` item); the contract on the snare during CS-12; a ceiling-drip object (11,1) after `auditionDone` (the freeze gag; the RAT FIGHT poster keeps (10,1)). **Spawn** (4,9) facing right.
+**Interactables.** Lucky's amp: "Forty-one stickers. Nine are political. Brian counted." Kit: "The size of a sedan. The ride cymbal is tinny. Don't tell him." Fridge: "Nobody has ever opened it." Tallies: "RAT FIGHT WAS HERE. (They toured?)" / "THE DENIM BOYS: ROOM 4 FOREVER (crossed out: NOW ROOM 2)." Iced coffee: "Boutique. Nine dollars. It has a name. The name is Brian." Pedalboard: "$2,000 of pristine, never-stepped-on tone."
 **Triggers.** `onFirstEnter` → CS-10; `onEnter` with `flags.monthLater && !flags.monthLaterRan` → CS-13. **Enemies:** B-9, B-10, scripted only.
 
 ### `palmers` — 26×14
@@ -245,7 +245,7 @@ Floor-band triggers `ep0_dad_1..4` (once each; `condition: !flags.podSpeakerSlap
 7. `caption "ONE MONTH LATER" 1800 style:tape` (**[EXT]** caption style; fallback: plain caption); `teleport room4 5 8` (same map, re-dressed by conditions: pedalboard and iced coffee in, contract out, drip in); `run ep0_month_later` (which also seats the player at (5,8) facing right, so a reload of the contract page plays the scene identically).
 
 ### CS-13 `ep0_month_later` — Toon 0 → 2
-1. `set flags.monthLaterRan`; `music normal_music` (the song played straight). Brian at the pedalboard (6,7), `anim brian brian_strum` (loop). Ryan at the kit, `anim ryan ryan_drum`.
+1. `set flags.monthLaterRan`; `party heal` (a month passes: whoever the AUDITION knocked out is back on their feet); `music normal_music` (the song played straight). Brian at the pedalboard (6,7), `anim brian brian_strum` (loop). Ryan at the kit, `anim ryan ryan_drum`.
 2. `say brian` "Do we really need all the political stickers? We're going to alienate the market."
 3. `face brian left`; `say brian` "Hey, man, can you turn the bass down?" `say phoenix portrait:phoenix_droop` "I'm not a 'man,' Brian. And no."
 4. `say ryan_caption` "[I give this guy three weeks. Tops.]"
@@ -254,7 +254,7 @@ Floor-band triggers `ep0_dad_1..4` (once each; `condition: !flags.podSpeakerSlap
 ### CS-14 `ep0_ultimatum` — Toon 2 → 1 → 0
 1. The battle's final hooks already showed the KRAAANG, the G, the spill and Brian's "I can't work like this!" line inside the battle. On the map: `sprite coffee_cup coffee_cup_spilled`; `sprite pedalboard pedalboard_fried`; `sfx sparks` ×3; `camera flash 60` ×2; `music null`; `set flags.pedalboardFried`.
 2. `say brian portrait:brian_red` "I can't work like this! I hate this weird, creative shit! Can't we just play normal music?!"
-3. `caption "ONE MONTH BEFORE THE POTATO BELT TOUR" 1800 style:tape`; `say phoenix` "My brain thinks that caption knows something we don't."
+3. `caption "ONE MONTH BEFORE\nTHE POTATO BELT TOUR" 1800 style:tape` (two lines: 37 characters do not fit a tape card); `say phoenix` "My brain thinks that caption knows something we don't."
 4. `move brian "LLRRLLRR" wait:true` (pacing); `say brian` "{shake}I'm not here to have fun.{/shake}" / `say brian` "{shake}I'm not into this creative shit. You people are wasting my time.{/shake}"
 5. `sfx unplug`; `sprite player lucky_bristle`; `say narrator` "Lucky unplugs. The slime on their shoulders stands up like a cat's."
 6. `anim phoenix phoenix_bass_mute wait:true`; `move phoenix "L" wait:true`.

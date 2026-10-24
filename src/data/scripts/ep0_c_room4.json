@@ -63,6 +63,7 @@
 
   "ep0_month_later": [
     { "set": { "flags.monthLaterRan": true } },
+    { "party": { "heal": true } },
     { "music": "normal_music" },
     { "setEntity": { "id": "player", "x": 5, "y": 8, "facing": "right" } },
     { "setEntity": { "id": "brian", "x": 6, "y": 7, "facing": "down" } },
@@ -104,7 +105,7 @@
     { "music": null },
     { "set": { "flags.pedalboardFried": true } },
     { "say": "I can't work like this! {shake}I hate this weird, creative shit! Can't we just play normal music?!{/shake}", "who": "brian", "portrait": "brian_red" },
-    { "caption": "ONE MONTH BEFORE THE POTATO BELT TOUR", "ms": 1800, "style": "tape" },
+    { "caption": "ONE MONTH BEFORE\nTHE POTATO BELT TOUR", "ms": 1800, "style": "tape" },
     { "say": "My brain thinks that caption knows something we don't.", "who": "phoenix" },
     { "anim": { "who": "brian", "key": "brian_pace", "wait": false } },
     { "move": { "who": "brian", "path": "RRLLRRLL", "wait": true } },
@@ -215,17 +216,10 @@
     { "say": "A sign: NO FOOD. NO DRINKS. NO SOLOS. Two of these are enforced.", "who": "narrator" }
   ],
   "ep0_room4_coffee": [
-    { "say": "Boutique. Nine dollars. It has a name. The name is Brian.", "who": "narrator" },
-    { "if": "flags.pedalboardFried", "then": [
-      { "say": "It is on its side now. It is still named Brian.", "who": "narrator" }
-    ] }
+    { "say": "Boutique. Nine dollars. It has a name. The name is Brian.", "who": "narrator" }
   ],
   "ep0_room4_pedalboard": [
-    { "if": "flags.pedalboardFried", "then": [
-      { "say": "It smells like a fuse and oat milk.", "who": "narrator" }
-    ], "else": [
-      { "say": "$2,000 of pristine, never-stepped-on tone.", "who": "narrator" }
-    ] }
+    { "say": "$2,000 of pristine, never-stepped-on tone.", "who": "narrator" }
   ],
   "ep0_room4_drip": [
     { "if": "flags.brianQuit", "then": [
