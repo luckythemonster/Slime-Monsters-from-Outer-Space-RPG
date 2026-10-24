@@ -24,7 +24,7 @@
   "ep0_street_rail": [
     { "if": "flags.brianCalledRyan || flags.ryanCalled", "then": [
       { "sfx": "door" },
-      { "caption": "TWENTY MINUTES OF LIGHT RAIL LATER", "ms": 1800 },
+      { "caption": "TWENTY MINUTES OF\nLIGHT RAIL LATER", "ms": 1800 },
       { "teleport": { "map": "city_sound_hall", "x": 3, "y": 6, "facing": "right" } }
     ], "else": [
       { "say": "The train is here. The reason to take it isn't.", "who": "narrator" },

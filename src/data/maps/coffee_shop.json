@@ -156,8 +156,9 @@
     {
       "id": "radiator",
       "type": "object",
-      "x": 1,
+      "x": 0,
       "y": 11,
+      "solid": true,
       "script": "npc_cafe_radiator"
     },
     {

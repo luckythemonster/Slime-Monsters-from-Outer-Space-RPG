@@ -203,6 +203,23 @@ async function main() {
     s = await snap();
     const pizzaAfter = (s.inventory.find((e) => e.id === 'pizza_slice') || { qty: 0 }).qty;
     check('pizza box gave exactly one slice', pizzaAfter === pizzaBefore + 1 && s.flags.pizzaBoxLooted2 === true, { pizzaBefore, pizzaAfter, flag: s.flags.pizzaBoxLooted2 });
+    // The box is readable but not a wall: from (33,10) the player walks past it to the office worker (36,9).
+    await warp('street_cedar', 33, 10, 'right');
+    await waitIdle();
+    await press('right'); await waitIdle();
+    await press('right'); await waitIdle();
+    s = await snap();
+    check('pizza box no longer walls off the office worker: walked (33,10) -> (35,10)', s.map === 'street_cedar' && s.x === 35 && s.y === 10, { x: s.x, y: s.y });
+    await press('up'); await waitIdle();
+    await press('right'); await waitIdle(); // the office worker is solid: this turns without moving
+    await ev(() => window.__slime.autoAdvance(false));
+    await press('confirm');
+    await waitFn(() => window.__slime.services.ui.isBusy());
+    const officeTop = await ev(() => window.__slime.services.ui.debugState().top);
+    check('office worker line opens from (35,9)', !!officeTop && officeTop.type === 'say' && /billboards went down/.test(officeTop.text || ''), officeTop);
+    await ev(() => window.__slime.autoAdvance(true));
+    for (let i = 0; i < 6 && !(await ev(() => window.__slime.idle())); i++) { await press('confirm'); await page.waitForTimeout(60); }
+    await waitIdle();
 
     // --- S7: the café ----------------------------------------------------------------------------
     await warp('street_cedar', 20, 9, 'up');

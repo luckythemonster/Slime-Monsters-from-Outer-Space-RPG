@@ -344,7 +344,7 @@
       "x": 34,
       "y": 10,
       "script": "npc_street_pizza_box",
-      "solid": true
+      "solid": false
     },
     {
       "id": "hydrant",
@@ -493,6 +493,7 @@
       "sprite": "slush_map",
       "x": 16,
       "y": 12,
+      "w": 2,
       "encounter": "hub_slush",
       "behavior": "static",
       "condition": "flags.hubOpen && !flags.gigFlyer && !flags.hasPalmersFlyer && !flags.cleared_slush",
