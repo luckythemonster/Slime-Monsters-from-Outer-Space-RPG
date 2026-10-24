@@ -27,7 +27,8 @@ const DEPTH = { bg: 0, word: 90, enemy: 100, party: 110, fx: 200, icons: 210, bu
 const FEET_Y = 144;
 const KIT = { x: 228, y: 144 };
 const WORD_SHEETS = { pop: 'word_pop', kraaang: 'word_kraaang', krathoom: 'word_krathoom', doom: 'word_doom', crack: 'word_crack', thud: 'word_thud', pow: 'word_pow', thwap: 'word_thwap', bonk: 'word_bonk' };
-const WORD_SFX = { pop: 'slime_pop', kraaang: 'kraaang', krathoom: 'kraaang', doom: 'drum_hit', crack: 'cymbal', thud: 'drum_hit' };
+// Each NOISE word has its own recipe (sfx.js); `thud` is the caption-card thud, the word is `thud_word`.
+const WORD_SFX = { pop: 'slime_pop', kraaang: 'kraaang', krathoom: 'krathoom', doom: 'doom', crack: 'crack', thud: 'thud_word' };
 const STATUS_SHORT = { DAZED: 'DZ', DEAF: 'DF', OUT_OF_TUNE: 'OT', TEMPO_DOWN: 'T-', TEMPO_UP: 'T+', BRISTLING: 'BR', SLIMED: 'SL', BAKED: 'BK', ON_HOLD: 'OH', DEADPAN: 'DP', BASS_DOWN: 'B-', BASS_UP: 'B+' };
 const HIT_WORDS = ['pow', 'thwap', 'bonk'];
 const T = { text: 420, hit: 220, turn: 160, word: 520, ko: 260, status: 200, join: 400 };
@@ -55,6 +56,7 @@ export default class BattleScene extends Phaser.Scene {
     this.burst = null;
     this.inputLocked = false;
     this.lastErr = null;
+    this.swungWord = false; // the current KRAAANG word already swung the G (one swing per KRAAANG)
   }
 
   get ui() { return services.ui; }
@@ -130,6 +132,7 @@ export default class BattleScene extends Phaser.Scene {
       this.playVictory();
       this.hud.refresh();
       await this.wait(T.text);
+      if (summary.levelups.length) this.sfx('level_up'); // DESIGN cue list: the arpeggio follows the sting when earned
       await this.hud.rewards(summary, this.model);
     } else if (result === 'lose') {
       await this.wait(T.text * 2);
@@ -495,6 +498,8 @@ export default class BattleScene extends Phaser.Scene {
       case 'status': {
         const v = this.actors.get(ev.target);
         if (v) this.refreshIcons(v);
+        // Revived: rebuild the sprite so the KO pose (a held _ko frame, or angle 90 / alpha 0.6) gives way to idle.
+        if (v && ev.status === 'KO' && !ev.on) this.applySheet(v, v.sheet);
         if (ev.on && ev.status !== 'ON_HOLD') { const v2 = this.actors.get(ev.target); if (v2) { this.hud.showMessage(`${v2.c.name}: ${STATUS[ev.status] ? STATUS[ev.status].name : ev.status}`); await this.wait(T.status); } }
         this.hud.refreshStatus();
         break;
@@ -553,7 +558,12 @@ export default class BattleScene extends Phaser.Scene {
 
   async playAnim(who, key) {
     const v = this.actors.get(who === 'word' ? '__none' : who);
-    if (who === 'word') { await this.swingWord(key); return; }
+    if (who === 'word') {
+      // One swing per KRAAANG: the word event already swung the G when the letters were physical.
+      if (key === 'kraaang_swing' && this.swungWord) { this.swungWord = false; return; }
+      await this.swingWord(key);
+      return;
+    }
     if (!v) return;
     const anim = `${v.sheet.key}_${key}`;
     const idle = v.sheet.kind === 'map' ? `${v.sheet.key}_idle_left` : `${v.sheet.key}_idle`;
@@ -567,7 +577,7 @@ export default class BattleScene extends Phaser.Scene {
     } else if (key === 'tune') {
       await new Promise((resolve) => this.tweens.chain({ targets: v.root, tweens: [{ y: v.root.y - 2, duration: scaleMs(60) }, { y: v.root.y, duration: scaleMs(60) }], onComplete: resolve }));
     } else if (key === 'mohawk_off') {
-      this.sfx('mohawk_off', 'slime_pop');
+      this.sfx('mohawk_pop', 'slime_pop');
       const hair = this.add.rectangle(v.root.x, v.root.y - v.h, 6, 6, 0x39ff8a, 1).setDepth(DEPTH.fx);
       await new Promise((resolve) => this.tweens.add({ targets: hair, x: hair.x + 48, y: hair.y + 40, angle: 180, duration: scaleMs(400), ease: 'Quad.easeIn', onComplete: () => { hair.destroy(); resolve(); } }));
     }
@@ -618,6 +628,7 @@ export default class BattleScene extends Phaser.Scene {
   /** NOISE words: Toon ≥ 2 letters are physical (fall in with a bounce and stay); below, pop and fade. */
   async showWord(ev) {
     const word = ev.word || 'pop';
+    this.swungWord = false;
     this.sfx(WORD_SFX[word] || 'kraaang');
     const key = WORD_SHEETS[word];
     const physical = this.model.toonLevel >= 2 || ev.scripted;
@@ -634,7 +645,7 @@ export default class BattleScene extends Phaser.Scene {
       this.words.push(obj);
       await new Promise((resolve) => this.tweens.add({ targets: obj, y: targetY, duration: scaleMs(320), ease: 'Bounce.easeOut', onUpdate: () => { obj.y = Math.round(obj.y); }, onComplete: resolve }));
       this.shakeFor(ev.level >= 3 ? 4 : 2, scaleMs(200));
-      if (word === 'kraaang') await this.swingWord('kraaang_swing', obj);
+      if (word === 'kraaang') { await this.swingWord('kraaang_swing', obj); this.swungWord = true; }
       if (this.words.length > 6) { const old = this.words.shift(); old.destroy(); }
     } else {
       obj.setPosition(targetX, targetY);
@@ -812,18 +823,21 @@ export default class BattleScene extends Phaser.Scene {
     for (const n of names) if (known(n)) { audioCall('sfx', n); return; }
   }
 
+  /** The set-piece cues (`audition`, `rehearsal_brian`, `palmers_set`, `eternity`) are aliases the engine resolves. */
   playMusic(id) {
     const a = services.audio;
-    const has = (s) => { try { return !!(a && a.songs && typeof a.songs.has === 'function' ? a.songs.has(s) : true); } catch { return false; } };
+    const has = (s) => { try { return !!a && (typeof a.hasSong === 'function' ? a.hasSong(s) : true); } catch { return false; } };
     if (has(id)) audioCall('playMusic', id, { fade: 0.1 });
-    else if (id === 'eternity') audioCall('stopMusic', { fade: 0.3 });
+    else if (id === 'eternity') audioCall('stopMusic', { fade: 0.3 }); // missing-song fallback: the Eternity is silence
     else if (has('battle')) audioCall('playMusic', 'battle', { fade: 0.1 });
   }
 
+  /** Hard cut from the battle song to the 2 s win sting (DESIGN cue list); `level_up` only follows when earned (end()). */
   playVictory() {
     const a = services.audio;
-    if (a && a.songs && typeof a.songs.has === 'function' && a.songs.has('victory')) audioCall('playMusic', 'victory', { fade: 0 });
-    else { audioCall('stopMusic', { fade: 0.1 }); this.sfx('win_sting', 'level_up'); }
+    const has = (s) => { try { return !!a && typeof a.hasSong === 'function' && a.hasSong(s); } catch { return false; } };
+    if (has('win_sting')) audioCall('playMusic', 'win_sting', { fade: 0 });
+    else audioCall('stopMusic', { fade: 0.1 });
   }
 
   /** Integer camera shake: alternates +x, −x, +y, −y per frame for `ms`. */
