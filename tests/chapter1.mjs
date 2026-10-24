@@ -121,7 +121,8 @@ function probeFn() {
   const out = {
     scene, idle: s.idle(), snap, ui: sv.ui ? sv.ui.debugState() : null,
     runner: !!(ex && ex.runner && ex.runner.running), lock: ex ? ex.lockCount : 0, transitioning: !!(ex && ex.transitioning),
-    player: null, entities: [], followers: [], overlay: null, battle: null, titleSeen: window.__titleSeen || 0, slot: s.state ? s.state.slot : null,
+    player: null, entities: [], followers: [], overlay: null, battle: null, titleSeen: window.__titleSeen || 0, exploreSeen: window.__exploreSeen || 0, slot: s.state ? s.state.slot : null,
+    uiBusy: !!(sv.ui && sv.ui.isBusy()), uiKinds: sv.ui ? sv.ui.debugState().kinds : [], moving: !!(ex && ex.player && ex.player.moving),
   };
   if (ex && ex.player) {
     out.player = { x: ex.player.tileX, y: ex.player.tileY, facing: ex.player.facing, moving: !!ex.player.moving, sheet: ex.player.sheet };
@@ -253,8 +254,10 @@ async function main() {
       if (taken.has(name)) return;
       taken.add(name);
       if (delay) await sleep(delay);
-      // Freeze the game loop for the capture so a 100 ms card or a mid-animation frame is what lands on disk.
-      if (freeze) await ev(() => window.__slime.game.loop.sleep());
+      // Freeze the game loop for the capture so a 100 ms card or a mid-animation frame is what lands on
+      // disk. A widget's state flips in a promise microtask after a frame has rendered, so let two more
+      // steps render first or the capture shows the frame before the window appeared.
+      if (freeze) { await ev(() => window.__slime.steps(2)); await ev(() => window.__slime.game.loop.sleep()); }
       try {
         const p = path.join(SHOTS, `${name}.png`);
         await page.screenshot({ path: p });
@@ -441,7 +444,7 @@ async function main() {
         if (pred(p)) return p;
         await sleep(POLL_MS);
       }
-      const st = last ? { scene: last.scene, map: last.snap.map, x: last.player && last.player.x, y: last.player && last.player.y, ui: last.ui && last.ui.top, battle: last.battle && { id: last.battle.id, round: last.battle.round, menu: last.battle.menu }, runner: last.runner, lock: last.lock, flags: last.snap.flags } : null;
+      const st = last ? { scene: last.scene, map: last.snap.map, x: last.player && last.player.x, y: last.player && last.player.y, idle: last.idle, uiBusy: last.uiBusy, uiKinds: last.uiKinds, ui: last.ui && last.ui.top, battle: last.battle && { id: last.battle.id, round: last.battle.round, menu: last.battle.menu }, runner: last.runner, lock: last.lock, transitioning: last.transitioning, moving: last.moving, titleSeen: last.titleSeen, exploreSeen: last.exploreSeen, slot: last.slot, flags: last.snap.flags } : null;
       throw new Error(`timeout waiting for ${label}; state=${JSON.stringify(st)}`);
     };
     const idleOnMap = (p) => p.scene === 'Explore' && p.idle;
@@ -498,7 +501,9 @@ async function main() {
       window.__slime.textInstant(true);
       window.__slime.autoAdvance(false);
       window.__titleSeen = 0;
+      window.__exploreSeen = 0;
       window.__slime.game.scene.getScene('Title').events.on('create', () => { window.__titleSeen += 1; });
+      window.__slime.game.scene.getScene('Explore').events.on('create', () => { window.__exploreSeen += 1; });
     });
     let p = await probe();
     check('S0 title scene up', p.scene === 'Title', p.scene);
@@ -580,6 +585,19 @@ async function main() {
     p = await walk('DDDDDDD LLLLLLLL u', 'to the bass stand');
     await press('confirm'); p = await driveIdle('bass stand');
     check('S5 bass stand gives the Beat-Up Bass', p.snap.flags.bassTaken === true && has(p.snap, 'beatup_bass'), p.snap.inventory);
+    // EQUIP it on Phoenix from the pause menu (menu → Equip → Phoenix → Inst → Beat-Up Bass → back out)
+    uiPlan.push(
+      { match: (l) => l[0] === 'Items' && l.includes('Equip'), pick: 2 },
+      { match: (l) => l[0] === 'Lucky' && l[1] === 'Phoenix', pick: 1 },
+      { match: (l) => /^Inst:/.test(l[0]), pick: 0 },
+      { match: (l) => l[0] === 'Beat-Up Bass', pick: 0 },
+      { match: (l) => l[0] === 'Lucky' && l[1] === 'Phoenix', pick: 'cancel' },
+      { match: (l) => l[0] === 'Items' && l.includes('Equip'), pick: 'cancel' },
+    );
+    await press('menu');
+    p = await driveIdle('equip the bass');
+    check('S5 pause menu EQUIP: Beat-Up Bass on Phoenix, the Trash Bag back in the bag', uiPlan.length === 0 && member(p.snap, 'phoenix').equip.instrument === 'beatup_bass' && !has(p.snap, 'beatup_bass') && has(p.snap, 'trash_bag'), { plan: uiPlan.length, phoenix: member(p.snap, 'phoenix'), inv: p.snap.inventory });
+    uiPlan.length = 0;
     p = await walk('RRRRRRRRRR DD', 'to the door');
     check('S5 autosave 2 at the apartment door', p.snap.flags.trig_apartment_autosave_door === true && p.snap.vars.lastAutosave === 'apartment', p.snap.vars);
     p = await walk('D', 'apartment door');
@@ -588,54 +606,64 @@ async function main() {
     // ==== S6–S7: the hub open, the café (no battles yet) ===============================================
     const hubIds = p.entities.map((e) => e.id);
     check('S6 day enemies + office worker present with hubOpen', ['slush', 'scooters', 'goose', 'analyst', 'billboard', 'office_worker'].every((id) => hubIds.includes(id)), hubIds);
-    p = await walk('RRRRR', 'along the sidewalk');
-    check('S6 towers autosave fired on the first step', p.snap.flags.trig_street_cedar_towers_autosave === true && p.snap.vars.lastAutosave === 'street_cedar', p.snap.vars);
-    await shot('ch1_07_street_hub');
-    p = await walk('U RRR', 'café door');
-    check('S7 café door → coffee_shop (10,12)', p.snap.map === 'coffee_shop' && at(p, 10, 12), pos(p));
-    const cafeIds = p.entities.map((e) => e.id);
-    check('S7 café roster present', ['barista', 'screenwriter', 'poet', 'intern', 'brian', 'pedalboard'].every((id) => cafeIds.includes(id)), cafeIds);
-    await shot('ch1_08_cafe');
-    p = await walk('UUUUUUUUU RRRRRR u', 'to the corkboard');
-    await press('confirm');
-    p = await driveIdle('CS-07 the flyer');
-    check('S7 CS-07 posted the flyer (SEEKING RHYTHMIC VESSEL)', p.snap.flags.flyerPosted === true && p.snap.vars.flyerText === 2 && !has(p.snap, 'flyer_blank'), { flags: p.snap.flags.flyerPosted, vars: p.snap.vars, inv: p.snap.inventory });
-    // buy one Pizza Slice at the counter ($8 → $5)
-    uiPlan.push(
-      { match: (l) => l[0] === 'BUY', pick: 0 },
-      { match: (l) => /^Pizza Slice/.test(l[0]), pick: 0 },
-      { match: (l) => /^x1/.test(l[0]), pick: 0 },
-      { match: (l) => /^Pizza Slice/.test(l[0]), pick: 'cancel' },
-      { match: (l) => l[0] === 'BUY', pick: 1 }, // LEAVE (the café does not buy)
-    );
-    p = await walk('DD LLLLLLLLLLLL u', 'to the counter');
-    await press('confirm');
-    p = await driveIdle('café shop');
-    check('S7 bought one Pizza Slice for $3', qty(p.snap, 'pizza_slice') === 3 && p.snap.money === 5, { money: p.snap.money, inv: p.snap.inventory });
-    check('S7 shop plan fully consumed', uiPlan.length === 0, uiPlan.length);
-    uiPlan.length = 0;
-    p = await walk('DDDDDD RRRRRR', 'to the door tile');
-    check('S7 at (10,11) above the door', at(p, 10, 11), pos(p));
-    p = await walk('d', 'CS-08 Brian'); // one press: the trigger tile teleports us back to (10,11)
-    check('S7 CS-08: Brian joined second; two coffees; Ryan called', p.snap.flags.brianJoined === true && party(p.snap) === 'lucky,phoenix,brian' && qty(p.snap, 'coffee') === 2 && p.snap.flags.ryanCalled === true && p.snap.flags.brianCalledRyan === true, { party: party(p.snap), flags: p.snap.flags, inv: p.snap.inventory });
-    check('S7 back in the café at (10,11); Brian is a follower', p.snap.map === 'coffee_shop' && at(p, 10, 11) && p.followers.some((f) => f.id === 'brian'), { pos: pos(p), followers: p.followers });
-    await shot('ch1_08c_cafe_brian');
-    p = await walk('DD', 'leave the café');
-    check('S6 café door → street (20,9); the Brian trigger did not re-fire', p.snap.map === 'street_cedar' && at(p, 20, 9), pos(p));
+    /** From the sidewalk by the Towers door to the café and back out at (20,9): the flyer, one slice, Brian. */
+    const cafeVisit = async (attempt) => {
+      p = await probe();
+      if (p.player.y === 10) p = await walk('U', 'up to the sidewalk');
+      while (p.player.x < 17) p = await walk('R', 'along the sidewalk');
+      if (attempt === 0) {
+        check('S6 towers autosave fired on the first step', p.snap.flags.trig_street_cedar_towers_autosave === true && p.snap.vars.lastAutosave === 'street_cedar', p.snap.vars);
+        await shot('ch1_07_street_hub');
+      }
+      p = await walk('U RRR', 'café door');
+      check('S7 café door → coffee_shop (10,12)', p.snap.map === 'coffee_shop' && at(p, 10, 12), pos(p));
+      const cafeIds = p.entities.map((e) => e.id);
+      check('S7 café roster present', ['barista', 'screenwriter', 'poet', 'intern', 'brian', 'pedalboard'].every((id) => cafeIds.includes(id)), cafeIds);
+      await shot('ch1_08_cafe');
+      p = await walk('UUUUUUUUU RRRRRR u', 'to the corkboard');
+      await press('confirm');
+      p = await driveIdle('CS-07 the flyer');
+      check('S7 CS-07 posted the flyer (SEEKING RHYTHMIC VESSEL)', p.snap.flags.flyerPosted === true && p.snap.vars.flyerText === 2 && !has(p.snap, 'flyer_blank'), { flags: p.snap.flags.flyerPosted, vars: p.snap.vars, inv: p.snap.inventory });
+      // buy one Pizza Slice at the counter ($8 → $5)
+      uiPlan.push(
+        { match: (l) => l[0] === 'BUY', pick: 0 },
+        { match: (l) => /^Pizza Slice/.test(l[0]), pick: 0 },
+        { match: (l) => /^x1/.test(l[0]), pick: 0 },
+        { match: (l) => /^Pizza Slice/.test(l[0]), pick: 'cancel' },
+        { match: (l) => l[0] === 'BUY', pick: 1 }, // LEAVE (the café does not buy)
+      );
+      p = await walk('DD LLLLLLLLLLLL u', 'to the counter');
+      await press('confirm');
+      p = await driveIdle('café shop');
+      check('S7 bought one Pizza Slice for $3', qty(p.snap, 'pizza_slice') === 3 && p.snap.money === 5, { money: p.snap.money, inv: p.snap.inventory });
+      check('S7 shop plan fully consumed', uiPlan.length === 0, uiPlan.length);
+      uiPlan.length = 0;
+      p = await walk('DDDDDD RRRRRR', 'to the door tile');
+      check('S7 at (10,11) above the door', at(p, 10, 11), pos(p));
+      p = await walk('d', 'CS-08 Brian'); // one press: the trigger tile teleports us back to (10,11)
+      check('S7 CS-08: Brian joined second; two coffees; Ryan called', p.snap.flags.brianJoined === true && party(p.snap) === 'lucky,phoenix,brian' && qty(p.snap, 'coffee') === 2 && p.snap.flags.ryanCalled === true && p.snap.flags.brianCalledRyan === true, { party: party(p.snap), flags: p.snap.flags, inv: p.snap.inventory });
+      check('S7 back in the café at (10,11); Brian is a follower; CS-08 autosaved', p.snap.map === 'coffee_shop' && at(p, 10, 11) && p.followers.some((f) => f.id === 'brian') && p.snap.vars.lastAutosave === 'coffee_shop', { pos: pos(p), followers: p.followers, vars: p.snap.vars });
+      await shot('ch1_08c_cafe_brian');
+      p = await walk('DD', 'leave the café');
+      check('S6 café door → street (20,9); the Brian trigger did not re-fire', p.snap.map === 'street_cedar' && at(p, 20, 9), pos(p));
+    };
+    await cafeVisit(0);
 
-    // ==== S6: the two chokepoint fights and the rail (phase B2; retried from the towers autosave) =========
+    // ==== S6: the two chokepoint fights and the rail (phase B2; retried from the CS-08 autosave) ===========
     await withRetries('hub chokepoints', async (attempt) => {
       p = await probe();
       if (attempt > 0) {
-        // the towers autosave fired on the first step east of the Towers door: (13,9) on the sidewalk
-        check(`S6 retry ${attempt}: CONTINUE loaded the street autosave`, p.snap.map === 'street_cedar' && p.snap.flags.hubOpen === true, pos(p));
-        if (p.player.y === 10) p = await walk('U', 'retry: up to the sidewalk');
-        while (p.player.x < 17) p = await walk('R', 'retry: east');
-        while (p.player.x > 17) p = await walk('L', 'retry: west');
-        p = await walk('D', 'retry: down to the curb');
-      } else {
-        p = await walk('D LLL', 'to the crosswalk'); // the busker stands on the sidewalk at (18,9): take the curb
+        // CONTINUE loads the newest page: the CS-08 autosave in the café (Brian in the band), or, from an
+        // older build of the content, the towers autosave on the sidewalk, in which case the café is redone.
+        check(`S6 retry ${attempt}: CONTINUE loaded an autosave with the hub open`, (p.snap.map === 'coffee_shop' || p.snap.map === 'street_cedar') && p.snap.flags.hubOpen === true, pos(p));
+        if (p.snap.map === 'coffee_shop') {
+          check(`S6 retry ${attempt}: the café page has Brian and the call`, at(p, 10, 11) && p.snap.flags.brianJoined === true && p.snap.flags.ryanCalled === true, { pos: pos(p), flags: p.snap.flags });
+          p = await walk('DD', 'retry: leave the café');
+        } else if (p.snap.flags.brianJoined !== true) {
+          await cafeVisit(attempt);
+        }
       }
+      p = await walk('D LLL', 'to the crosswalk'); // the busker stands on the sidewalk at (18,9): take the curb
       check('S6 at the crosswalk (17,10)', at(p, 17, 10), pos(p));
       p = await walk('D L d', 'bump the Slush Pile');
       p = await driveIdle('after the slush');
@@ -654,7 +682,7 @@ async function main() {
       check('S8 rail → city_sound_hall (3,6)', p.snap.map === 'city_sound_hall' && at(p, 3, 6), pos(p));
     });
     check('S8 autosave 3 on entering the hall', p.snap.vars.lastAutosave === 'city_sound_hall', p.snap.vars);
-    check('S8 XP after the hub: Lucky 26 (L3), Phoenix 26 (L3), Brian fixed L3', member(p.snap, 'lucky').xp === 26 && member(p.snap, 'phoenix').level === 3 && member(p.snap, 'brian').level === 3, p.snap.party);
+    check('S8 XP after the hub: Lucky 26 (L3), Phoenix 26 (L3), Brian fixed L3', (member(p.snap, 'lucky') || {}).xp === 26 && (member(p.snap, 'phoenix') || {}).level === 3 && (member(p.snap, 'brian') || {}).level === 3, p.snap.party);
 
     // ==== S8–S10: City Sound hallway, Room 4, the audition, the contract, ONE MONTH LATER (phase C) ====
     await withRetries('ep0_audition', async (attempt) => {
@@ -674,9 +702,11 @@ async function main() {
       } else {
         check(`S8 retry ${attempt}: CONTINUE loaded PAGE 2 outside Room 4`, p.snap.map === 'city_sound_hall' && at(p, 20, 6) && p.snap.flags.hasBajonka === true, pos(p));
       }
+      // Room 4 runs CS-10 → CS-11 → AUDITION → CS-12 (contract, PAGE 2) → ONE MONTH LATER → CS-13 → the
+      // Chorus → CS-14 with no idle moment, so the step into the room settles only at the ultimatum.
       p = await walk('U', 'into Room 4');
-      p = await drive('CS-10/11 → AUDITION → CS-12 contract', (q) => q.snap.flags.ryanJoined === true && !!ent(q, 'contract'));
-      p = await drive('CS-12 → ONE MONTH LATER → CS-13', (q) => idleOnMap(q) && q.snap.flags.monthLaterRan === true && q.snap.flags.brianQuit === true);
+      p = await drive('CS-10/11 → AUDITION → CS-12 contract', (q) => q.snap.flags.ryanJoined === true);
+      p = await drive('CS-12 → ONE MONTH LATER → CS-13 → the Chorus → CS-14', (q) => idleOnMap(q) && q.snap.flags.monthLaterRan === true && q.snap.flags.brianQuit === true);
     });
     check('S9 audition reward: auditionDone, ryanJoined, band agreement, Tinny Ride Cymbal', p.snap.flags.auditionDone === true && p.snap.flags.ryanJoined === true && has(p.snap, 'band_agreement') && has(p.snap, 'tinny_ride_cymbal'), p.snap.inventory);
     check('S9 contract pages = 3 + pages initialed before it (4); the contract save bumped saveCount to 2', p.snap.vars.contractPages === 4 && p.snap.vars.saveCount === 2, p.snap.vars);
@@ -689,13 +719,14 @@ async function main() {
     // ==== save round trip: pause menu → Quit to title → CONTINUE (PAGE 2, the contract) → replay ========
     const beforeReload = p;
     const titlesBefore = p.titleSeen;
+    const exploresBefore = p.exploreSeen;
     uiPlan.push(
       { match: (l) => l[0] === 'Items' && l.includes('Quit'), pick: 5 },
       { match: (l) => l[0] === 'Quit to title', pick: 0 },
       { match: (l) => l[0] === 'New Game', pick: 1 },
     );
     await press('menu');
-    p = await drive('pause menu → title → CONTINUE', (q) => q.scene === 'Explore' && q.titleSeen > titlesBefore && q.snap.map === 'room4' && q.snap.vars.saveCount === 2 && (q.idle || q.runner));
+    p = await drive('pause menu → title → CONTINUE', (q) => q.scene === 'Explore' && q.titleSeen > titlesBefore && q.exploreSeen > exploresBefore && q.snap.map === 'room4' && q.snap.vars.saveCount === 2 && (q.idle || q.runner));
     check('RT menu plan fully consumed', uiPlan.length === 0, uiPlan.length);
     uiPlan.length = 0;
     const reload = await ev(() => ({ slot: window.__slime.state.slot, has1: window.__slime.state.hasSave(1), has2: window.__slime.state.hasSave(2), has3: window.__slime.state.hasSave(3) }));
@@ -717,7 +748,8 @@ async function main() {
     p = await walk('LLL DD D', 'leave Room 4');
     check('S8 Room 4 door → hall (20,6)', p.snap.map === 'city_sound_hall' && at(p, 20, 6), pos(p));
     p = await walk('L D LLLLLLLL U LLLLLLLL L', 'hall → stairs');
-    check('S11 the Room 3 trigger did not re-fire on the way out', !ent(p, 'ryan') && !ent(p, 'hardware'), p.entities.map((e) => e.id));
+    const npcRyan = (q) => (q.entities || []).find((e) => e.id === 'ryan' && e.type !== 'follower');
+    check('S11 the Room 3 trigger did not re-fire on the way out (no temporary Ryan / hardware stack)', !npcRyan(p) && !ent(p, 'hardware'), p.entities.map((e) => `${e.id}:${e.type}`));
     check('S11 stairs → street at night (22,15)', p.snap.map === 'street_cedar' && at(p, 22, 15), pos(p));
     const nightIds = p.entities.map((e) => e.id);
     check('S11 night roster + night enemies; day roster gone; overlay on', ['stranger_tall', 'smoker', 'bajonka', 'analyst_duo', 'goose_pair'].every((id) => nightIds.includes(id)) && !nightIds.some((id) => ['shoveler', 'cyclist', 'busker', 'slush', 'scooters', 'goose', 'analyst'].includes(id)) && p.overlay === true, { nightIds, overlay: p.overlay });
@@ -754,9 +786,9 @@ async function main() {
     // ==== S13: the rubble, the quit, NEXT: THE POTATO BELT → Title → CONTINUE ===========================
     p = await drive('CS-17: the quit', (q) => q.snap.flags.ryanQuit === true);
     check('S13 PLEAD picked (vars.quitResponse 1); Ryan gone; luckyRageLocked', p.snap.vars.quitResponse === 1 && p.snap.flags.ryanQuit === true && p.snap.flags.luckyRageLocked === true && party(p.snap) === 'lucky,phoenix', { vars: p.snap.vars, party: party(p.snap) });
-    const titlesBeforeEnd = p.titleSeen;
+    const exploresBeforeEnd = p.exploreSeen; // CONTINUE starts a fresh Explore scene; the rubble teleport before the title did not
     uiPlan.push({ match: (l) => l[0] === 'New Game', pick: 1 });
-    p = await drive('CS-17 stinger → NEXT → save → Title → CONTINUE', (q) => q.scene === 'Explore' && q.snap.flags.ch1Complete === true && q.snap.map === 'palmers_rubble' && q.idle && q.titleSeen > titlesBeforeEnd);
+    p = await drive('CS-17 stinger → NEXT → save → Title → CONTINUE', (q) => q.scene === 'Explore' && q.exploreSeen > exploresBeforeEnd && q.snap.flags.ch1Complete === true && q.snap.map === 'palmers_rubble' && q.idle);
     check('S13 ch1Complete, van keys + itinerary', p.snap.flags.ch1Complete === true && has(p.snap, 'van_keys') && has(p.snap, 'tour_itinerary'), p.snap.inventory);
     check('S13 the final clipboard page (saveCount 4) went to PAGE 2 and CONTINUE loaded it', p.snap.vars.saveCount === 4 && p.slot === 2, { vars: p.snap.vars, slot: p.slot });
     check('S13 the title screen came up for the round trip, the chapter end and every retry', p.titleSeen === 2 + report.retries, { titleSeen: p.titleSeen, retries: report.retries });
