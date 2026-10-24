@@ -163,11 +163,14 @@ export function getNoiseBuffer(ctx, mode = 'white') {
 /** WaveShaper soft-clip distortion. `amount` 0 (clean) .. ~100 (fuzz). */
 export function makeDistortion(ctx, amount = 40, dest = null) {
   const shaper = ctx.createWaveShaper();
-  const n = 1024;
+  // Odd length so the middle sample is exactly x = 0 -> 0. The shaper reads the curve at 0.5 * (x + 1) * (n - 1);
+  // with an even length a silent input lands between two samples and comes out as a DC offset (-0.053 at
+  // amount 60): a click at the start of every distorted SFX and a DC tail until the voice is disconnected.
+  const n = 1025;
   const curve = new Float32Array(n);
   const k = Math.max(0, amount);
   for (let i = 0; i < n; i++) {
-    const x = (i * 2) / n - 1;
+    const x = (i * 2) / (n - 1) - 1;
     curve[i] = ((1 + k) * x) / (1 + k * Math.abs(x));
   }
   shaper.curve = curve;

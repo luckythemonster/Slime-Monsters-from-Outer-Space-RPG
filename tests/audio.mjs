@@ -495,6 +495,21 @@ try {
       r.dur > 0 && r.dur <= 3 && r.rms > 2e-4 && r.onsetRms > 1e-3 && r.afterRms < 1e-3 && r.tailRms < 1e-3 && r.peak < 1.0, sfxOffline[name]);
   }
 
+  // --- distortion curve: silence in, silence out. An even-length curve has no sample at x = 0, so a connected
+  // but silent input came out as -0.053 of DC: a click at the start of every distorted SFX and a DC tail until
+  // the voice was disconnected (which made the offline checks above timing-dependent under load).
+  const dc = await page.evaluate(async () => {
+    const { makeDistortion } = await import('/src/audio/Synth.js');
+    const { bufferRms } = await import('/src/audio/AudioEngine.js');
+    const ctx = new OfflineAudioContext(1, 4410, 44100);
+    const shaper = makeDistortion(ctx, 60, ctx.destination);
+    const src = ctx.createConstantSource(); src.offset.value = 0; src.connect(shaper); src.start(0); // connected, silent, never stops
+    const buffer = await ctx.startRendering();
+    const d = buffer.getChannelData(0); let sum = 0; for (let i = 0; i < d.length; i++) sum += d[i];
+    return { mean: +(sum / d.length).toFixed(6), rms: +bufferRms(buffer).toFixed(6) };
+  });
+  check('distortion: a connected silent input shapes to exactly 0 (no DC offset)', Math.abs(dc.mean) < 1e-4 && dc.rms < 1e-4, dc);
+
   check('browser: no page errors', pageErrors.length === 0, { pageErrors });
   check('browser: no console errors', consoleErrors.length === 0, { consoleErrors });
   const harnessErrors = await page.evaluate(() => window.__audioHarness.errors);
