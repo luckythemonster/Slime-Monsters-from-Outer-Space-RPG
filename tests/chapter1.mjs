@@ -727,6 +727,7 @@ async function main() {
     );
     await press('menu');
     p = await drive('pause menu → title → CONTINUE', (q) => q.scene === 'Explore' && q.titleSeen > titlesBefore && q.exploreSeen > exploresBefore && q.snap.map === 'room4' && q.snap.vars.saveCount === 2 && (q.idle || q.runner));
+    notes.push(`RT: titleSeen=${p.titleSeen} exploreSeen=${p.exploreSeen}`);
     check('RT menu plan fully consumed', uiPlan.length === 0, uiPlan.length);
     uiPlan.length = 0;
     const reload = await ev(() => ({ slot: window.__slime.state.slot, has1: window.__slime.state.hasSave(1), has2: window.__slime.state.hasSave(2), has3: window.__slime.state.hasSave(3) }));
@@ -777,14 +778,18 @@ async function main() {
       check('S12 jukebox played (7/8 Shuffle)', p.snap.flags.jukeboxPlayed === true, p.snap.flags);
       p = await walk('D LLLLLLLL UUUUUUUU RRRRRRRRRRR DD', 'to the stage edge');
       check('S12 at (19,6) beside the stage', at(p, 19, 6), pos(p));
-      p = await walk('R', 'onto the stage');
+      // One bare press, not walk(): the stage trigger chains CS-16 → THE SET → CS-17 → the save → the title with
+      // no idle-on-map moment before CONTINUE, so walk()'s driveIdle would play the whole ending here.
+      await press('right');
       p = await drive('CS-16 → THE SET → CS-17 aftermath', (q) => q.snap.map === 'palmers_rubble' && q.snap.flags.eternityDone === true);
     });
     check('S12 THE SET: onStage, mohawkOff, eternityArmed, eternityFired, eternityDone', ['onStage', 'mohawkOff', 'eternityArmed', 'eternityFired', 'eternityDone'].every((f) => p.snap.flags[f] === true), p.snap.flags);
     check('S12 THE SET reward: +100 XP (Lucky 206, L7) and the Price-Tag Leather Jacket', member(p.snap, 'lucky').xp === 206 && member(p.snap, 'lucky').level === 7 && has(p.snap, 'price_tag_jacket'), { lucky: member(p.snap, 'lucky'), inv: p.snap.inventory });
 
     // ==== S13: the rubble, the quit, NEXT: THE POTATO BELT → Title → CONTINUE ===========================
+    notes.push(`THE SET landed: titleSeen=${p.titleSeen} exploreSeen=${p.exploreSeen} runner=${p.runner}`); // the aftermath should still be running here
     p = await drive('CS-17: the quit', (q) => q.snap.flags.ryanQuit === true);
+    notes.push(`quit settled: titleSeen=${p.titleSeen} exploreSeen=${p.exploreSeen} runner=${p.runner} map=${p.snap.map}`);
     check('S13 PLEAD picked (vars.quitResponse 1); Ryan gone; luckyRageLocked', p.snap.vars.quitResponse === 1 && p.snap.flags.ryanQuit === true && p.snap.flags.luckyRageLocked === true && party(p.snap) === 'lucky,phoenix', { vars: p.snap.vars, party: party(p.snap) });
     const exploresBeforeEnd = p.exploreSeen; // CONTINUE starts a fresh Explore scene; the rubble teleport before the title did not
     uiPlan.push({ match: (l) => l[0] === 'New Game', pick: 1 });
