@@ -115,6 +115,51 @@ function smartPolicy(m, actor) {
   return strumPolicy(m, actor);
 }
 
+/**
+ * tests/chapter1.mjs's `makePlan` on the model: Hotdish for a KO, Shared Aura / pizza / TUNE when someone is
+ * under 40%, KRAAANG against two or more (or the Chorus), POP on a healthy single, the best-frequency riff
+ * while AMP stays above a reserve, else STRUM the lowest enemy.
+ */
+function chapter1Policy(m, me) {
+  const living = m.party().filter((c) => c.present && !c.ko);
+  const enemies = m.living('enemy');
+  const items = m.usableItems();
+  const item = (id) => items.find((e) => e.id === id && e.qty > 0 && !e.disabled);
+  const sync = (id) => m.syncMenu(me.uid).find((e) => e.id === id && !e.disabled);
+  const riff = (id) => m.riffMenu(me.uid).find((e) => e.id === id && !e.disabled);
+  const noise = (id) => m.noiseMenu(me.uid).find((e) => e.id === id && !e.disabled);
+  const cmdOk = (id) => m.commands(me.uid).some((c) => c.id === id && !c.disabled);
+  const resists = (c, f) => (c.resist || []).includes(f);
+  const ko = m.party().find((c) => c.present && c.ko && !c.auto);
+  const weakest = living.filter((c) => !c.auto).sort((a, c) => a.hp / a.maxHp - c.hp / c.maxHp)[0];
+  const lowest = enemies.slice().sort((a, c) => a.hp - c.hp)[0];
+  const slime = me.id === 'lucky' || me.id === 'phoenix';
+  if (ko && cmdOk('item') && item('hotdish')) return { cmd: 'item', item: 'hotdish', target: ko.uid };
+  if (weakest && weakest.hp / weakest.maxHp < 0.4) {
+    if (slime && cmdOk('riff') && sync('shared_aura')) return { cmd: 'sync', sync: 'shared_aura' };
+    if (cmdOk('item') && item('pizza_slice')) return { cmd: 'item', item: 'pizza_slice', target: weakest.uid };
+    if (weakest.uid === me.uid && me.hp / me.maxHp < 0.25) return { cmd: 'tune' };
+  }
+  if (!lowest) return { cmd: 'tune' };
+  if (cmdOk('noise')) {
+    const chorus = m.encounterId === 'ep0_rehearsal';
+    const noiseWorks = enemies.some((e) => !resists(e, 'NOISE'));
+    if (m.toonLevel >= 2 && noise('kraaang') && (chorus || (enemies.length >= 2 && noiseWorks))) return { cmd: 'noise', word: 'kraaang', target: lowest.uid };
+    if (m.toonLevel >= 1 && !chorus && noise('pop') && !resists(lowest, 'NOISE') && lowest.hp > 20) return { cmd: 'noise', word: 'pop', target: lowest.uid };
+  }
+  if (cmdOk('riff')) {
+    const reserve = slime ? 4 : 0;
+    const choices = me.id === 'lucky' ? [['power_chord', 3, 'HIGH'], ['pseudopod_slap', 3, 'PHYS']]
+      : me.id === 'phoenix' ? [['root_note', 3, 'LOW']]
+        : me.id === 'brian' ? [['sterile_chord', 0, 'HIGH'], ['tube_screamer', 5, 'HIGH']] : [];
+    const ranked = choices.filter(([id, cost]) => riff(id) && me.amp - cost >= reserve)
+      .map(([id, , f]) => ({ id, score: (lowest.weak || []).includes(f) ? 2 : resists(lowest, f) ? 0 : 1 }))
+      .sort((a, c) => c.score - a.score);
+    if (ranked.length && ranked[0].score > 0) return { cmd: 'riff', riff: ranked[0].id, target: lowest.uid };
+  }
+  return { cmd: 'strum', target: lowest.uid };
+}
+
 const evTypes = (m) => m.events.map((e) => e.type);
 
 // ---------------------------------------------------------------------------------------------
@@ -697,11 +742,59 @@ group('script: ep0_palmers_set', (check) => {
   check(all.some((e) => e.type === 'caption' && /Rhythm achieved/.test(e.text)), 'Rhythm achieved');
   check(m.rewards.xp === 100 && m.rewards.money === 0 && m.rewards.drops.includes('price_tag_jacket'), `reward ${JSON.stringify(m.rewards)}`);
   check(m.enemies().every((c) => c.ko || c.fled), 'cops gone');
-  // Cops flee instead of dying before the Eternity.
-  const m2 = new BattleModel({ encounter: { ...encounters.ep0_palmers_set }, party: party(5), data, rng: makeRng(1), meter: 25, flags: {}, script: BATTLE_SCRIPTS.ep0_palmers_set(), inventory: [], money: 0 });
+  // Cops flee instead of dying before the Eternity; the last one gone holds the win and arms it.
+  const m2 = new BattleModel({ encounterId: 'ep0_palmers_set', encounter: { ...encounters.ep0_palmers_set }, party: party(5), data, rng: makeRng(1), meter: 25, flags: {}, script: BATTLE_SCRIPTS.ep0_palmers_set(), inventory: [], money: 0 });
   m2.start();
   m2.damage(m2.find('cop'), 999, { by: 'lucky' });
   check(m2.find('cop').fled && !m2.find('cop').ko && m2.events.some((e) => e.type === 'leave' && e.who === 'cop'), 'cop crawls toward the exit');
+  check(m2.result === null && m2.suspendEnd === true && m2.flags.eternityArmed === true && m2.inputLocked && m2.invincible, `last cop gone: win held, armed (result ${m2.result}, suspend ${m2.suspendEnd}, armed ${m2.flags.eternityArmed})`);
+  const m2Round = m2.round;
+  run(m2, smartPolicy);
+  const m2Words = m2.events.filter((e) => e.type === 'word' && e.scripted).map((e) => e.word);
+  check(m2.result === 'win' && m2.flags.eternityFired === true && JSON.stringify(m2Words) === JSON.stringify(['doom', 'crack', 'thud']), `the Eternity still fires on Ryan's next turn (${m2.result}, round ${m2Round} → ${m2.round}, words ${m2Words})`);
+  check(m2.round <= m2Round + 1 && m2.rewards && m2.rewards.xp === 100 && m2.rewards.drops.includes('price_tag_jacket'), `Ryan's next turn, with the reward (${m2.round}, ${JSON.stringify(m2.rewards)})`);
+  // The same hold when a KRAAANG knocks the last backup off-panel (no onDefeat on that path).
+  const m3 = new BattleModel({ encounterId: 'ep0_palmers_set', encounter: { ...encounters.ep0_palmers_set }, party: party(5), data, rng: knockRng, meter: 25, flags: {}, script: BATTLE_SCRIPTS.ep0_palmers_set(), inventory: [], money: 0 });
+  m3.start();
+  m3.spawn('backup_cop'); m3.spawn('backup_cop');
+  m3.damage(m3.find('cop'), 999, { by: 'lucky' });
+  check(m3.find('cop').fled && m3.result === null && !m3.suspendEnd && !m3.flags.eternityArmed, 'the cop leaving with backups on stage does not arm');
+  m3.forceNoise('kraaang', 'lucky');
+  check(m3.enemies().filter((c) => c.offPanel).length === 2 && m3.living('enemy').length === 0, `KRAAANG knocks both backups off-panel (${m3.enemies().map((c) => `${c.uid}:${c.offPanel ? 'off' : c.fled ? 'fled' : c.hp}`)})`);
+  check(m3.result === null && m3.suspendEnd === true && m3.flags.eternityArmed === true, `off-panel last cop: win held, armed (result ${m3.result})`);
+  run(m3, smartPolicy);
+  check(m3.result === 'win' && m3.flags.eternityFired === true, `the Eternity fires after the knock-off (${m3.result}, fired ${m3.flags.eternityFired})`);
+});
+
+// ---------------------------------------------------------------------------------------------
+group('monte carlo: the Eternity is unskippable', (check) => {
+  // Before the hold (onLeave → suspendEnd + arm) a party that cleared the cop and both backups before round 6
+  // won THE SET without the finale: 400 seeds at L5 skipped it in 5% of wins with the chapter1 brain and 25%
+  // with smartPolicy (L6: 21% / 62%). Every win must now fire it, and the win rate must not drop below what
+  // those same seeds gave before the hold (100% at L4-6 with both policies).
+  const RUNS = Number(process.env.MC_ETERNITY_RUNS || 300);
+  const BASELINE_WIN = { 4: 100, 5: 100, 6: 100 };
+  const build = (l) => (rng) => new BattleModel({ encounterId: 'ep0_palmers_set', encounter: { ...encounters.ep0_palmers_set }, party: [seed('lucky', l), seed('phoenix', l), seed('ryan', 4, { opts: { form: 'pocket', guest: true } })], data, rng, meter: 25, flags: {}, script: BATTLE_SCRIPTS.ep0_palmers_set(), inventory: [], money: 20 });
+  for (const [pname, policy] of [['chapter1', chapter1Policy], ['smart', smartPolicy]]) {
+    for (const l of [4, 5, 6]) {
+      let wins = 0; let skipped = 0; let heldByLeave = 0; let rounds = 0;
+      for (let i = 0; i < RUNS; i++) {
+        const m = build(l)(makeRng(1000 + i));
+        try { run(m, policy, { maxRounds: 40 }); } catch (err) { throw new Error(`eternity ${pname} L${l} run ${i}: ${err.message}`); }
+        if (m.result === 'win') {
+          wins++; rounds += m.round;
+          if (!m.flags.eternityFired || !m.flags.eternityArmed) skipped++;
+          const armIdx = m.events.findIndex((e) => e.type === 'lockInput' && e.on);
+          const lastLeave = m.events.map((e, idx) => (e.type === 'leave' ? idx : -1)).filter((idx) => idx >= 0).pop();
+          if (armIdx >= 0 && lastLeave !== undefined && lastLeave < armIdx && m.events.slice(lastLeave, armIdx).every((e) => e.type !== 'round')) heldByLeave++;
+        }
+      }
+      const winPct = Math.round((wins * 100) / RUNS);
+      process.stdout.write(`${JSON.stringify({ test: 'monte-carlo-eternity', policy: pname, level: l, runs: RUNS, winPct, skipped, heldByLeave, avgRound: wins ? +(rounds / wins).toFixed(1) : null })}\n`);
+      check(skipped === 0, `${pname} L${l}: ${skipped} of ${wins} wins skipped the Eternity`);
+      check(winPct >= BASELINE_WIN[l], `${pname} L${l}: win rate ${winPct}% below the pre-hold ${BASELINE_WIN[l]}%`);
+    }
+  }
 });
 
 // ---------------------------------------------------------------------------------------------

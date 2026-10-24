@@ -299,8 +299,10 @@ level_up, item, door, sneeze, feedback, drum_hit, cymbal, ko, flee, save`.
 `{ type: 'damage', target, amount, crit }`, `{ type: 'text', text }`, `{ type: 'anim', who, key }`, `{ type: 'meter', value }`,
 `{ type: 'transform', who, sheet }`, `{ type: 'status', target, status, on }`, `{ type: 'ko', who }`, `{ type: 'win' }`, `{ type: 'lose' }`, `{ type: 'flee' }`).
 `BattleScene` drains events and animates them one by one. Scripted battles register hooks:
-`{ onStart(model), onTurnStart(model, turn), onHpBelow(model, who, pct), onRound(model, n), onDefeat(model, who) }` returning
-events to inject (e.g. Ryan's transformation). Formulas live in `formulas.js` and are the numbers in `docs/DESIGN.md`.
+`{ onStart(model), onTurnStart(model, actor), onAction(model, actor, action), onToon(model, level), onHpBelow(model, who, pct), onRound(model, n),
+onDefeat(model, who), onLeave(model, who, how), onWipe(model) }` returning events to inject (e.g. Ryan's transformation). `onDefeat` fires before an
+enemy is marked KO (a script may `leave` it instead); `onLeave` fires after a flee / off-panel removal and before the end check, so a script may set
+`model.suspendEnd` to hold the win until its own finale (THE SET arms The Eternity when the last cop is gone); `onWipe` replaces the loss on `noLose` encounters. Formulas live in `formulas.js` and are the numbers in `docs/DESIGN.md`.
 `tests/battle.test.mjs` must cover: damage formula, turn order ties, meter fill, KO handling, win/lose, each scripted battle's hooks.
 
 ## 9. Debug API (required; tests depend on it)

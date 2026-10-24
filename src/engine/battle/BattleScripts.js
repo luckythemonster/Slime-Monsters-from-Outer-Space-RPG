@@ -1,7 +1,7 @@
 // Scripted battles (docs/DESIGN.md "Scripted battles, hook by hook"), keyed by encounter `script`.
 // Each entry is a factory returning a fresh hooks object so a battle can be replayed:
 //   { onStart(m), onRound(m, n), onTurnStart(m, actor), onAction(m, actor, action), onToon(m, level),
-//     onHpBelow(m, who, pct), onDefeat(m, who), onWipe(m), hpBelow: [{ who, pct }] }
+//     onHpBelow(m, who, pct), onDefeat(m, who), onLeave(m, who, how), onWipe(m), hpBelow: [{ who, pct }] }
 // Hooks mutate the model through its API (text/say/caption/toast/join/spawn/transform/inflict/damage/
 // setMeter/lockInput/leave/finish/forceNoise/wait) and may also return extra presentation events.
 // Pure module: no Phaser.
@@ -203,6 +203,15 @@ function ep0_palmers_set() {
       if (!c || c.side !== 'enemy' || fired) return;
       m.text(`${c.name} crawls toward the exit...`);
       m.leave(c, 'flee');
+    },
+    // The Eternity ends THE SET, never the cops leaving: when the last one crawls off (or a KRAAANG
+    // knocks it off-panel) before the meter or the clock armed it, hold the win, arm now, and Ryan's
+    // next turn levels the bar. Toon 3 / round 6 / last cop gone, whichever comes first. Runs before
+    // the model's end check, so the suspend lands in time.
+    onLeave(m) {
+      if (fired || m.living('enemy').length > 0) return;
+      m.suspendEnd = true;
+      arm(m);
     },
   };
 }

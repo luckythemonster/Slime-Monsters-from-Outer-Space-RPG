@@ -844,13 +844,18 @@ export class BattleModel {
     }
   }
 
-  /** An enemy leaves the fight (flee / knocked off-panel). No XP, no money. */
+  /**
+   * An enemy leaves the fight (flee / knocked off-panel). No XP, no money. The `onLeave(m, who, how)`
+   * hook runs before the end check so a script can hold the win (THE SET: the last cop gone arms The
+   * Eternity instead of ending the battle).
+   */
   leave(c, how = 'flee') {
     if (!c || !c.present || c.ko || c.fled || c.offPanel) return;
     if (how === 'offPanel') c.offPanel = true; else c.fled = true;
     this.emit({ type: 'leave', who: c.uid, how });
     this.emit({ type: 'sfx', name: how === 'offPanel' ? 'kraaang' : 'flee' });
     this.text(how === 'offPanel' ? `${c.name} is knocked off-panel!` : `${c.name} flees!`);
+    this.hook('onLeave', c.uid, how);
     this.checkEnd();
   }
 
