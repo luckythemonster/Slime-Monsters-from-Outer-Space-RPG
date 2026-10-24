@@ -241,8 +241,8 @@ Floor-band triggers `ep0_dad_1..4` (once each; `condition: !flags.podSpeakerSlap
 3. `say ryan_caption` "[I am literally a hostage.]"; `say ryan` "So, do I get the gig?"
 4. `set vars.contractPages = 3 + vars.saveCount` (**[EXT]** arithmetic in `set`; fallback: `inc` from a base of 3 at each save); `spawn bajonka sprite:bajonka 12 3`; `move bajonka "DDL" wait:true`; `anim bajonka trot_drop wait:true`; `spawn contract sprite:contract 11 5`; `sfx thud`; `move bajonka "R" wait:true`; `anim bajonka idle_down`.
 5. `say narrator` "Bajonka drops a {var:contractPages}-page, legally binding band agreement onto the snare, turns around, and sits down."
-6. `party add ryan` (toast "Ryan joined the band. He is not available."); `give item:band_agreement`; `set flags.auditionDone, ryanJoined`; `save` (Bajonka's prompt reads "INITIAL HERE TO ACKNOWLEDGE RHYTHM SECTION").
-7. `caption "ONE MONTH LATER" 1800 style:tape` (**[EXT]** caption style; fallback: plain caption); `set flags.monthLater`; `teleport room4 5 8` (same map, re-dressed by conditions: pedalboard and iced coffee in, contract out, drip in); `run ep0_month_later`.
+6. `party add ryan` (toast "Ryan joined the band. He is not available."); `give item:band_agreement`; `set flags.auditionDone, ryanJoined, monthLater` (the month flag goes on the page *before* the save, so a page initialed here reloads straight into ONE MONTH LATER instead of an empty Room 4); `save` (Bajonka's prompt reads "INITIAL HERE TO ACKNOWLEDGE RHYTHM SECTION").
+7. `caption "ONE MONTH LATER" 1800 style:tape` (**[EXT]** caption style; fallback: plain caption); `teleport room4 5 8` (same map, re-dressed by conditions: pedalboard and iced coffee in, contract out, drip in); `run ep0_month_later` (which also seats the player at (5,8) facing right, so a reload of the contract page plays the scene identically).
 
 ### CS-13 `ep0_month_later` — Toon 0 → 2
 1. `set flags.monthLaterRan`; `music normal_music` (the song played straight). Brian at the pedalboard (6,7), `anim brian brian_strum` (loop). Ryan at the kit, `anim ryan ryan_drum`.

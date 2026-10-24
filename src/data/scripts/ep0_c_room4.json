@@ -55,16 +55,16 @@
     { "say": "Bajonka drops a {var:contractPages}-page, legally binding band agreement onto the snare, turns around, and sits down.", "who": "narrator" },
     { "party": { "add": "ryan", "toast": "Ryan joined the band. He is not available." } },
     { "give": { "item": "band_agreement", "qty": 1 } },
-    { "set": { "flags.auditionDone": true, "flags.ryanJoined": true } },
+    { "set": { "flags.auditionDone": true, "flags.ryanJoined": true, "flags.monthLater": true } },
     { "save": { "prompt": "INITIAL HERE TO ACKNOWLEDGE RHYTHM SECTION" } },
     { "caption": "ONE MONTH LATER", "ms": 1800, "style": "tape" },
-    { "set": { "flags.monthLater": true } },
     { "teleport": { "map": "room4", "x": 5, "y": 8, "facing": "right" } }
   ],
 
   "ep0_month_later": [
     { "set": { "flags.monthLaterRan": true } },
     { "music": "normal_music" },
+    { "setEntity": { "id": "player", "x": 5, "y": 8, "facing": "right" } },
     { "setEntity": { "id": "brian", "x": 6, "y": 7, "facing": "down" } },
     { "anim": { "who": "brian", "key": "brian_strum", "wait": false } },
     { "setEntity": { "id": "ryan", "x": 11, "y": 2, "facing": "down" } },
