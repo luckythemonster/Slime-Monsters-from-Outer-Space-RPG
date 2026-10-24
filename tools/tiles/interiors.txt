@@ -1296,7 +1296,7 @@ LLLLLLLLLLLLkLLL
 LLLLLLLLLLLLLLLL
 
 tile sky_hole_a:
-solid: false
+solid: true
 eeeeeeeeeeeeeeee
 eeeeeeeeeeeNeeee
 eeeneeeeeeeeeeee
@@ -1315,7 +1315,7 @@ eeneeeeeeeeeeeee
 eeeeeeeeeeeeeeee
 
 tile sky_hole_b:
-solid: false
+solid: true
 eeeeeeeeeeeeeeee
 eeeeeeeeeeeneeee
 eeeNeeeeeeeeeeee

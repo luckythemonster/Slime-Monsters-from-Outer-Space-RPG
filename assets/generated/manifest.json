@@ -2448,11 +2448,11 @@
       },
       "sky_hole_a": {
         "index": 66,
-        "solid": false
+        "solid": true
       },
       "sky_hole_b": {
         "index": 67,
-        "solid": false
+        "solid": true
       },
       "plaster_floor": {
         "index": 68,
