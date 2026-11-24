@@ -53,7 +53,7 @@ room4  ep0_room4_setup ─B-9─▶ auditionDone, ryanJoined (contractPages = 3 
   ONE MONTH LATER ─▶ monthLater ─B-10─▶ pedalboardFried ─▶ brianQuit (−brian, +fried_pedalboard) ─▶ hasPalmersFlyer (street NIGHT; Palmer's ON)
 palmers  stage ─▶ ep0_palmers_set ─B-11─▶ eternityDone ─▶ palmers_rubble
 rubble  ep0_aftermath ─▶ ryanQuit (vars.quitResponse; −ryan; luckyRageLocked) ─▶ ch1Complete ─save─▶ TITLE
-Side flags (never gate the spine): readBillyPod, billsRead, pizzaBoxLooted, fridgeLooted, jukeboxPlayed,
+Side flags (never gate the spine): readPod3, billsRead, pizzaBoxLooted, fridgeLooted, jukeboxPlayed,
 cleared_<enemyId>, trig_<map>_<id>, vars.saveCount, vars.billboardsTagged, vars.flyerText, vars.quitResponse.
 ```
 
@@ -80,7 +80,7 @@ Twelve maps including the scene. Every map lists `"encounters": { "rate": 0, "po
 
 ### `pod_bay` — 16×14
 **Layout.** Steel floor, catwalk along the top row, three drop pods along the bottom (pod 2 open at (7,11), Lucky inside). Intercom speaker 2×2 on the north wall at (7,2). Viewport (12,2) onto Planet California, a planet made of billboards (`window_stars` animated tile). Vending machine (2,3), plaque (4,2). Pod 3 nameplate (11,11). **Spawn** (7,11) facing up. Lucky uses the `lucky_ball` 16×16 sheet here (CS-01 swaps it in; rolls; 2-frame squish idle) until the crash puts the `lucky` sheet back.
-**Interactables.** Speaker → CS-02. Pod 2 EJECT (6,11) → CS-03. Laser guitar case in the pod (8,11): "The only thing from home worth the fuel." (equips Beat-Up Guitar; one toast: "EQUIP is in the menu."). Pod 3 nameplate: "RESERVED — RUBEN, B." → Lucky: "…He's late. He's always late." (`flags.readBillyPod`). Vending: "DENTAL PLAN: SOLD OUT. DEMOGRAPHIC: SOLD OUT. WATER: $40." Plaque: "EMPLOYEE OF THE QUARTER: DAD (41 CONSECUTIVE)." Viewport: "One billboard says WORK IS LOVE. Lucky has never seen it turned off."
+**Interactables.** Speaker → CS-02. Pod 2 EJECT (6,11) → CS-03. Laser guitar case in the pod (8,11): "The only thing from home worth the fuel." (equips Beat-Up Guitar; one toast: "EQUIP is in the menu."). Pod 3 nameplate: "POD 3. RESERVED. The name is scratched off." → Lucky: "…They're late. They're always late." (`flags.readPod3`). Vending: "DENTAL PLAN: SOLD OUT. DEMOGRAPHIC: SOLD OUT. WATER: $40." Plaque: "EMPLOYEE OF THE QUARTER: DAD (41 CONSECUTIVE)." Viewport: "One billboard says WORK IS LOVE. Lucky has never seen it turned off."
 **Triggers.** Four once-only floor bands (rows 4, 6, 8, 10 across x 3..12) keep Dad going (CS-01 extras). **Enemies:** none.
 
 ### `alley` — 24×14
@@ -148,7 +148,7 @@ Every cutscene is a numbered list of §5.1 commands in shorthand: `say who "text
 4. `say dad` "If you'd just join The Vanguard, you could be financially successful and oppress people with a dental plan!"
 5. `emote player …`; `set flags.podIntro`.
 
-Floor-band triggers `ep0_dad_1..4` (once each; `condition: !flags.podSpeakerSlapped`): `say dad` "Your mother and I paid for the compression. The least you could do is market yourself." / "There's an opening in Demographic Alignment. You'd report to me." / "Billy's parents say Billy 'found himself.' In a storage unit. The Bile Ducts. What kind of a brand is that?" / "…I can see the speaker light." Twins with `condition: flags.podSpeakerSlapped`: `say dad` "{speed:slow}mmf. mmmf."
+Floor-band triggers `ep0_dad_1..4` (once each; `condition: !flags.podSpeakerSlapped`): `say dad` "Your mother and I paid for the compression. The least you could do is market yourself." / "There's an opening in Demographic Alignment. You'd report to me." / "Your little band 'found itself.' In a storage unit. What kind of a brand is that?" / "…I can see the speaker light." Twins with `condition: flags.podSpeakerSlapped`: `say dad` "{speed:slow}mmf. mmmf."
 
 ### CS-02 `ep0_speaker` (interact, speaker) — Toon 3
 1. `sprite player lucky_ball` (a no-op after CS-01; keeps a warp honest); `face player up`; `anim player lucky_ball_pseudopod wait:true`; `sfx squelch`; `sprite speaker speaker_slimed`; `face player up` (the arm stays on the grille, Lucky is a ball again).
@@ -991,7 +991,7 @@ Tests: `tests/battle.test.mjs` must cover E1–E5 (each scripted battle end to e
 | A L2 party at the AUDITION wipes ~21% of the time without items. | Two hub enemies sit in chokepoints so L2 is the floor; the Hotdish and $4 of pizza exist for this case. Acceptable for a first boss. |
 | Bounded XP means no grinding. | Intentional: required fights are tuned for L4 / L5; the Billboard and the night hub are the catch-up. |
 | 19 songs is a lot of chiptune. | Cut `sticker_hallway`, `six_inch_stage`, `plaster_dust`, `game_over` to filters of existing songs. `title`, `battle`, `four_dollars`, `pocket`, `rhythm_achieved` are not cuttable. |
-| ~75 flavor lines of NPC/object text. | Cut order: Palmer's crowd (keep 6), night extras, the ska band, Room 4 tallies. Never cut: the bills, the Pizza Luce box, the billboard, Billy's pod, the jukebox. |
+| ~75 flavor lines of NPC/object text. | Cut order: Palmer's crowd (keep 6), night extras, the ska band, Room 4 tallies. Never cut: the bills, the Pizza Luce box, the billboard, the Pod 3 nameplate, the jukebox. |
 | `rooftops` is a cutscene-only map. | Three captions over black; keep the garage (used twice; it is the Ryan hook). |
 | SLIMED, BAKED and Band Sticker are low-value systems. | Cut all three first; no script depends on them. |
 | Playtime over 75 min. | Day hub to Slush + Scooters + Analyst; night hub to one encounter; trim Palmer's crowd lines. Never cut the quit or the keys. |
@@ -1029,7 +1029,7 @@ Each contradiction between the three proposals (S = `design_systems.md`, L = `de
 24. **Money at start.** L: $0 → $4 when Phoenix joins; S and the shipped `start.json`: $4. **Decision: $4 from the start** (one fewer command; the "four dollars" line stays true).
 25. **The slap verb.** F proposed a context "slap" action. **Decision: cut** — the speaker and EJECT are ordinary interact scripts; the pseudopod is an animation.
 26. **Items and prices.** The shipped `items.json` (Pizza 30 HP / $5, Coffee 10 AMP / $3) predates the simulation. **Decision: S's table** (Pizza 20 HP / $3, Coffee +6 AMP / $4, etc.); data is updated. L's Duct Tape, Cheap Beer and $40 cymbal, and F's Jumbo Slice and Political Stickers accessory, are cut (S's Band Sticker covers the sticker gag; the ride cymbal is a key item).
-27. **Dad's extra lines and Billy seeds.** `story_structure.md` adds "that Ruben kid" to Dad; L seeds a pod nameplate "RESERVED — RUBEN, B." and Lucky's "My old band's still back there." **Decision: L's seeds only** (optional, one line each, no new plot); the comic's Dad lines are verbatim and unchanged.
+27. **Dad's extra lines and old-band seeds.** L seeds a pod nameplate and Lucky's "My old band's still back there." **Decision: L's seeds only** (optional, one line each, no new plot, no names on them); the comic's Dad lines are verbatim and unchanged.
 28. **The "ONE MONTH BEFORE THE POTATO BELT TOUR" card.** All three keep it; it contradicts nothing (Lucky's itinerary says TOMORROW a month later). Kept as a duct-tape caption with Phoenix's line.
 29. **Keys.** S: Menu C/M; F: Menu Esc/C, Cancel X/Backspace; shipped `config.js`: Menu Esc, Cancel X/Backspace. **Decision: F's table + shipped config**, with C added to menu, M mute, F fullscreen.
 30. **Chapter length.** Scene minutes come from L's reading-speed estimates adjusted to S's fight counts: ~69 min full, ~50 min skipping optional fights. Inside the 45–75 window at both ends.
