@@ -171,5 +171,26 @@
     ],
     "script": "ep0_palmers_set",
     "countIn": "lucky"
+  },
+  "ep0_zerkel": {
+    "name": "ZERKEL PIT",
+    "enemies": [
+      "folded_arms"
+    ],
+    "guests": [
+      "ryan"
+    ],
+    "forms": {
+      "ryan": "possessed"
+    },
+    "background": "zerkel",
+    "music": "band_hunger",
+    "noFlee": true,
+    "noLose": true,
+    "toonStart": 0,
+    "fixedXp": 0,
+    "fixedMoney": 0,
+    "script": "ep0_zerkel",
+    "countIn": "lucky"
   }
 }

@@ -1253,3 +1253,156 @@ eeeeeeeeeeeeeeek
 eeeeeeeeeeeeeeek
 kkkkkkkkkkkkkkk.
 ................
+
+# Zerkel Pit PunX Fest: a summer parking lot, a flatbed trailer for a stage, a taped-up banner.
+tile grass:
+solid: false
+vvvvvvvvvvvvvvvv
+vvGvvvvvvvvvvvvv
+vvvvvvgvvGvvvvvv
+vvvvvvvvvvvvvvvv
+vvvvvvvvvvvvvGvv
+vvvvvGvvvvvvvvvv
+vvvvvvvvvvvvvvvv
+vvvvvvvvvvvvgvvv
+vGvvvvvvvvvvvvvv
+vvvvvvvvvvvGvvvv
+vvgvvvvvvvvvvvvv
+vvvvvvvGvvvvvvvv
+vvvvvvvvvvvvvvGv
+vvvGvvvvvvgvvvvv
+vvvvvvvvvGvvvvvv
+vvvvvvvvvvvvvvvv
+
+tile flatbed_deck:
+solid: false
+hhhhhhhhhhhhhhhh
+hhhhhHhhhhhhhhhh
+hhhhhhhhhhhhhhhh
+HHHHHHHHHHHHHHHH
+hhhhhhhhhhhhhhhh
+hhhhhhhhhhhhHhhh
+hhhhhhhhhhhhhhhh
+HHHHHHHHHHHHHHHH
+hhhhhhhhhhhhhhhh
+hhhHhhhhhhhhhhhh
+hhhhhhhhhhhhhhhh
+HHHHHHHHHHHHHHHH
+hhhhhhhhhhhhhhhh
+hhhhhhhhhhHhhhhh
+hhhhhhhhhhhhhhhh
+HHHHHHHHHHHHHHHH
+
+tile flatbed_edge:
+solid: true
+hhhhhhhhhhhhhhhh
+hhhhhhhhhhhhhhhh
+hhhhhhhhhhhhhhhh
+HHHHHHHHHHHHHHHH
+kkkkkkkkkkkkkkkk
+LLLLLLLLLLLLLLLL
+dddddddddddddddd
+ddrrdddyydddrrdd
+ddrrdddyydddrrdd
+dddddddddddddddd
+dddddddddddddddd
+kkkkkkkkkkkkkkkk
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+ssssssssssssssss
+ssssssssssssssss
+
+tile flatbed_wheel:
+solid: true
+eeekkkeeeekkkeee
+eekkkkkeekkkkkee
+ekkkdkkkkkkdkkke
+skkdLdkkkkdLdkks
+skkkdkkkkkkdkkks
+sskkkkksskkkkkss
+ssskkksssskkksss
+ssssssssssssssss
+ssssssssssssssss
+ssssssssssssssss
+ssssssssssssssss
+ssssssssssssssss
+ssssssssssssssss
+ssssssssssssssss
+ssssssssssssssss
+ssssssssssssssss
+
+tile amp_stack:
+solid: true
+................
+..kkkkkkkkkkkk..
+..ksdsdsdsdrdk..
+..kdsdsdsdsdsk..
+..ksdsdsdsdsdk..
+..kdsdsdsdsdsk..
+..ksdsdsdsdsdk..
+..kdsdsdsdsdsk..
+..kkkkkkkkkkkk..
+..kdsdsdsdsgsk..
+..ksdsdsdsdsdk..
+..kdsdsdsdsdsk..
+..ksdsdsdsdsdk..
+..kdsdsdsdsdsk..
+..ksdsdsdsdsdk..
+..kkkkkkkkkkkk..
+
+tile banner_zerkel_1:
+solid: true
+................
+................
+.kkkkkkkkkkkkkkk
+.kwwwwwwwwwwwwww
+.kwrwwwwwwwwwwww
+.kwwpppwpppwppww
+.kwwwwpwpwwwpwpw
+.kwwwpwwppwwppww
+.kwwpwwwpwwwpwpw
+.kwwpppwpppwpwpw
+.kwrwwwwwwwwwwww
+.kwwwwwwwwwwwwww
+.kkkkkkkkkkkkkkk
+..d.............
+..d.............
+..d.............
+
+tile banner_zerkel_2:
+solid: true
+................
+................
+kkkkkkkkkkkkkkkk
+wwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwww
+pwpwpppwpwwwwwww
+pwpwpwwwpwwwwwww
+ppwwppwwpwwwwwww
+pwpwpwwwpwwwwwww
+pwpwpppwpppwwwww
+wwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwww
+kkkkkkkkkkkkkkkk
+................
+................
+................
+
+tile banner_zerkel_3:
+solid: true
+................
+................
+kkkkkkkkkkkkkkk.
+wwwwwwwwwwwwwwk.
+wwwwwwwwwwwwrwk.
+kkkwkkkwkkkwwwk.
+kwkwwkwwwkwwwwk.
+kkkwwkwwwkwwwwk.
+kwwwwkwwwkwwwwk.
+kwwwkkkwwkwwwwk.
+wwwwwwwwwwwwrwk.
+wwwwwwwwwwwwwwk.
+kkkkkkkkkkkkkkk.
+.............d..
+.............d..
+.............d..

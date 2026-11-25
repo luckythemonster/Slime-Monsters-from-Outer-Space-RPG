@@ -1817,6 +1817,60 @@
       }
     ]
   },
+  "folded_arms_b": {
+    "type": "spritesheet",
+    "frameWidth": 48,
+    "frameHeight": 48,
+    "frames": 6,
+    "names": [
+      "idle a",
+      "idle b (the middle one shifts his weight)",
+      "attack a (checks phone)",
+      "attack b (yawns)",
+      "hurt (the arms come unfolded)",
+      "ko (won over: hands up)"
+    ],
+    "anims": [
+      {
+        "key": "folded_arms_b_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "folded_arms_b_attack",
+        "frames": [
+          2,
+          3
+        ],
+        "fps": 4,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "folded_arms_b_hurt",
+        "frames": [
+          4
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      },
+      {
+        "key": "folded_arms_b_ko",
+        "frames": [
+          5
+        ],
+        "fps": 1,
+        "repeat": 0,
+        "flipX": false
+      }
+    ]
+  },
   "goose": {
     "type": "spritesheet",
     "frameWidth": 16,
@@ -4566,6 +4620,38 @@
       },
       "neon_palmers_4": {
         "index": 63,
+        "solid": true
+      },
+      "grass": {
+        "index": 64,
+        "solid": false
+      },
+      "flatbed_deck": {
+        "index": 65,
+        "solid": false
+      },
+      "flatbed_edge": {
+        "index": 66,
+        "solid": true
+      },
+      "flatbed_wheel": {
+        "index": 67,
+        "solid": true
+      },
+      "amp_stack": {
+        "index": 68,
+        "solid": true
+      },
+      "banner_zerkel_1": {
+        "index": 69,
+        "solid": true
+      },
+      "banner_zerkel_2": {
+        "index": 70,
+        "solid": true
+      },
+      "banner_zerkel_3": {
+        "index": 71,
         "solid": true
       }
     }

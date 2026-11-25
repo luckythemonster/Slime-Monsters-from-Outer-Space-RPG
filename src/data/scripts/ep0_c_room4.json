@@ -101,10 +101,27 @@
   "ep0_zerkel": [
     { "camera": { "fade": "out", "ms": 300 } },
     { "caption": "THAT SUMMER", "ms": 1800, "style": "tape" },
-    { "face": { "who": "brian", "dir": "down" } },
-    { "anim": { "who": "brian", "key": "brian_strum", "wait": false } },
+    { "teleport": { "map": "zerkel_pit", "x": 7, "y": 5, "facing": "down" } },
+    { "setEntity": { "id": "player", "x": 7, "y": 5, "facing": "down" } },
+    { "setEntity": { "id": "phoenix", "x": 6, "y": 5, "facing": "down" } },
+    { "setEntity": { "id": "brian", "x": 4, "y": 4, "facing": "down" } },
+    { "setEntity": { "id": "ryan", "x": 10, "y": 3, "facing": "down" } },
+    { "music": null },
     { "camera": { "fade": "in", "ms": 300 } },
-    { "say": "Last weekend: Zerkel Pit PunX Fest. Four of them on a flatbed. It went well. Nothing had ever gone well before.", "who": "narrator" },
+    { "say": "ZERKEL PIT PUNX FEST. A parking lot, a flatbed and a sky.", "who": "narrator" },
+    { "say": "[Outside. In front of people.]", "who": "ryan_caption" },
+    { "say": "[The truck has wheels. I could still leave.]", "who": "ryan_caption" },
+    { "say": "Is this stage rated for a $2,000 pedalboard?", "who": "brian", "portrait": "brian_normal" },
+    { "say": "My brain thinks it is rated for hay.", "who": "phoenix" },
+    { "battle": "ep0_zerkel",
+      "onWin": [ { "run": "ep0_zerkel_after" } ],
+      "onLose": [ { "run": "ep0_zerkel_after" } ] }
+  ],
+
+  "ep0_zerkel_after": [
+    { "set": { "flags.zerkelPlayed": true } },
+    { "say": "The hat comes back with a guitar pick and one drink ticket.", "who": "narrator" },
+    { "say": "It went well. Nothing had ever gone well before.", "who": "narrator" },
     { "say": "We were GOOD. People stayed!", "who": "lucky", "portrait": "lucky_grin" },
     { "say": "My brain thinks they clapped on purpose.", "who": "phoenix" },
     { "say": "I almost quit before the show. I thought we'd suck.", "who": "ryan", "portrait": "ryan_stoic" },
@@ -130,6 +147,14 @@
   "ep0_chorus": [
     { "camera": { "fade": "out", "ms": 300 } },
     { "caption": "ALMOST A YEAR LATER", "ms": 1800, "style": "tape" },
+    { "teleport": { "map": "room4", "x": 5, "y": 8, "facing": "right" } },
+    { "music": "normal_music" },
+    { "setEntity": { "id": "player", "x": 5, "y": 8, "facing": "right" } },
+    { "setEntity": { "id": "brian", "x": 6, "y": 7, "facing": "down" } },
+    { "anim": { "who": "brian", "key": "brian_strum", "wait": false } },
+    { "setEntity": { "id": "ryan", "x": 11, "y": 2, "facing": "down" } },
+    { "anim": { "who": "ryan", "key": "ryan_drum", "wait": false } },
+    { "setEntity": { "id": "phoenix", "x": 4, "y": 7, "facing": "right" } },
     { "camera": { "fade": "in", "ms": 300 } },
     { "say": "Almost a year in Room 4. Brian has asked for one rehearsal where nothing manifests. He has asked eleven times.", "who": "narrator" },
     { "say": "Hit the chorus. Get the band to Toon 2.", "who": "narrator" },
@@ -218,6 +243,16 @@
     { "despawn": "gig_flyer" },
     { "give": { "item": "palmers_flyer", "qty": 1 } },
     { "set": { "flags.hasPalmersFlyer": true, "flags.gigFlyer": true } }
+  ],
+
+  "ep0_zerkel_kit": [
+    { "say": "The kit, on a flatbed. It has never been this far from a wall.", "who": "narrator" }
+  ],
+  "ep0_zerkel_crowd": [
+    { "say": "Arms folded. It is how they clap.", "who": "narrator" }
+  ],
+  "ep0_zerkel_bajonka": [
+    { "say": "The dog has a clipboard and a cash box. The cash box is empty. It was empty when she got it.", "who": "narrator" }
   ],
 
   "ep0_room4_exit_flyer": [

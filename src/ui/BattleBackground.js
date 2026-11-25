@@ -43,6 +43,14 @@ const PATTERNS = {
       px(ctx, ox + x, y, c[band]);
     }
   },
+  /** Zerkel Pit: a summer evening over a parking lot. Warm bands that drift like heat off asphalt. */
+  zerkel(ctx, phase, ox) {
+    const c = ['#40c0ff', '#8ee0ff', '#ffe066', '#e07040'];
+    for (let y = 0; y < TILE; y++) for (let x = 0; x < TILE; x++) {
+      const band = (Math.floor((y + Math.floor(x / 8) + phase) / 8)) % 4;
+      px(ctx, ox + x, y, (x + y * 3 + phase) % 23 === 0 ? PAL.white : c[band]);
+    }
+  },
   alley(ctx, phase, ox) {
     const c = ['#505878', '#2a1a4a', '#3a3a4a', '#141018'];
     for (let y = 0; y < TILE; y++) for (let x = 0; x < TILE; x++) {
@@ -129,7 +137,7 @@ const PATTERNS = {
 };
 
 const ALIASES = { room4: 'sticker_wall', palmers: 'palmers_neon', citysound: 'sticker_wall', street_snow: 'street', apartment: 'apartment_posters', default: 'street' };
-const FPS = { street: 8, alley: 8, apartment_posters: 8, sticker_wall: 10, palmers_neon: 8, black_hole: 12, rupture: 15, vanguard_grid: 8, palmers_roof_peel: 10 };
+const FPS = { zerkel: 6, street: 8, alley: 8, apartment_posters: 8, sticker_wall: 10, palmers_neon: 8, black_hole: 12, rupture: 15, vanguard_grid: 8, palmers_roof_peel: 10 };
 
 export const BACKGROUND_IDS = Object.keys(PATTERNS);
 

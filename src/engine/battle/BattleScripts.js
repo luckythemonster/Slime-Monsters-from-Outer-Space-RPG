@@ -124,6 +124,47 @@ function ep0_rehearsal() {
 }
 
 /**
+ * `ep0_zerkel` — ZERKEL PIT PUNX FEST: the one fight in Chapter 1 the band simply wins. One enemy, the front
+ * row's FOLDED ARMS. Cannot be lost: a wipe or round 8 ends it in the band's favor, the way the Chorus does.
+ */
+function ep0_zerkel() {
+  let done = false;
+  const wonOver = (m) => {
+    m.text('The arms come unfolded. People stay.');
+    CAP(m, '[They stayed. Suspicious.]');
+    m.flags.zerkelWon = true;
+  };
+  const forced = (m, why) => {
+    if (done) return;
+    done = true;
+    m.suspendEnd = true;
+    m.text(why);
+    wonOver(m);
+    for (const c of m.party()) if (c.ko && c.controllable && !c.auto) m.revive(c, 1);
+    m.suspendEnd = false;
+    m.finish('win');
+  };
+  return {
+    onStart(m) {
+      m.transform('ryan', { form: 'possessed' });
+      m.text('Forty people in a parking lot. The front row has its arms folded.');
+      CAP(m, '[Outside. No walls. Everyone can see the drummer.]');
+    },
+    onRound(m, n) {
+      if (n === 3 && !done) CAP(m, '[Nobody is looking at me. They are looking at the truck.]');
+      if (n === 8) forced(m, 'The last chorus lands on its own.');
+    },
+    onDefeat(m, who) {
+      const c = m.find(who);
+      if (done || !c || c.side !== 'enemy') return;
+      done = true;
+      wonOver(m);
+    },
+    onWipe(m) { forced(m, 'The song holds itself up.'); },
+  };
+}
+
+/**
  * B-11 `ep0_palmers_set` — THE SET: cops, backup, Pocket Ryan, the one choice Ryan gets all game, then The Eternity.
  * Toon 3 / round 6 / the last cop gone, whichever comes first, puts the question: [Keep fighting it] / [Let go].
  * From the question on the fight cannot be lost (HP floors at 1) and the end check waits on the answer. [Let go]
@@ -271,5 +312,5 @@ function ep0_palmers_set() {
   };
 }
 
-export const BATTLE_SCRIPTS = { ep0_drone, ep0_audition, ep0_rehearsal, ep0_palmers_set };
+export const BATTLE_SCRIPTS = { ep0_drone, ep0_audition, ep0_rehearsal, ep0_zerkel, ep0_palmers_set };
 export default BATTLE_SCRIPTS;

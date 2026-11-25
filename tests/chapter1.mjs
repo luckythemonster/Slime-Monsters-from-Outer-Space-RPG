@@ -289,6 +289,7 @@ async function main() {
       { name: 'ch1_10b_contract', when: (p) => p.snap.map === 'room4' && !!ent(p, 'contract') && say(p).who === 'narrator' && say(p).state === 'complete' },
       { name: 'ch1_w_tape_card', when: (p) => cap(p).style === 'tape' },
       { name: 'ch1_b10_chorus', when: (p) => battleMenu(p, 'ep0_rehearsal') },
+      { name: 'ch1_10a_zerkel', when: (p) => p.snap.map === 'zerkel_pit' && !!say(p).text, delay: 400 },
       { name: 'ch1_10c_ultimatum', when: (p) => say(p).portrait === 'brian_stroke' && say(p).state === 'complete' },
       { name: 'ch1_w_insert_flyer', when: (p) => !!(p.ui && p.ui.kinds && p.ui.kinds.includes('insert') && say(p).state === 'complete') },
       { name: 'ch1_b11_set', when: (p) => battleMenu(p, 'ep0_palmers_set') },
@@ -724,6 +725,7 @@ async function main() {
     check('S9 audition reward: auditionDone, ryanJoined, band agreement; the Tinny Ride stays on the kit until he quits', p.snap.flags.auditionDone === true && p.snap.flags.ryanJoined === true && has(p.snap, 'band_agreement') && !has(p.snap, 'tinny_ride_cymbal'), p.snap.inventory);
     check('S9 contract pages = 3 + pages initialed before it (4); the contract save bumped saveCount to 2', p.snap.vars.contractPages === 4 && p.snap.vars.saveCount === 2, p.snap.vars);
     check('S10 ONE MONTH LATER ran: monthLater, monthLaterRan, pedalboardFried, kraaangFired, brianQuit', ['monthLater', 'monthLaterRan', 'pedalboardFried', 'kraaangFired', 'brianQuit'].every((f) => p.snap.flags[f] === true), p.snap.flags);
+    check('S10 THAT SUMMER: Zerkel Pit was played and won on the way (zerkelPlayed, zerkelWon, zerkelLetGo), and the band is back in Room 4', ['zerkelPlayed', 'zerkelWon', 'zerkelLetGo'].every((f) => p.snap.flags[f] === true) && p.snap.map === 'room4', { flags: p.snap.flags, map: p.snap.map });
     check('S10 Zerkel Pit: Ryan said it out loud ("I thought we\'d suck.") and Lucky let it go (vars.zerkelChoice 0, zerkelLetGo)', seenLine('ryan', "I almost quit before the show. I thought we'd suck.") && p.snap.vars.zerkelChoice === 0 && p.snap.flags.zerkelLetGo === true && seenLine('narrator', 'Lucky lets it go.'), { vars: p.snap.vars });
     check('S10 Brian left; party = lucky,phoenix,ryan; Fried Pedalboard left behind', party(p.snap) === 'lucky,phoenix,ryan' && has(p.snap, 'fried_pedalboard'), { party: party(p.snap), inv: p.snap.inventory });
     check('S10 Lucky L5 after the audition (+50) and the Chorus (+30): 106 XP', member(p.snap, 'lucky').xp === 106 && member(p.snap, 'lucky').level === 5, member(p.snap, 'lucky'));

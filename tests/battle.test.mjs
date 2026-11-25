@@ -691,6 +691,32 @@ group('script: ep0_audition', (check) => {
 });
 
 // ---------------------------------------------------------------------------------------------
+group('script: ep0_zerkel', (check) => {
+  const mk = (rngSeed, party) => new BattleModel({ encounter: { ...encounters.ep0_zerkel }, party: party || [seed('lucky', 4), seed('phoenix', 4), seed('brian'), seed('ryan', 4, { opts: { form: 'possessed', guest: true } })], data, rng: makeRng(rngSeed), meter: 0, flags: {}, script: BATTLE_SCRIPTS.ep0_zerkel(), inventory: [], money: 4 });
+  // Played straight: the band wins the front row over.
+  const m = mk(77);
+  const all = [];
+  run(m, (mm, actor) => { all.push(...mm.drain()); return smartPolicy(mm, actor); });
+  all.push(...m.drain());
+  check(m.result === 'win' && m.flags.zerkelWon === true, `Zerkel is won (${m.result}, round ${m.round})`);
+  check(all.some((e) => e.type === 'text' && /arms come unfolded/.test(e.text)), 'the arms come unfolded');
+  check(all.some((e) => e.type === 'caption' && /Everyone can see the drummer/.test(e.text)), "Ryan's opening caption: the stage fright is on the page");
+  check(m.rewards.xp === 0 && m.rewards.money === 0, `it pays nothing: the chapter's XP and money budgets do not move (${JSON.stringify(m.rewards)})`);
+  // Nobody plays: round 8 ends it in the band's favor anyway.
+  const m2 = mk(5);
+  const all2 = [];
+  run(m2, (mm, actor) => { all2.push(...mm.drain()); return { cmd: 'tune' }; });
+  all2.push(...m2.drain());
+  check(m2.result === 'win' && m2.round <= 8 && m2.flags.zerkelWon === true, `tuning only still wins by round 8 (${m2.result}, round ${m2.round})`);
+  // Cannot be lost: a wipe ends it in the band's favor and stands everyone back up.
+  const m3 = mk(5, [seed('lucky', 4), seed('phoenix', 4), seed('brian')]);
+  m3.start();
+  for (const id of ['lucky', 'phoenix', 'brian']) m3.damage(m3.find(id), 999, { by: 'folded_arms' });
+  check(m3.result === 'win' && m3.flags.zerkelWon === true, `wipe → win (${m3.result})`);
+  check(['lucky', 'phoenix', 'brian'].every((id) => !m3.find(id).ko && m3.find(id).hp >= 1), 'the wiped band stands back up');
+});
+
+// ---------------------------------------------------------------------------------------------
 group('script: ep0_rehearsal', (check) => {
   const party = [seed('lucky', 4), seed('phoenix', 4), seed('brian'), seed('ryan', 4, { opts: { form: 'possessed', guest: true } })];
   const m = new BattleModel({ encounter: { ...encounters.ep0_rehearsal }, party, data, rng: makeRng(77), meter: 0, flags: {}, script: BATTLE_SCRIPTS.ep0_rehearsal(), inventory: [], money: 4 });
