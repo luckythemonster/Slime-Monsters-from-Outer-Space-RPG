@@ -54,6 +54,9 @@ Small, and all of it pays off twelve times. One pull request.
    credits. Chapter 1 never built it. Add the key item, grant it in the alley scene, and have the save migration
    grant it to existing saves.
 9. **`docs/chapters/`.** One brief and one design spec per chapter live here.
+10. **Progression groundwork.** `docs/PROGRESSION.md`, "What changes in the Chapter 1 build": rename the level 5
+    riff `migraine` to `headache`, extend `xpTable` to 50, growth past level 8, the new save fields (`chops`,
+    `nodes`, `breath`, `words`, `stickers`, `scrap`) and the `rig` and `wear` slots, all behind the save migration.
 
 ## Systems, and the chapter that first needs each
 
@@ -213,6 +216,12 @@ What one chapter writes and a later one reads. Add a row whenever a chapter crea
 | The beam core | Ch 9 (Bajonka keeps it) | Ch 11 (set by the amp), Ch 12 (the nuclear amplifier) | |
 | The rider: yes or no | Ch 10 | Ch 11 (the ring, the salute), Ch 12 (where Bajonka sits), the summon | |
 | MIC CHECK done | Ch 11 | Ch 12 MIGRAINE | Lucky sings either way |
+| Chops and owned nodes, per member | every chapter from Ch 2 | every chapter | see `docs/PROGRESSION.md` |
+| The sticker sheet | Ch 2 on | every chapter | clipped to the Band Agreement; survives the collision |
+| SCRAP | Ch 7 on | Ch 7 to 12 (WELD) | not money; never invoiced |
+| Lucky's GUITAR nodes | Ch 2 to 10 | Ch 12 (David's kit) | chops refunded the morning Lucky goes clear |
+| Phoenix's BASS nodes | Ch 2 on | Ch 12 (the rascal) | transposed to the synth in between |
+| Postcards read | Ch 11 | Ch 12 (Diego's chops at the airlock) | |
 
 ## Decisions Lucky owes, and by when
 

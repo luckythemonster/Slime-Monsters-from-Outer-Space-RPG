@@ -11,7 +11,8 @@ rest of the game, one chapter at a time. Lucky calls you Clode.
 4. `docs/DESIGN.md`: the Chapter 1 design spec. It is the model for every later chapter's spec.
 5. The brief for the chapter you are on, under `docs/chapters/`.
 
-Then, as needed: `docs/SUBPLOT_BAJONKA_RIDER.md` (Chapter 10), `docs/SIDEQUEST_MIC_CHECK.md` (Chapter 11),
+Then, as needed: `docs/PROGRESSION.md` (levels, skill trees and equipment for the whole game),
+`docs/SUBPLOT_BAJONKA_RIDER.md` (Chapter 10), `docs/SIDEQUEST_MIC_CHECK.md` (Chapter 11),
 `docs/comic-outlines/` (the source comics), `docs/PHASER_API_DIGEST.md` (Phaser 4 signatures).
 
 ## Commands
