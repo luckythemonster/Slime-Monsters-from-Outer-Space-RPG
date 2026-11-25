@@ -317,6 +317,12 @@ export class BattleModel {
     return out;
   }
 
+  /** Every piece of gear a combatant has on, whatever slot it sits in (instrument, rig, wear, sticker). */
+  equipped(actor) {
+    const table = this.data.equipment || {};
+    return Object.values((actor && actor.equip) || {}).map((id) => (id ? table[id] : null)).filter(Boolean);
+  }
+
   text(text) { return this.emit({ type: 'text', text }); }
   say(who, text, extra = {}) { return this.emit({ type: 'say', who, text, ...extra }); }
   caption(text) { return this.emit({ type: 'caption', text }); }
@@ -462,8 +468,7 @@ export class BattleModel {
         const per = (actor.forms && actor.form && actor.forms[actor.form] && actor.forms[actor.form].toonPerAction) ?? actor.toonPerAction;
         if (per) this.addToon(per, 'ryan');
       }
-      const sticker = (this.data.equipment || {})[actor.equip.accessory];
-      if (sticker && sticker.toonPerAction) this.addToon(sticker.toonPerAction, 'sticker');
+      for (const piece of this.equipped(actor)) if (piece.toonPerAction) this.addToon(piece.toonPerAction, 'sticker');
     }
     this.hook('onAction', actor, a);
     this.checkEnd();
@@ -500,8 +505,9 @@ export class BattleModel {
     this.changeAmp(actor, -(r.amp || 0));
     this.emit({ type: 'anim', who: actor.uid, key: 'riff' });
     this.text(`${actor.name}: ${r.name}!`);
-    const acc = (this.data.equipment || {})[actor.equip.accessory];
-    if (acc && acc.selfOutOfTune && this.rng.chance(acc.selfOutOfTune)) this.inflict(actor, 'OUT_OF_TUNE', 3, `${actor.name}'s pedalboard crackles.`);
+    for (const piece of this.equipped(actor)) {
+      if (piece.selfOutOfTune && this.rng.chance(piece.selfOutOfTune)) this.inflict(actor, 'OUT_OF_TUNE', 3, `${actor.name}'s pedalboard crackles.`);
+    }
     const targets = this.targetsForMove(actor, r, a.target);
     this.applyMove(actor, r, targets, 'riff');
     if (r.scan) this.addToon(F.TOON_FILL.scan, 'scan');
@@ -693,9 +699,9 @@ export class BattleModel {
   attack(actor, target, move, { source = 'strum', extraMult = 1, isParty = actor.side === 'party' } = {}) {
     const ea = this.eff(actor);
     const et = this.eff(target);
-    const acc = (this.data.equipment || {})[actor.equip && actor.equip.accessory] || {};
-    const alwaysHit = !!move.alwaysHit || !!acc.hit100 || !!actor.hit100;
-    const noCrit = !!move.noCrit || !!acc.noCrit || !!actor.noCrit;
+    const gear = this.equipped(actor);
+    const alwaysHit = !!move.alwaysHit || gear.some((g) => g.hit100) || !!actor.hit100;
+    const noCrit = !!move.noCrit || gear.some((g) => g.noCrit) || !!actor.noCrit;
     const hitPct = F.hitChance({ attSpd: ea.spd, tgtSpd: et.spd, accMod: move.acc || 0, outOfTune: hasStatus(actor, 'OUT_OF_TUNE'), alwaysHit });
     if (!this.rng.chance(hitPct)) {
       this.emit({ type: 'damage', target: target.uid, amount: 0, miss: true, crit: false, source });

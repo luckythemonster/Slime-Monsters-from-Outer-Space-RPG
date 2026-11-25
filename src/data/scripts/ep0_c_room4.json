@@ -120,6 +120,7 @@
 
   "ep0_zerkel_after": [
     { "set": { "flags.zerkelPlayed": true } },
+    { "inc": { "vars.crowdBank": 40 } },
     { "say": "The hat comes back with a guitar pick and one drink ticket.", "who": "narrator" },
     { "say": "It went well. Nothing had ever gone well before.", "who": "narrator" },
     { "say": "We were GOOD. People stayed!", "who": "lucky", "portrait": "lucky_grin" },

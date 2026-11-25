@@ -1,26 +1,5 @@
 {
-  "xpTable": [
-    0,
-    10,
-    24,
-    48,
-    85,
-    135,
-    200,
-    275,
-    365,
-    470,
-    590,
-    725,
-    875,
-    1040,
-    1220,
-    1415,
-    1625,
-    1850,
-    2090,
-    2345
-  ],
+  "xpTable": [0, 10, 24, 48, 85, 135, 200, 275, 365, 470, 590, 725, 875, 1040, 1220, 1415, 1625, 1850, 2090, 2345, 2615, 2900, 3200, 3515, 3845, 4190, 4550, 4925, 5315, 5720, 6140, 6575, 7025, 7490, 7970, 8465, 8975, 9500, 10040, 10595, 11165, 11750, 12350, 12965, 13595, 14240, 14900, 15575, 16265, 16970],
   "characters": {
     "lucky": {
       "name": "Lucky",
@@ -48,9 +27,12 @@
         "spd": 1,
         "lck": 1
       },
+      "growthLate": { "from": 9, "hp": 6, "amp": 1, "atk": 2, "def": 1, "spd": 0.5, "lck": 0.3334 },
       "equip": {
         "instrument": "beatup_guitar",
-        "accessory": null
+        "rig": null,
+        "wear": null,
+        "sticker": null
       },
       "freq": "HIGH",
       "voice": "NOISE",
@@ -58,7 +40,7 @@
         "power_chord",
         "feedback_squeal",
         "pseudopod_slap",
-        "migraine",
+        "headache",
         "bristle"
       ],
       "syncs": [
@@ -88,35 +70,17 @@
       "growth": {
         "hp": 7,
         "amp": 2,
-        "atk": [
-          5,
-          6,
-          8,
-          9,
-          11,
-          12,
-          14,
-          15,
-          17,
-          18,
-          20,
-          21,
-          23,
-          24,
-          26,
-          27,
-          29,
-          30,
-          32,
-          33
-        ],
+        "atk": [5, 6, 8, 9, 11, 12, 14, 15, 17, 18, 20, 21, 23, 24, 26, 27, 29, 30, 32, 33, 35, 36, 38, 39, 41, 42, 44, 45, 47, 48, 50, 51, 53, 54, 56, 57, 59, 60, 62, 63, 65, 66, 68, 69, 71, 72, 74, 75, 77, 78],
         "def": 2,
         "spd": 1,
         "lck": 1
       },
+      "growthLate": { "from": 9, "hp": 7, "amp": 1, "def": 1.5, "spd": 0.5, "lck": 0.3334 },
       "equip": {
         "instrument": "trash_bag",
-        "accessory": "hoodie"
+        "rig": null,
+        "wear": "hoodie",
+        "sticker": null
       },
       "freq": "LOW",
       "riffs": [
@@ -162,7 +126,9 @@
       },
       "equip": {
         "instrument": "brians_strat",
-        "accessory": "pedalboard_2000"
+        "rig": "pedalboard_2000",
+        "wear": null,
+        "sticker": null
       },
       "freq": "HIGH",
       "riffs": [
@@ -213,7 +179,9 @@
       },
       "equip": {
         "instrument": "drumsticks",
-        "accessory": "flannel"
+        "rig": null,
+        "wear": "flannel",
+        "sticker": null
       },
       "freq": "PHYS",
       "riffs": [],

@@ -45,10 +45,13 @@ src/
     MapLoader.js            map JSON (section 4) → Phaser tilemap layers + entity objects
     Entities.js             Player / NPC / MapEnemy sprite classes (grid-aware movement)
     Input.js                unified keyboard + gamepad → logical actions
+    Chapters.js             the chapter table: each chapter's complete flag and entry script (section 6.2)
     Debug.js                window.__slime API (section 9)
     battle/
       BattleModel.js        PURE rules: turn order, damage, riffs, items, meter, status, AI. No Phaser.
-      BattleScripts.js      scripted mid-battle events keyed by encounter id (hooks into the model)
+      scripts/              scripted mid-battle events keyed by encounter `script` (hooks into the model):
+        index.js            merges the chapters' tables into BATTLE_SCRIPTS; a duplicate key throws
+        ch01.js             one module per chapter (ch02.js, ch03.js, ...). Chapter 1 keeps its ep0_ keys
       formulas.js
   ui/
     Window.js               SNES window frame (9-slice from generated 'ui' sheet)
@@ -238,7 +241,7 @@ one file: `{ "alley_phoenix": [ … ], "alley_sign": [ … ] }`. Script ids are 
 
 - Map entities: `script` (interact / overlap), `onDefeat` for enemies.
 - Maps: `"onEnter": "scriptId"` runs after load; `"onFirstEnter"` once.
-- Encounters: `"script"` → key in `BattleScripts.js` (code, not JSON, because mid-battle logic needs model access).
+- Encounters: `"script"` → key in `src/engine/battle/scripts/` (one module per chapter) (code, not JSON, because mid-battle logic needs model access).
 - Characters: `"onJoin"` script.
 
 ### 5.3 Conditions
@@ -251,21 +254,43 @@ operators `! && || == != < <= > >= + -`, parentheses, numbers, single-quoted str
 
 ```jsonc
 {
-  "version": 1,
+  "version": 2,                                // SAVE_VERSION; older saves are migrated on load (6.1)
   "chapter": 1,
   "map": "apartment", "x": 5, "y": 6, "facing": "down",
   "flags": { "metPhoenix": true },
   "vars": { "coffeeCount": 2 },
   "money": 4,
-  "party": [ { "id": "lucky", "level": 3, "xp": 120, "hp": 54, "amp": 12, "equip": { "instrument": "beatup_guitar", "accessory": null }, "status": [] } ],
+  "party": [ { "id": "lucky", "level": 3, "xp": 120, "hp": 54, "amp": 12, "equip": { "instrument": "beatup_guitar", "rig": null, "wear": null, "sticker": null }, "status": [],
+               "chops": 0, "nodes": [], "breath": null } ],   // skill points, owned tree nodes, Lucky's Breath pool (docs/PROGRESSION.md)
   "roster": ["lucky", "phoenix", "ryan"],      // everyone who has ever joined (for menus/story)
   "inventory": [ { "id": "pizza_slice", "qty": 2 } ],
   "meter": 0,                                  // shared party meter carried between battles? (design decides; default resets)
+  "words": [],                                 // NOISE words collected from set pieces (Chapter 1's three come by Toon level)
+  "stickers": [],                              // the sticker sheet: stickers owned and not on an instrument
+  "scrap": 0,                                  // the Disc 2 currency
   "playtimeMs": 123456,
   "savedAt": "2026-10-08T00:00:00Z"
 }
 ```
 `GameState` is a plain object + helper methods; scenes never mutate it except through `GameState` / `Party` / `Inventory` APIs. `localStorage` keys: `smfos.save.1..3`, `smfos.settings`.
+
+Equipment slots are `instrument`, `rig` (the amp, the pedals), `wear` and `sticker` (the first sticker slot on the instrument). `vars.crowdBank` counts the crowd at every gig; the last boss reads it.
+
+### 6.1 Save versions and migration
+
+**An old save is never refused.** `GameState.fromJSON` runs every save through `migrateSave(obj, data)` first. `MIGRATIONS[n]` in `src/engine/GameState.js` turns a version-n object into version n+1; a save steps through each one in order. To change the save format: bump `SAVE_VERSION`, add the next step, never edit a shipped step, and add a case to the `save migration` group in `tests/data.test.mjs`. A save from a newer build than the one running is refused with a clear error. Loading does not rewrite the stored save; the next save does.
+
+- **1 → 2:** the single `accessory` slot becomes `rig` / `wear` / `sticker` (the equipment table decides which; unknown gear goes back in the bag); members gain `chops`, `nodes`, `breath`; the state gains `words`, `stickers`, `scrap`; a save from after the alley is handed the Pothole Invoice; `vars.crowdBank` is back-filled from the gigs already played.
+
+`tests/fixtures/save_ch1_end_v1.json` is a real version 1 save from the end of Chapter 1, written by `tests/chapter1.mjs` (`CH1_SAVE_FIXTURE_OUT=...`) on the last build before version 2. It is the old save that must keep loading; do not regenerate it.
+
+### 6.2 Chapters
+
+`src/engine/Chapters.js` is the one table of chapters: number, title, `completeFlag`, `entry` script. A chapter ends by setting its complete flag, saving, and running `{"title": true}`. When CONTINUE loads a save whose chapter is complete, `TitleScene` asks `nextChapterEntry(state)` and starts Explore with that script as `chapterEntry`: the camera stays black, the old map's enter hooks do not run, and the entry script owns the hand-off (the card, the first map, `state.chapter`). Start data is one-shot: Explore clears it in `init`, because Phaser would hand the same object back on the next start. Until Chapter 2 is built, `ch02_start` shows the chapter card and TO BE CONTINUED and returns to the title; the save is untouched.
+
+From Chapter 2 on, maps, scripts, NPC files, encounters, battle-script keys and songs carry the chapter prefix (`ch02_`, `ch03_`, ...). Chapter 1's data keeps `ep0_`.
+
+Each chapter has a seeded start in `tests/fixtures/chNN_start.json`, built by `node tests/fixtures/make.mjs` from a real playthrough save through `migrateSave`. A chapter's tests begin there with `__slime.loadSave(obj)` instead of replaying the chapters before it. `tests/data.test.mjs` fails if a seeded start goes stale.
 
 ## 7. Audio contracts
 
@@ -327,6 +352,7 @@ window.__slime = {
   game, state: GameState,
   scene: () => activeSceneKey,  // 'Title' | 'Explore' | 'Battle' | 'Menu' | 'Freefall' | 'GameOver'
   newGame(), load(slot), save(slot),
+  loadSave(obj),                // start from a save object of any version (tests/fixtures/chNN_start.json)
   warp(mapId, x, y),            // from anywhere in Explore
   setFlag(path, value), give(itemId, qty), setMoney(n), addParty(id), removeParty(id),
   startBattle(encounterId, {ambush}), // resolves with 'win' | 'lose' | 'flee'; ambush: true → enemies act first in round 1
@@ -352,7 +378,7 @@ Boot → Title ⇄ (New/Continue) → Explore ──(exit)──► Explore (sam
                                    │ {"scene":"freefall"} → Freefall → back
                                    │ menu key → MenuScene (overlay; Explore paused)
 Battle ──win──► Explore (resume, rewards shown) ──lose──► GameOver → Title
-Explore ──{"title"} (chapter end, after a save)──► Title (CONTINUE enabled; loads that save)
+Explore ──{"title"} (chapter end, after a save)──► Title (CONTINUE loads that save and starts the next chapter's entry script, 6.2)
 ```
 `UIScene` is launched once after Boot and never stopped; it exposes `ui.say()`, `ui.choice()`, `ui.caption()`,
 `ui.fade()` returning Promises. Explore and Battle are the only scenes that read gameplay input; `Input.js`

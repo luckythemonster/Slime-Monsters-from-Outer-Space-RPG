@@ -14,7 +14,7 @@ import { makeRng } from '../src/engine/battle/rng.js';
 import { STATUS, applyStatus, removeStatus, hasStatus, tickRound, statusMods, statusId } from '../src/engine/battle/statuses.js';
 import { BattleModel } from '../src/engine/battle/BattleModel.js';
 import { decide, aiContext } from '../src/engine/battle/BattleAI.js';
-import { BATTLE_SCRIPTS } from '../src/engine/battle/BattleScripts.js';
+import { BATTLE_SCRIPTS } from '../src/engine/battle/scripts/index.js';
 import { partySeed, levelStats, buildBattle, applyResults } from '../src/engine/battle/setup.js';
 import { GameState } from '../src/engine/GameState.js';
 
@@ -220,7 +220,7 @@ group('stats tables L1-8', (check) => {
   check(s.atk === 10 && s.freq === 'HIGH' && s.maxHp === 28, 'seed applies Beat-Up Guitar (+3 ATK, HIGH)');
   const p = seed('phoenix', 1);
   check(p.atk === 7 && p.def === 7 && p.freq === 'PHYS', 'Phoenix seed: Trash Bag +2 PHYS, Hoodie +1 DEF');
-  const glasses = partySeed(data, 'lucky', { equip: { accessory: 'slime_sunglasses' } });
+  const glasses = partySeed(data, 'lucky', { equip: { wear: 'slime_sunglasses' } });
   check(glasses.lck === 8 && glasses.immune.includes('DAZED'), 'sunglasses LCK +2, immune DAZED');
   for (const id of Object.keys(data.characters)) for (const rid of data.characters[id].riffs.concat(data.characters[id].syncs)) check(!!riffs[rid], `${id} riff ${rid} exists`);
   for (const [id, enc] of Object.entries(encounters)) for (const e of enc.enemies) check(!!enemies[typeof e === 'string' ? e : e.id], `encounter ${id} enemy exists`);
@@ -324,7 +324,7 @@ group('toon meter', (check) => {
   check(m3.meter === 2, `Brian halves STRUM +4 → +2 (got ${m3.meter})`);
   check(m3.addToon(3) === 1 && m3.meter === 3, 'floor(3/2) = 1');
   // Band sticker +1 per action; carryover.
-  const st = partySeed(data, 'lucky', { level: 3, equip: { accessory: 'band_sticker' } });
+  const st = partySeed(data, 'lucky', { level: 3, equip: { sticker: 'band_sticker' } });
   const m4 = model({ party: [st], enemyIds: ['chorus'], rng: zeroRng });
   m4.start(); m4.advance(); m4.act('lucky', { cmd: 'tune' });
   check(m4.meter === 1, 'sticker +1 on a TUNE');
@@ -485,10 +485,10 @@ group('statuses', (check) => {
   check(m5.find('lucky').amp === m5.find('lucky').maxAmp && m5.find('phoenix').amp === m5.find('phoenix').maxAmp && hasStatus(m5.find('phoenix'), 'BAKED'), 'Half-Ounce session');
   check(m5.inventory.find((e) => e.id === 'half_ounce').qty === 3, 'consumed one');
   // Earplugs immune DEAF; fried pedalboard self OUT OF TUNE per RIFF (maxRng → always).
-  const plugs = partySeed(data, 'lucky', { level: 3, equip: { accessory: 'earplugs' } });
+  const plugs = partySeed(data, 'lucky', { level: 3, equip: { wear: 'earplugs' } });
   const m6 = model({ party: [plugs], enemyIds: ['chorus'], rng: zeroRng });
   check(m6.inflict(m6.find('lucky'), 'DEAF') === false, 'Earplugs immune DEAF');
-  const fried = partySeed(data, 'lucky', { level: 3, equip: { accessory: 'fried_pedalboard' } });
+  const fried = partySeed(data, 'lucky', { level: 3, equip: { rig: 'fried_pedalboard' } });
   const m7 = model({ party: [fried], enemyIds: ['chorus'], rng: maxRng });
   m7.start(); m7.advance(); m7.act('lucky', { cmd: 'riff', riff: 'power_chord', target: 'chorus' });
   check(hasStatus(m7.find('lucky'), 'OUT_OF_TUNE') && fried.atk === 18, 'Fried Pedalboard: ATK +4, self OUT OF TUNE on a riff');

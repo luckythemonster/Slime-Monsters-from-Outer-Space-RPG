@@ -7,18 +7,18 @@
 import { BattleModel } from './BattleModel.js';
 import { makeRng } from './rng.js';
 import { meterCarryover } from './formulas.js';
-import { BATTLE_SCRIPTS } from './BattleScripts.js';
-import { STAT_KEYS, levelStats } from '../Party.js';
+import { BATTLE_SCRIPTS } from './scripts/index.js';
+import { STAT_KEYS, EQUIP_SLOTS, levelStats } from '../Party.js';
 
 // The stat list and the level→base-stats rule live in Party.js (one source of truth); re-exported
 // here because the battle tests and BattleScene import them from the bridge.
 export { STAT_KEYS, levelStats };
 
-/** Equipment bonuses and flags for an equip map { instrument, accessory }. */
+/** Equipment bonuses and flags for an equip map { instrument, rig, wear, sticker }. */
 export function equipBonus(equipment, equip = {}) {
   const out = { bonus: {}, immune: [], hit100: false, noCrit: false, freq: null, onHit: null, toonPerAction: 0, selfOutOfTune: 0 };
   for (const k of STAT_KEYS) out.bonus[k] = 0;
-  for (const slot of ['instrument', 'accessory']) {
+  for (const slot of EQUIP_SLOTS) {
     const eq = equip && equip[slot] ? equipment[equip[slot]] : null;
     if (!eq) continue;
     for (const k of STAT_KEYS) out.bonus[k] += (eq.bonus && eq.bonus[k]) || 0;
@@ -45,7 +45,7 @@ export function partySeed(data, id, member = {}, opts = {}) {
   if (!def) throw new Error(`partySeed: unknown character "${id}"`);
   const level = member.level || def.startLevel || 1;
   const base = levelStats(def, level);
-  const equip = { instrument: null, accessory: null, ...(def.equip || {}), ...(member.equip || {}) };
+  const equip = { instrument: null, rig: null, wear: null, sticker: null, ...(def.equip || {}), ...(member.equip || {}) };
   const eb = equipBonus(data.equipment || {}, equip);
   const stats = {};
   for (const k of STAT_KEYS) stats[k] = base[k] + eb.bonus[k];

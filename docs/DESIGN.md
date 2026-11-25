@@ -169,7 +169,7 @@ Floor-band triggers `ep0_dad_1..4` (once each; `condition: !flags.podSpeakerSlap
 2. `say phoenix` "{speed:slow}…"
 3. `sfx crash`; `camera shake 900 0.03`; `camera flash 120`; `spawn crater sprite:crater 9 8`; `spawn crash_fx sprite:crash_word 10 4` (Toon 2: CRASH is an object); `move crash_fx "RRR" wait:true` — each dumpster it passes swaps to `dumpster_down` (`sprite dumpster_1 dumpster_down` ×4 between steps); `despawn crash_fx`.
 4. `sprite player lucky_puddle`; `wait 900`; `anim phoenix phoenix_glasses_push wait:true`.
-5. `say phoenix portrait:phoenix_tired` "My brain thinks you're going to have to pay the city for that pothole."
+5. `say phoenix portrait:phoenix_tired` "My brain thinks you're going to have to pay the city for that pothole." `give item:pothole_invoice` (toast "Got Pothole Invoice. $1,400. It cannot be paid.").
 6. `anim player lucky_reform wait:true` (`sfx slime_pop` ×3 — pop-pop-pop); `sprite player lucky`.
 7. `say lucky` "My dad runs Demographic Alignment for the Vanguard. He thinks a personality is a market segment." / `say lucky` "Planet California is one billboard with a dental plan." / `say lucky` "My old band's still back there. Or they're not. I didn't check."
 8. `face phoenix toward:player`; `say phoenix` "I came here for college. The economy fell over. Rent didn't." / `say phoenix` "I'm a permanent resident of the Midwest now. It's a medical condition."
@@ -255,7 +255,7 @@ Floor-band triggers `ep0_dad_1..4` (once each; `condition: !flags.podSpeakerSlap
 1. `camera fade out`; `caption "THAT SUMMER" 1800 style:tape`; `teleport zerkel_pit 7 5`; the band on the flatbed: Lucky (7,5), Phoenix (6,5), Brian (4,4), Ryan (10,3) behind the kit; `music null`; `camera fade in`.
 2. `say narrator` "ZERKEL PIT PUNX FEST. A parking lot, a flatbed and a sky." `say ryan_caption` "[Outside. In front of people.]" / "[The truck has wheels. I could still leave.]" `say brian` "Is this stage rated for a $2,000 pedalboard?" `say phoenix` "My brain thinks it is rated for hay."
 3. `battle ep0_zerkel` (the one fight the band simply wins; cannot be lost; see Battle system); onWin and onLose: `run ep0_zerkel_after`.
-4. `ep0_zerkel_after`: `set flags.zerkelPlayed`; `say narrator` "The hat comes back with a guitar pick and one drink ticket." / "It went well. Nothing had ever gone well before." `say lucky portrait:lucky_grin` "We were GOOD. People stayed!" `say phoenix` "My brain thinks they clapped on purpose." `say ryan portrait:ryan_stoic` "I almost quit before the show. I thought we'd suck." `emote player …`; `choice` [[Say something] → `set vars.zerkelChoice 1`; `say lucky` "You thought we'd…" / [Let it go] → `set vars.zerkelChoice 0`; `say narrator` "Lucky lets it go."]; `set flags.zerkelLetGo`. Then `say brian` "We ran four minutes long. Festivals remember that." and, on [Say something], `say narrator` "Brian is talking. The moment is gone. Lucky lets it go." Both options end the same way: the choice is Lucky's and it changes nothing.
+4. `ep0_zerkel_after`: `set flags.zerkelPlayed`; `inc vars.crowdBank 40` (the crowd bank the last boss reads); `say narrator` "The hat comes back with a guitar pick and one drink ticket." / "It went well. Nothing had ever gone well before." `say lucky portrait:lucky_grin` "We were GOOD. People stayed!" `say phoenix` "My brain thinks they clapped on purpose." `say ryan portrait:ryan_stoic` "I almost quit before the show. I thought we'd suck." `emote player …`; `choice` [[Say something] → `set vars.zerkelChoice 1`; `say lucky` "You thought we'd…" / [Let it go] → `set vars.zerkelChoice 0`; `say narrator` "Lucky lets it go."]; `set flags.zerkelLetGo`. Then `say brian` "We ran four minutes long. Festivals remember that." and, on [Say something], `say narrator` "Brian is talking. The moment is gone. Lucky lets it go." Both options end the same way: the choice is Lucky's and it changes nothing.
 5. `run ep0_chorus`.
 
 ### CS-13c `ep0_chorus` — Toon 0 → 2
@@ -294,7 +294,7 @@ Floor-band triggers `ep0_dad_1..4` (once each; `condition: !flags.podSpeakerSlap
 4. `music null` (the song starts after the battle's count-in); `battle ep0_palmers_set onLose:gameover`; onWin: `run ep0_aftermath`. (The first power chord, the mohawk, the shockwave, the one choice Ryan gets all game — [Keep fighting it] / [Let go] — and The Eternity all happen inside the battle; see B-11 and Set pieces.)
 
 ### CS-17 `ep0_aftermath` — Toon 1 → 0
-1. `teleport palmers_rubble 8 9`; `sfx cymbal` (long); ambient `wind`; `camera fade in 1500`; `say narrator` "The dust settles. The night sky is where the ceiling used to be."
+1. `inc vars.crowdBank 40`; `teleport palmers_rubble 8 9`; `sfx cymbal` (long); ambient `wind`; `camera fade in 1500`; `say narrator` "The dust settles. The night sky is where the ceiling used to be."
 2. `sprite player lucky_plaster`; `sprite phoenix phoenix_plaster`; `spawn ryan sprite:ryan_slimed_map 23 7 facing:down`; `anim ryan ryan_reform wait:true` (two intact sticks); `music plaster_dust`.
 3. `say lucky` "Okay. That is our sound." `say phoenix` "My brain thinks we are officially domestic terrorists."
 4. `say ryan portrait:ryan_stoic` "I think I broke the space-time continuum on that snare fill."
@@ -447,7 +447,7 @@ Three archetypes: **Brute** (two attacks, one with a status), **Caller** (timers
 Palette-variant sheet swaps driven by events: BRISTLING → `lucky_battle_rage`; HP < 25% → `lucky_battle_deflated`; KO → `lucky_battle_bruised` (the puddle); landing a crit → the `g` glow swapped to white for 6 frames (a baked `_flare` variant). The tutorial teaches it: Phoenix's toast after the first hit Lucky takes reads "Your color's doing a thing."
 
 ### Scripted battles, hook by hook
-Keyed by encounter id in `BattleScripts.js` using the §8 hooks plus the extensions in *Engine extensions required*. Hooks return presentation events.
+Keyed by encounter id in `src/engine/battle/scripts/ch01.js` using the §8 hooks plus the extensions in *Engine extensions required*. Hooks return presentation events.
 
 **B-1 `alley_drone` — tutorial.** Vanguard Retrieval Drone vs. Lucky alone. Not `noFlee`, but BAIL is grayed "Not yet." Toon 0.
 - `onStart`: text "A Vanguard Retrieval Drone followed the pod."; toast "STRUM to attack. Hits put AMP in the tank."; only STRUM and TUNE lit in round 1.
@@ -529,7 +529,7 @@ Budget: critical path = drone 8 + the two chokepoint hub fights (Slush 8 + Scoot
 | Lucky | 1 | Power Chord | 3 | HIGH | 140 | Single. |
 | Lucky | 2 | Feedback Squeal | 4 | NOISE | 70 | All, acc −10, 50% DEAF. |
 | Lucky | 3 | Pseudopod Slap | 3 | PHYS | 110 | Single, 60% DAZED. |
-| Lucky | 5 | Migraine | 7 | NOISE | 150 | All, 30% OUT OF TUNE. |
+| Lucky | 5 | Headache | 7 | NOISE | 150 | All, 30% OUT OF TUNE. (MIGRAINE is Lucky's ultimate, learned in Chapter 11; one riff in a rehearsal room is a headache.) |
 | Lucky | 7 | Bristle | 4 | — | — | Self BRISTLING 3. |
 | Phoenix | 1 | Root Note | 3 | LOW | 130 | Single, 30% TEMPO DOWN. |
 | Phoenix | 2 | My Brain Thinks | 2 | — | — | Scan: HP, weak, resist, flavor line. +5 Toon. |
@@ -550,7 +550,7 @@ Budget: critical path = drone 8 + the two chokepoint hub fights (Slush 8 + Scoot
 Syncs (Shared Aura, Low-End Theory, Wall of Sound, Pocket) are in `riffs.json` with `"sync": ["lucky","phoenix"]`; NOISE words (POP!, KRAAANG, KRATHOOM, DOOM, CRACK, THUD) are in the same file with `"toonCost"`. Total 24 riff entries.
 
 ### Brian, the deliberately bad temp member
-- **$2,000 Pedalboard** (locked accessory): hit 100, crit 0.
+- **$2,000 Pedalboard** (locked, RIG slot): hit 100, crit 0.
 - **Market Alignment**: Toon gains halved while he is in the party; the TOON label turns beige.
 - **Buzzkill**: 20% per round (never round 1) he ignores the command and complains, losing the turn. Six lines rotate: "Can we turn the bass down?", "Do we really need the stickers?", "Is this in a weird time signature?", "My coffee's getting warm.", "Can we play something people know?", "I've got a thing at nine."
 - No SYNC, no NOISE ("Brian hates this"). Tube Screamer is his one big hit and self-sabotages 30% of the time.
@@ -610,9 +610,9 @@ Start: **$4**, Half-Ounce (×4), Beat-Up Guitar equipped, Spiky Slime Sunglasses
 | Hand Warmer | 5 | Cure DEAF and TEMPO DOWN, heal 8. | Café; pawn after the skip |
 | Tater Tot Hotdish | 15 | Revive at 50% HP. | Fridge (1); café after the skip |
 | Half-Ounce (×4) | pawn pays $20 for the lot | "Session": party AMP to max, BAKED 3. Usable on the map. | Start |
-| Fried Pedalboard | pawn pays $11 | Key item / accessory (ATK +4, 15% self OUT OF TUNE per RIFF). | Brian leaves it |
+| Fried Pedalboard | pawn pays $11 | Key item / RIG (ATK +4, 15% self OUT OF TUNE per RIFF). | Brian leaves it |
 
-Key items (never sold, never used from the menu): Flyer (blank, until posted), Band Agreement ("{n} pages"), Tinny Ride Cymbal, Palmer's Flyer, Van Keys, Tour Itinerary.
+Key items (never sold, never used from the menu): Flyer (blank, until posted), Band Agreement ("{n} pages"), Tinny Ride Cymbal, Palmer's Flyer, Van Keys, Tour Itinerary, Pothole Invoice ("CITY OF MINNEAPOLIS: POTHOLE, 1 (one). $1,400. It cannot be paid."; Phoenix's pothole line in the alley hands it over, and it never leaves the inventory).
 
 | Equipment | Slot | Who | Stats | $ | Where |
 |---|---|---|---|---|---|
@@ -622,12 +622,12 @@ Key items (never sold, never used from the menu): Flyer (blank, until posted), B
 | Beat-Up Bass | instrument | Phoenix | ATK +4, LOW | — | apartment |
 | P-Bass Copy | instrument | Phoenix | ATK +7, DEF +1, LOW | 24 | pawn (after the skip) |
 | Brian's Strat / Drumsticks | instrument | Brian / Ryan | ATK +5 HIGH / ATK +3 PHYS; locked | — | fixed |
-| Spiky Slime Sunglasses | accessory | Lucky | LCK +2, immune DAZED | — | freefall |
-| Hoodie | accessory | Phoenix | DEF +1 | — | start |
-| Earplugs | accessory | any | immune DEAF | 10 | pawn |
-| Band Sticker | accessory | any | +1 Toon per action | 6 | pawn |
-| Price-Tag Leather Jacket | accessory | any | DEF +4; sells $20 | — | cop drop |
-| $2,000 Pedalboard / Flannel | accessory | Brian / Ryan | hit 100 crit 0 / DEF +3; locked | — | fixed |
+| Spiky Slime Sunglasses | wear | Lucky | LCK +2, immune DAZED | — | freefall |
+| Hoodie | wear | Phoenix | DEF +1 | — | start |
+| Earplugs | wear | any | immune DEAF | 10 | pawn |
+| Band Sticker | sticker (goes on the instrument) | any | +1 Toon per action | 6 | pawn |
+| Price-Tag Leather Jacket | wear | any | DEF +4; sells $20 | — | cop drop |
+| $2,000 Pedalboard / Flannel | rig / wear | Brian / Ryan | hit 100 crit 0 / DEF +3; locked | — | fixed |
 
 **Shops (`shops.json`).** `cafe` (barista): Pizza Slice, Gas Station Coffee, Hand Warmer; Tater Tot Hotdish after `monthLater`. `pawnshop` (pawn door): Thrift Telecaster, Earplugs, Band Sticker; after `monthLater` also P-Bass Copy and Hand Warmer. Buys the Fried Pedalboard $11, the Half-Ounce $20, the Jacket $20, anything else at half price; refuses key items.
 

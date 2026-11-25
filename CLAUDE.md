@@ -21,6 +21,7 @@ Then, as needed: `docs/PROGRESSION.md` (levels, skill trees and equipment for th
 npm install
 npm run dev                 # play at http://localhost:5173 (?fast=1 skips fades)
 npm test                    # everything; about 15 minutes
+npm test -- --chapter 2     # the fast tests, the build, and one chapter's suites
 node tests/data.test.mjs    # fast: every id in every data file resolves
 node tests/battle.test.mjs  # fast: the battle model and every scripted battle
 python3 tools/gen_assets.py --check       # validate the ASCII art
@@ -36,7 +37,7 @@ The browser tests need Playwright and Chrome. A single suite reuses the last bui
 - Everything is generated from text in this repo. Art is ASCII pixel maps in `tools/sprites/`, `tools/tiles/`
   and `tools/ui/`. Music is synthesized from `src/audio/songs/`. No third-party assets, ever.
 - Content is data: maps, cutscene scripts, NPCs, enemies, riffs and items are JSON under `src/data/`. Scripted
-  battle logic is code in `src/engine/battle/BattleScripts.js`.
+  battle logic is code in `src/engine/battle/scripts/`, one module per chapter.
 - Sprites use the shared 32-color palette in `tools/palettes.md`, 16 colors or fewer per sheet.
 - Generated PNGs are committed. The generator's compression differs by machine, so always regenerate with
   `tools/regen_assets.py`. A commit should only carry PNGs whose pixels changed.
@@ -94,10 +95,9 @@ These are Lucky's decisions. They hold in dialogue, narration, item text, menus 
 
 ## Known rough edges
 
-- `tests/chapter1_wrong.mjs` failed once in section S10 (a null scene inside the test's `adjacentSpot` helper)
-  during a full run, then passed twice. If it recurs, fix the race in the helper. Do not delete the check.
+- `tests/chapter1_wrong.mjs` section S10 used to fail now and then (a null scene, an "unreachable" NPC, a Game
+  Over at the pawn door). The cause was the hub's roaming enemies catching the player mid-sweep. The sweep now
+  parks every enemy it skips. If S10 fails again it is something new: the error names the scene it lost the map to.
 - `tests/content_c.mjs` plays the AUDITION by confirm-spam with an unseeded RNG. It lost the fight once in a full
   run (a game over while waiting for the contract), then passed twice. If it recurs, seed the battle or raise
   the test party's level. Do not delete the check.
-- `src/engine/battle/BattleScripts.js` holds every scripted battle in one file. Split it per chapter before it
-  grows (see the roadmap, Foundations).

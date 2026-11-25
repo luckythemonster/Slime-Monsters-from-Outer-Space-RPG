@@ -1,0 +1,177 @@
+{
+  "version": 1,
+  "chapter": 1,
+  "map": "palmers_rubble",
+  "x": 16,
+  "y": 9,
+  "facing": "left",
+  "flags": {
+    "visited_pod_bay": true,
+    "podIntro": true,
+    "trig_pod_bay_dad_1": true,
+    "trig_pod_bay_dad_2": true,
+    "trig_pod_bay_dad_3": true,
+    "trig_pod_bay_dad_4": true,
+    "podSpeakerSlapped": true,
+    "trig_pod_bay_dad_4_mmf": true,
+    "trig_pod_bay_dad_3_mmf": true,
+    "trig_pod_bay_dad_2_mmf": true,
+    "trig_pod_bay_dad_1_mmf": true,
+    "ejected": true,
+    "freefallSkipped": false,
+    "visited_alley": true,
+    "tutorialDone": true,
+    "phoenixJoined": true,
+    "metPhoenix": true,
+    "droneDefeated": true,
+    "pizzaBoxLooted": true,
+    "bajonkaSeen": true,
+    "visited_street_cedar": true,
+    "visited_apartment": true,
+    "visited_rooftops": true,
+    "visited_garage_north": true,
+    "signalSent": true,
+    "weekLater": true,
+    "hubOpen": true,
+    "couchCushions": true,
+    "aptBajonkaRead": true,
+    "fridgeLooted": true,
+    "bassTaken": true,
+    "trig_apartment_autosave_door": true,
+    "trig_street_cedar_towers_autosave": true,
+    "visited_coffee_shop": true,
+    "flyerPosted": true,
+    "brianJoined": true,
+    "ryanCalled": true,
+    "brianCalledRyan": true,
+    "cleared_slush": true,
+    "cleared_scooters": true,
+    "visited_city_sound_hall": true,
+    "trig_city_sound_hall_ryan_arrives": true,
+    "ryanArrived": true,
+    "hasBajonka": true,
+    "visited_room4": true,
+    "auditionStarted": true,
+    "auditionWon": true,
+    "auditionDone": true,
+    "ryanJoined": true,
+    "monthLater": true,
+    "monthLaterRan": true,
+    "visited_zerkel_pit": true,
+    "zerkelWon": true,
+    "zerkelPlayed": true,
+    "zerkelLetGo": true,
+    "kraaangFired": true,
+    "brianFried": true,
+    "pedalboardFried": true,
+    "brianQuit": true,
+    "hasPalmersFlyer": true,
+    "gigFlyer": true,
+    "visited_palmers": true,
+    "jukeboxPlayed": true,
+    "trig_palmers_stage": true,
+    "onStage": true,
+    "mohawkOff": true,
+    "letGo": true,
+    "eternityChoice": "letGo",
+    "eternityArmed": true,
+    "eternityFired": true,
+    "eternityDone": true,
+    "visited_palmers_rubble": true,
+    "luckyRageLocked": true,
+    "ryanQuit": true,
+    "ch1Complete": true
+  },
+  "vars": {
+    "billboardsTagged": 0,
+    "lastAutosave": "city_sound_hall",
+    "flyerText": 2,
+    "saveCount": 4,
+    "weedCount": 4,
+    "contractPages": 4,
+    "zerkelChoice": 0,
+    "quitResponse": 1
+  },
+  "money": 14,
+  "party": [
+    {
+      "id": "lucky",
+      "level": 7,
+      "xp": 206,
+      "hp": 64,
+      "amp": 20,
+      "equip": {
+        "instrument": "beatup_guitar",
+        "accessory": null
+      },
+      "status": []
+    },
+    {
+      "id": "phoenix",
+      "level": 7,
+      "xp": 206,
+      "hp": 76,
+      "amp": 22,
+      "equip": {
+        "instrument": "beatup_bass",
+        "accessory": "hoodie"
+      },
+      "status": []
+    }
+  ],
+  "roster": [
+    "lucky",
+    "phoenix",
+    "brian",
+    "ryan"
+  ],
+  "inventory": [
+    {
+      "id": "half_ounce",
+      "qty": 4
+    },
+    {
+      "id": "slime_sunglasses",
+      "qty": 1
+    },
+    {
+      "id": "trash_bag",
+      "qty": 1
+    },
+    {
+      "id": "coffee",
+      "qty": 2
+    },
+    {
+      "id": "band_agreement",
+      "qty": 1
+    },
+    {
+      "id": "fried_pedalboard",
+      "qty": 1
+    },
+    {
+      "id": "palmers_flyer",
+      "qty": 1
+    },
+    {
+      "id": "price_tag_jacket",
+      "qty": 1
+    },
+    {
+      "id": "tinny_ride_cymbal",
+      "qty": 1
+    },
+    {
+      "id": "van_keys",
+      "qty": 1
+    },
+    {
+      "id": "tour_itinerary",
+      "qty": 1
+    }
+  ],
+  "meter": 50,
+  "playtimeMs": 113389,
+  "savedAt": "2026-11-25T14:28:40.136Z"
+}

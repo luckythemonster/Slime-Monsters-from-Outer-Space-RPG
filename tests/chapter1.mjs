@@ -17,7 +17,7 @@
 // Part of tests/run.mjs (after content_c.mjs). Knobs: PLAYWRIGHT_MODULE, SMOKE_CHROME, EXPLORE_KEEP_DIST=1.
 
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdirSync, readdirSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, writeFileSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import { createRequire } from 'node:module';
@@ -432,7 +432,8 @@ async function main() {
 
     // ---- the driver ------------------------------------------------------------------------------------
     let freefallSteered = false;
-    const drive = async (label, pred, { timeout = SCENE_TIMEOUT_MS, allowGameOver = false } = {}) => {
+    // `predFirst`: test the predicate before any UI is handled (for a stop on the title menu, which is always "busy").
+    const drive = async (label, pred, { timeout = SCENE_TIMEOUT_MS, allowGameOver = false, predFirst = false } = {}) => {
       const t0 = Date.now();
       let last = null;
       while (Date.now() - t0 < timeout) {
@@ -440,6 +441,7 @@ async function main() {
         last = p;
         await takeWanted(p);
         if (!p.uiBusy) lastSeenKey = null; // a new box may repeat the last line word for word
+        if (predFirst && pred(p)) return p;
         if (p.scene === 'GameOver') {
           if (!allowGameOver) throw new GameOverSignal(label);
           await press('confirm');
@@ -818,14 +820,31 @@ async function main() {
     check('S13 PLEAD carries the complicity line after "One more show."', seen.findIndex((l) => l.who === 'narrator' && l.text === 'He already let go once. That was the show.') > seen.findIndex((l) => l.who === 'lucky' && l.text.includes('One more show')), seen.filter((l) => l.map === 'palmers_rubble').map((l) => `${l.who}: ${l.text}`));
     const exploresBeforeEnd = p.exploreSeen; // CONTINUE starts a fresh Explore scene; the rubble teleport before the title did not
     uiPlan.push({ match: (l) => l[0] === 'New Game', pick: 1 });
-    p = await drive('CS-17 stinger → NEXT → save → Title → CONTINUE', (q) => q.scene === 'Explore' && q.exploreSeen > exploresBeforeEnd && q.snap.flags.ch1Complete === true && q.snap.map === 'palmers_rubble' && q.idle);
+    // CONTINUE on the finished chapter does not go back to the rubble: Chapters.js hands the save to Chapter 2's
+    // entry script (the chapter card, then TO BE CONTINUED until Chapter 2 is built), which returns to the title.
+    const titlesBeforeEnd = p.titleSeen;
+    const cardsSeen = [];
+    p = await drive('CS-17 stinger → NEXT → save → Title → CONTINUE → ch02_start → Title', (q) => {
+      const c = cap(q).text;
+      if (c && !cardsSeen.includes(c)) cardsSeen.push(c);
+      return q.scene === 'Title' && q.titleSeen >= titlesBeforeEnd + 2 && q.exploreSeen > exploresBeforeEnd && cardsSeen.some((t) => /TO BE CONTINUED/.test(t));
+    }, { predFirst: true });
+    check('S13 CONTINUE on the finished chapter starts Chapter 2: the chapter card, then TO BE CONTINUED, then the title', cardsSeen.some((t) => /CHAPTER 2/.test(t) && /POTATO BELT/.test(t)) && cardsSeen.findIndex((t) => /CHAPTER 2/.test(t)) < cardsSeen.findIndex((t) => /TO BE CONTINUED/.test(t)) && p.scene === 'Title', cardsSeen);
     check('S13 ch1Complete, van keys + itinerary + the Tinny Ride he left', p.snap.flags.ch1Complete === true && has(p.snap, 'van_keys') && has(p.snap, 'tour_itinerary') && has(p.snap, 'tinny_ride_cymbal'), p.snap.inventory);
     check('S13 the final clipboard page (saveCount 4) went to PAGE 2 and CONTINUE loaded it', p.snap.vars.saveCount === 4 && p.slot === 2, { vars: p.snap.vars, slot: p.slot });
-    check('S13 the title screen came up for the round trip, the chapter end and every retry', p.titleSeen === 2 + report.retries, { titleSeen: p.titleSeen, retries: report.retries });
-    check('S13 CONTINUE lands in the rubble at (16,9) with Bajonka (save) and the band', p.snap.map === 'palmers_rubble' && at(p, 16, 9) && !!(ent(p, 'bajonka') && ent(p, 'bajonka').type === 'save') && party(p.snap) === 'lucky,phoenix', { pos: pos(p), party: party(p.snap) });
-    check('S13 Lucky stays rage-locked on the map after the reload', p.player.sheet === 'lucky_rage', p.player.sheet);
+    check('S13 the title screen came up for the round trip, the chapter end, the Chapter 2 hand-off and every retry', p.titleSeen === 3 + report.retries, { titleSeen: p.titleSeen, retries: report.retries });
+    check('S13 the save still stands at the end of Chapter 1: the rubble at (16,9), the band of two', p.snap.map === 'palmers_rubble' && p.snap.x === 16 && p.snap.y === 9 && party(p.snap) === 'lucky,phoenix' && p.snap.chapter === 1, { pos: pos(p), party: party(p.snap) });
+    check('S13 Lucky is still rage-locked in the save Chapter 2 will open on', p.snap.flags.luckyRageLocked === true, p.snap.flags.luckyRageLocked);
+    check('S13 carried into Chapter 2: the Pothole Invoice from the alley, and 80 in the crowd bank (Zerkel Pit and Palmer\'s)', has(p.snap, 'pothole_invoice') && p.snap.vars.crowdBank === 80, { inv: p.snap.inventory, vars: p.snap.vars });
     levels.end = levelsOf(p.snap);
     await shot('ch1_13_rubble');
+    // CH1_SAVE_FIXTURE_OUT=<path>: write the save this real playthrough just made, exactly as it sits in localStorage.
+    // This is how tests/fixtures/*.json are made (docs/ROADMAP.md, Foundations: fixtures come from a real playthrough).
+    if (process.env.CH1_SAVE_FIXTURE_OUT) {
+      const raw = await page.evaluate((slot) => window.localStorage.getItem(`smfos.save.${slot}`), p.slot);
+      check('fixture: the end-of-chapter save is in localStorage', typeof raw === 'string' && raw.length > 0, { slot: p.slot });
+      if (raw) { mkdirSync(path.dirname(path.resolve(process.env.CH1_SAVE_FIXTURE_OUT)), { recursive: true }); writeFileSync(path.resolve(process.env.CH1_SAVE_FIXTURE_OUT), `${JSON.stringify(JSON.parse(raw), null, 2)}\n`); }
+    }
     check('levels vs the DESIGN budget (audition L3, Palmer\'s L5, end L7)', !!levels.audition && !!levels.palmers && levels.audition.lucky === BUDGET.audition && levels.palmers.lucky === BUDGET.palmers && levels.end.lucky === BUDGET.end, levels);
 
     // ---- hygiene -------------------------------------------------------------------------------------

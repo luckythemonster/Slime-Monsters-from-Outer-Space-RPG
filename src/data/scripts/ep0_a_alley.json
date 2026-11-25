@@ -135,6 +135,13 @@
       "portrait": "phoenix_tired"
     },
     {
+      "give": {
+        "item": "pothole_invoice",
+        "qty": 1,
+        "toast": "Got Pothole Invoice. $1,400. It cannot be paid."
+      }
+    },
+    {
       "sfx": "slime_pop"
     },
     {

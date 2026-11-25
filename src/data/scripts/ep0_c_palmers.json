@@ -74,6 +74,7 @@
     { "sprite": { "who": "phoenix", "sheet": "phoenix_plaster" } },
     { "sprite": { "who": "ryan", "sheet": "ryan_slimed_map" } },
     { "wait": 900 },
+    { "inc": { "vars.crowdBank": 40 } },
     { "say": "The dust settles. The night sky is where the ceiling used to be.", "who": "narrator" },
     { "say": "One man did not run. Double denim. The blast did not touch his mustache.", "who": "narrator" },
     { "face": { "who": "denim_boy", "dir": "right" } },

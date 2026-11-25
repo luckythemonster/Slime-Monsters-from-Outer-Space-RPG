@@ -1,4 +1,5 @@
-// Scripted battles (docs/DESIGN.md "Scripted battles, hook by hook"), keyed by encounter `script`.
+// Chapter 1's scripted battles (docs/DESIGN.md "Scripted battles, hook by hook"), keyed by encounter `script`.
+// One module per chapter; scripts/index.js merges them into BATTLE_SCRIPTS.
 // Each entry is a factory returning a fresh hooks object so a battle can be replayed:
 //   { onStart(m), onRound(m, n), onTurnStart(m, actor), onAction(m, actor, action), onToon(m, level),
 //     onHpBelow(m, who, pct), onDefeat(m, who), onLeave(m, who, how), onWipe(m), hpBelow: [{ who, pct }] }
@@ -312,5 +313,5 @@ function ep0_palmers_set() {
   };
 }
 
-export const BATTLE_SCRIPTS = { ep0_drone, ep0_audition, ep0_rehearsal, ep0_zerkel, ep0_palmers_set };
-export default BATTLE_SCRIPTS;
+export const CH01_SCRIPTS = { ep0_drone, ep0_audition, ep0_rehearsal, ep0_zerkel, ep0_palmers_set };
+export default CH01_SCRIPTS;

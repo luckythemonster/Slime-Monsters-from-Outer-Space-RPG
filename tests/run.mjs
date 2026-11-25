@@ -9,6 +9,8 @@
 // at once.
 //
 //   npm test   /   node tests/run.mjs
+//   npm test -- --chapter 2   only the fast tests, the build, and that chapter's suites (the loop while building a
+//                             chapter). The full run stays the gate for a merge.
 
 import { spawnSync } from 'node:child_process';
 import { existsSync } from 'node:fs';
@@ -16,14 +18,35 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const TESTS = ['data.test.mjs', 'battle.test.mjs', 'smoke.mjs', 'explore.mjs', 'extensions.mjs', 'content_a.mjs', 'content_b.mjs', 'content_c.mjs', 'chapter1.mjs', 'chapter1_wrong.mjs', 'battle.mjs', 'audio.mjs', 'ui.mjs'];
+const TESTS = ['data.test.mjs', 'battle.test.mjs', 'smoke.mjs', 'foundations.mjs', 'explore.mjs', 'extensions.mjs', 'content_a.mjs', 'content_b.mjs', 'content_c.mjs', 'chapter1.mjs', 'chapter1_wrong.mjs', 'battle.mjs', 'audio.mjs', 'ui.mjs'];
 /** Playwright tests that serve dist/ and honour EXPLORE_KEEP_DIST=1 (reuse the build smoke.mjs made). */
-const REUSE_DIST = new Set(['explore.mjs', 'extensions.mjs', 'content_a.mjs', 'content_b.mjs', 'content_c.mjs', 'chapter1.mjs', 'chapter1_wrong.mjs', 'battle.mjs']);
+const REUSE_DIST = new Set(['foundations.mjs', 'chapter2.mjs', 'chapter2_wrong.mjs', 'explore.mjs', 'extensions.mjs', 'content_a.mjs', 'content_b.mjs', 'content_c.mjs', 'chapter1.mjs', 'chapter1_wrong.mjs', 'battle.mjs']);
+
+/** Browser suites that belong to one chapter. A chapter's playthrough and its wrong-path twin are added when it is built. */
+const CHAPTER_SUITES = {
+  1: ['explore.mjs', 'extensions.mjs', 'content_a.mjs', 'content_b.mjs', 'content_c.mjs', 'chapter1.mjs', 'chapter1_wrong.mjs', 'battle.mjs'],
+  2: ['chapter2.mjs', 'chapter2_wrong.mjs'],
+};
+/** Always run: the two pure-Node suites, the build, and the Foundations checks every chapter stands on. */
+const ALWAYS = ['data.test.mjs', 'battle.test.mjs', 'smoke.mjs', 'foundations.mjs'];
+
+const argv = process.argv.slice(2);
+const chapterArg = argv.indexOf('--chapter');
+let selected = TESTS;
+if (chapterArg >= 0) {
+  const n = Number(argv[chapterArg + 1]);
+  if (!Number.isInteger(n) || !CHAPTER_SUITES[n]) {
+    process.stderr.write(`[run] --chapter needs one of: ${Object.keys(CHAPTER_SUITES).join(', ')}\n`);
+    process.exit(2);
+  }
+  selected = [...ALWAYS, ...CHAPTER_SUITES[n]];
+  process.stderr.write(`[run] chapter ${n}: ${selected.join(', ')}\n`);
+}
 
 const results = [];
 let builtDist = false;
 
-for (const name of TESTS) {
+for (const name of selected) {
   const file = path.join(ROOT, 'tests', name);
   if (!existsSync(file)) {
     results.push({ test: name, ok: true, skipped: true });
