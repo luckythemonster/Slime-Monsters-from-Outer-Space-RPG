@@ -1,0 +1,58 @@
+{
+  "id": "zerkel_pit",
+  "name": "Zerkel Pit PunX Fest",
+  "tileset": "minneapolis",
+  "music": null,
+  "ambient": null,
+  "battleBackground": "zerkel",
+  "followers": true,
+  "encounters": { "rate": 0, "pool": [] },
+  "legend": { "g": "grass", "F": "fence", "d": "flatbed_deck", "e": "flatbed_edge", "o": "flatbed_wheel", "a": "asphalt", "A": "asphalt_line", "=": "sidewalk", "M": "amp_stack", "1": "banner_zerkel_1", "2": "banner_zerkel_2", "3": "banner_zerkel_3" },
+  "layers": {
+    "ground": [
+      "gggggggggggggggg",
+      "gggggggggggggggg",
+      "FFFFFFFFFFFFFFFF",
+      "aaddddddddddddaa",
+      "aaddddddddddddaa",
+      "aaddddddddddddaa",
+      "aaeeeeeeeeeeeeaa",
+      "aaaoaaaaaaaaoaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "AAAAAAAAAAAAAAAA",
+      "aaaaaaaaaaaaaaaa",
+      "================"
+    ],
+    "deco": [
+      "                ",
+      "      123       ",
+      "                ",
+      "  M          M  ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  },
+  "spawn": { "x": 7, "y": 5, "facing": "down" },
+  "entities": [
+    { "id": "kit", "type": "object", "sprite": "obj_drumkit", "w": 2, "footprint": [2, 2], "x": 10, "y": 5, "facing": "down", "script": "ep0_zerkel_kit", "solid": true },
+    { "id": "punk_1", "type": "npc", "sprite": "punk_a", "x": 4, "y": 8, "facing": "up", "behavior": "idle", "script": "ep0_zerkel_crowd" },
+    { "id": "punk_2", "type": "npc", "sprite": "punk_b", "x": 6, "y": 9, "facing": "up", "behavior": "idle", "script": "ep0_zerkel_crowd" },
+    { "id": "punk_3", "type": "npc", "sprite": "punk_c", "x": 8, "y": 8, "facing": "up", "behavior": "idle", "script": "ep0_zerkel_crowd" },
+    { "id": "punk_4", "type": "npc", "sprite": "punk_a", "x": 10, "y": 9, "facing": "up", "behavior": "idle", "script": "ep0_zerkel_crowd" },
+    { "id": "punk_5", "type": "npc", "sprite": "punk_b", "x": 12, "y": 8, "facing": "up", "behavior": "idle", "script": "ep0_zerkel_crowd" },
+    { "id": "punk_6", "type": "npc", "sprite": "punk_c", "x": 5, "y": 10, "facing": "up", "behavior": "idle", "script": "ep0_zerkel_crowd" },
+    { "id": "punk_7", "type": "npc", "sprite": "punk_a", "x": 9, "y": 10, "facing": "up", "behavior": "idle", "script": "ep0_zerkel_crowd" },
+    { "id": "crust_punk", "type": "npc", "sprite": "npc_crustpunk", "x": 2, "y": 9, "facing": "right", "behavior": "idle", "script": "ep0_zerkel_crowd" },
+    { "id": "bajonka_lot", "type": "npc", "sprite": "bajonka", "x": 14, "y": 9, "facing": "left", "behavior": "idle", "script": "ep0_zerkel_bajonka" }
+  ]
+}

@@ -1,5 +1,14 @@
 {
   "ep0_palmers_enter": [
+    { "setEntity": { "id": "warner", "x": 21, "y": 7, "facing": "down" } },
+    { "camera": { "pan": { "x": 344, "y": 120, "ms": 700 } } },
+    { "say": "On the six-inch stage, RAT FIGHT is ending the opening set. It is their fifth farewell show.", "who": "narrator" },
+    { "say": "We were Rat Fight. This was our last show. Again. Thanks. Sorry.", "who": "warner" },
+    { "say": "Two people clap. One of them is the bartender.", "who": "narrator" },
+    { "camera": { "fade": "out", "ms": 200 } },
+    { "setEntity": { "id": "warner", "x": 17, "y": 11, "facing": "down" } },
+    { "camera": { "follow": "player" } },
+    { "camera": { "fade": "in", "ms": 200 } },
     { "if": "inventory.has('half_ounce')", "then": [
       { "say": "We kept the weed for this.", "who": "phoenix" }
     ], "else": [
@@ -15,7 +24,7 @@
     { "setEntity": { "id": "ryan", "x": 23, "y": 6, "facing": "down" } },
     { "sprite": { "who": "ryan", "sheet": "ryan_slimed_map" } },
     { "camera": { "fade": "in", "ms": 150 } },
-    { "say": "The stage is six inches off the floor. It is the tallest thing Lucky has ever stood on.", "who": "narrator" },
+    { "say": "The stage is six inches off the floor. It is the lowest thing Lucky has ever played on. The other one was a flatbed.", "who": "narrator" },
     { "camera": { "pan": { "x": 360, "y": 184, "ms": 600 } } },
     { "anim": { "who": "cop", "key": "cop_collar_tap", "wait": false } },
     { "say": "{speed:slow}Dispatch, I have located the unauthorized slime gathering. Stand by.", "who": "cop", "portrait": "cop_disguise" },
@@ -27,9 +36,9 @@
     { "say": "[Zerkel Pit had a sky. This has a ceiling.]", "who": "ryan_caption" },
     { "face": { "who": "player", "dir": "left" } },
     { "emote": { "who": "phoenix", "type": "♪" } },
-    { "say": "No Brian to ruin the mix.", "who": "narrator" },
+    { "say": "No Brian to ruin the mix. First show as a three-piece.", "who": "narrator" },
     { "face": { "who": "player", "dir": "down" } },
-    { "music": "pocket" },
+    { "music": null },
     { "battle": "ep0_palmers_set", "onLose": "gameover", "onWin": [
       { "set": { "flags.eternityDone": true } },
       { "run": "ep0_aftermath" }
@@ -125,6 +134,7 @@
     { "despawn": "ryan" },
     { "party": { "remove": "ryan" } },
     { "set": { "flags.ryanQuit": true } },
+    { "give": { "item": "tinny_ride_cymbal", "qty": 1, "toast": "Got Tinny Ride Cymbal. He left it on the kit." } },
     { "say": "My brain thinks he's scared.", "who": "phoenix" },
     { "sprite": { "who": "player", "sheet": "lucky_rage" } },
     { "say": "I don't care what he is.", "who": "lucky", "portrait": "lucky_rage" },
@@ -140,12 +150,13 @@
     { "face": { "who": "phoenix", "dir": "left" } },
     { "despawn": "van_keys" },
     { "give": { "item": "van_keys", "qty": 1, "toast": "Got Van Keys. To a van you have never seen." } },
-    { "give": { "item": "tour_itinerary", "qty": 1, "toast": "Got Tour Itinerary." } },
     { "insert": { "sprite": "obj_itinerary", "text": "A folded itinerary under her collar. POTATO BELT: TOMORROW, circled in red." } },
+    { "give": { "item": "tour_itinerary", "qty": 1, "toast": "Got Tour Itinerary." } },
     { "say": "We don't have a drummer.", "who": "lucky", "portrait": "lucky_rage" },
     { "sfx": "sneeze" },
     { "anim": { "who": "bajonka_keys", "key": "bajonka_sneeze", "wait": true } },
     { "set": { "flags.ch1Complete": true } },
+    { "camera": { "fade": "out", "ms": 400 } },
     { "caption": "NEXT: THE POTATO BELT", "ms": 2200, "style": "flyer" },
     { "caption": "(DRUMMER WANTED)", "ms": 1600, "style": "flyer" },
     { "despawn": "bajonka_keys" },
@@ -203,7 +214,7 @@
     { "say": "Someone carved REPLACEMENTS WERE HERE. Someone else carved NO THEY WEREN'T.", "who": "narrator" }
   ],
   "npc_palmers_kit": [
-    { "say": "Ryan's kit. Still the size of a sedan. The ride cymbal is still tinny. He still doesn't know.", "who": "narrator" }
+    { "say": "Ryan's kit. Still the size of a sedan. The ride cymbal is still tinny. He still has not bought a new one.", "who": "narrator" }
   ],
   "npc_palmers_mic": [
     { "say": "The house mic. It smells like 1906.", "who": "narrator" }
@@ -224,6 +235,14 @@
   "npc_palmers_cop": [
     { "anim": { "who": "cop", "key": "cop_collar_tap", "wait": false } },
     { "say": "Hello, fellow kids. I also enjoy the… moshes.", "who": "cop", "portrait": "cop_disguise" }
+  ],
+  "npc_palmers_warner": [
+    { "say": "…hurk. Sorry. I do that after every farewell show.", "who": "warner" },
+    { "say": "A stick bag on a singer. He fronts Rat Fight. He would rather be behind something.", "who": "narrator" }
+  ],
+  "ep0_rubble_warner": [
+    { "say": "Both sticks. I checked twice.", "who": "warner" },
+    { "say": "The mic was the bar's. He is not going to mention the mic.", "who": "narrator" }
   ],
   "npc_palmers_stranger": [
     { "say": "Good vibes in here. Dense.", "who": "stranger_tall" }
@@ -270,7 +289,7 @@
   ],
   "ep0_rubble_kit": [
     { "if": "flags.ryanQuit", "then": [
-      { "say": "Two perfectly intact drumsticks were here. They left with him. The tinny ride stayed.", "who": "narrator" }
+      { "say": "Two perfectly intact drumsticks were here. They left with him. The tinny ride did not. It is in the bag.", "who": "narrator" }
     ], "else": [
       { "say": "The kit. Still warm. Still humming in 7/8.", "who": "narrator" }
     ] }

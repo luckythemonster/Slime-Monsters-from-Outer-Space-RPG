@@ -241,7 +241,7 @@ group('maps', (check) => {
       if (tileset) check(!!tileset.tiles[name], `map ${id}: legend "${ch}" → tile "${name}" exists in tileset ${m.tileset}`);
     }
     for (const [layerName, rows] of Object.entries(m.layers)) {
-      check(['ground', 'deco', 'over'].includes(layerName), `map ${id}: layer "${layerName}" known`);
+      check(['ground', 'deco', 'flat', 'over'].includes(layerName), `map ${id}: layer "${layerName}" known`);
       check(rows.length === h, `map ${id}: layer ${layerName} has ${h} rows`);
       rows.forEach((row, y) => {
         check(row.length === w, `map ${id}: layer ${layerName} row ${y} width ${row.length} != ${w}`);

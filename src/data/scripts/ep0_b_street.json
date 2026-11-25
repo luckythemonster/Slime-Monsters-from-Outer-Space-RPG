@@ -1,6 +1,6 @@
 {
   "ep0_street_enter": [
-    { "if": "!flags.hubOpen || flags.gigFlyer || flags.hasPalmersFlyer", "then": [
+    { "if": "!flags.hubOpen || flags.gigFlyer || flags.hasPalmersFlyer || flags.visited_city_sound_hall && !flags.auditionDone", "then": [
       { "music": "snow" }
     ], "else": [
       { "music": "west_bank" }
@@ -24,8 +24,13 @@
   "ep0_street_rail": [
     { "if": "flags.brianCalledRyan || flags.ryanCalled", "then": [
       { "sfx": "door" },
+      { "camera": { "fade": "out", "ms": 300 } },
+      { "if": "!flags.visited_city_sound_hall", "then": [
+        { "caption": "THAT NIGHT", "ms": 1500 }
+      ] },
       { "caption": "TWENTY MINUTES OF\nLIGHT RAIL LATER", "ms": 1800 },
-      { "teleport": { "map": "city_sound_hall", "x": 3, "y": 6, "facing": "right" } }
+      { "teleport": { "map": "city_sound_hall", "x": 3, "y": 6, "facing": "right" } },
+      { "camera": { "fade": "in", "ms": 300 } }
     ], "else": [
       { "say": "The train is here. The reason to take it isn't.", "who": "narrator" },
       { "move": { "who": "player", "path": "U", "wait": true } }
@@ -102,7 +107,7 @@
   ],
 
   "npc_street_office_worker": [
-    { "say": "Did you see the sky? {var:billboardsTagged} billboards went down. My boss cried.", "who": "office_worker" }
+    { "say": "Did you see the sky? {var:billboardsTagged} billboards went down. My boss cried all week.", "who": "office_worker" }
   ],
 
   "npc_street_stranger": [

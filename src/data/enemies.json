@@ -639,5 +639,49 @@
       }
     ],
     "drops": []
+  },
+  "folded_arms": {
+    "name": "Folded Arms",
+    "sprite": "punk_a",
+    "battleSprite": "folded_arms_b",
+    "size": 48,
+    "stats": {
+      "hp": 240,
+      "atk": 6,
+      "def": 5,
+      "spd": 6
+    },
+    "xp": 0,
+    "money": 0,
+    "weak": [
+      "NOISE"
+    ],
+    "resist": [],
+    "scan": "My brain thinks they want to like us. My brain thinks they will not say so.",
+    "skills": {
+      "phone": {
+        "name": "Checks Phone",
+        "freq": "NOISE",
+        "pow": 20
+      },
+      "yawn": {
+        "name": "Yawn",
+        "freq": "NOISE",
+        "pow": 28
+      }
+    },
+    "ai": [
+      {
+        "do": "phone",
+        "target": "random",
+        "weight": 3
+      },
+      {
+        "do": "yawn",
+        "target": "random",
+        "weight": 2
+      }
+    ],
+    "drops": []
   }
 }

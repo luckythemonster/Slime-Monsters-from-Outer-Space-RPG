@@ -9,5 +9,6 @@
   "nurse": { "name": "Nurse", "blip": "D5" },
   "guy": { "name": "Guy", "blip": "C4" },
   "denim_boy": { "name": "Denim Boy", "blip": "E3" },
+  "warner": { "name": "Warner", "blip": "G4" },
   "crowd": { "name": "Crowd", "blip": "A4" }
 }

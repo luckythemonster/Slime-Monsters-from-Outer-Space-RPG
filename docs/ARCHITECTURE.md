@@ -164,6 +164,7 @@ Maps are authored as ASCII rows with a legend, so humans and agents can draw the
   "layers": {
     "ground": [ "################", "#..............#", … ],   // required; ' ' = empty
     "deco":   [ "                ", "   D   D        ", … ],   // optional; same size; drawn above ground
+    "flat":   [ … ],                                            // optional; drawn BELOW sprites, never solid (doors a character walks into)
     "over":   [ … ]                                             // optional; drawn ABOVE sprites (awnings, tree tops)
   },
   "spawn": { "x": 3, "y": 10, "facing": "right" },             // default when entering without a target
@@ -193,7 +194,7 @@ Rules:
 
 The `MapLoader` resolves legend names to tile indices through the manifest and builds the tilemap with
 `this.make.tilemap({ tileWidth: 16, tileHeight: 16, width, height })` + `createBlankLayer` + `putTilesAt`.
-Depths: ground 0, deco 1, entities `y` (pixel y of the feet, for y-sorting), over 100. UIScene is a separate scene above.
+Depths: ground 0, deco 1, flat 1.5, entities `y` (pixel y of the feet, for y-sorting), over 100. UIScene is a separate scene above.
 
 ## 5. Event scripts (`src/data/scripts/<scriptId>.json`)
 

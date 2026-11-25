@@ -55,8 +55,8 @@
   "spawn": { "x": 4, "y": 9, "facing": "right" },
   "entities": [
     { "id": "ryan", "type": "npc", "sprite": "ryan", "x": 11, "y": 2, "facing": "down", "behavior": "static", "script": "ep0_room4_ryan_npc", "condition": "flags.ryanArrived && !flags.ryanJoined" },
-    { "id": "kit", "type": "object", "sprite": "obj_drumkit", "w": 2, "footprint": [2, 2], "x": 10, "y": 4, "solid": true, "script": "ep0_room4_kit" },
-    { "id": "ride", "type": "object", "x": 12, "y": 3, "script": "ep0_room4_cymbal" },
+    { "id": "kit", "type": "object", "sprite": "obj_drumkit", "w": 2, "footprint": [2, 2], "x": 10, "y": 4, "solid": true, "script": "ep0_room4_kit", "condition": "!flags.visited_palmers" },
+    { "id": "ride", "type": "object", "x": 12, "y": 3, "script": "ep0_room4_cymbal", "condition": "!flags.visited_palmers" },
     { "id": "amp_lucky", "type": "object", "x": 2, "y": 5, "script": "ep0_room4_amp_lucky" },
     { "id": "amp_phoenix", "type": "object", "x": 2, "y": 7, "script": "ep0_room4_amp_phoenix" },
     { "id": "mic", "type": "object", "x": 7, "y": 6, "solid": true, "script": "ep0_room4_mic" },
@@ -72,7 +72,8 @@
     { "id": "drip", "type": "object", "sprite": "obj_drip", "x": 11, "y": 1, "solid": false, "script": "ep0_room4_drip", "condition": "flags.auditionDone" },
     { "id": "kraaang", "type": "object", "sprite": "word_kraaang", "w": 6, "x": 4, "y": 1, "solid": false, "script": "ep0_room4_kraaang", "condition": "flags.pedalboardFried" },
     { "id": "gig_flyer", "type": "object", "sprite": "obj_flyer", "x": 7, "y": 7, "solid": true, "script": "ep0_gig_flyer", "condition": "flags.brianQuit && !flags.hasPalmersFlyer" },
-    { "id": "to_hall", "type": "exit", "x": 3, "y": 10, "w": 1, "h": 1,
-      "to": { "map": "city_sound_hall", "x": 20, "y": 6, "facing": "down" } }
+    { "id": "to_hall", "type": "exit", "x": 3, "y": 10, "w": 1, "h": 1, "condition": "!flags.brianQuit || flags.hasPalmersFlyer",
+      "to": { "map": "city_sound_hall", "x": 20, "y": 6, "facing": "down" } },
+    { "id": "to_hall_flyer", "type": "trigger", "x": 3, "y": 10, "w": 1, "h": 1, "script": "ep0_room4_exit_flyer", "condition": "flags.brianQuit && !flags.hasPalmersFlyer" }
   ]
 }

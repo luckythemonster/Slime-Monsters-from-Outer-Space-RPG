@@ -123,14 +123,8 @@
     "toonStart": 0,
     "fixedXp": 50,
     "fixedMoney": 0,
-    "drops": [
-      {
-        "item": "tinny_ride_cymbal",
-        "chance": 1
-      }
-    ],
     "script": "ep0_audition",
-    "countIn": "lucky"
+    "countIn": "none"
   },
   "ep0_rehearsal": {
     "name": "The Chorus",
@@ -176,6 +170,27 @@
       }
     ],
     "script": "ep0_palmers_set",
+    "countIn": "lucky"
+  },
+  "ep0_zerkel": {
+    "name": "ZERKEL PIT",
+    "enemies": [
+      "folded_arms"
+    ],
+    "guests": [
+      "ryan"
+    ],
+    "forms": {
+      "ryan": "possessed"
+    },
+    "background": "zerkel",
+    "music": "band_hunger",
+    "noFlee": true,
+    "noLose": true,
+    "toonStart": 0,
+    "fixedXp": 0,
+    "fixedMoney": 0,
+    "script": "ep0_zerkel",
     "countIn": "lucky"
   }
 }

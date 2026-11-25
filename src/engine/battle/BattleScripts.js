@@ -22,7 +22,7 @@ function ep0_drone() {
       if (n !== 2) return;
       m.allowCommands(null);
       if (!m.find('phoenix')) m.join(m.data.makeSeed('phoenix'));
-      m.say('phoenix', 'Beats the day job.');
+      m.text('Phoenix swings the trash bag.');
       m.toast('RIFF spends AMP. Power Chord costs 3. Shared Aura is a SYNC.');
     },
     onTurnStart(m, actor) {
@@ -49,7 +49,6 @@ function ep0_drone() {
 function ep0_audition() {
   return {
     onStart(m) {
-      m.text('One, two, three, four!');
       m.emit({ type: 'anim', who: 'ryan', key: 'drum' });
       m.transform('ryan', { form: 'possessed' });
       m.emit({ type: 'shake', ms: 600, px: 4 });
@@ -92,6 +91,7 @@ function ep0_rehearsal() {
       m.inflict(brian, 'OUT_OF_TUNE', 3);
       m.text('Sparks.');
       m.emit({ type: 'sfx', name: 'feedback' });
+      m.emit({ type: 'music', id: null }); // the music grinds to a halt, then the line
       m.say('brian', "I can't work like this! I hate this weird, creative shit! Can't we just play normal music?!", { portrait: 'brian_red' });
     }
     // Cannot be lost: whoever the wipe (or the possessed Ryan) put down stands back up at 1 HP, so the
@@ -120,6 +120,47 @@ function ep0_rehearsal() {
       if (n === 8) forced(m);
     },
     onWipe(m) { forced(m); },
+  };
+}
+
+/**
+ * `ep0_zerkel` — ZERKEL PIT PUNX FEST: the one fight in Chapter 1 the band simply wins. One enemy, the front
+ * row's FOLDED ARMS. Cannot be lost: a wipe or round 8 ends it in the band's favor, the way the Chorus does.
+ */
+function ep0_zerkel() {
+  let done = false;
+  const wonOver = (m) => {
+    m.text('The arms come unfolded. People stay.');
+    CAP(m, '[They stayed. Suspicious.]');
+    m.flags.zerkelWon = true;
+  };
+  const forced = (m, why) => {
+    if (done) return;
+    done = true;
+    m.suspendEnd = true;
+    m.text(why);
+    wonOver(m);
+    for (const c of m.party()) if (c.ko && c.controllable && !c.auto) m.revive(c, 1);
+    m.suspendEnd = false;
+    m.finish('win');
+  };
+  return {
+    onStart(m) {
+      m.transform('ryan', { form: 'possessed' });
+      m.text('Forty people in a parking lot. The front row has its arms folded.');
+      CAP(m, '[Outside. No walls. Everyone can see the drummer.]');
+    },
+    onRound(m, n) {
+      if (n === 3 && !done) CAP(m, '[Nobody is looking at me. They are looking at the truck.]');
+      if (n === 8) forced(m, 'The last chorus lands on its own.');
+    },
+    onDefeat(m, who) {
+      const c = m.find(who);
+      if (done || !c || c.side !== 'enemy') return;
+      done = true;
+      wonOver(m);
+    },
+    onWipe(m) { forced(m, 'The song holds itself up.'); },
   };
 }
 
@@ -161,7 +202,7 @@ function ep0_palmers_set() {
     if (asked || fired) return;
     asked = true;
     m.invincible = true;
-    CAP(m, "[I've been fighting the possession. That was a mistake.]");
+    CAP(m, '[The goo wants all of it.]');
     m.prompt(['[Keep fighting it]', '[Let go]'], (i) => {
       if (i === 1) {
         m.flags.letGo = true;
@@ -181,6 +222,8 @@ function ep0_palmers_set() {
     m.suspendEnd = true;
     m.setMeter(100, { force: true, source: 'script' });
     m.transform('ryan', { form: 'eternity' });
+    // The comic's order: the decision, then the line. On [Keep fighting it] it lands after "[I couldn't.]".
+    CAP(m, "[I've been fighting the possession. That was a mistake.]");
     CAP(m, '[I am not trapped in the goo. The goo is trapped in the pocket.]');
     m.emit({ type: 'music', id: 'eternity' });
     m.wait(900);
@@ -202,7 +245,6 @@ function ep0_palmers_set() {
   return {
     onStart(m) {
       m.transform('ryan', { form: 'pocket' });
-      m.text('Dispatch, I have located the unauthorized slime gathering. Stand by.');
       const cop = m.find('cop');
       if (cop) m.inflict(cop, 'ON_HOLD', 2);
     },
@@ -270,5 +312,5 @@ function ep0_palmers_set() {
   };
 }
 
-export const BATTLE_SCRIPTS = { ep0_drone, ep0_audition, ep0_rehearsal, ep0_palmers_set };
+export const BATTLE_SCRIPTS = { ep0_drone, ep0_audition, ep0_rehearsal, ep0_zerkel, ep0_palmers_set };
 export default BATTLE_SCRIPTS;

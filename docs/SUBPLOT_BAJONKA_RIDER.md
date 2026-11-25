@@ -15,7 +15,7 @@ Disc 2 is "who comes back." Lucky spends the game chasing a drummer who ran. Baj
 - **She never speaks as a dog.** So the proposal is paperwork. A contract rider is the gig word for a wish list, and venues always get the rider slightly wrong.
 - **The band agreement grows a page per save** (`contractPages = 3 + saveCount` in the slice). The player has been initialing it all game without reading it.
 - **The clipboard arc.** Slapped away (Ch 2), signed blind (Ch 3), read (Ch 7). Reading is the unlock.
-- **Asking the universe.** Lucky asked for a drummer and got Brian. Warner showed up three weeks late. The universe delivers, late and adjacent.
+- **Asking the universe.** Lucky asked for a drummer and got Brian. Warner showed up a year late. The universe delivers, late and adjacent.
 - **"Next: Princess Bajonka vs. Pete."** The Issue 4 caption. The word "Princess" is already hers.
 - **Color is the HUD.** Beige is Dad.
 - **She broke the beam.** *(canon, Lucky)* In Chapter 9 the one who comes for Lucky on Dad's roof is Bajonka, in a stolen billboard. Nobody from Lucky's old life shows. The rider is the first thing she has ever asked for in return.
