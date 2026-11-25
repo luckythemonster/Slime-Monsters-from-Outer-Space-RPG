@@ -325,6 +325,7 @@ async function main() {
       if (/^INITIAL HERE/.test(l0)) return labels.findIndex((l) => /^PAGE 2/.test(l)); // the prompt may take two rows
       if (l0 === 'Pothole Blues') return 2;
       if (l0 === '[Keep fighting it]') { eternityChoices += 1; return 1; } // [Let go]: the honest run's one choice for Ryan
+      if (l0 === '[Say something]') return 1; // [Let it go]: what Lucky did after Zerkel Pit
       if (l0 === 'RAGE') return 1; // PLEAD
       if (l0 === 'Yes' && labels[1] === 'No') return 1;
       notes.push(`menu with no policy: ${JSON.stringify(labels)}; picked 0`);
@@ -723,6 +724,7 @@ async function main() {
     check('S9 audition reward: auditionDone, ryanJoined, band agreement, Tinny Ride Cymbal', p.snap.flags.auditionDone === true && p.snap.flags.ryanJoined === true && has(p.snap, 'band_agreement') && has(p.snap, 'tinny_ride_cymbal'), p.snap.inventory);
     check('S9 contract pages = 3 + pages initialed before it (4); the contract save bumped saveCount to 2', p.snap.vars.contractPages === 4 && p.snap.vars.saveCount === 2, p.snap.vars);
     check('S10 ONE MONTH LATER ran: monthLater, monthLaterRan, pedalboardFried, kraaangFired, brianQuit', ['monthLater', 'monthLaterRan', 'pedalboardFried', 'kraaangFired', 'brianQuit'].every((f) => p.snap.flags[f] === true), p.snap.flags);
+    check('S10 Zerkel Pit: Ryan said it out loud ("I thought we\'d suck.") and Lucky let it go (vars.zerkelChoice 0, zerkelLetGo)', seenLine('ryan', "I almost quit before the show. I thought we'd suck.") && p.snap.vars.zerkelChoice === 0 && p.snap.flags.zerkelLetGo === true && seenLine('narrator', 'Lucky lets it go.'), { vars: p.snap.vars });
     check('S10 Brian left; party = lucky,phoenix,ryan; Fried Pedalboard left behind', party(p.snap) === 'lucky,phoenix,ryan' && has(p.snap, 'fried_pedalboard'), { party: party(p.snap), inv: p.snap.inventory });
     check('S10 Lucky L5 after the audition (+50) and the Chorus (+30): 106 XP', member(p.snap, 'lucky').xp === 106 && member(p.snap, 'lucky').level === 5, member(p.snap, 'lucky'));
     check('S10 the gig flyer and the KRAAANG on the wall; player at (5,7)', !!ent(p, 'gig_flyer') && !!ent(p, 'kraaang') && at(p, 5, 7), { pos: pos(p), ents: p.entities.map((e) => e.id) });
@@ -810,7 +812,7 @@ async function main() {
     notes.push(`quit settled: titleSeen=${p.titleSeen} exploreSeen=${p.exploreSeen} runner=${p.runner} map=${p.snap.map}`);
     check('S13 PLEAD picked (vars.quitResponse 1); Ryan gone; luckyRageLocked', p.snap.vars.quitResponse === 1 && p.snap.flags.ryanQuit === true && p.snap.flags.luckyRageLocked === true && party(p.snap) === 'lucky,phoenix', { vars: p.snap.vars, party: party(p.snap) });
     const quitCaps = seen.filter((l) => l.map === 'palmers_rubble' && l.who === 'ryan_caption').map((l) => l.text).filter((t, i, a) => i === 0 || t !== a[i - 1]); // recorded once per page: collapse repeats
-    check('S13 the quit lands on complicity: [I could have killed…] [That wasn\'t the goo.] [That was me.], then "I quit."', quitCaps.join('|').includes("[I could have killed every person in this room.]|[That wasn't the goo.]|[That was me.]") && seenLine('ryan', 'I quit.') && !seenLine('ryan_caption', "I didn't let go"), quitCaps);
+    check('S13 the quit lands on complicity: [Every person… looking at me.] [The guy in denim…] [That wasn\'t the goo.] [That was me.], then "I quit."', quitCaps.join('|').includes("[Every person in this room was looking at me.]|[The guy in denim says we suck.]|[That wasn't the goo.]|[That was me.]") && seenLine('ryan', 'I quit.') && !seenLine('ryan_caption', "I didn't let go"), quitCaps);
     check('S13 PLEAD carries the complicity line after "One more show."', seen.findIndex((l) => l.who === 'narrator' && l.text === 'He already let go once. That was the show.') > seen.findIndex((l) => l.who === 'lucky' && l.text.includes('One more show')), seen.filter((l) => l.map === 'palmers_rubble').map((l) => `${l.who}: ${l.text}`));
     const exploresBeforeEnd = p.exploreSeen; // CONTINUE starts a fresh Explore scene; the rubble teleport before the title did not
     uiPlan.push({ match: (l) => l[0] === 'New Game', pick: 1 });

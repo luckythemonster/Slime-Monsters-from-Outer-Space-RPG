@@ -182,7 +182,7 @@ async function main() {
     check('guitar case line read', s.flags.guitarCaseRead === true, s.flags);
     await warp('pod_bay', 11, 10, 'down'); await step('confirm');
     s = await snap();
-    check("Billy's pod nameplate sets flags.readBillyPod", s.flags.readBillyPod === true, s.flags);
+    check('Pod 3 nameplate sets flags.readPod3', s.flags.readPod3 === true, s.flags);
 
     // --- CS-03 EJECT → Freefall → alley CS-04 (crash, Phoenix, drone tutorial, join, autosave) ---
     await warp('pod_bay', 7, 11, 'left');

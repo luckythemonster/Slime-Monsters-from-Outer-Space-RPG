@@ -700,24 +700,24 @@
     "frames": 19,
     "names": [
       "down stand",
-      "down step a (right foot lifted)",
-      "down step b (left foot lifted)",
+      "down roll a",
+      "down roll b",
       "up stand",
-      "up step a (right foot lifted)",
-      "up step b (left foot lifted)",
+      "up roll a",
+      "up roll b",
       "left stand",
-      "left step a (near leg forward)",
-      "left step b (far leg forward)",
+      "left roll a",
+      "left roll b",
       "pace a",
       "pace b",
-      "point",
-      "rage a (red face, veins, arms up)",
+      "point (empty sleeve)",
+      "rage a (red brain, sleeves up)",
       "rage b (shaking)",
       "stuff_cables a",
       "stuff_cables b",
-      "phone (to the ear)",
-      "strum a (cream Strat, hand up)",
-      "strum b (hand down)"
+      "phone (to the glass)",
+      "strum a (cream Strat, sleeve up)",
+      "strum b (sleeve down)"
     ],
     "anims": [
       {
@@ -871,15 +871,15 @@
     "frames": 11,
     "names": [
       "idle a",
-      "idle b (pick shift)",
+      "idle b (bubble, pick shift)",
       "attack a (wind-up)",
       "attack b (strike)",
       "attack c (follow-through)",
       "riff a (stiff chord)",
       "riff b",
-      "hurt",
-      "ko (flat on the pedalboard)",
-      "win a (thumbs up)",
+      "hurt (sloshed)",
+      "ko (on its side on the pedalboard)",
+      "win a (sleeve up)",
       "win b (sparkle)"
     ],
     "anims": [
@@ -951,15 +951,15 @@
     "frames": 11,
     "names": [
       "idle a",
-      "idle b (pick shift)",
+      "idle b (bubble, pick shift)",
       "attack a (wind-up)",
       "attack b (strike)",
       "attack c (follow-through)",
       "riff a (stiff chord)",
       "riff b",
-      "hurt",
-      "ko (flat on the pedalboard)",
-      "win a (thumbs up)",
+      "hurt (sloshed)",
+      "ko (on its side on the pedalboard)",
+      "win a (sleeve up)",
       "win b (sparkle)"
     ],
     "anims": [
@@ -1031,24 +1031,24 @@
     "frames": 19,
     "names": [
       "down stand",
-      "down step a (right foot lifted)",
-      "down step b (left foot lifted)",
+      "down roll a",
+      "down roll b",
       "up stand",
-      "up step a (right foot lifted)",
-      "up step b (left foot lifted)",
+      "up roll a",
+      "up roll b",
       "left stand",
-      "left step a (near leg forward)",
-      "left step b (far leg forward)",
+      "left roll a",
+      "left roll b",
       "pace a",
       "pace b",
-      "point",
-      "rage a (red face, veins, arms up)",
+      "point (empty sleeve)",
+      "rage a (red brain, sleeves up)",
       "rage b (shaking)",
       "stuff_cables a",
       "stuff_cables b",
-      "phone (to the ear)",
-      "strum a (cream Strat, hand up)",
-      "strum b (hand down)"
+      "phone (to the glass)",
+      "strum a (cream Strat, sleeve up)",
+      "strum b (sleeve down)"
     ],
     "anims": [
       {
@@ -4834,6 +4834,80 @@
       }
     ]
   },
+  "npc_denim": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 6,
+    "names": [
+      "down a",
+      "down b (blink)",
+      "up a",
+      "up b",
+      "left a",
+      "left b (blink)"
+    ],
+    "anims": [
+      {
+        "key": "npc_denim_idle",
+        "frames": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "npc_denim_idle_down",
+        "frames": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "npc_denim_idle_up",
+        "frames": [
+          2,
+          3
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "npc_denim_idle_left",
+        "frames": [
+          4,
+          4,
+          4,
+          5
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "npc_denim_idle_right",
+        "frames": [
+          4,
+          4,
+          4,
+          5
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": true
+      }
+    ]
+  },
   "npc_intern": {
     "type": "spritesheet",
     "frameWidth": 16,
@@ -6174,7 +6248,7 @@
     "names": [
       "grind",
       "spark",
-      "backward"
+      "backward (the picture garbles)"
     ],
     "anims": [
       {
