@@ -89,7 +89,7 @@
     ] },
     { "set": { "flags.zerkelLetGo": true } },
     { "anim": { "who": "brian", "key": "brian_point", "wait": false } },
-    { "say": "Do we really need all the political stickers? We're going to alienate the market.", "who": "brian" },
+    { "say": "Do we really need all the political stickers? We're going to alienate the market.", "who": "brian", "portrait": "brian_pointing" },
     { "if": "vars.zerkelChoice == 1", "then": [
       { "say": "Brian is talking. The moment is gone. Lucky lets it go.", "who": "narrator" }
     ] },
