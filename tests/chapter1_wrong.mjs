@@ -443,7 +443,7 @@ async function main() {
 
     // ---- UI driving ---------------------------------------------------------------------------------
     const uiPlan = [];
-    const choice = { title: 1, eject: 1, flyer: 2, juke: 2, hold: 1, quit: 1, yesNo: 1, clipboard: 'decline', nap: 0 }; // hold: THE SET's [Keep fighting it] 0 / [Let go] 1
+    const choice = { title: 1, eject: 1, flyer: 2, juke: 2, hold: 1, quit: 1, yesNo: 1, clipboard: 'decline', nap: 0, zerkel: 0 }; // hold: THE SET's [Keep fighting it] 0 / [Let go] 1
     const defaultPick = (labels) => {
       const l0 = labels[0] || '';
       if (l0 === 'New Game') return choice.title;
@@ -454,6 +454,7 @@ async function main() {
       if (l0 === 'Pothole Blues') return choice.juke;
       if (l0 === '[Keep fighting it]') return choice.hold;
       if (l0 === 'RAGE') return choice.quit;
+      if (l0 === '[Say something]') return choice.zerkel; // after Zerkel Pit: 0 tries to say it, 1 lets it go
       if (l0 === 'Yes' && labels[1] === 'No') return choice.yesNo;
       if (l0 === 'BUY') return labels.indexOf('LEAVE');
       if (l0 === 'Items' && labels.includes('Quit')) return 'cancel';
@@ -1018,6 +1019,7 @@ async function main() {
       p = await drive('CS-13 → the Chorus wiped → CS-14', (q) => idleOnMap(q) && q.snap.flags.brianQuit === true, { timeout: 180_000 });
       const chorus = battleLog.filter((l) => l.id === 'ep0_rehearsal');
       await check('the Chorus: BAIL grayed; the whole band KO\'d still ends in the forced KRAAANG (kraaangFired, brianFried, pedalboardFried, brianQuit)', chorus.length > 0 && chorus.every((l) => l.bail === true) && ['kraaangFired', 'brianFried', 'pedalboardFried', 'brianQuit'].every((f) => p.snap.flags[f] === true), { log: chorus.slice(0, 3), flags: p.snap.flags });
+      await check('Zerkel Pit, [Say something]: Lucky starts, Brian talks over it, and it is let go anyway (zerkelChoice 1, zerkelLetGo)', p.snap.vars.zerkelChoice === 1 && p.snap.flags.zerkelLetGo === true && seen.some((l) => l.who === 'lucky' && l.text.includes("You thought we'd")) && seen.some((l) => l.text.includes('The moment is gone. Lucky lets it go.')), { vars: p.snap.vars });
       await check('after the wipe the band is standing (HP > 0) so THE SET can start', member(p.snap, 'lucky').hp > 0 && member(p.snap, 'phoenix').hp > 0, p.snap.party);
       await check('Brian gone, Fried Pedalboard, the gig flyer on the floor', party(p.snap) === 'lucky,phoenix,ryan' && has(p.snap, 'fried_pedalboard') && !!ent(p, 'gig_flyer'), { party: party(p.snap), inv: p.snap.inventory });
       battlePlan = winPlan;
@@ -1057,10 +1059,10 @@ async function main() {
       await shot('wrong_eternity_hold_rubble');
       choice.hold = 1;
       const quitBefore = seen.length;
-      p = await drive('CS-17: RAGE → the quit (pure terror)', (q) => q.snap.flags.ryanQuit === true, { timeout: 120_000 });
+      p = await drive('CS-17: RAGE → the quit (pure stage fright)', (q) => q.snap.flags.ryanQuit === true, { timeout: 120_000 });
       await check('RAGE: vars.quitResponse 0, the RAGE line, Ryan gone, luckyRageLocked', p.snap.vars.quitResponse === 0 && seen.some((t) => t.text.includes("You don't get to be scared")) && party(p.snap) === 'lucky,phoenix' && p.snap.flags.luckyRageLocked === true, { vars: p.snap.vars, party: party(p.snap) });
       const terrorCaps = runs(seen.slice(quitBefore).filter((t) => t.who === 'ryan_caption').map((t) => t.text)).join('|');
-      await check('the terror quit: [I could have killed…] [I didn\'t let go.] [It didn\'t matter.], "I quit.", no complicity line', terrorCaps === "[I could have killed every person in this room.]|[I didn't let go.]|[It didn't matter.]" && seen.slice(quitBefore).some((t) => t.who === 'ryan' && t.text === 'I quit.') && !seen.slice(quitBefore).some((t) => t.who === 'narrator' && /let go|Weather doesn't choose/.test(t.text)), { terrorCaps, narrator: seen.slice(quitBefore).filter((t) => t.who === 'narrator').map((t) => t.text) });
+      await check('the stage fright quit: [Every person… looking at me.] [The guy in denim…] [I didn\'t let go.] [It didn\'t matter.], "I quit.", no complicity line', terrorCaps === "[Every person in this room was looking at me.]|[The guy in denim says we suck.]|[I didn't let go.]|[It didn't matter.]" && seen.slice(quitBefore).some((t) => t.who === 'ryan' && t.text === 'I quit.') && !seen.slice(quitBefore).some((t) => t.who === 'narrator' && /let go|Weather doesn't choose/.test(t.text)), { terrorCaps, narrator: seen.slice(quitBefore).filter((t) => t.who === 'narrator').map((t) => t.text) });
       const exploresBefore = p.exploreSeen;
       p = await drive('CS-17 stinger → PAGE 1 → Title → CONTINUE', (q) => q.scene === 'Explore' && q.exploreSeen > exploresBefore && q.snap.flags.ch1Complete === true && q.idle, { allowGameOver: true, timeout: 120_000 });
       await check('the chapter end saved page 1 and CONTINUE loaded it into the rubble', p.slot === 1 && p.snap.map === 'palmers_rubble' && p.snap.flags.ch1Complete === true && !!ent(p, 'bajonka') && p.player.sheet === 'lucky_rage', { slot: p.slot, pos: pos(p), sheet: p.player.sheet });
@@ -1068,7 +1070,7 @@ async function main() {
       // RAGE, PLEAD and JOKE through the same scene on the [Let go] branch (the party and the flags put back first):
       // [That wasn't the goo.] [That was me.] and one complicity line after each comic line.
       const quitLines = { 0: "You don't get to be scared", 1: 'One more show', 2: 'weather event' };
-      const complicity = { 0: 'She asked the universe for this. She watched him let go.', 1: 'He already let go once. That was the show.', 2: "Weather doesn't choose. He did." };
+      const complicity = { 0: 'They asked the universe for this. They watched him let go.', 1: 'He already let go once. That was the show.', 2: "Weather doesn't choose. He did." };
       for (const k of [0, 1, 2]) {
         await ev(() => { const s = window.__slime; s.addParty('ryan'); for (const f of ['ryanQuit', 'luckyRageLocked', 'ch1Complete']) s.setFlag(`flags.${f}`, false); s.setFlag('flags.letGo', true); s.setFlag('flags.eternityChoice', 'letGo'); });
         choice.quit = k;
@@ -1081,7 +1083,7 @@ async function main() {
         const letGoCaps = runs(seen.slice(before).filter((t) => t.who === 'ryan_caption').map((t) => t.text)).join('|');
         const lineIdx = seen.slice(before).findLastIndex((t) => t.who === 'lucky' && t.text.includes(quitLines[k]));
         const complicityIdx = seen.slice(before).findIndex((t) => t.who === 'narrator' && t.text === complicity[k]);
-        await check(`quit response ${k} on [Let go]: [That wasn't the goo.] [That was me.], then the complicity line right after the comic line`, letGoCaps === "[I could have killed every person in this room.]|[That wasn't the goo.]|[That was me.]" && lineIdx >= 0 && complicityIdx === lineIdx + 1, { letGoCaps, lineIdx, complicityIdx, after: seen.slice(before).slice(Math.max(0, lineIdx), lineIdx + 3).map((t) => `${t.who}: ${t.text}`) });
+        await check(`quit response ${k} on [Let go]: [That wasn't the goo.] [That was me.], then the complicity line right after the comic line`, letGoCaps === "[Every person in this room was looking at me.]|[The guy in denim says we suck.]|[That wasn't the goo.]|[That was me.]" && lineIdx >= 0 && complicityIdx === lineIdx + 1, { letGoCaps, lineIdx, complicityIdx, after: seen.slice(before).slice(Math.max(0, lineIdx), lineIdx + 3).map((t) => `${t.who}: ${t.text}`) });
         if (k === 1) await check('PLEAD: the deflated walk, then the rage lock', p.snap.flags.luckyRageLocked === true && seen.slice(before).some((t) => t.portrait === 'lucky_deflated'), seen.slice(before).map((t) => t.portrait));
         const explores2 = p.exploreSeen;
         p = await drive(`CS-17 ${k}: DECLINE → Title → CONTINUE`, (q) => q.scene === 'Explore' && q.exploreSeen > explores2 && q.idle, { allowGameOver: true, timeout: 120_000 });

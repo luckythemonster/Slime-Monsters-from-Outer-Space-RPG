@@ -80,6 +80,7 @@
     { "id": "punk_10", "type": "npc", "sprite": "punk_c", "x": 13, "y": 10, "facing": "right", "behavior": "wander", "radius": 1, "script": "npc_palmers_crowd_4" },
     { "id": "punk_11", "type": "npc", "sprite": "punk_c", "x": 6, "y": 11, "facing": "right", "behavior": "idle", "script": "npc_palmers_crowd_5" },
     { "id": "punk_12", "type": "npc", "sprite": "punk_a", "x": 19, "y": 11, "facing": "up", "behavior": "idle", "script": "npc_palmers_crowd_6" },
+    { "id": "denim_boy", "type": "npc", "sprite": "npc_denim", "x": 19, "y": 10, "facing": "right", "behavior": "idle", "script": "npc_palmers_denim" },
     { "id": "bajonka", "type": "save", "sprite": "bajonka", "x": 2, "y": 4, "facing": "down", "prompt": "INITIAL HERE TO ACKNOWLEDGE SOUNDCHECK", "condition": "flags.hasBajonka && !flags.onStage" },
     { "id": "stage", "type": "trigger", "x": 20, "y": 5, "w": 5, "h": 6, "script": "ep0_palmers_set", "once": true, "condition": "!flags.onStage" },
     { "id": "to_street", "type": "exit", "x": 8, "y": 13, "w": 1, "h": 1, "condition": "!flags.onStage", "refuse": "npc_palmers_door_locked",

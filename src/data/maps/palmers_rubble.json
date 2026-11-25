@@ -57,6 +57,7 @@
     { "id": "jukebox_rubble", "type": "object", "x": 16, "y": 10, "script": "ep0_rubble_jukebox" },
     { "id": "patron_1", "type": "npc", "sprite": "punk_b", "x": 5, "y": 6, "facing": "down", "behavior": "idle", "script": "ep0_rubble_patron_1" },
     { "id": "stranger_tall", "type": "npc", "sprite": "stranger_tall", "h": 2, "x": 12, "y": 11, "facing": "up", "behavior": "idle", "script": "ep0_rubble_stranger" },
+    { "id": "denim_boy", "type": "npc", "sprite": "npc_denim", "x": 19, "y": 10, "facing": "right", "behavior": "idle", "script": "ep0_rubble_denim" },
     { "id": "cop_run", "type": "npc", "sprite": "cop", "x": 20, "y": 12, "facing": "left", "behavior": "patrol", "path": "LLLLLLLLLLLLLRRRRRRRRRRRRR", "ghost": true, "solid": false, "script": "ep0_rubble_cop" },
     { "id": "bajonka", "type": "save", "sprite": "bajonka", "x": 15, "y": 9, "facing": "right", "prompt": "INITIAL HERE TO END CHAPTER 1", "condition": "flags.ch1Complete" }
   ]

@@ -21,7 +21,10 @@
     { "say": "{speed:slow}Dispatch, I have located the unauthorized slime gathering. Stand by.", "who": "cop", "portrait": "cop_disguise" },
     { "camera": { "follow": "player" } },
     { "face": { "who": "player", "dir": "up" } },
-    { "emote": { "who": "ryan", "type": "♪" } },
+    { "emote": { "who": "ryan", "type": "…" } },
+    { "say": "[Six-inch stage.]", "who": "ryan_caption" },
+    { "say": "[Forty people.]", "who": "ryan_caption" },
+    { "say": "[Zerkel Pit had a sky. This has a ceiling.]", "who": "ryan_caption" },
     { "face": { "who": "player", "dir": "left" } },
     { "emote": { "who": "phoenix", "type": "♪" } },
     { "say": "No Brian to ruin the mix.", "who": "narrator" },
@@ -63,6 +66,10 @@
     { "sprite": { "who": "ryan", "sheet": "ryan_slimed_map" } },
     { "wait": 900 },
     { "say": "The dust settles. The night sky is where the ceiling used to be.", "who": "narrator" },
+    { "say": "One man did not run. Double denim. The blast did not touch his mustache.", "who": "narrator" },
+    { "face": { "who": "denim_boy", "dir": "right" } },
+    { "say": "You guys suck!", "who": "denim_boy" },
+    { "say": "DOOM, CRACK and THUD fall out of orbit.", "who": "narrator" },
     { "anim": { "who": "ryan", "key": "ryan_slimed_map_reform", "wait": true } },
     { "music": "plaster_dust" },
     { "say": "Okay. That is our sound.", "who": "lucky" },
@@ -70,7 +77,8 @@
     { "say": "I think I broke the space-time continuum on that snare fill.", "who": "ryan", "portrait": "ryan_stoic" },
     { "wait": 1200 },
     { "face": { "who": "ryan", "dir": "down" } },
-    { "say": "[I could have killed every person in this room.]", "who": "ryan_caption", "shake": true },
+    { "say": "[Every person in this room was looking at me.]", "who": "ryan_caption", "shake": true },
+    { "say": "[The guy in denim says we suck.]", "who": "ryan_caption" },
     { "if": "flags.letGo", "then": [
       { "say": "[That wasn't the goo.]", "who": "ryan_caption" },
       { "say": "[That was me.]", "who": "ryan_caption" }
@@ -92,7 +100,7 @@
         { "set": { "vars.quitResponse": 0 } },
         { "say": "{shake}You don't get to be scared of the best thing you've ever done!{/shake}", "who": "lucky", "portrait": "lucky_rage" },
         { "if": "flags.letGo", "then": [
-          { "say": "She asked the universe for this. She watched him let go.", "who": "narrator" }
+          { "say": "They asked the universe for this. They watched him let go.", "who": "narrator" }
         ] }
       ] },
       { "text": "PLEAD", "then": [
@@ -220,6 +228,10 @@
   "npc_palmers_stranger": [
     { "say": "Good vibes in here. Dense.", "who": "stranger_tall" }
   ],
+  "npc_palmers_denim": [
+    { "say": "Double denim. Arms crossed. He has not uncrossed them since he came in.", "who": "narrator" },
+    { "say": "I'm in a band too. A normal one.", "who": "denim_boy" }
+  ],
   "npc_palmers_crowd_1": [
     { "say": "Woo.", "who": "crowd" }
   ],
@@ -275,6 +287,10 @@
   ],
   "ep0_rubble_patron_1": [
     { "say": "I was mid-pull-tab.", "who": "crowd" }
+  ],
+  "ep0_rubble_denim": [
+    { "say": "Still sucked.", "who": "denim_boy" },
+    { "say": "His arms are still crossed. There is plaster on everything but the mustache.", "who": "narrator" }
   ],
   "ep0_rubble_stranger": [
     { "say": "Whoa, man. Is this… someone's?", "who": "stranger_tall" }

@@ -72,8 +72,27 @@
     { "anim": { "who": "ryan", "key": "ryan_drum", "wait": false } },
     { "setEntity": { "id": "phoenix", "x": 4, "y": 7, "facing": "right" } },
     { "face": { "who": "player", "dir": "right" } },
+    { "say": "Last weekend: Zerkel Pit PunX Fest. Four of them on a flatbed. It went well. Nothing had ever gone well before.", "who": "narrator" },
+    { "say": "We were GOOD. People stayed!", "who": "lucky", "portrait": "lucky_grin" },
+    { "say": "My brain thinks they clapped on purpose.", "who": "phoenix" },
+    { "say": "I almost quit before the show. I thought we'd suck.", "who": "ryan", "portrait": "ryan_stoic" },
+    { "emote": { "who": "player", "type": "…" } },
+    { "choice": [
+      { "text": "[Say something]", "then": [
+        { "set": { "vars.zerkelChoice": 1 } },
+        { "say": "You thought we'd…", "who": "lucky" }
+      ] },
+      { "text": "[Let it go]", "then": [
+        { "set": { "vars.zerkelChoice": 0 } },
+        { "say": "Lucky lets it go.", "who": "narrator" }
+      ] }
+    ] },
+    { "set": { "flags.zerkelLetGo": true } },
     { "anim": { "who": "brian", "key": "brian_point", "wait": false } },
     { "say": "Do we really need all the political stickers? We're going to alienate the market.", "who": "brian" },
+    { "if": "vars.zerkelChoice == 1", "then": [
+      { "say": "Brian is talking. The moment is gone. Lucky lets it go.", "who": "narrator" }
+    ] },
     { "face": { "who": "brian", "dir": "left" } },
     { "say": "Hey, man, can you turn the bass down?", "who": "brian" },
     { "say": "I'm not a 'man,' Brian. And no.", "who": "phoenix", "portrait": "phoenix_droop" },
