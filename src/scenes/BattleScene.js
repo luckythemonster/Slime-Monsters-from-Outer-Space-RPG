@@ -196,6 +196,7 @@ export default class BattleScene extends Phaser.Scene {
   /** 1-2-3-4 at 180 BPM (count_* frames when the ui atlas has them, else 16 px digits); the song starts after "4". */
   async countIn() {
     const beat = scaleMs(333);
+    if (this.encounter.countIn === 'none') return; // the map cutscene already counted this one in
     if (this.encounter.countIn === 'lucky') {
       for (let i = 1; i <= 4; i++) this.time.delayedCall(beat * (i - 1), () => this.sfx('count_click', 'drum_hit'));
       await this.ui.say({ who: 'lucky', text: '{speed:instant}One, two, three, four!' });

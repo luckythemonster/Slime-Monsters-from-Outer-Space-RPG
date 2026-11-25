@@ -95,5 +95,8 @@ These are Lucky's decisions. They hold in dialogue, narration, item text, menus 
 
 - `tests/chapter1_wrong.mjs` failed once in section S10 (a null scene inside the test's `adjacentSpot` helper)
   during a full run, then passed twice. If it recurs, fix the race in the helper. Do not delete the check.
+- `tests/content_c.mjs` plays the AUDITION by confirm-spam with an unseeded RNG. It lost the fight once in a full
+  run (a game over while waiting for the contract), then passed twice. If it recurs, seed the battle or raise
+  the test party's level. Do not delete the check.
 - `src/engine/battle/BattleScripts.js` holds every scripted battle in one file. Split it per chapter before it
   grows (see the roadmap, Foundations).

@@ -302,7 +302,7 @@
     {
       "anim": {
         "who": "ryan",
-        "key": "ryan_sit",
+        "key": "ryan_freeze",
         "wait": false
       }
     },
@@ -336,7 +336,9 @@
     },
     {
       "set": {
-        "flags.signalSent": true
+        "flags.signalSent": true,
+        "flags.weekLater": true,
+        "flags.hubOpen": true
       }
     },
     {

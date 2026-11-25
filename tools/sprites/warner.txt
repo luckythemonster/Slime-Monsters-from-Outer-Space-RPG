@@ -1,0 +1,181 @@
+# Warner: the Duluth kid who fronts Rat Fight. Brown hair, army-green jacket over a white Rat Fight tee,
+# jeans, a stick bag on his back with two sticks poking out. idle 2: a bead of sweat on frame b (he has just
+# played a farewell show and it is not sitting well). 16x24. Chapter 2 adds his walk frames to this sheet.
+name: warner
+frame: 16x24
+palette:
+  . = transparent
+  k = #141018     # outline
+  f = #f0c8a0     # skin
+  F = #c89060     # skin shadow
+  w = #f8f8f8     # eye white / tee
+  i = #141018     # pupil
+  h = #7c4c2c     # hair
+  g = #3c8c40     # jacket
+  G = #1c8c48     # jacket shadow
+  j = #3c5c9c     # jeans
+  b = #7c4c2c     # bag strap
+  B = #48281c     # stick bag
+  y = #f0dcb0     # drumsticks
+  s = #40e0f0     # sweat
+anim: idle        frames: 0 1  fps: 2
+anim: idle_down   frames: 0 1  fps: 2
+anim: idle_up     frames: 2 3  fps: 2
+anim: idle_left   frames: 4 5  fps: 2
+anim: idle_right  frames: 4 5  fps: 2  flipX: true
+
+frame 0: down a
+................
+.....kkkkkk.....
+...kkhhhhhhkk...
+..khhhhhhhhhhk..
+.khhhhhhhhhhhhk.
+.khhffffffffhhk.
+.khffkkffkkffhk.
+.khffwiffwiffhk.
+.kkffffffffffkk.
+..kFfffkkfffFky.
+..kFFffffffFFky.
+...kkffffffkkk..
+.kggggwwwwggggk.
+.kggkgwwwwgkggk.
+.kggkgwwwwgkggk.
+.kggkgGwwGgkggk.
+.kGGkgGGGGgkGGk.
+.kffkgGGGGgkffk.
+..kkkjjjjjjkkk..
+....kjjjjjjk....
+....kjjkkjjk....
+....kjjkkjjk....
+....kkkkkkkk....
+....kkkkkkkk....
+
+frame 1: down b (sweat)
+................
+.....kkkkkk.....
+...kkhhhhhhkk...
+..khhhhhhhhhhk..
+.khhhhhhhhhhhhk.
+.khhffffffffhhk.
+skhffkkffkkffhk.
+.khffwiffwiffhk.
+.kkffffffffffkk.
+..kFffkkkkffFky.
+..kFFffffffFFky.
+...kkffffffkkk..
+.kggggwwwwggggk.
+.kggkgwwwwgkggk.
+.kggkgwwwwgkggk.
+.kggkgGwwGgkggk.
+.kGGkgGGGGgkGGk.
+.kffkgGGGGgkffk.
+..kkkjjjjjjkkk..
+....kjjjjjjk....
+....kjjkkjjk....
+....kjjkkjjk....
+....kkkkkkkk....
+....kkkkkkkk....
+
+frame 2: up a
+................
+.....kkkkkk.....
+...kkhhhhhhkk...
+..khhhhhhhhhhk..
+.khhhhhhhhhhhhk.
+.khhhhhhhhhhhhk.
+.khhhhhhhhhhhhk.
+.khhhhhhhhhhhhk.
+.kkhhhhhhhhhhkk.
+..kFhhhhhhhhFky.
+..kkffffffffkky.
+...kkggggggkkk..
+.kggggggbbggggk.
+.kggkggbbgggkggk
+.kggkgbbBBggkggk
+.kggkgbBBBBgkggk
+.kGGkgGBBBBgkGGk
+.kffkgGGGGGgkffk
+..kkkjjjjjjkkk..
+....kjjjjjjk....
+....kjjkkjjk....
+....kjjkkjjk....
+....kkkkkkkk....
+....kkkkkkkk....
+
+frame 3: up b
+................
+.....kkkkkk.....
+...kkhhhhhhkk...
+..khhhhhhhhhhk..
+.khhhhhhhhhhhhk.
+.khhhhhhhhhhhhk.
+.khhhhhhhhhhhhk.
+.khhhhhhhhhhhhk.
+.kkhhhhhhhhhhkk.
+..kFhhhhhhhhFky.
+..kkffffffffkky.
+...kkggggggkkk..
+.kggggggbbggggk.
+.kggkggbbgggkggk
+.kggkgbbBBggkggk
+.kggkgbBBBBgkggk
+.kGGkgGBBBBgkGGk
+.kffkgGGGGGgkffk
+..kkkjjjjjjkkk..
+....kjjjjjjk....
+....kjjkkjjk....
+....kjjkkjjk....
+....kkkkkkkk....
+....kkkkkkkk....
+
+frame 4: left a
+................
+.....kkkkkk.....
+...kkhhhhhhkk...
+..khhhhhhhhhhk..
+.khhhhhhhhhhhhk.
+.kfffhhhhhhhhhk.
+.kkkffhhhhhhhhk.
+.kwiffhhhhhhhhk.
+.kfffffhhhhhhkk.
+..kkfffFhhhhky..
+..kFFffFkkkkky..
+...kkkkggggkkk..
+...kkggggggkbk..
+..kggkgggggkBBk.
+..kggkgggggkBBk.
+..kggkgGGGgkBBk.
+..kGGkgGggGgkkk.
+..kffkgGGGGgk...
+...kkkjjjjjjk...
+.....kjjjjjjk...
+.....kjjkjjk....
+.....kjjkjjk....
+.....kkkkkkk....
+.....kkkkkkk....
+
+frame 5: left b (sweat)
+................
+.....kkkkkk.....
+...kkhhhhhhkk...
+..khhhhhhhhhhk..
+.khhhhhhhhhhhhk.
+.kfffhhhhhhhhhk.
+skkkffhhhhhhhhk.
+.kwiffhhhhhhhhk.
+.kfffffhhhhhhkk.
+..kkfffFhhhhky..
+..kFFffFkkkkky..
+...kkkkggggkkk..
+...kkggggggkbk..
+..kggkgggggkBBk.
+..kggkgggggkBBk.
+..kggkgGGGgkBBk.
+..kGGkgGggGgkkk.
+..kffkgGGGGgk...
+...kkkjjjjjjk...
+.....kjjjjjjk...
+.....kjjkjjk....
+.....kjjkjjk....
+.....kkkkkkk....
+.....kkkkkkk....

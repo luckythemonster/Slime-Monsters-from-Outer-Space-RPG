@@ -262,7 +262,7 @@ async function main() {
     check("ep0_audition resolves 'win'", r2 === 'win', r2);
     check('audition flags set', s2.flags.auditionWon === true, s2.flags);
     check('audition: Ryan not added to the party by the battle', !s2.party.some((m) => m.id === 'ryan'), s2.party.map((m) => m.id));
-    check('audition: Tinny Ride Cymbal dropped', s2.inventory.some((e) => e.id === 'tinny_ride_cymbal'), s2.inventory);
+    check('audition: no cymbal yet (the Tinny Ride is picked up in the rubble, after he quits)', !s2.inventory.some((e) => e.id === 'tinny_ride_cymbal'), s2.inventory);
 
     // --- 3. ep0_palmers_set (auto) ----------------------------------------------------------------
     await ev(() => {

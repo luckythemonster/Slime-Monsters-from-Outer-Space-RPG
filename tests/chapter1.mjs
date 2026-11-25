@@ -721,7 +721,7 @@ async function main() {
       p = await drive('CS-10/11 → AUDITION → CS-12 contract', (q) => q.snap.flags.ryanJoined === true);
       p = await drive('CS-12 → ONE MONTH LATER → CS-13 → the Chorus → CS-14', (q) => idleOnMap(q) && q.snap.flags.monthLaterRan === true && q.snap.flags.brianQuit === true);
     });
-    check('S9 audition reward: auditionDone, ryanJoined, band agreement, Tinny Ride Cymbal', p.snap.flags.auditionDone === true && p.snap.flags.ryanJoined === true && has(p.snap, 'band_agreement') && has(p.snap, 'tinny_ride_cymbal'), p.snap.inventory);
+    check('S9 audition reward: auditionDone, ryanJoined, band agreement; the Tinny Ride stays on the kit until he quits', p.snap.flags.auditionDone === true && p.snap.flags.ryanJoined === true && has(p.snap, 'band_agreement') && !has(p.snap, 'tinny_ride_cymbal'), p.snap.inventory);
     check('S9 contract pages = 3 + pages initialed before it (4); the contract save bumped saveCount to 2', p.snap.vars.contractPages === 4 && p.snap.vars.saveCount === 2, p.snap.vars);
     check('S10 ONE MONTH LATER ran: monthLater, monthLaterRan, pedalboardFried, kraaangFired, brianQuit', ['monthLater', 'monthLaterRan', 'pedalboardFried', 'kraaangFired', 'brianQuit'].every((f) => p.snap.flags[f] === true), p.snap.flags);
     check('S10 Zerkel Pit: Ryan said it out loud ("I thought we\'d suck.") and Lucky let it go (vars.zerkelChoice 0, zerkelLetGo)', seenLine('ryan', "I almost quit before the show. I thought we'd suck.") && p.snap.vars.zerkelChoice === 0 && p.snap.flags.zerkelLetGo === true && seenLine('narrator', 'Lucky lets it go.'), { vars: p.snap.vars });
@@ -817,7 +817,7 @@ async function main() {
     const exploresBeforeEnd = p.exploreSeen; // CONTINUE starts a fresh Explore scene; the rubble teleport before the title did not
     uiPlan.push({ match: (l) => l[0] === 'New Game', pick: 1 });
     p = await drive('CS-17 stinger → NEXT → save → Title → CONTINUE', (q) => q.scene === 'Explore' && q.exploreSeen > exploresBeforeEnd && q.snap.flags.ch1Complete === true && q.snap.map === 'palmers_rubble' && q.idle);
-    check('S13 ch1Complete, van keys + itinerary', p.snap.flags.ch1Complete === true && has(p.snap, 'van_keys') && has(p.snap, 'tour_itinerary'), p.snap.inventory);
+    check('S13 ch1Complete, van keys + itinerary + the Tinny Ride he left', p.snap.flags.ch1Complete === true && has(p.snap, 'van_keys') && has(p.snap, 'tour_itinerary') && has(p.snap, 'tinny_ride_cymbal'), p.snap.inventory);
     check('S13 the final clipboard page (saveCount 4) went to PAGE 2 and CONTINUE loaded it', p.snap.vars.saveCount === 4 && p.slot === 2, { vars: p.snap.vars, slot: p.slot });
     check('S13 the title screen came up for the round trip, the chapter end and every retry', p.titleSeen === 2 + report.retries, { titleSeen: p.titleSeen, retries: report.retries });
     check('S13 CONTINUE lands in the rubble at (16,9) with Bajonka (save) and the band', p.snap.map === 'palmers_rubble' && at(p, 16, 9) && !!(ent(p, 'bajonka') && ent(p, 'bajonka').type === 'save') && party(p.snap) === 'lucky,phoenix', { pos: pos(p), party: party(p.snap) });

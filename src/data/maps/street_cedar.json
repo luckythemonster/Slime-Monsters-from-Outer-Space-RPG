@@ -11,7 +11,7 @@
     "color": "#182850",
     "alpha": 0.45,
     "depth": 50,
-    "condition": "flags.gigFlyer || flags.hasPalmersFlyer"
+    "condition": "flags.gigFlyer || flags.hasPalmersFlyer || flags.visited_city_sound_hall && !flags.auditionDone"
   },
   "lights": [
     {
@@ -197,6 +197,32 @@
       "                                        ",
       "                                        "
     ],
+    "flat": [
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "      B     S       S                   ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        ",
+      "                                        "
+    ],
     "over": [
       "                                        ",
       "                                        ",
@@ -206,7 +232,7 @@
       "        b                               ",
       "   !@$%            y                    ",
       "                    ~~~                 ",
-      "      B     S       S            ZZ     ",
+      "                                 ZZ     ",
       " l                       l           l  ",
       "                                        ",
       "                                        ",
@@ -465,7 +491,7 @@
       "facing": "down",
       "behavior": "idle",
       "script": "npc_street_stranger",
-      "condition": "flags.gigFlyer || flags.hasPalmersFlyer"
+      "condition": "(flags.gigFlyer || flags.hasPalmersFlyer) && !flags.visited_palmers"
     },
     {
       "id": "smoker",

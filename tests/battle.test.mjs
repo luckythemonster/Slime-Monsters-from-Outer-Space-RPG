@@ -685,7 +685,7 @@ group('script: ep0_audition', (check) => {
   check(all.some((e) => e.type === 'caption' && /Tempo's good/.test(e.text)), 'round 3 caption');
   check(all.some((e) => e.type === 'uiTear' && e.level === 1), 'uiTear 1');
   check(all.some((e) => e.type === 'transform' && e.who === 'ryan'), 'Ryan transforms');
-  check(m.flags.auditionWon === true && m.rewards.xp === 50 && m.rewards.money === 0 && m.rewards.drops.includes('tinny_ride_cymbal'), `reward ${JSON.stringify(m.rewards)}`);
+  check(m.flags.auditionWon === true && m.rewards.xp === 50 && m.rewards.money === 0 && !m.rewards.drops.includes('tinny_ride_cymbal'), `reward ${JSON.stringify(m.rewards)}`);
   check(m.commands('lucky').find((c) => c.id === 'bail').disabled, 'noFlee');
   check(all.filter((e) => e.type === 'damage' && e.by === 'ryan').length > 0, 'Ryan did damage');
 });
@@ -746,7 +746,9 @@ group('script: ep0_palmers_set', (check) => {
   const askIdx = all.findIndex((e) => e.type === 'prompt');
   const ask = all[askIdx];
   check(askIdx > 0 && JSON.stringify(ask.options) === JSON.stringify(OPTIONS) && ask.answered === 1, `one prompt, [Keep fighting it] / [Let go], answered [Let go] (${ask && JSON.stringify(ask.options)}, ${ask && ask.answered})`);
-  check(all[askIdx - 1].type === 'caption' && /fighting the possession/.test(all[askIdx - 1].text), "Ryan's caption comes right before the question");
+  check(all[askIdx - 1].type === 'caption' && /goo wants all of it/.test(all[askIdx - 1].text), "Ryan's caption comes right before the question");
+  const capsLetGo = all.filter((e) => e.type === 'caption').map((e) => e.text);
+  check(capsLetGo.indexOf("[I've been fighting the possession. That was a mistake.]") > capsLetGo.indexOf('[The goo wants all of it.]') && all.findIndex((e) => e.type === 'caption' && /fighting the possession/.test(e.text)) > askIdx, '"That was a mistake" lands after the answer, as the decision');
   check(all.filter((e) => e.type === 'prompt').length === 1 && m.log.filter((l) => l.prompt).length === 1 && m.log.find((l) => l.prompt).index === 1, 'asked once, logged once');
   check(m.flags.letGo === true && m.flags.eternityChoice === 'letGo' && m.flags.eternityArmed === true && m.flags.eternityFired === true, 'letGo (eternityChoice letGo), armed and fired');
   const armIdx = all.findIndex((e) => e.type === 'lockInput' && e.on);
@@ -821,7 +823,7 @@ group('script: ep0_palmers_set', (check) => {
   check(m4.enemies().filter((c) => c.present).length === 3, 'the cop and both backups were on stage');
   check(m4.result === 'win' && m4.flags.letGo === false && m4.flags.eternityChoice === 'keptFighting' && m4.flags.eternityFired === true && m4.round === expected4, `held two of Ryan's turns with the cops on stage, then fired (${m4.result}, asked round ${askRound4 && askRound4.n}${ryanPlayed4 ? ' after Ryan played' : ''}, fired round ${m4.round}, expected ${expected4})`);
   const caps4 = captionsOf(ev4);
-  check(ordered(caps4, "[I've been fighting the possession. That was a mistake.]", '[Holding it.]', '[Holding it. Holding it.]', "[I couldn't.]", '[Rhythm achieved.]'), `the hold's captions in order (${JSON.stringify(caps4)})`);
+  check(ordered(caps4, '[The goo wants all of it.]', '[Holding it.]', '[Holding it. Holding it.]', "[I couldn't.]", "[I've been fighting the possession. That was a mistake.]", '[Rhythm achieved.]'), `the hold's captions in order (${JSON.stringify(caps4)})`);
   const quit4 = ev4.findIndex((e) => e.type === 'caption' && e.text === "[I couldn't.]");
   const lock4 = ev4.findIndex((e) => e.type === 'lockInput' && e.on);
   check(lock4 > quit4, "the player keeps the command window through the hold; input locks at [I couldn't.]");

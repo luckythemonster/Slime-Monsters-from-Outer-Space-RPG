@@ -22,7 +22,7 @@ function ep0_drone() {
       if (n !== 2) return;
       m.allowCommands(null);
       if (!m.find('phoenix')) m.join(m.data.makeSeed('phoenix'));
-      m.say('phoenix', 'Beats the day job.');
+      m.text('Phoenix swings the trash bag.');
       m.toast('RIFF spends AMP. Power Chord costs 3. Shared Aura is a SYNC.');
     },
     onTurnStart(m, actor) {
@@ -49,7 +49,6 @@ function ep0_drone() {
 function ep0_audition() {
   return {
     onStart(m) {
-      m.text('One, two, three, four!');
       m.emit({ type: 'anim', who: 'ryan', key: 'drum' });
       m.transform('ryan', { form: 'possessed' });
       m.emit({ type: 'shake', ms: 600, px: 4 });
@@ -92,6 +91,7 @@ function ep0_rehearsal() {
       m.inflict(brian, 'OUT_OF_TUNE', 3);
       m.text('Sparks.');
       m.emit({ type: 'sfx', name: 'feedback' });
+      m.emit({ type: 'music', id: null }); // the music grinds to a halt, then the line
       m.say('brian', "I can't work like this! I hate this weird, creative shit! Can't we just play normal music?!", { portrait: 'brian_red' });
     }
     // Cannot be lost: whoever the wipe (or the possessed Ryan) put down stands back up at 1 HP, so the
@@ -161,7 +161,7 @@ function ep0_palmers_set() {
     if (asked || fired) return;
     asked = true;
     m.invincible = true;
-    CAP(m, "[I've been fighting the possession. That was a mistake.]");
+    CAP(m, '[The goo wants all of it.]');
     m.prompt(['[Keep fighting it]', '[Let go]'], (i) => {
       if (i === 1) {
         m.flags.letGo = true;
@@ -181,6 +181,8 @@ function ep0_palmers_set() {
     m.suspendEnd = true;
     m.setMeter(100, { force: true, source: 'script' });
     m.transform('ryan', { form: 'eternity' });
+    // The comic's order: the decision, then the line. On [Keep fighting it] it lands after "[I couldn't.]".
+    CAP(m, "[I've been fighting the possession. That was a mistake.]");
     CAP(m, '[I am not trapped in the goo. The goo is trapped in the pocket.]');
     m.emit({ type: 'music', id: 'eternity' });
     m.wait(900);
@@ -202,7 +204,6 @@ function ep0_palmers_set() {
   return {
     onStart(m) {
       m.transform('ryan', { form: 'pocket' });
-      m.text('Dispatch, I have located the unauthorized slime gathering. Stand by.');
       const cop = m.find('cop');
       if (cop) m.inflict(cop, 'ON_HOLD', 2);
     },

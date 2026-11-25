@@ -151,6 +151,14 @@ async function main() {
     check('no hub enemies while hub closed', !names.some((id) => ['slush', 'scooters', 'goose', 'analyst', 'billboard'].includes(id)), names);
     check('night roster absent by day', !names.some((id) => ['stranger_tall', 'smoker', 'bajonka', 'analyst_duo', 'goose_pair'].includes(id)), names);
     check('overlay hidden by day', s.overlay === false || s.overlay === null, s.overlay);
+    // The doors a character walks into are drawn UNDER the sprites (the `flat` layer), never across their heads.
+    const doorDepths = await ev(() => {
+      const ex = window.__slime.game.scene.getScene('Explore');
+      const L = ex.built.layers;
+      const doorTiles = (layer) => (layer ? layer.getTilesWithin().filter((t) => t.index >= 0 && t.y === 8 && [6, 12, 20].includes(t.x)).length : 0);
+      return { flat: L.flat ? L.flat.depth : null, over: L.over ? L.over.depth : null, player: ex.player.depth, flatDoors: doorTiles(L.flat), overDoors: doorTiles(L.over), doorSolid: [6, 12, 20].map((x) => ex.built.solid[8 * ex.built.width + x]) };
+    });
+    check('street doors render under the characters and can still be walked into', doorDepths.flatDoors === 3 && doorDepths.overDoors === 0 && doorDepths.flat !== null && doorDepths.flat < doorDepths.player && doorDepths.over > doorDepths.player && doorDepths.doorSolid.every((v) => !v), doorDepths);
     await page.waitForTimeout(150);
     await shot('content_b_street_first_pass');
 

@@ -39,7 +39,7 @@ Scene ids are proposals. Lines in quotes are canon unless marked *(new)* in the 
 | # | Scene | Where | What happens | Toon |
 |---|---|---|---|---|
 | 1 | The door | apartment (reuse) | Diego, very tall, with the cop's mohawk: "Man, I think this is yours? Also I play guitar. The vibes last night were heavy." Diego joins. | 0 |
-| 2 | The other door | apartment | Warner, stick bag: "Is this the band from the... the wave? Sorry, I had midterms." The signal worked, three weeks late. Warner joins. | 0 |
+| 2 | The other door | apartment | Warner, stick bag: "Is this the band from the... the wave? Sorry, I had midterms." The signal worked, a year late. Warner joins. | 0 |
 | 3 | The van | the curb, then space | The first look at the van Bajonka stole. Rust, welded thrusters, duct tape on the mirror. Title card. | 2 |
 | 4 | Driving | space lanes | Phoenix drives. "Take the next orbital exit, Phoenix. And don't clip the toll booth, I don't want to know who Bajonka stole this van from." Diego: "Man, the stars out here are heavy." | 1 |
 | 5 | The name | the van | Warner starts to say Ryan's name. Lucky goes magenta: "We don't say his name." / "Cool. Cool cool cool." See bible beat 4. Nothing else about Ryan is said in this chapter. | 1 |
@@ -102,8 +102,9 @@ Each is on the roadmap's systems table. Build them to be used again.
 ## New content
 
 - **Party:** Diego (guitar, red Strat, HIGH) and Warner (drums). Field sheets, battle sheets, portraits, riffs.
-  Diego already stands in Palmer's as `stranger_tall`; match him. The bible seeds Warner at Palmer's as well,
-  but he is not in the build. Scene 2 can be his first appearance, or add him to the Palmer's crowd.
+  Diego already stands in Palmer's as `stranger_tall`; match him. Warner is in the build too: he fronts Rat
+  Fight, the opener at Palmer's, and stands in the rubble with his sticks (`warner`, idle frames only). Match
+  him and add his walk frames. His door line has to work for someone who was in the room last night.
   Diego's TALK command does not exist yet. It unlocks in Chapter 3. Do not give it to him early.
 - **NPCs:** the cyborg farmers (three or four builds), two khaki agents, the dock guard, the Promoter (trench
   coat, neon-blue cigarette), an opening band.

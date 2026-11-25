@@ -12227,6 +12227,72 @@
       }
     }
   },
+  "warner": {
+    "type": "spritesheet",
+    "frameWidth": 16,
+    "frameHeight": 24,
+    "frames": 6,
+    "names": [
+      "down a",
+      "down b (sweat)",
+      "up a",
+      "up b",
+      "left a",
+      "left b (sweat)"
+    ],
+    "anims": [
+      {
+        "key": "warner_idle",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "warner_idle_down",
+        "frames": [
+          0,
+          1
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "warner_idle_up",
+        "frames": [
+          2,
+          3
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "warner_idle_left",
+        "frames": [
+          4,
+          5
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": false
+      },
+      {
+        "key": "warner_idle_right",
+        "frames": [
+          4,
+          5
+        ],
+        "fps": 2,
+        "repeat": -1,
+        "flipX": true
+      }
+    ]
+  },
   "whrnnng_b": {
     "type": "spritesheet",
     "frameWidth": 64,

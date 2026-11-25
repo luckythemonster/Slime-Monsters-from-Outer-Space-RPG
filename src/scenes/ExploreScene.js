@@ -628,6 +628,8 @@ export default class ExploreScene extends Phaser.Scene {
       const done = () => resolve();
       if (fx.shake !== undefined) this.shake(scaleMs(fx.shake || 300), fx.intensity ?? 0.01, fx.px).then(done);
       else if (fx.flash !== undefined) { cam.once(CamEvents.FLASH_COMPLETE, done); cam.flash(scaleMs(fx.flash || 150), r, g, b, true); }
+      // A camera that is already faded out stays black (Fade.start would flash the scene and fade again).
+      else if (fx.fade === 'out' && !cam.fadeEffect.isRunning && cam.fadeEffect.isComplete && cam.fadeEffect.direction && cam.fadeEffect.alpha >= 1) done();
       else if (fx.fade === 'out') { cam.once(CamEvents.FADE_OUT_COMPLETE, done); cam.fadeOut(scaleMs(fx.ms || FADE_MS), r, g, b); }
       // A camera that is not faded out has nothing to fade in from (Fade.start would cut to black first).
       else if (fx.fade === 'in' && !cam.fadeEffect.isRunning && cam.fadeEffect.alpha === 0) done();

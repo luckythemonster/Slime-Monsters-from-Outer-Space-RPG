@@ -68,6 +68,7 @@
     { "id": "guy", "type": "npc", "sprite": "punk_c", "x": 18, "y": 9, "facing": "right", "behavior": "idle", "script": "npc_palmers_guy" },
     { "id": "cop", "type": "npc", "sprite": "cop", "x": 22, "y": 11, "facing": "up", "behavior": "idle", "script": "npc_palmers_cop", "condition": "!flags.eternityDone" },
     { "id": "stranger_tall", "type": "npc", "sprite": "stranger_tall", "h": 2, "x": 14, "y": 11, "facing": "up", "behavior": "idle", "script": "npc_palmers_stranger" },
+    { "id": "warner", "type": "npc", "sprite": "warner", "x": 17, "y": 11, "facing": "down", "behavior": "idle", "script": "npc_palmers_warner" },
     { "id": "punk_1", "type": "npc", "sprite": "punk_a", "x": 6, "y": 7, "facing": "right", "behavior": "idle", "script": "npc_palmers_crowd_1" },
     { "id": "punk_2", "type": "npc", "sprite": "punk_b", "x": 10, "y": 7, "facing": "right", "behavior": "idle", "script": "npc_palmers_crowd_2" },
     { "id": "punk_3", "type": "npc", "sprite": "punk_b", "x": 14, "y": 7, "facing": "right", "behavior": "idle", "script": "npc_palmers_crowd_3" },

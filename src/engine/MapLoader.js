@@ -4,7 +4,7 @@ import { TILE, DEPTH } from '../config.js';
 /**
  * @typedef {object} BuiltMap
  * @property {Phaser.Tilemaps.Tilemap} tilemap
- * @property {{ground: Phaser.Tilemaps.TilemapLayer, deco: Phaser.Tilemaps.TilemapLayer|null, over: Phaser.Tilemaps.TilemapLayer|null}} layers
+ * @property {{ground: Phaser.Tilemaps.TilemapLayer, deco: Phaser.Tilemaps.TilemapLayer|null, flat: Phaser.Tilemaps.TilemapLayer|null, over: Phaser.Tilemaps.TilemapLayer|null}} layers
  * @property {number} width tiles
  * @property {number} height tiles
  * @property {Uint8Array} solid width*height collision grid (1 = blocked)
@@ -66,10 +66,13 @@ export function buildMap(scene, mapDef, manifest) {
   const tilemap = scene.make.tilemap({ tileWidth: TILE, tileHeight: TILE, width, height });
   const set = tilemap.addTilesetImage(mapDef.tileset, mapDef.tileset, tileset.tileWidth || TILE, tileset.tileHeight || TILE, 0, 0, 0);
 
-  const layers = { ground: null, deco: null, over: null };
+  const layers = { ground: null, deco: null, flat: null, over: null };
+  // `flat` is for things a character walks INTO (doors on a wall face): drawn under the sprites like deco,
+  // but never solid, whatever the tile says. A door in `over` would paint itself across the character's head.
   const specs = [
     ['ground', DEPTH.GROUND, true],
     ['deco', DEPTH.DECO, true],
+    ['flat', DEPTH.DECO + 0.5, false],
     ['over', DEPTH.OVER, false],
   ];
   for (const [name, depth, collides] of specs) {

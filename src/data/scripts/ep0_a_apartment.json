@@ -3,7 +3,11 @@
     { "if": "flags.signalSent", "then": [
       { "say": "It hums at a frequency Phoenix describes as 'rent.'", "who": "narrator" },
       { "if": "flags.ampRead", "then": [
-        { "say": "My brain thinks it's still waiting for a reply.", "who": "phoenix" }
+        { "if": "flags.ryanCalled", "then": [
+          { "say": "My brain thinks it got a reply. The reply has a drum kit.", "who": "phoenix" }
+        ], "else": [
+          { "say": "My brain thinks it's still waiting for a reply.", "who": "phoenix" }
+        ] }
       ] },
       { "set": { "flags.ampRead": true } },
       { "end": true }
@@ -68,7 +72,7 @@
       { "say": "PARKING TICKET. (Phoenix does not own a car.)", "who": "narrator" }
     ] },
     { "if": "vars.billsIndex == 4", "then": [
-      { "say": "CITY OF MINNEAPOLIS: POTHOLE, 1 (one). $4,000.", "who": "narrator" },
+      { "say": "CITY OF MINNEAPOLIS: POTHOLE, 1 (one). $1,400.", "who": "narrator" },
       { "if": "!flags.billsRead", "then": [
         { "say": "My brain thinks we should frame that one.", "who": "phoenix" }
       ] },
@@ -98,7 +102,11 @@
   "ep0_apt_window": [
     { "say": "WORK IS LOVE. It has never once been turned off.", "who": "narrator" },
     { "if": "flags.signalSent", "then": [
-      { "say": "It blinked once. Last week. Nobody else saw it. Lucky is counting it.", "who": "narrator" }
+      { "if": "flags.monthLater", "then": [
+        { "say": "It blinked once. Last year. Nobody else saw it. Lucky is still counting it.", "who": "narrator" }
+      ], "else": [
+        { "say": "It blinked once. Last week. Nobody else saw it. Lucky is counting it.", "who": "narrator" }
+      ] }
     ] }
   ],
 

@@ -35,7 +35,7 @@
   "npc_cs_manager": [
     { "say": "Room 4. Cash only. Don't put stickers on the stickers.", "who": "night_manager" },
     { "if": "flags.monthLater", "then": [
-      { "say": "You're a month behind on the stickers rule. The stickers are winning.", "who": "night_manager" }
+      { "say": "You're a year behind on the stickers rule. The stickers are winning.", "who": "night_manager" }
     ] }
   ],
   "npc_cs_desk": [
