@@ -68,13 +68,17 @@ export function installDebug(game) {
 
   /** Stop every gameplay scene and start Explore from the current GameState position. */
   const restartExplore = () => new Promise((resolve) => {
+    // Called over the title menu, closeAll() answers that menu "New Game": tell the title it is closing first, so a
+    // load made from the title screen is not replaced by a new game.
+    const title = sm.getScene('Title');
+    if (title && sm.isActive('Title')) title.closed = true;
     if (services.ui) services.ui.closeAll();
     for (const k of SCENE_PRIORITY) {
       if (k !== 'Boot' && (sm.isActive(k) || sm.isPaused(k) || sm.isSleeping(k))) sm.stop(k);
     }
     const ex = sm.getScene('Explore');
     ex.events.once(Phaser.Scenes.Events.CREATE, () => resolve(api.snapshot()));
-    sm.start('Explore');
+    sm.start('Explore', {}); // an explicit empty object: Phaser would otherwise reuse the last start data
     sm.bringToTop('UI');
   });
 
@@ -103,6 +107,8 @@ export function installDebug(game) {
       return restartExplore();
     },
     save(slot = 1) { return services.state.save(slot); },
+    /** Start from a save object (any version): how a chapter's tests begin at tests/fixtures/chNN_start.json. */
+    async loadSave(obj) { services.state.fromJSON(obj); return restartExplore(); },
 
     warp(mapId, x, y, facing) { return requireExplore().changeMap(mapId, x, y, facing); },
     setFlag(path, value = true) {

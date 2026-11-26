@@ -9,7 +9,7 @@ import { EQUIP_SLOTS } from '../engine/Party.js';
 import { riffs as RIFFS } from '../engine/battle/data.js';
 
 const TOP_ITEMS = ['Items', 'Riffs', 'Equip', 'Status', 'Save', 'Quit'];
-const SLOT_LABEL = { instrument: 'Inst', accessory: 'Acc' };
+const SLOT_LABEL = { instrument: 'Inst', rig: 'Rig', wear: 'Wear', sticker: 'Stkr' };
 
 export default class MenuScene extends Phaser.Scene {
   constructor() { super({ key: 'Menu' }); }
@@ -129,7 +129,7 @@ export default class MenuScene extends Phaser.Scene {
       if (cur && cur.locked) { await this.ui.say({ text: `${nameOf(m.equip[slot])} stays on. It is not up for discussion.`, who: 'narrator' }); continue; }
       const fits = inv.list().filter((e) => e.def.type === 'equipment' && e.def.slot === slot && !e.def.locked && (!e.def.who || e.def.who.includes(m.id)));
       if (!fits.length) { await this.ui.say({ text: `Nothing in the bag fits ${p.def(m.id).name}'s ${slot}.`, who: 'narrator' }); continue; }
-      const ii = await this.ui.menu(fits.map((e) => ({ label: e.def.name.slice(0, 26), hint: (e.def.desc || '').slice(0, 56) })), { x: 128, y: 144, cancelable: true });
+      const ii = await this.ui.menu(fits.map((e) => ({ label: e.def.name.slice(0, 26), hint: (e.def.desc || '').slice(0, 56) })), { x: 128, y: 168, cancelable: true });
       if (this.closed || ii < 0) continue;
       const pick = fits[ii];
       const prev = p.equip(m.id, pick.id);

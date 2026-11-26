@@ -420,7 +420,7 @@ The eight open questions, answered, plus Lucky's later decisions (9 to 20), whic
 
 **What the slice picked up (all in the Chapter 1 build).** (a) The [Keep fighting it] / [Let go] choice in THE SET, with `eternityChoice` remembered; [Keep fighting it] holds two more turns and it happens anyway. (b) The quit scene branches on it: [Let go] adds [That wasn't the goo.] [That was me.]; [Keep fighting it] adds [I didn't let go.] [It didn't matter.]. (c) The old-band seeds have no names: Dad's third floor line is "Your little band 'found itself.' In a storage unit. What kind of a brand is that?"; the Pod 3 nameplate is "POD 3. RESERVED. The name is scratched off." with Lucky's "…They're late. They're always late."; the flag is `flags.readPod3`. (d) Ryan's stage fright and the heckle: Brian's "He doesn't gig." exchange in the café, the small captions before the set, the Denim Boy (`npc_denim`, in Palmer's and in the rubble) and his "You guys suck!", and the aftermath captions [Every person in this room was looking at me.] [The guy in denim says we suck.]. (e) Zerkel Pit PunX Fest: the month-later scene opens the weekend after it, Ryan says his line, and Lucky gets [Say something] / [Let it go] (`vars.zerkelChoice`, `flags.zerkelLetGo`). (f) Brian's field and battle sprites are the jar; his portraits are still the normal guy; the ultimatum's X-ray is the tiny living room.
 
-**Still optional for the slice.** The Pothole Invoice, the rubble silhouettes, the ASSET LOCATED post-credit.
+**Still optional for the slice.** The rubble silhouettes, the ASSET LOCATED post-credit. (The Pothole Invoice is in: Phoenix's pothole line hands it over in the alley.)
 
 ## New open questions for Lucky
 

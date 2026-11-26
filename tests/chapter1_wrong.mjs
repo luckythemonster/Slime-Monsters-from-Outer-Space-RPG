@@ -122,7 +122,12 @@ async function launch(chromium) {
 
 function installHelpers() {
   const s = window.__slime;
-  const ex = () => s.explore();
+  // Name the scene when Explore is gone: "null.entities" says nothing about why a sweep lost the map.
+  const ex = () => {
+    const e = s.explore();
+    if (!e) throw new Error(`Explore is not running (scene ${s.scene()}, map ${s.state && s.state.map}, ui ${JSON.stringify(s.services.ui.debugState().top)})`);
+    return e;
+  };
   const W = {
     /** Reposition the player inside the current map (no fade, no hooks). */
     place(x, y, facing) {
@@ -962,7 +967,9 @@ async function main() {
         const before = xpOf(r.p);
         r = await fight(id, winPlan, `${id} win`);
         const want = ENCOUNTERS[enc].enemies.reduce((s, e, i) => s + (((ENCOUNTERS[enc].overrides || [])[i] || {}).xp ?? ENEMIES[e].xp), 0);
-        await check(`${id}: won after the BAIL, cleared, +${want} XP`, !ent(r.p, id) && r.p.snap.flags[`cleared_${id}`] === true && xpOf(r.p) - before === want, { xp: xpOf(r.p) - before, want, flags: r.p.snap.flags[`cleared_${id}`] });
+        // A lone goose under 30% HP may flee (its own AI rule), and a goose that flees pays no XP.
+        const gotDay = xpOf(r.p) - before;
+        await check(`${id}: won after the BAIL, cleared, +${want} XP`, !ent(r.p, id) && r.p.snap.flags[`cleared_${id}`] === true && (gotDay === want || (id === 'goose' && gotDay === 0)), { xp: xpOf(r.p) - before, want, flags: r.p.snap.flags[`cleared_${id}`] });
         optionalXp += want;
       }
       // the billboard (optional, static object with a Yes/No)
@@ -989,7 +996,9 @@ async function main() {
         const before = xpOf(r.p);
         r = await fight(id, winPlan, `${id} win`);
         const want = ENCOUNTERS[enc].enemies.reduce((s, e) => s + ENEMIES[e].xp, 0);
-        await check(`${id}: won after the BAIL, cleared, +${want} XP`, !ent(r.p, id) && r.p.snap.flags[`cleared_${id}`] === true && xpOf(r.p) - before === want, { xp: xpOf(r.p) - before, want });
+        // The last goose standing may flee under 30% HP (its own AI rule), and a goose that flees pays no XP.
+        const gotNight = xpOf(r.p) - before;
+        await check(`${id}: won after the BAIL, cleared, +${want} XP`, !ent(r.p, id) && r.p.snap.flags[`cleared_${id}`] === true && (gotNight === want || (id === 'goose_pair' && gotNight === want - ENEMIES.goose.xp)), { xp: gotNight, want });
         optionalXp += want;
       }
       p = await probe();
@@ -1063,9 +1072,13 @@ async function main() {
       await check('RAGE: vars.quitResponse 0, the RAGE line, Ryan gone, luckyRageLocked', p.snap.vars.quitResponse === 0 && seen.some((t) => t.text.includes("You don't get to be scared")) && party(p.snap) === 'lucky,phoenix' && p.snap.flags.luckyRageLocked === true, { vars: p.snap.vars, party: party(p.snap) });
       const terrorCaps = runs(seen.slice(quitBefore).filter((t) => t.who === 'ryan_caption').map((t) => t.text)).join('|');
       await check('the stage fright quit: [Every person… looking at me.] [The guy in denim…] [I didn\'t let go.] [It didn\'t matter.], "I quit.", no complicity line', terrorCaps === "[Every person in this room was looking at me.]|[The guy in denim says we suck.]|[I didn't let go.]|[It didn't matter.]" && seen.slice(quitBefore).some((t) => t.who === 'ryan' && t.text === 'I quit.') && !seen.slice(quitBefore).some((t) => t.who === 'narrator' && /let go|Weather doesn't choose/.test(t.text)), { terrorCaps, narrator: seen.slice(quitBefore).filter((t) => t.who === 'narrator').map((t) => t.text) });
-      const exploresBefore = p.exploreSeen;
-      p = await drive('CS-17 stinger → PAGE 1 → Title → CONTINUE', (q) => q.scene === 'Explore' && q.exploreSeen > exploresBefore && q.snap.flags.ch1Complete === true && q.idle, { allowGameOver: true, timeout: 120_000 });
-      await check('the chapter end saved page 1 and CONTINUE loaded it into the rubble', p.slot === 1 && p.snap.map === 'palmers_rubble' && p.snap.flags.ch1Complete === true && !!ent(p, 'bajonka') && p.player.sheet === 'lucky_rage', { slot: p.slot, pos: pos(p), sheet: p.player.sheet });
+      // CONTINUE on the finished chapter runs Chapter 2's entry script (the card, TO BE CONTINUED) and returns to the
+      // title: it no longer drops the band back in the rubble. The rubble page itself is read through the debug loader.
+      const titlesBefore = p.titleSeen;
+      p = await drive('CS-17 stinger → PAGE 1 → Title → CONTINUE → ch02_start → Title', (q) => q.scene === 'Title' && q.titleSeen >= titlesBefore + 2 && q.snap.flags.ch1Complete === true, { allowGameOver: true, timeout: 120_000 });
+      await check('the chapter end saved page 1; CONTINUE handed it to Chapter 2 and came back to the title with the save untouched', p.slot === 1 && p.snap.map === 'palmers_rubble' && p.snap.flags.ch1Complete === true && p.snap.chapter === 1, { slot: p.slot, map: p.snap.map, chapter: p.snap.chapter });
+      p = await loadSlot(1, 'page 1 through the debug loader');
+      await check('page 1 is the rubble: Bajonka with the clipboard, Lucky rage-locked', p.snap.map === 'palmers_rubble' && !!ent(p, 'bajonka') && p.player.sheet === 'lucky_rage', { pos: pos(p), sheet: p.player && p.player.sheet });
 
       // RAGE, PLEAD and JOKE through the same scene on the [Let go] branch (the party and the flags put back first):
       // [That wasn't the goo.] [That was me.] and one complicity line after each comic line.
@@ -1085,9 +1098,10 @@ async function main() {
         const complicityIdx = seen.slice(before).findIndex((t) => t.who === 'narrator' && t.text === complicity[k]);
         await check(`quit response ${k} on [Let go]: [That wasn't the goo.] [That was me.], then the complicity line right after the comic line`, letGoCaps === "[Every person in this room was looking at me.]|[The guy in denim says we suck.]|[That wasn't the goo.]|[That was me.]" && lineIdx >= 0 && complicityIdx === lineIdx + 1, { letGoCaps, lineIdx, complicityIdx, after: seen.slice(before).slice(Math.max(0, lineIdx), lineIdx + 3).map((t) => `${t.who}: ${t.text}`) });
         if (k === 1) await check('PLEAD: the deflated walk, then the rage lock', p.snap.flags.luckyRageLocked === true && seen.slice(before).some((t) => t.portrait === 'lucky_deflated'), seen.slice(before).map((t) => t.portrait));
-        const explores2 = p.exploreSeen;
-        p = await drive(`CS-17 ${k}: DECLINE → Title → CONTINUE`, (q) => q.scene === 'Explore' && q.exploreSeen > explores2 && q.idle, { allowGameOver: true, timeout: 120_000 });
-        await check(`quit response ${k}: declining the last clipboard still ends the chapter on the title; CONTINUE reloads the newest page`, seen.some((t) => t.text.includes('The clipboard does not move')) && p.snap.map === 'palmers_rubble', { map: p.snap.map, slot: p.slot });
+        const titles2 = p.titleSeen;
+        p = await drive(`CS-17 ${k}: DECLINE → Title → CONTINUE → ch02_start → Title`, (q) => q.scene === 'Title' && q.titleSeen >= titles2 + 2, { allowGameOver: true, timeout: 120_000 });
+        await check(`quit response ${k}: declining the last clipboard still ends the chapter on the title; CONTINUE takes the newest finished page into Chapter 2`, seen.some((t) => t.text.includes('The clipboard does not move')) && p.snap.map === 'palmers_rubble' && p.snap.flags.ch1Complete === true, { map: p.snap.map, flags: p.snap.flags.ch1Complete });
+        p = await loadSlot(1, `back to the rubble page for the next response (${k})`);
       }
       choice.quit = 1;
     });
@@ -1156,7 +1170,9 @@ async function main() {
       await reloadCheck('rubble page', 3, { map: 'palmers_rubble', x: 16, y: 9, party: 'lucky,phoenix', flags: { ch1Complete: true } });
       p = await probe();
       await check('Lucky rage-locked on the reloaded rubble page', p.player.sheet === 'lucky_rage', p.player.sheet);
-      // Title → CONTINUE picks the newest (3), then page 1 re-initialed becomes the newest
+      // Title → CONTINUE picks the newest (3), then page 1 re-initialed becomes the newest. This is about which page
+      // CONTINUE picks, so the pages are re-initialed as unfinished ones: a finished page would go to Chapter 2 instead.
+      await ev(() => { window.__slime.setFlag('flags.ch1Complete', false); window.__slime.save(3); return true; });
       uiPlan.push({ match: (l) => l[0] === 'Items' && l.includes('Quit'), pick: 5 }, { match: (l) => l[0] === 'Quit to title', pick: 0 });
       choice.title = 1;
       await press('menu');
@@ -1263,19 +1279,36 @@ async function main() {
         let list = await ev(() => window.__wrong.scripted());
         if (opts.order) list = list.sort((a, b) => (opts.order.indexOf(a.id) + 1 || 999) - (opts.order.indexOf(b.id) + 1 || 999));
         const skip = new Set(opts.skip || []);
+        // Park everything the sweep does not talk to. A hub enemy left on `chase` or `wander` (the analyst starts two tiles
+        // from the pawn door) can reach the player between two presses, start a fight this sweep is not there to play,
+        // and end it in a Game Over. S6 fights those enemies; here they stand still.
+        for (const e of list) {
+          if (!skip.has(e.id) || !e.behavior || e.behavior === 'idle' || e.behavior === 'static') continue;
+          await ev((id) => window.__wrong.setBehavior(id, 'idle'), e.id);
+          await ev((id) => window.__slime.waitFor(() => { const scene = window.__slime.explore(); const en = scene && scene.entities.get(id); return !!scene && (!en || !en.moving); }, 3000).catch(() => false), e.id);
+        }
         const results = [];
         for (const e of list) {
           if (skip.has(e.id)) continue;
           if (e.behavior === 'wander' || e.behavior === 'patrol') await ev((id) => window.__wrong.setBehavior(id, 'idle'), e.id);
           // a step already under way finishes after the switch to idle: wait for the feet to land
-          await ev((id) => window.__slime.waitFor(() => { const en = window.__slime.explore().entities.get(id); return !en || !en.moving; }, 3000).catch(() => false), e.id);
+          await ev((id) => window.__slime.waitFor(() => { const scene = window.__slime.explore(); const en = scene && scene.entities.get(id); return !!scene && (!en || !en.moving); }, 3000).catch(() => false), e.id);
           const texts = [];
           let silent = false;
           let reachable = true;
           let still = true;
           let consumed = false;
           for (let n = 0; n < 2; n++) {
-            const adj = await ev((id) => window.__wrong.adjacentSpot(id), e.id);
+            // A wandering NPC or a chasing enemy can stand on the one free side for a moment, and a condition refresh can
+            // swap the entity out for a frame: ask a few times before calling it unreachable.
+            let adj = null;
+            for (let attempt = 0; attempt < 12 && !adj; attempt++) {
+              adj = await ev((id) => window.__wrong.adjacentSpot(id), e.id);
+              if (!adj) {
+                if (n === 1 && !(await ev((id) => window.__wrong.entity(id), e.id))) break; // used up by the first press
+                await sleep(150);
+              }
+            }
             if (!adj) {
               // the first press used the object up (the bass stand, the gig flyer): its condition now hides it
               if (n === 1 && !(await ev((id) => window.__wrong.entity(id), e.id))) { consumed = true; break; }

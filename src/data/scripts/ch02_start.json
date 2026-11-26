@@ -1,0 +1,8 @@
+{
+  "ch02_start": [
+    { "camera": { "fade": "out", "ms": 300 } },
+    { "caption": "CHAPTER 2\nGIG IN THE POTATO BELT", "ms": 2400, "style": "flyer" },
+    { "caption": "TO BE CONTINUED", "ms": 1800 },
+    { "title": true }
+  ]
+}

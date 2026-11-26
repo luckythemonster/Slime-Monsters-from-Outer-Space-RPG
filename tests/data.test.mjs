@@ -9,9 +9,10 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { evaluate, evaluateWith, tokenize } from '../src/engine/Conditions.js';
-import { Party } from '../src/engine/Party.js';
+import { Party, levelStats, EQUIP_SLOTS } from '../src/engine/Party.js';
 import { Inventory } from '../src/engine/Inventory.js';
-import { GameState } from '../src/engine/GameState.js';
+import { GameState, SAVE_VERSION, migrateSave } from '../src/engine/GameState.js';
+import { CHAPTERS, nextChapterEntry } from '../src/engine/Chapters.js';
 import { COMMANDS, EventRunner, PROMPT_COLS, isExpression, resolveValue } from '../src/engine/EventRunner.js';
 import { services } from '../src/engine/services.js';
 import { wrapWords } from '../src/ui/theme.js';
@@ -196,7 +197,7 @@ group('gamestate', (check) => {
   gs.tick(1234.5);
   const saved = gs.save(1);
   check(gs.hasSave(1) && store.has('smfos.save.1'), 'save writes smfos.save.1');
-  check(saved.version === 1 && saved.map === 'dev_street' && saved.flags.metPhoenix === true && saved.vars.coffeeCount === 3, 'save shape');
+  check(saved.version === 2 && Array.isArray(saved.words) && Array.isArray(saved.stickers) && saved.scrap === 0 && saved.party.every((m) => m.chops === 0 && Array.isArray(m.nodes) && m.breath === null && !('accessory' in m.equip)) && saved.map === 'dev_street' && saved.flags.metPhoenix === true && saved.vars.coffeeCount === 3, 'save shape');
   check(Array.isArray(saved.party) && saved.party[0].id === 'lucky' && saved.party[0].level === 3, 'party in save');
   check(Array.isArray(saved.roster) && Array.isArray(saved.inventory) && typeof saved.savedAt === 'string', 'roster/inventory/savedAt');
   const gs2 = new GameState({ characters, items, equipment, start }, fakeStorage);
@@ -461,6 +462,104 @@ group('shops', (check) => {
     check(sellPrice(pawn, 'fried_pedalboard', state.inventory.def('fried_pedalboard')) === 11, 'pawn pays $11 for the pedalboard');
     check(sellPrice(pawn, 'band_agreement', state.inventory.def('band_agreement')) === null, 'pawn refuses key items');
   }
+});
+
+// ---------------------------------------------------------------------------------------------
+// Foundations (docs/ROADMAP.md): progression groundwork, save migration, chapter boundaries.
+group('progression', (check) => {
+  const xp = characters.xpTable;
+  check(xp.length === 50, `xpTable has 50 levels (${xp.length})`);
+  check(JSON.stringify(xp.slice(0, 20)) === JSON.stringify([0, 10, 24, 48, 85, 135, 200, 275, 365, 470, 590, 725, 875, 1040, 1220, 1415, 1625, 1850, 2090, 2345]), 'the first 20 levels are the shipped table, untouched');
+  for (let i = 9; i < xp.length; i++) check((xp[i] - xp[i - 1]) - (xp[i - 1] - xp[i - 2]) === 15, `level ${i} to ${i + 1} costs 15 more than the level before (${xp[i] - xp[i - 1]})`);
+  check(xp[8] - xp[7] === 90 && xp[38] - xp[37] === 540, `level 8 to 9 costs 90 and level 38 to 39 costs 540 (${xp[8] - xp[7]}, ${xp[38] - xp[37]})`);
+  // docs/PROGRESSION.md "Stats": the table is the acceptance test. HP / AMP / ATK / DEF / SPD / LCK before equipment.
+  const TABLE = {
+    lucky: { 8: [70, 22, 21, 11, 14, 13], 13: [100, 27, 31, 16, 16, 14], 19: [136, 33, 43, 22, 19, 16], 28: [190, 42, 61, 31, 24, 19], 38: [250, 52, 81, 41, 29, 23] },
+    phoenix: { 8: [83, 24, 15, 20, 12, 11], 13: [118, 29, 23, 27, 14, 12], 19: [160, 35, 32, 36, 17, 14], 28: [223, 44, 45, 50, 22, 17], 38: [293, 54, 60, 65, 27, 21] },
+  };
+  for (const [id, rows] of Object.entries(TABLE)) {
+    for (const [level, want] of Object.entries(rows)) {
+      const s = levelStats(characters.characters[id], Number(level));
+      const got = [s.hp, s.amp, s.atk, s.def, s.spd, s.lck];
+      check(JSON.stringify(got) === JSON.stringify(want), `${id} L${level}: ${got.join(' / ')} (want ${want.join(' / ')})`);
+    }
+  }
+  // Growth never goes backwards, and no stat freezes before level 50.
+  for (const id of ['lucky', 'phoenix']) {
+    for (let level = 2; level <= 50; level++) {
+      const a = levelStats(characters.characters[id], level - 1); const b = levelStats(characters.characters[id], level);
+      check(['hp', 'amp', 'atk', 'def', 'spd', 'lck'].every((k) => b[k] >= a[k]) && b.hp > a.hp, `${id} L${level} is not weaker than L${level - 1}`);
+    }
+    check(levelStats(characters.characters[id], 50).atk > levelStats(characters.characters[id], 40).atk, `${id}: ATK still grows from level 40 to 50`);
+  }
+  const riffTable = readJson(path.join(DATA, 'riffs.json'));
+  check(!!riffTable.headache && riffTable.headache.name === 'Headache' && !riffTable.migraine, 'the level 5 riff is Headache; MIGRAINE is reserved for Chapter 11');
+  check(JSON.stringify(EQUIP_SLOTS) === JSON.stringify(['instrument', 'rig', 'wear', 'sticker']), `slots: ${EQUIP_SLOTS}`);
+  for (const [id, eq] of Object.entries(equipment)) check(EQUIP_SLOTS.includes(eq.slot), `equipment ${id}: slot "${eq.slot}" is one of ${EQUIP_SLOTS.join(', ')}`);
+  for (const [id, def] of Object.entries(characters.characters)) check(!('accessory' in (def.equip || {})), `character ${id}: no accessory slot`);
+});
+
+group('save migration', (check) => {
+  const fixturePath = path.join(ROOT, 'tests', 'fixtures', 'save_ch1_end_v1.json');
+  check(existsSync(fixturePath), 'tests/fixtures/save_ch1_end_v1.json exists (a real end-of-Chapter-1 save, made by tests/chapter1.mjs before save version 2)');
+  if (!existsSync(fixturePath)) return;
+  const v1 = readJson(fixturePath);
+  const before = JSON.stringify(v1);
+  check(v1.version === 1 && v1.flags.ch1Complete === true && v1.map === 'palmers_rubble', 'the fixture is a version 1 save at the end of Chapter 1');
+  const gs = new GameState({ characters, items, equipment, start }, null);
+  let threw = null;
+  try { gs.fromJSON(v1); } catch (err) { threw = err; }
+  check(!threw, `a version 1 save loads (${threw && threw.message})`);
+  check(JSON.stringify(v1) === before, 'loading does not touch the save object it was given');
+  if (threw) return;
+  const out = gs.toJSON();
+  check(out.version === SAVE_VERSION && SAVE_VERSION === 2, `it is written back as version ${SAVE_VERSION}`);
+  for (const key of ['chapter', 'map', 'x', 'y', 'facing', 'money', 'meter', 'playtimeMs', 'savedAt']) check(out[key] === v1[key], `${key} carries over (${out[key]})`);
+  check(JSON.stringify(out.flags) === JSON.stringify(v1.flags), 'every flag carries over');
+  check(Object.entries(v1.vars).every(([k, v]) => out.vars[k] === v), 'every var carries over');
+  check(out.vars.crowdBank === 80, `the crowd bank is back-filled from the two gigs played: 40 at Zerkel Pit, 40 at Palmer's (${out.vars.crowdBank})`);
+  for (const old of v1.party) {
+    const m = out.party.find((x) => x.id === old.id);
+    check(!!m && m.level === old.level && m.xp === old.xp && m.hp === old.hp && m.amp === old.amp, `${old.id}: level, XP, HP and AMP carry over`);
+    check(m.equip.instrument === old.equip.instrument && !('accessory' in m.equip), `${old.id}: the instrument stays on and the accessory slot is gone`);
+    check(m.chops === 0 && Array.isArray(m.nodes) && m.nodes.length === 0 && m.breath === null, `${old.id}: chops 0, no nodes, no breath`);
+  }
+  check(out.party.find((m) => m.id === 'phoenix').equip.wear === 'hoodie', "Phoenix's hoodie moved from accessory to WEAR");
+  check(gs.party.stats('phoenix').def === levelStats(characters.characters.phoenix, 7).def + equipment.hoodie.bonus.def + ((equipment[out.party.find((m) => m.id === 'phoenix').equip.instrument].bonus || {}).def || 0), `the hoodie still counts toward Phoenix's DEF after the move (${gs.party.stats('phoenix').def})`);
+  for (const row of v1.inventory) check(gs.inventory.count(row.id) === row.qty, `inventory: ${row.id} x${row.qty} carries over`);
+  check(gs.inventory.count('pothole_invoice') === 1, 'the Pothole Invoice is granted to a save from after the alley');
+  check(Array.isArray(out.words) && Array.isArray(out.stickers) && out.scrap === 0, 'words, stickers and scrap exist');
+  // A second load of the migrated save changes nothing (the migration runs once).
+  const gs2 = new GameState({ characters, items, equipment, start }, null);
+  gs2.fromJSON(out);
+  check(JSON.stringify(gs2.toJSON()) === JSON.stringify(out), 'a version 2 save round-trips unchanged');
+  // Every kind of old accessory lands in its new slot.
+  const withGear = (accessory) => migrateSave({ version: 1, chapter: 1, map: 'alley', x: 1, y: 1, flags: {}, vars: {}, party: [{ id: 'lucky', level: 3, xp: 24, hp: 10, amp: 5, equip: { instrument: 'beatup_guitar', accessory }, status: [] }], inventory: [] }, { equipment });
+  check(withGear('band_sticker').party[0].equip.sticker === 'band_sticker', 'an equipped Band Sticker moves onto the instrument');
+  check(withGear('fried_pedalboard').party[0].equip.rig === 'fried_pedalboard', 'a pedalboard moves to RIG');
+  check(withGear('price_tag_jacket').party[0].equip.wear === 'price_tag_jacket', 'a jacket moves to WEAR');
+  const odd = withGear('not_a_real_item');
+  check(odd.party[0].equip.rig === null && odd.party[0].equip.wear === null && odd.inventory.some((e) => e.id === 'not_a_real_item' && e.qty === 1), 'gear the table does not know goes back in the bag, never lost');
+  check(!withGear(null).inventory.some((e) => e.id === 'pothole_invoice'), 'a save from before the alley is not handed the invoice early');
+  const mid = migrateSave({ version: 1, chapter: 1, map: 'room4', x: 5, y: 8, flags: { metPhoenix: true, zerkelPlayed: true }, vars: {}, party: [], inventory: [] }, { equipment });
+  check(mid.vars.crowdBank === 40 && mid.inventory.some((e) => e.id === 'pothole_invoice'), 'a mid-chapter save banks only the gigs it has played');
+  // The seeded Chapter 2 start is that real save run through the game's own migration, and nothing else.
+  const ch02Path = path.join(ROOT, 'tests', 'fixtures', 'ch02_start.json');
+  check(existsSync(ch02Path) && JSON.stringify(readJson(ch02Path)) === JSON.stringify(migrateSave(v1, { equipment })), 'tests/fixtures/ch02_start.json is current (rebuild with: node tests/fixtures/make.mjs)');
+  const throwsOn = (obj) => { try { migrateSave(obj, { equipment }); return false; } catch { return true; } };
+  check(throwsOn({ version: SAVE_VERSION + 1 }) && throwsOn({}) && throwsOn(null), 'a newer or version-less save is refused, loudly');
+});
+
+group('chapters', (check) => {
+  check(CHAPTERS.every((c, i) => c.n === i + 1), 'chapters are numbered from 1 with no gaps');
+  for (const c of CHAPTERS) {
+    if (c.entry) check(!!scripts[c.entry], `chapter ${c.n}: entry script "${c.entry}" exists`);
+    if (c.n >= 2 && c.entry) check(c.entry.startsWith(`ch${String(c.n).padStart(2, '0')}_`), `chapter ${c.n}: entry "${c.entry}" carries the chapter prefix`);
+  }
+  check(nextChapterEntry({ chapter: 1, flags: { ch1Complete: true } }) === 'ch02_start', 'a finished Chapter 1 save continues into ch02_start');
+  check(nextChapterEntry({ chapter: 1, flags: {} }) === null && nextChapterEntry({ chapter: 1, flags: { brianQuit: true } }) === null, 'a save in the middle of Chapter 1 resumes where it stands');
+  check(nextChapterEntry({ chapter: 2, flags: { ch1Complete: true } }) === null, 'a save already in Chapter 2 is not sent back to its start');
+  check(nextChapterEntry({ chapter: CHAPTERS.length, flags: { [CHAPTERS[CHAPTERS.length - 1].completeFlag]: true } }) === null, 'the last chapter in the table has nowhere to go yet');
 });
 
 process.stdout.write(`${JSON.stringify({ test: 'data.test', ok: failures === 0, checks: total, failures })}\n`);

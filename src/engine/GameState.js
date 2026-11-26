@@ -4,7 +4,67 @@ import { Party } from './Party.js';
 import { Inventory } from './Inventory.js';
 import { SAVE_PREFIX, SAVE_SLOTS } from '../config.js';
 
-export const SAVE_VERSION = 1;
+export const SAVE_VERSION = 2;
+
+/** Forty people at Zerkel Pit, forty at Palmer's: what each Chapter 1 gig puts in `vars.crowdBank`. */
+const CH1_CROWD = 40;
+
+/**
+ * One step per save version: MIGRATIONS[n] turns a version-n save object into version n+1. Never edit a shipped
+ * step; add the next one. `data` is the game's data files (the equipment table decides where old gear goes).
+ */
+const MIGRATIONS = {
+  // 1 → 2, Foundations: the accessory slot becomes RIG / WEAR / STICKER; members gain chops, nodes and breath;
+  // the state gains words, stickers and scrap; the Pothole Invoice and the crowd bank are back-filled.
+  1(s, data) {
+    const equipment = (data && data.equipment) || {};
+    s.inventory = Array.isArray(s.inventory) ? s.inventory : [];
+    const bag = (id) => {
+      const row = s.inventory.find((e) => e.id === id);
+      if (row) row.qty = (row.qty || 0) + 1; else s.inventory.push({ id, qty: 1 });
+    };
+    for (const m of s.party || []) {
+      const eq = { instrument: null, rig: null, wear: null, sticker: null, ...(m.equip || {}) };
+      const old = eq.accessory;
+      delete eq.accessory;
+      if (old) {
+        const slot = (equipment[old] || {}).slot;
+        if (slot && slot !== 'instrument' && slot in eq && !eq[slot]) eq[slot] = old;
+        else bag(old); // unknown gear, or the slot is taken: it goes back in the bag, never lost
+      }
+      m.equip = eq;
+      m.chops = m.chops || 0;
+      m.nodes = Array.isArray(m.nodes) ? m.nodes : [];
+      m.breath = m.breath ?? null;
+    }
+    s.words = Array.isArray(s.words) ? s.words : [];
+    s.stickers = Array.isArray(s.stickers) ? s.stickers : [];
+    s.scrap = s.scrap || 0;
+    const flags = s.flags || (s.flags = {});
+    const vars = s.vars || (s.vars = {});
+    // The alley hands Lucky the invoice now; a save from after the alley gets it here.
+    if ((flags.metPhoenix || flags.phoenixJoined) && !s.inventory.some((e) => e.id === 'pothole_invoice')) bag('pothole_invoice');
+    if (vars.crowdBank === undefined) vars.crowdBank = (flags.zerkelPlayed ? CH1_CROWD : 0) + (flags.eternityDone ? CH1_CROWD : 0);
+    return s;
+  },
+};
+
+/**
+ * Bring a save object of any earlier version up to SAVE_VERSION. Returns a new object; the argument is not touched.
+ * Throws on a missing version or a save from a newer build. An old save is never refused.
+ * @param {object} obj parsed save
+ * @param {object} [data] game data ({ equipment })
+ */
+export function migrateSave(obj, data) {
+  if (!obj || typeof obj !== 'object' || !Number.isInteger(obj.version) || obj.version < 1) throw new Error('GameState: bad or missing save');
+  if (obj.version > SAVE_VERSION) throw new Error(`GameState: this save is from a newer build (version ${obj.version}, this build reads up to ${SAVE_VERSION})`);
+  let s = JSON.parse(JSON.stringify(obj));
+  for (let v = s.version; v < SAVE_VERSION; v++) {
+    s = MIGRATIONS[v](s, data);
+    s.version = v + 1;
+  }
+  return s;
+}
 
 /**
  * @typedef {object} GameData
@@ -47,6 +107,12 @@ export class GameState {
     this.playtimeMs = 0;
     this.savedAt = null;
     this.slot = null;
+    /** NOISE words collected from set pieces (docs/PROGRESSION.md "Words"). Chapter 1's three are learned by Toon level. @type {string[]} */
+    this.words = [];
+    /** The sticker sheet clipped to the Band Agreement: stickers the band owns that are not on an instrument. @type {string[]} */
+    this.stickers = [];
+    /** SCRAP, the Disc 2 currency. Not money. */
+    this.scrap = 0;
     this.party.fromJSON([], []);
     this.inventory.fromJSON([]);
   }
@@ -134,14 +200,17 @@ export class GameState {
       roster: [...this.party.roster],
       inventory: this.inventory.toJSON(),
       meter: this.meter,
+      words: [...this.words],
+      stickers: [...this.stickers],
+      scrap: this.scrap,
       playtimeMs: Math.round(this.playtimeMs),
       savedAt: this.savedAt,
     };
   }
 
   /** Restore from a save object. */
-  fromJSON(obj) {
-    if (!obj || obj.version !== SAVE_VERSION) throw new Error('GameState.fromJSON: bad or missing save');
+  fromJSON(saved) {
+    const obj = migrateSave(saved, this.data); // any earlier version loads; see MIGRATIONS
     this.reset();
     this.chapter = obj.chapter || 1;
     this.map = obj.map; this.x = obj.x; this.y = obj.y; this.facing = obj.facing || 'down';
@@ -151,6 +220,9 @@ export class GameState {
     this.party.fromJSON(obj.party, obj.roster);
     this.inventory.fromJSON(obj.inventory);
     this.meter = obj.meter || 0;
+    this.words = [...(obj.words || [])];
+    this.stickers = [...(obj.stickers || [])];
+    this.scrap = obj.scrap || 0;
     this.playtimeMs = obj.playtimeMs || 0;
     this.savedAt = obj.savedAt || null;
     return this;
@@ -213,6 +285,9 @@ export class GameState {
       party: this.party.toJSON(),
       inventory: this.inventory.toJSON(),
       money: this.money,
+      words: [...this.words],
+      stickers: [...this.stickers],
+      scrap: this.scrap,
       playtimeMs: Math.round(this.playtimeMs),
     };
   }

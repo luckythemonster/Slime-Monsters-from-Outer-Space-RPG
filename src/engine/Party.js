@@ -6,17 +6,25 @@
 //     "characters": { "lucky": { "name", "sprite", "portrait", "battleSprite",
 //                                "stats": { hp, amp, atk, def, spd },      // level-1 base
 //                                "growth": { hp: 6, amp: 2, ... },         // per level (number) or per-level array
-//                                "equip": { instrument: "beatup_guitar", accessory: null },
+//                                "growthLate": { from: 9, hp: 6, amp: 1, spd: 0.5, lck: 0.3334 },  // optional: per-level
+//                                                                         // rates from level `from` on (docs/PROGRESSION.md)
+//                                "equip": { instrument: "beatup_guitar", rig: null, wear: null, sticker: null },
 //                                "riffs": [...], "onJoin": "scriptId" } } }
 // equipment.json shape: { "beatup_guitar": { "name", "slot", "bonus": { atk: 3 }, "price" } }
 
 /** Every character stat; the one list the battle bridge (battle/setup.js) and the menus share. */
 export const STAT_KEYS = ['hp', 'amp', 'atk', 'def', 'spd', 'lck'];
-export const EQUIP_SLOTS = ['instrument', 'accessory'];
+/**
+ * INSTRUMENT, RIG (the amp, the pedals, whatever it plugs into), WEAR, and the first STICKER slot on the
+ * instrument (docs/PROGRESSION.md "Equipment"). Saves made before save version 2 had one `accessory` slot.
+ */
+export const EQUIP_SLOTS = ['instrument', 'rig', 'wear', 'sticker'];
+const EMPTY_EQUIP = () => ({ instrument: null, rig: null, wear: null, sticker: null });
 
 /**
  * Base stats of a character definition at a level (before equipment): `growth` per stat is a number
- * (per level) or a per-level array.
+ * (per level) or a per-level array. With `growthLate: { from, ...rates }` a numeric stat grows by `growth`
+ * up to level `from - 1` and by the late rate after it (fractions floor), so the early game's tables never move.
  * @param {object} def characters.json entry
  * @param {number} [level]
  */
@@ -25,13 +33,21 @@ export function levelStats(def, level = 1) {
   for (const k of STAT_KEYS) {
     const base = (def.stats && def.stats[k]) || 0;
     const g = def.growth ? def.growth[k] : 0;
+    const late = def.growthLate;
     if (Array.isArray(g)) out[k] = g[Math.min(level - 1, g.length - 1)] ?? base;
-    else out[k] = base + Math.round((g || 0) * (level - 1));
+    else if (late && level >= late.from && late[k] !== undefined) {
+      // 1e-9: a rate written as 0.3334 for "one every third level" must not land a hair under the integer.
+      out[k] = base + Math.round((g || 0) * (late.from - 2)) + Math.floor(late[k] * (level - late.from + 1) + 1e-9);
+    } else out[k] = base + Math.round((g || 0) * (level - 1));
   }
   return out;
 }
 
-/** @typedef {{id: string, level: number, xp: number, hp: number, amp: number, equip: Record<string, string|null>, status: string[]}} Member */
+/**
+ * `chops` are unspent skill points, `nodes` the skill-tree nodes owned, `breath` Lucky's second pool (null until
+ * Chapter 7). Chapter 1 never changes them; they are here so a save made today carries into every later chapter.
+ * @typedef {{id: string, level: number, xp: number, hp: number, amp: number, equip: Record<string, string|null>, status: string[], chops: number, nodes: string[], breath: number|null}} Member
+ */
 
 export class Party {
   /**
@@ -79,8 +95,11 @@ export class Party {
       xp: this.xpTable[level - 1] || 0,
       hp: 0,
       amp: 0,
-      equip: { instrument: null, accessory: null, ...(def.equip || {}) },
+      equip: { ...EMPTY_EQUIP(), ...(def.equip || {}) },
       status: [],
+      chops: 0,
+      nodes: [],
+      breath: null,
     };
     this.members.push(member);
     if (!this.roster.includes(id)) this.roster.push(id);
@@ -212,6 +231,7 @@ export class Party {
     return this.members.map((m) => ({
       id: m.id, level: m.level, xp: m.xp, hp: m.hp, amp: m.amp,
       equip: { ...m.equip }, status: [...m.status],
+      chops: m.chops || 0, nodes: [...(m.nodes || [])], breath: m.breath ?? null,
     }));
   }
 
@@ -219,7 +239,8 @@ export class Party {
   fromJSON(members, roster) {
     this.members = (members || []).map((m) => ({
       id: m.id, level: m.level || 1, xp: m.xp || 0, hp: m.hp ?? 1, amp: m.amp ?? 0,
-      equip: { instrument: null, accessory: null, ...(m.equip || {}) }, status: [...(m.status || [])],
+      equip: { ...EMPTY_EQUIP(), ...(m.equip || {}) }, status: [...(m.status || [])],
+      chops: m.chops || 0, nodes: [...(m.nodes || [])], breath: m.breath ?? null,
     }));
     this.roster = roster ? [...roster] : this.members.map((m) => m.id);
   }

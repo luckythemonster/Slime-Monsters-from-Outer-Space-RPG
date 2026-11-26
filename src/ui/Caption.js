@@ -45,7 +45,8 @@ export default class Caption {
       this.style = CAPTION_STYLES.includes(style) ? style : 'plain';
       const ui = this.ui;
       const instant = ui.textInstant;
-      const lines = String(text ?? '').split('\n');
+      this.captionText = String(text ?? '');
+      const lines = this.captionText.split('\n');
       this.rect = ui.add.rectangle(0, 0, SCREEN_W, SCREEN_H, 0x000000, 1).setOrigin(0, 0).setDepth(DEPTH.CAPTION);
       const hold = instant ? INSTANT_HOLD_MS : Math.max(0, ms | 0);
       const fade = instant ? 0 : FADE_MS;
@@ -175,6 +176,6 @@ export default class Caption {
   }
 
   debugState() {
-    return { type: 'caption', state: this.state, style: this.style, card: this.cardRect || null, tapes: this.tapes.length };
+    return { type: 'caption', state: this.state, style: this.style, text: this.captionText || '', card: this.cardRect || null, tapes: this.tapes.length };
   }
 }

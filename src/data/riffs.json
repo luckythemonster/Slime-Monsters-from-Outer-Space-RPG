@@ -43,8 +43,8 @@
     },
     "desc": "Single. 60% DAZED."
   },
-  "migraine": {
-    "name": "Migraine",
+  "headache": {
+    "name": "Headache",
     "kind": "riff",
     "who": "lucky",
     "level": 5,

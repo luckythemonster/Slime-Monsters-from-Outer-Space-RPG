@@ -344,28 +344,34 @@ async function main() {
     // CS-17 ends on the clipboard (page 1) and the {"title"} command: Explore stops, the title comes up
     // with CONTINUE enabled, and CONTINUE must load the page just initialed. chooseIndex 1 picks PAGE 1
     // on the clipboard (row 0 is its disabled title) and then CONTINUE (item 1) on the title menu.
+    // CONTINUE on the finished chapter runs Chapter 2's entry script (the chapter card, TO BE CONTINUED) and comes
+    // back to the title; autoAdvance is switched off there so the test stops on that second title screen.
     await ev(() => {
       window.__slime.chooseIndex = 1;
       window.__titleSeen = 0;
-      window.__slime.game.scene.getScene('Title').events.on('create', () => { window.__titleSeen += 1; });
+      window.__cards = [];
+      window.__slime.game.scene.getScene('Title').events.on('create', () => { window.__titleSeen += 1; if (window.__titleSeen >= 2) window.__slime.autoAdvance(false); });
+      window.__slime.game.events.on('poststep', () => {
+        const top = window.__slime.services.ui.debugState().top;
+        if (top && top.type === 'caption' && top.text && window.__cards[window.__cards.length - 1] !== top.text) window.__cards.push(top.text);
+      });
     });
     s = await driveUntil('chapter complete', (sn) => sn.flags.ch1Complete === true, SCENE_TIMEOUT_MS);
     check('flags.ch1Complete', s.flags.ch1Complete === true, s.flags);
     check('van_keys + tour_itinerary given', ['van_keys', 'tour_itinerary'].every((id) => s.inventory.some((e) => e.id === id)), s.inventory);
     check('party is Lucky + Phoenix', s.party.map((m) => m.id).join(',') === 'lucky,phoenix', s.party.map((m) => m.id));
-    s = await driveUntil('title → CONTINUE → the rubble', (sn, st) => st.titleSeen > 0 && st.scene === 'Explore' && sn.map === 'palmers_rubble' && st.idle, SCENE_TIMEOUT_MS);
-    const ending = await ev(() => ({ titleSeen: window.__titleSeen, slot: window.__slime.state.slot, scene: window.__slime.scene() }));
-    check('the title screen came up after the chapter-end save', ending.titleSeen === 1, ending);
-    check('CONTINUE loaded the page just initialed (slot 1)', ending.slot === 1 && ending.scene === 'Explore', ending);
+    s = await driveUntil('title → CONTINUE → ch02_start → title', (sn, st) => st.titleSeen >= 2 && st.scene === 'Title', SCENE_TIMEOUT_MS);
+    const ending = await ev(() => ({ titleSeen: window.__titleSeen, slot: window.__slime.state.slot, scene: window.__slime.scene(), cards: window.__cards.filter((t) => /CHAPTER 2|TO BE CONTINUED/.test(t)) }));
+    check('the title screen came up after the chapter-end save, and again after the Chapter 2 card', ending.titleSeen === 2, ending);
+    check('CONTINUE loaded the page just initialed (slot 1) and handed it to Chapter 2: the card, then TO BE CONTINUED', ending.slot === 1 && ending.scene === 'Title' && ending.cards.length === 2 && /CHAPTER 2/.test(ending.cards[0]) && /TO BE CONTINUED/.test(ending.cards[1]), ending);
     check('final clipboard save bumped saveCount', s.vars.saveCount === 2, s.vars);
-    check('loaded save lands in the rubble with ch1Complete', s.map === 'palmers_rubble' && s.flags.ch1Complete === true && s.x === 16 && s.y === 9, { map: s.map, x: s.x, y: s.y, ch1Complete: s.flags.ch1Complete });
-    check('Bajonka save in the rubble', (s.entities || []).some((e) => e.id === 'bajonka' && e.type === 'save'), (s.entities || []).map((e) => e.id));
-    check('still in the rubble (no exits)', s.map === 'palmers_rubble', s.map);
+    check('the save still stands in the rubble with ch1Complete', s.map === 'palmers_rubble' && s.flags.ch1Complete === true && s.x === 16 && s.y === 9, { map: s.map, x: s.x, y: s.y, ch1Complete: s.flags.ch1Complete });
     await page.waitForTimeout(400);
     await shot('content_c_15_end');
-    // The same page through the debug loader.
-    await ev(() => window.__slime.load(1));
+    // The same page through the debug loader: the rubble itself, as the save holds it.
+    await ev(() => { window.__slime.autoAdvance(true); return window.__slime.load(1); });
     s = await driveUntil('__slime.load(1)', (sn, st) => st.scene === 'Explore' && sn.map === 'palmers_rubble' && st.idle, 20_000);
+    check('Bajonka save in the rubble', (s.entities || []).some((e) => e.id === 'bajonka' && e.type === 'save'), (s.entities || []).map((e) => e.id));
     check('__slime.load(1) lands in the rubble with ch1Complete and the band', s.map === 'palmers_rubble' && s.flags.ch1Complete === true && s.party.map((m) => m.id).join(',') === 'lucky,phoenix', { map: s.map, party: s.party.map((m) => m.id) });
 
     const lastErrors = await ev(() => window.__slime.lastErrors);

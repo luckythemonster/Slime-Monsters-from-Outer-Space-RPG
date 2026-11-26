@@ -3,6 +3,7 @@ import Phaser from 'phaser';
 import { services } from '../engine/services.js';
 import { markReady } from '../engine/Debug.js';
 import { audioCall } from '../engine/Audio.js';
+import { nextChapterEntry } from '../engine/Chapters.js';
 import { PIXEL_FONT, WIDTH, PARAMS, FADE_MS, SAVE_SLOTS, scaleMs } from '../config.js';
 
 const FONT = { fontFamily: PIXEL_FONT, fontSize: '8px', color: '#ffffff', resolution: 1, align: 'center' };
@@ -52,14 +53,18 @@ export default class TitleScene extends Phaser.Scene {
       const idx = await services.ui.menu(items, { x: 72, y: 136, cancelable: false });
       if (this.closed) return;
       if (idx === 0) { state.newGame(); await this.startExplore(); return; }
-      if (idx === 1 && hasSave) { state.load(slot); await this.startExplore(); return; }
+      // A save that finished its chapter does not resume in the rubble: it starts the next chapter's entry script.
+      if (idx === 1 && hasSave) { state.load(slot); await this.startExplore(nextChapterEntry(state)); return; }
     }
   }
 
-  async startExplore() {
+  /** @param {string|null} [chapterEntry] entry script of the chapter this save moves on to (Chapters.js) */
+  async startExplore(chapterEntry = null) {
     audioCall('sfx', 'confirm');
     await services.ui.fade('out', scaleMs(FADE_MS));
     if (this.closed) return;
-    this.scene.start('Explore');
+    // Always pass a data object: Phaser keeps a scene's last start data when none is given, and a stale
+    // chapterEntry would send the next New Game through the chapter card.
+    this.scene.start('Explore', { chapterEntry: chapterEntry || null });
   }
 }

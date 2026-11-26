@@ -23,9 +23,10 @@ finds out it is good at one thing, playing through a raid, and gets paid in pota
 
 ## Where the player starts
 
-The end of Chapter 1: Lucky and Phoenix, Bajonka attached as the save point, Van Keys, the Tour Itinerary and
-the Tinny Ride Cymbal in the inventory, and Lucky locked magenta (`flags.luckyRageLocked`). The Pothole Invoice
-is in the bible but not in the build; Foundations adds it (see the roadmap).
+The end of Chapter 1: Lucky and Phoenix at level 7, Bajonka attached as the save point, Van Keys, the Tour
+Itinerary, the Tinny Ride Cymbal and the Pothole Invoice in the inventory, 80 in `vars.crowdBank`, and Lucky
+locked magenta (`flags.luckyRageLocked`). That state is checked in as `tests/fixtures/ch02_start.json`, made
+from a real playthrough; build and test from it.
 Chapter 2 opens the next morning. Lucky's color is back to normal rules by the time Diego knocks; decide in the
 spec where the lock lifts and say why.
 
@@ -84,7 +85,8 @@ this one, because the point of the fight is that he does not need telling.
 
 Each is on the roadmap's systems table. Build them to be used again.
 
-1. **Chapter start.** From Foundations: CONTINUE on an end-of-Chapter-1 save lands in scene 1.
+1. **Chapter start.** CONTINUE on an end-of-Chapter-1 save already runs `ch02_start`. Today that script is a
+   chapter card and TO BE CONTINUED. Replace its body with scene 1 and set `state.chapter` to 2 there.
 2. **Beat-timed input in battle.** A visible beat driven by the sequencer (the cosmetic beat lamp and
    `onBeat` already exist), a timing window, and a result the battle model can read. It must be deterministic
    under test: give the debug API a way to force on-beat or off-beat, the way `chooseIndex` forces a choice.

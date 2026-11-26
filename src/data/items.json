@@ -89,5 +89,11 @@
     "type": "key",
     "price": 0,
     "desc": "POTATO BELT: TOMORROW, circled in red."
+  },
+  "pothole_invoice": {
+    "name": "Pothole Invoice",
+    "type": "key",
+    "price": 0,
+    "desc": "CITY OF MINNEAPOLIS: POTHOLE, 1 (one). $1,400. It cannot be paid."
   }
 }

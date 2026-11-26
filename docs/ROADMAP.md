@@ -7,7 +7,8 @@ gets built, what each chapter needs from the engine, and what has to be remember
 
 - **Shipped:** Chapter 1, "Coagulation". Pod bay to the rubble of Palmer's, about 70 minutes. It ends on
   `flags.ch1Complete`, a save, and a return to the title screen.
-- **Next:** Foundations (below), then Chapter 2. The Chapter 2 brief is `docs/chapters/CH02_BRIEF.md`.
+- **In place:** Foundations (below).
+- **Next:** Chapter 2. The brief is `docs/chapters/CH02_BRIEF.md`. The first step is the design spec.
 - **Target:** two discs of six chapters, about nine hours each by the bible's own estimate. That number is a
   ceiling, not a promise. See "Cutting" at the bottom.
 
@@ -30,33 +31,30 @@ gets built, what each chapter needs from the engine, and what has to be remember
 
 Size is relative effort: how many new systems and bespoke scenes the chapter needs, not how long it plays.
 
-## Foundations (do these before Chapter 2)
+## Foundations (in place)
 
-Small, and all of it pays off twelve times. One pull request.
+What every chapter after the first stands on. Details are in `docs/ARCHITECTURE.md`, sections 6.1 and 6.2.
 
-1. **Chapter boundaries.** Chapter 1 ends by saving and going to the title. CONTINUE on a save with
-   `flags.ch1Complete` must start Chapter 2. Give every chapter an entry script (`ch02_start`) and one place that
-   maps "chapter complete" to "next chapter's entry".
-2. **Save versioning.** The save has `version: 1`. Add a migration step on load so a Chapter 1 save keeps working
-   as the state grows. Never break an old save. Test it with a real end-of-Chapter-1 save checked in as a fixture.
-3. **A way to start anywhere.** The tests already seed state through `window.__slime`. Add one seeded state per
-   chapter start (party, levels, inventory, flags) so a chapter can be built and tested without replaying the
-   ones before it. Keep these fixtures honest: generate them from a real playthrough, do not hand-write them.
-4. **Naming.** Chapter 1's data uses the `ep0_` prefix. Leave it. From Chapter 2 on use `ch02_`, `ch03_` and so
-   on for maps, scripts, NPC files, encounters and songs.
-5. **Split the scripted battles.** `src/engine/battle/BattleScripts.js` becomes a folder with one module per
-   chapter and an index. No behavior change.
-6. **Tests by chapter.** Let the runner take a chapter (`npm test -- --chapter 2`) so the loop stays fast. The
-   full run stays the gate for a merge.
-7. **Start banking the crowd.** The ending pays out every chapter's crowd (see Chapter 12). Add `vars.crowdBank`
-   now and add to it at every gig from Chapter 2 on. Chapter 1's Palmer's set can seed it.
-8. **The Pothole Invoice.** The bible gives it to Lucky in the alley and it rides in the inventory to the
-   credits. Chapter 1 never built it. Add the key item, grant it in the alley scene, and have the save migration
-   grant it to existing saves.
+1. **Chapter boundaries.** `src/engine/Chapters.js` is the one table: each chapter's complete flag and entry
+   script. CONTINUE on a save with `flags.ch1Complete` runs `ch02_start`. Until Chapter 2 is built that script
+   shows the chapter card and TO BE CONTINUED, then returns to the title.
+2. **Save versioning.** The save is `version: 2`. `migrateSave` steps an older save up on load. An old save is
+   never refused. `tests/fixtures/save_ch1_end_v1.json` is a real version 1 save from the end of Chapter 1.
+3. **A way to start anywhere.** `tests/fixtures/chNN_start.json`, one per chapter start, built from a real
+   playthrough save by `node tests/fixtures/make.mjs`. Tests load it with `__slime.loadSave`.
+4. **Naming.** Chapter 1's data uses the `ep0_` prefix. From Chapter 2 on use `ch02_`, `ch03_` and so on for
+   maps, scripts, NPC files, encounters, battle-script keys and songs.
+5. **Scripted battles by chapter.** `src/engine/battle/scripts/` holds one module per chapter and an index.
+6. **Tests by chapter.** `npm test -- --chapter 2` runs the fast tests, the build, the Foundations test and that
+   chapter's suites. The full run stays the gate for a merge.
+7. **The crowd bank.** `vars.crowdBank` counts the crowd at every gig. Chapter 1 banks 40 at Zerkel Pit and 40 at
+   Palmer's. The ending pays it out (see Chapter 12).
+8. **The Pothole Invoice.** A key item. Phoenix's pothole line hands it over in the alley. It rides in the
+   inventory to the credits.
 9. **`docs/chapters/`.** One brief and one design spec per chapter live here.
-10. **Progression groundwork.** `docs/PROGRESSION.md`, "What changes in the Chapter 1 build": rename the level 5
-    riff `migraine` to `headache`, extend `xpTable` to 50, growth past level 8, the new save fields (`chops`,
-    `nodes`, `breath`, `words`, `stickers`, `scrap`) and the `rig` and `wear` slots, all behind the save migration.
+10. **Progression groundwork.** From `docs/PROGRESSION.md`: the level 5 riff is Headache, `xpTable` runs to 50,
+    stats grow past level 8 on the late rates, members carry `chops`, `nodes` and `breath`, the state carries
+    `words`, `stickers` and `scrap`, and equipment has INSTRUMENT, RIG, WEAR and a sticker slot.
 
 ## Systems, and the chapter that first needs each
 
@@ -199,14 +197,14 @@ What one chapter writes and a later one reads. Add a row whenever a chapter crea
 
 | State | Written | Read | Notes |
 |---|---|---|---|
-| `flags.ch1Complete` | Ch 1 end | Foundations | starts Chapter 2 |
+| `flags.ch1Complete` | Ch 1 end | `Chapters.js` | CONTINUE starts `ch02_start` |
 | `vars.quitResponse` (0 RAGE, 1 PLEAD, 2 JOKE) | Ch 1 | Ch 2 | Phoenix remembers which one, once |
 | `flags.eternityChoice`, `flags.letGo` | Ch 1, THE SET | Ch 10 (optional line at the fence) | |
 | `vars.zerkelChoice`, `flags.zerkelLetGo` | Ch 1 | Ch 10 (optional) | Lucky let it go either way |
 | `vars.billboardsTagged` | Ch 1 freefall | Ch 9 (optional) | |
-| Pothole Invoice (key item) | Ch 1 (added in Foundations) | every chapter; Ch 8 adds LATE FEE; post-credits adds a surcharge | never payable, never leaves |
+| Pothole Invoice (key item) | Ch 1, the alley | every chapter; Ch 8 adds LATE FEE; post-credits adds a surcharge | never payable, never leaves |
 | Tinny Ride Cymbal | Ch 1 | Ch 6 (saved), Ch 10 (hung on the wire) | never pays off mechanically, on purpose |
-| `vars.crowdBank` | every gig from Ch 2 | Ch 12 Phase 3 | |
+| `vars.crowdBank` | every gig: Ch 1 banks 80 (Zerkel Pit 40, Palmer's 40) | Ch 12 Phase 3 | |
 | Little Guy | Ch 3 | cup holder to the end; Ch 11 goes with Diego | |
 | Contract signed unread | Ch 3 | Ch 7 (Lucky reads every page) | |
 | The XXX-666 | Ch 4 seen, Ch 5 slip, Ch 10 burnt out | Ch 11 STICKY-R | thirteenth of a baker's dozen |

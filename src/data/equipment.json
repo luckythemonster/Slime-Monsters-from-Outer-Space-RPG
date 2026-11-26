@@ -7,12 +7,12 @@
   "drumsticks": { "name": "Drumsticks", "slot": "instrument", "who": ["ryan"], "freq": "PHYS", "bonus": { "atk": 3 }, "locked": true, "price": 0, "desc": "They hover. ATK +3, PHYS." },
   "brians_strat": { "name": "Brian's Strat", "slot": "instrument", "who": ["brian"], "freq": "HIGH", "bonus": { "atk": 5 }, "locked": true, "price": 0, "desc": "Pristine. ATK +5, HIGH." },
 
-  "slime_sunglasses": { "name": "Spiky Slime Sunglasses", "slot": "accessory", "who": ["lucky"], "bonus": { "lck": 2 }, "immune": ["DAZED"], "price": 0, "desc": "Formed at 5 s of freefall. LCK +2, immune DAZED." },
-  "hoodie": { "name": "Hoodie", "slot": "accessory", "who": ["phoenix"], "bonus": { "def": 1 }, "price": 0, "desc": "DEF +1." },
-  "earplugs": { "name": "Earplugs", "slot": "accessory", "bonus": {}, "immune": ["DEAF"], "price": 10, "desc": "Immune DEAF." },
-  "band_sticker": { "name": "Band Sticker", "slot": "accessory", "bonus": {}, "toonPerAction": 1, "price": 6, "desc": "+1 Toon per action." },
-  "price_tag_jacket": { "name": "Price-Tag Leather Jacket", "slot": "accessory", "bonus": { "def": 4 }, "price": 0, "sell": 20, "desc": "Tag still on. DEF +4. Sells for $20." },
-  "flannel": { "name": "Flannel", "slot": "accessory", "who": ["ryan"], "bonus": { "def": 3 }, "locked": true, "price": 0, "desc": "DEF +3." },
-  "pedalboard_2000": { "name": "$2,000 Pedalboard", "slot": "accessory", "who": ["brian"], "bonus": {}, "hit100": true, "noCrit": true, "locked": true, "price": 0, "desc": "Hit 100. Crit 0." },
-  "fried_pedalboard": { "name": "Fried Pedalboard", "slot": "accessory", "bonus": { "atk": 4 }, "selfOutOfTune": 15, "price": 0, "sell": 11, "desc": "ATK +4. 15% self OUT OF TUNE per RIFF. Sells for $11." }
+  "slime_sunglasses": { "name": "Spiky Slime Sunglasses", "slot": "wear", "who": ["lucky"], "bonus": { "lck": 2 }, "immune": ["DAZED"], "price": 0, "desc": "Formed at 5 s of freefall. LCK +2, immune DAZED." },
+  "hoodie": { "name": "Hoodie", "slot": "wear", "who": ["phoenix"], "bonus": { "def": 1 }, "price": 0, "desc": "DEF +1." },
+  "earplugs": { "name": "Earplugs", "slot": "wear", "bonus": {}, "immune": ["DEAF"], "price": 10, "desc": "Immune DEAF." },
+  "band_sticker": { "name": "Band Sticker", "slot": "sticker", "bonus": {}, "toonPerAction": 1, "price": 6, "desc": "Goes on the instrument. +1 Toon per action." },
+  "price_tag_jacket": { "name": "Price-Tag Leather Jacket", "slot": "wear", "bonus": { "def": 4 }, "price": 0, "sell": 20, "desc": "Tag still on. DEF +4. Sells for $20." },
+  "flannel": { "name": "Flannel", "slot": "wear", "who": ["ryan"], "bonus": { "def": 3 }, "locked": true, "price": 0, "desc": "DEF +3." },
+  "pedalboard_2000": { "name": "$2,000 Pedalboard", "slot": "rig", "who": ["brian"], "bonus": {}, "hit100": true, "noCrit": true, "locked": true, "price": 0, "desc": "Hit 100. Crit 0." },
+  "fried_pedalboard": { "name": "Fried Pedalboard", "slot": "rig", "bonus": { "atk": 4 }, "selfOutOfTune": 15, "price": 0, "sell": 11, "desc": "ATK +4. 15% self OUT OF TUNE per RIFF. Sells for $11." }
 }

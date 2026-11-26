@@ -36,7 +36,9 @@ export default class ExploreScene extends Phaser.Scene {
 
   /** @param {{map?: string, x?: number, y?: number, facing?: string}} data */
   init(data) {
-    this.startData = data || {};
+    this.startData = { ...(data || {}) };
+    // Start data is for this start only (Phaser hands the same object back on a restart with no data).
+    if (this.sys && this.sys.settings) this.sys.settings.data = {};
     /** @type {Map<string, Entity>} 'player' is always present; followers sit under their member id */
     this.entities = new Map();
     /** @type {Entity[]} party members trailing the leader (E14), in party order */
@@ -91,7 +93,15 @@ export default class ExploreScene extends Phaser.Scene {
     }
     this.loadMap(d.map || st.map, d.x ?? st.x, d.y ?? st.y, d.facing || st.facing);
     this.transitioning = true; // the fade-in is not play time: no steps, triggers, menu or encounters on a black screen
-    services.ui.fade('in', scaleMs(FADE_MS)).then(() => { this.transitioning = false; this.enterMap(); });
+    // A continued save whose chapter is complete (TitleScene, Chapters.js) starts on the next chapter's entry script,
+    // under a black camera: the old chapter's last map is loaded but never shown, and its enter hooks do not run.
+    const chapterEntry = d.chapterEntry && data.scripts[d.chapterEntry] ? d.chapterEntry : null;
+    if (chapterEntry) this.cameras.main.fadeOut(1, 0, 0, 0);
+    services.ui.fade('in', scaleMs(FADE_MS)).then(() => {
+      this.transitioning = false;
+      if (chapterEntry) this.runner.run(chapterEntry, { hook: 'chapter' });
+      else this.enterMap();
+    });
   }
 
   /** Scene shutdown: Phaser destroys the display list itself, so only drop references here. */
