@@ -4,7 +4,7 @@
 //   ui.say({ text, who, portrait, name })   -> Promise<void>
 //   ui.choice(options, { cancelIndex = -1, x, y }) -> Promise<number>
 //   ui.menu(items, { x, y, width, columns = 1, cancelable = true, selected = 0 }) -> Promise<number>
-//   ui.caption(text, ms = 1500, { style: 'plain'|'tape'|'flyer' }) / ui.toast(text, ms = 1200) -> Promise<void>
+//   ui.caption(text, ms = 1500, { style: 'plain'|'tape'|'flyer' }) / ui.toast(text, ms = 1200, { tip }) -> Promise<void>
 //   ui.insert({ sprite, frame, text }) -> Promise<void>      (DESIGN E9: sprite window + narrator line)
 //   ui.status(text | null)                                   (small persistent window, top-right: shop money)
 //   ui.fade('out'|'in', ms = 400, color = 0x000000) / ui.flash(ms = 150, color = 0xffffff) -> Promise<void>
@@ -175,13 +175,13 @@ export default class UIScene extends Phaser.Scene {
     this._status = { win, text: t };
   }
 
-  /** Small top-centre notification. Not modal; toasts queue one after another. */
-  toast(text, ms = 1200) {
+  /** Small top-centre notification. Not modal; toasts queue one after another. `tip`: onboarding beige. */
+  toast(text, ms = 1200, opts = {}) {
     const run = async () => {
       const t = new Toast(this);
       this._toast = t;
       try {
-        await t.show(expandVars(text, services.state), ms);
+        await t.show(expandVars(text, services.state), ms, opts);
       } finally {
         if (this._toast === t) this._toast = null;
       }
@@ -278,6 +278,7 @@ export default class UIScene extends Phaser.Scene {
       fadeAlpha: this._fadeRect ? this._fadeRect.alpha : 0,
       flashAlpha: this._flashRect ? this._flashRect.alpha : 0,
       toast: !!this._toast,
+      toastTip: !!(this._toast && this._toast.tip),
       status: this._status ? this._status.text.text : null,
     };
   }

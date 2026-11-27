@@ -1,5 +1,7 @@
 // Small notification window at the top centre: slides in, holds, slides out. Text longer than the
 // screen wraps onto extra 12 px rows (never wider than the 8 px screen margin allows).
+// `tip: true` is onboarding: beige text and a beige inner rule, like the dialogue box's tip style.
+import Phaser from 'phaser';
 import Window from './Window.js';
 import { CHAR_W, COLORS, DEPTH, FONT_SIZE, LINE_H, SCREEN_W, textStyle, wrapWords } from './theme.js';
 
@@ -23,10 +25,11 @@ export default class Toast {
     this._resolve = null;
   }
 
-  show(text, ms = 1200) {
+  show(text, ms = 1200, { tip = false } = {}) {
     return new Promise((resolve) => {
       this._resolve = resolve;
       this.state = 'open';
+      this.tip = !!tip;
       const ui = this.ui;
       const instant = ui.textInstant;
       const lines = wrapToast(text);
@@ -37,7 +40,18 @@ export default class Toast {
       const x = Math.round((SCREEN_W - w) / 2);
       this.win = new Window(ui, x, REST_Y, w, h, { depth: DEPTH.TOAST });
       this.win.open(true);
-      this.text = ui.add.text(x + PAD, REST_Y + PAD, label, textStyle(COLORS.text, { lineSpacing: LINE_H - FONT_SIZE - 2 })).setDepth(DEPTH.TOAST + 2);
+      if (this.tip) {
+        // The inner rule rides in the window container so it slides with it.
+        const c = Phaser.Display.Color.HexStringToColor(COLORS.tip).color;
+        this.win.add([
+          ui.add.rectangle(3, 3, w - 6, 1, c, 1).setOrigin(0, 0),
+          ui.add.rectangle(3, h - 4, w - 6, 1, c, 1).setOrigin(0, 0),
+          ui.add.rectangle(3, 3, 1, h - 6, c, 1).setOrigin(0, 0),
+          ui.add.rectangle(w - 4, 3, 1, h - 6, c, 1).setOrigin(0, 0),
+        ]);
+      }
+      const color = this.tip ? COLORS.tip : COLORS.text;
+      this.text = ui.add.text(x + PAD, REST_Y + PAD, label, textStyle(color, { lineSpacing: LINE_H - FONT_SIZE - 2 })).setDepth(DEPTH.TOAST + 2);
       const hold = instant ? Math.min(ms, 100) : Math.max(0, ms | 0);
       const slide = instant ? 0 : SLIDE_MS;
       const startHold = () => {

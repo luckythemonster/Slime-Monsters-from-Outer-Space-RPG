@@ -19,6 +19,7 @@ export const COLORS = {
   moodMagenta: '#ff1aa0', // from flags.luckyRageLocked on
   moodToon4: '#a050c0',
   moodTan: '#e8c890', // Bajonka's windows
+  tip: '#e8c890', // onboarding: every tutorial and help line, Disc 1 (the TOON label's beige)
   // Named colours usable in dialogue markup: {color:pink}...{/color}
   pink: '#ff5fd2',
   green: '#39ff8a',
@@ -27,6 +28,7 @@ export const COLORS = {
   red: '#ff5a5a',
   orange: '#ffa040',
   purple: '#c080ff',
+  beige: '#e8c890',
   gray: '#8c8ca0',
   grey: '#8c8ca0',
   white: '#ffffff',

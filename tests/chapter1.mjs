@@ -350,7 +350,7 @@ async function main() {
       notes.push(`could not reach menu row ${idx} of ${JSON.stringify(m.labels)}`);
       await press('confirm');
     };
-    /** Every dialogue page the driver dismissed: { text, who, portrait, map } (THE SET's captions and the quit are checked by line). */
+    /** Every dialogue page the driver dismissed: { text, who, portrait, style, map } (THE SET's captions and the quit are checked by line). */
     const seen = [];
     let lastSeenKey = null;
     const flatText = (t) => String(t || '').replace(/[\n\f]+/g, ' ').replace(/\s+/g, ' ').trim();
@@ -361,7 +361,7 @@ async function main() {
       if (top.type === 'say') {
         if (top.state === 'complete' || top.state === 'typing') {
           const key = `${top.who}|${top.page}|${top.text}`;
-          if (key !== lastSeenKey) { lastSeenKey = key; seen.push({ text: flatText(top.text), who: top.who, portrait: top.portrait, map: p.snap.map }); }
+          if (key !== lastSeenKey) { lastSeenKey = key; seen.push({ text: flatText(top.text), who: top.who, portrait: top.portrait, style: top.style, map: p.snap.map }); }
           await press('confirm');
         } else await sleep(20);
       } else if (top.type === 'menu') {
@@ -532,6 +532,12 @@ async function main() {
       p = await driveIdle('CS-01');
       check('S1 NEW GAME lands in pod_bay (7,11) facing up', p.snap.map === 'pod_bay' && at(p, 7, 11) && p.player.facing === 'up', pos(p));
       check('S1 CS-01 ep0_pod_intro ran (flags.podIntro)', p.snap.flags.podIntro === true, p.snap.flags);
+      {
+        const tip = seen.findIndex((l) => l.who === 'narrator' && l.style === 'tip' && l.text.startsWith('TIP: Face the speaker'));
+        const who = seen.findIndex((l) => l.who === 'lucky' && l.text === "Who's that?");
+        const onb = seen.findIndex((l) => l.who === 'dad' && l.text === "That's onboarding.");
+        check('S1 CS-01 onboarding: the beige TIP, "Who\'s that?", "That\'s onboarding."', tip >= 0 && tip < who && who < onb, seen.filter((l) => l.map === 'pod_bay').map((l) => `${l.who}/${l.style}: ${l.text}`));
+      }
       check('S1 start: $4, Half-Ounce x4, party = lucky', p.snap.money === 4 && qty(p.snap, 'half_ounce') === 4 && party(p.snap) === 'lucky', { money: p.snap.money, inv: p.snap.inventory, party: party(p.snap) });
       await shot('ch1_01_pod_bay');
       p = await walk('UUUUUUUU', 'pod bay catwalk');
@@ -585,6 +591,7 @@ async function main() {
     p = await drive('CS-05 the signal → CS-06', (q) => idleOnMap(q) && q.snap.flags.weekLater === true);
     check('S5 CS-05: signalSent, weekLater, hubOpen', p.snap.flags.signalSent === true && p.snap.flags.weekLater === true && p.snap.flags.hubOpen === true, p.snap.flags);
     check('S5 ONE WEEK LATER lands on the couch (3,7)', p.snap.map === 'apartment' && at(p, 3, 7), pos(p));
+    check('S5 CS-06 Lucky corrects the card ("Eight days.") before "Nobody came."', seen.findIndex((l) => l.who === 'lucky' && l.text === 'Eight days.') >= 0 && seen.findIndex((l) => l.who === 'lucky' && l.text === 'Eight days.') < seen.findIndex((l) => l.who === 'phoenix' && l.text === 'Nobody came.'), seen.filter((l) => l.map === 'apartment').map((l) => `${l.who}: ${l.text}`));
     check('S5 CS-06 gave the blank flyer; Bajonka on the couch arm', has(p.snap, 'flyer_blank') && !!ent(p, 'bajonka_couch'), p.snap.inventory);
     check('S5 player sprite back to lucky after the glow', p.player.sheet === 'lucky', p.player.sheet);
     await shot('ch1_06_apartment');
@@ -696,6 +703,7 @@ async function main() {
       while (p.player.x > 22) p = await walk('L', 'to the platform stairs');
       p = await walk('DDD', 'the rail');
       check('S8 rail → city_sound_hall (3,6)', p.snap.map === 'city_sound_hall' && at(p, 3, 6), pos(p));
+      check('S8 Lucky corrects the rail card once ("Twenty-six. There was a goose.")', seenLine('lucky', 'Twenty-six. There was a goose.') && p.snap.flags.railCardCorrected === true, p.snap.flags.railCardCorrected);
     });
     check('S8 autosave 3 on entering the hall', p.snap.vars.lastAutosave === 'city_sound_hall', p.snap.vars);
     check('S8 XP after the hub: Lucky 26 (L3), Phoenix 26 (L3), Brian fixed L3', (member(p.snap, 'lucky') || {}).xp === 26 && (member(p.snap, 'phoenix') || {}).level === 3 && (member(p.snap, 'brian') || {}).level === 3, p.snap.party);

@@ -10,6 +10,10 @@
     { "anim": { "who": "speaker", "key": "obj_intercom_talk", "wait": false } },
     { "say": "If you'd just join The Vanguard, you could be financially successful and oppress people with a dental plan!", "who": "dad" },
     { "emote": { "who": "player", "type": "…" } },
+    { "say": "TIP: Face the speaker and press CONFIRM to engage.", "who": "narrator", "window": "tip" },
+    { "say": "Who's that?", "who": "lucky" },
+    { "anim": { "who": "speaker", "key": "obj_intercom_talk", "wait": false } },
+    { "say": "That's onboarding.", "who": "dad" },
     { "set": { "flags.podIntro": true } }
   ],
 
@@ -82,7 +86,8 @@
   "ep0_pod_guitar_case": [
     { "say": "The only thing from home worth the fuel.", "who": "narrator" },
     { "if": "!flags.guitarCaseRead", "then": [
-      { "say": "Beat-Up Guitar. Already on. (EQUIP is in the menu, for when there is something else.)", "who": "narrator" },
+      { "say": "Beat-Up Guitar. Already on.", "who": "narrator" },
+      { "say": "EQUIP is in the menu, for when there is something else.", "who": "narrator", "window": "tip" },
       { "set": { "flags.guitarCaseRead": true } }
     ], "else": [
       { "say": "Three strings. The fourth is a philosophy.", "who": "lucky" }

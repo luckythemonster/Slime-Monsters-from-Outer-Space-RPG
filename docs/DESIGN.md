@@ -80,7 +80,7 @@ Twelve maps including the scene. Every map lists `"encounters": { "rate": 0, "po
 
 ### `pod_bay` — 16×14
 **Layout.** Steel floor, catwalk along the top row, three drop pods along the bottom (pod 2 open at (7,11), Lucky inside). Intercom speaker 2×2 on the north wall at (7,2). Viewport (12,2) onto Planet California, a planet made of billboards (`window_stars` animated tile). Vending machine (2,3), plaque (4,2). Pod 3 nameplate (11,11). **Spawn** (7,11) facing up. Lucky uses the `lucky_ball` 16×16 sheet here (CS-01 swaps it in; rolls; 2-frame squish idle) until the crash puts the `lucky` sheet back.
-**Interactables.** Speaker → CS-02. Pod 2 EJECT (6,11) → CS-03. Laser guitar case in the pod (8,11): "The only thing from home worth the fuel." (equips Beat-Up Guitar; one toast: "EQUIP is in the menu."). Pod 3 nameplate: "POD 3. RESERVED. The name is scratched off." → Lucky: "…They're late. They're always late." (`flags.readPod3`). Vending: "DENTAL PLAN: SOLD OUT. DEMOGRAPHIC: SOLD OUT. WATER: $40." Plaque: "EMPLOYEE OF THE QUARTER: DAD (41 CONSECUTIVE)." Viewport: "One billboard says WORK IS LOVE. Lucky has never seen it turned off."
+**Interactables.** Speaker → CS-02. Pod 2 EJECT (6,11) → CS-03. Laser guitar case in the pod (8,11): "The only thing from home worth the fuel." (equips Beat-Up Guitar; narrator "Beat-Up Guitar. Already on.", then the onboarding window: "EQUIP is in the menu, for when there is something else."). Pod 3 nameplate: "POD 3. RESERVED. The name is scratched off." → Lucky: "…They're late. They're always late." (`flags.readPod3`). Vending: "DENTAL PLAN: SOLD OUT. DEMOGRAPHIC: SOLD OUT. WATER: $40." Plaque: "EMPLOYEE OF THE QUARTER: DAD (41 CONSECUTIVE)." Viewport: "One billboard says WORK IS LOVE. Lucky has never seen it turned off."
 **Triggers.** Four once-only floor bands (rows 4, 6, 8, 10 across x 3..12) keep Dad going (CS-01 extras). **Enemies:** none.
 
 ### `alley` — 24×14
@@ -94,7 +94,7 @@ Twelve maps including the scene. Every map lists `"encounters": { "rate": 0, "po
 **Spawn** (38,12) facing left (from the alley).
 **Day NPCs** (`condition: !flags.hasPalmersFlyer`). Snow Shoveler (8,14): "I've shoveled this square four times today. The city calls it a job. I call it a relationship." Cyclist (26,14): "It's not cold if you're angry enough." Busker (18,9): "I take requests. I can't play them. But I take them." Crust Punk with dog (30,15): "Her name's Also Bajonka. No relation." Office Worker (36,9), after `signalSent`: "Did you see the sky? {var:billboardsTagged} billboards went down. My boss cried." Pawnbroker is reached through the pawn door (shop script, below).
 **Night NPCs** (`condition: flags.hasPalmersFlyer`). Tall Stranger outside Palmer's (4,9): "Whoa, man. The stars are heavy tonight." (Chapter 2 seed.) Smoker (8,9): "They're on in ten. The drummer looks… wet." Bajonka (`save`) at (5,9) beside Palmer's door. Shoveler, Cyclist, Busker gone.
-**Interactables.** Towers sign (13,8): "RENT DUE. ALSO: RENT INCREASE. ALSO: RENT." Pizza Luce box: "Still warm? No. Nothing in Minneapolis is still warm." → one Pizza Slice (`flags.pizzaBoxLooted2`). Shelter ad: "WORK IS LOVE. (smaller:) LOVE IS A VANGUARD TRADEMARK." Hydrant flyer: "LOST: CAT. ANSWERS TO 'NO.'" — after `eternityDone`: "LOST: MOHAWK. SENTIMENTAL VALUE. NO QUESTIONS." Pawn door → `shop_pawn` script. Café door `condition: flags.hubOpen`, refusal before: Phoenix: "After. I need to lie down in a specific way." Rail exit `condition: flags.ryanCalled`, refusal before: "The train is here. The reason to take it isn't." Palmer's door `condition: flags.hasPalmersFlyer`, refusal before: "PALMER'S. Closed until there's a reason."
+**Interactables.** Towers sign (13,8): "RENT DUE. ALSO: RENT INCREASE. ALSO: RENT." Pizza Luce box: "Still warm? No. Nothing in Minneapolis is still warm." → one Pizza Slice (`flags.pizzaBoxLooted2`). Shelter ad: "WORK IS LOVE. (smaller:) LOVE IS A VANGUARD TRADEMARK." Hydrant flyer: "LOST: CAT. ANSWERS TO 'NO.'" — after `eternityDone`: "LOST: MOHAWK. SENTIMENTAL VALUE. NO QUESTIONS." Pawn door → `shop_pawn` script. Café door `condition: flags.hubOpen`, refusal before: Phoenix: "After. I need to lie down in a specific way." Rail exit `condition: flags.ryanCalled`, refusal before: "The train is here. The reason to take it isn't." The ride is the card TWENTY MINUTES OF LIGHT RAIL LATER; on the first ride only, Lucky corrects it on arrival in the hallway: "Twenty-six. There was a goose." (`flags.railCardCorrected`). Palmer's door `condition: flags.hasPalmersFlyer`, refusal before: "PALMER'S. Closed until there's a reason."
 **Enemies (day, `flags.hubOpen`).** `slush` Slush Pile, `static` at the crosswalk chokepoint (16,12) — "It's not moving. You are." (B-2, effectively mandatory). `scooters` Feral Scooter Pack, `patrol` path `RRRRRRLLLLLL` on row 13 between x 20 and x 26 covering the platform stairs (B-3, effectively mandatory). `goose` Canada Goose, `wander` radius 3 at (33,14), sight 4 (B-4). `analyst` Demographic Analyst, `chase` sight 5 at (27,10) by the pawn (B-5). `billboard` WORK IS LOVE Billboard, `static` object at the billboard's base (16,5): "It's humming. Fight it?" [Yes / No] (B-6, optional).
 **Enemies (night, `flags.hasPalmersFlyer`).** `analyst_duo` Analyst Duo, `chase` sight 5 at (24,10) (B-7). `goose_pair` Goose Pair, `wander` radius 3 at (31,15) (B-8). All enemies clear via `setOnWin: flags.cleared_<id>`.
 **Night dressing.** A blue overlay rectangle at depth 50 under the `over` layer; lit-window objects; neon on; the night NPC roster via `condition`.
@@ -149,7 +149,9 @@ Every cutscene is a numbered list of §5.1 commands in shorthand: `say who "text
 2. `say dad portrait:dad_grille` "I just don't understand the whole nonbinary thing."
 3. `say dad` "Why can't you pick a tangible demographic to market yourself to?"
 4. `say dad` "If you'd just join The Vanguard, you could be financially successful and oppress people with a dental plan!"
-5. `emote player …`; `set flags.podIntro`.
+5. `emote player …`.
+6. `say narrator window:tip` "TIP: Face the speaker and press CONFIRM to engage." (the onboarding window, beige).
+7. `say lucky` "Who's that?"; `anim speaker obj_intercom_talk`; `say dad` "That's onboarding."; `set flags.podIntro`.
 
 Floor-band triggers `ep0_dad_1..4` (once each; `condition: !flags.podSpeakerSlapped`): `say dad` "Your mother and I paid for the compression. The least you could do is market yourself." / "There's an opening in Demographic Alignment. You'd report to me." / "Your little band 'found itself.' In a storage unit. What kind of a brand is that?" / "…I can see the speaker light." Twins with `condition: flags.podSpeakerSlapped`: `say dad` "{speed:slow}mmf. mmmf."
 
@@ -191,7 +193,7 @@ Floor-band triggers `ep0_dad_1..4` (once each; `condition: !flags.podSpeakerSlap
 8. `caption "END PART 1" 2000`; `set flags.signalSent`; `caption "ONE WEEK LATER" 1800`; `teleport apartment 3 7 facing:right`; `music unpaid_bills`; `set flags.weekLater, hubOpen`; `run ep0_week_later`.
 
 ### CS-06 `ep0_week_later`
-1. Phoenix on the couch (`spawn`/`move` to (3,6), `anim phoenix idle_down`). `say phoenix` "Nobody came."
+1. Phoenix on the couch (`spawn`/`move` to (3,6), `anim phoenix idle_down`). `say lucky` "Eight days." (the card said a week); `say phoenix` "Nobody came."
 2. `say lucky` "The universe is slow."
 3. `say phoenix` "The universe is a flyer at the coffee shop. I made one. Hard Luck Café. Corkboard. Go."; `give item:flyer_blank qty:1`.
 4. Leaving the apartment for the first time after this (`street_cedar` trigger at the Towers door, once, `condition: flags.weekLater`): **[EXT]** autosave 2.
@@ -261,7 +263,7 @@ Floor-band triggers `ep0_dad_1..4` (once each; `condition: !flags.podSpeakerSlap
 ### CS-13c `ep0_chorus` — Toon 0 → 2
 1. `camera fade out`; `caption "ALMOST A YEAR LATER" 1800 style:tape`; `teleport room4 5 8`; the band at their rehearsal marks (Brian at the pedalboard strumming, Ryan drumming); `music normal_music`; `camera fade in`.
 2. `say narrator` "Almost a year in Room 4. Brian has asked for one rehearsal where nothing manifests. He has asked eleven times." The outburst that follows is the last straw, not the first look.
-3. `say narrator` "Hit the chorus. Get the band to Toon 2."; `battle ep0_rehearsal` (cannot be lost; see Battle system); onWin: `run ep0_ultimatum`.
+3. `say narrator window:tip` "Hit the chorus. Get the band to Toon 2."; `battle ep0_rehearsal` (cannot be lost; see Battle system); onWin: `run ep0_ultimatum`.
 
 ### CS-14 `ep0_ultimatum` — Toon 2 → 1 → 0
 1. The battle owns the KRAAANG, the G, the spill, the music grinding to a halt and Brian's "I can't work like this!" line. They play once. The map shows the aftermath: `spawn kraaang_cs` (the word on the wall); `anim coffee_cup obj_coffee_cup_spilled`; `anim pedalboard obj_pedalboard_fried`; `face ryan down` (stops the drum loop); `set flags.pedalboardFried`; `sfx sparks`; `wait 900`.
@@ -450,9 +452,9 @@ Palette-variant sheet swaps driven by events: BRISTLING → `lucky_battle_rage`;
 Keyed by encounter id in `src/engine/battle/scripts/ch01.js` using the §8 hooks plus the extensions in *Engine extensions required*. Hooks return presentation events.
 
 **B-1 `alley_drone` — tutorial.** Vanguard Retrieval Drone vs. Lucky alone. Not `noFlee`, but BAIL is grayed "Not yet." Toon 0.
-- `onStart`: text "A Vanguard Retrieval Drone followed the pod."; toast "STRUM to attack. Hits put AMP in the tank."; only STRUM and TUNE lit in round 1.
-- `onRound(2)`: `join` Phoenix (walks in from the right, trash bag); text "Phoenix swings the trash bag." (the comic line "Beats the day job." is said once, in CS-04); toast "RIFF spends AMP. Power Chord costs 3. Shared Aura is a SYNC."; all commands lit.
-- `onHpBelow(drone, 50)`: text "RETRIEVAL TARGET IS NONCOMPLIANT."; toast "The TOON meter is filling. At 25 you can make NOISE."
+- `onStart`: text "A Vanguard Retrieval Drone followed the pod."; tip toast "STRUM to attack. Hits put AMP in the tank."; only STRUM and TUNE lit in round 1. (Tip toasts are the onboarding window; see Window style.)
+- `onRound(2)`: `join` Phoenix (walks in from the right, trash bag); text "Phoenix swings the trash bag." (the comic line "Beats the day job." is said once, in CS-04); tip toast "RIFF spends AMP. Power Chord costs 3. Shared Aura is a SYNC."; all commands lit.
+- `onHpBelow(drone, 50)`: text "RETRIEVAL TARGET IS NONCOMPLIANT."; tip toast "The TOON meter is filling. At 25 you can make NOISE."
 - `onDefeat(drone)`: text "It leaves a $2 severance check." Reward 8 XP, $2.
 - Tuning: Lucky L1 alone survives round 1 at 20–21/28 HP; the fight ends round 2–3.
 
@@ -471,7 +473,7 @@ Keyed by encounter id in `src/engine/battle/scripts/ch01.js` using the §8 hooks
 - Reward: nothing. 0 XP and $0, so the chapter's level curve and money budget do not move. The hat pays a guitar pick and a drink ticket.
 
 **B-10 `ep0_rehearsal` — The Chorus.** One enemy, The Chorus (a pulsing speech balloon, HP 400, `minHp 1`: "The chorus repeats."). Party: Lucky, Phoenix, Brian, Ryan (`auto`, Possessed). `noFlee`, Toon 0. **Cannot be lost:** with Brian halving gains Toon 2 arrives around round 5 and the player feels the drag; if all controllables are KO'd, or at `onRound(8)`, the forced KRAAANG fires. Whoever is down when it fires stands back up at 1 HP (the chorus repeats; nobody leaves a rehearsal KO'd, so THE SET never opens on a band that is already out).
-- `onStart`: toast "Hit the chorus. Get to Toon 2."
+- `onStart`: tip toast "Hit the chorus. Get to Toon 2."
 - `onAction` = NOISE KRAAANG by anyone, or `onRound(8)` (text "Lucky and Phoenix's slime links up on its own." then a forced KRAAANG), or all controllables KO'd (same text): `anim word_kraaang swing` → `damage brian 1` (text "The G knocks over Brian's boutique iced coffee.") → `transform brian → brian_fried` → `status brian OUT OF TUNE` → text "Sparks." → `music null` (the music grinds to a halt) → `say brian` "I can't work like this! I hate this weird, creative shit! Can't we just play normal music?!" → `win`. The line is said here and nowhere else.
 - Reward 30 XP fixed, $0. CS-14 continues on the map.
 
@@ -645,6 +647,8 @@ All coordinates are absolute screen pixels on the 256×224 canvas; frame counts 
 **Ryan's caption window** (`who: "ryan_caption"`): inverted. Fill `#f8f8f8`, 1 px `#141018` border, 1 px gap, 1 px `#141018` second rule; square corners; text `#141018`; no portrait, no tag; fixed at x 8..136, y 28..52 (2 lines of 14 chars; auto-paginates). Text appears **instantly** with one soft `caption_tick` — the only window with no typewriter, so it reads as the calmest voice in the loudest room. It is drawn at the same position on the map and in battle.
 
 **Bajonka's windows** (save, contract, flyer): the flat window with a clipboard-clip sprite (16×8, `clip`) centered on the top edge and the inner rule in tan `#e8c890`.
+
+**The onboarding window** (`window: "tip"` on a `say`; `tip` on a `give`; `{ tip: true }` on a battle toast): the flat window with the inner rule in beige `#e8c890` and the text in the same beige; no tag, no portrait, no blips. It is the Vanguard's onboarding, the TOON label's beige when Brian is in the band. Every tutorial and how-to line in the chapter uses it: the pod-bay TIP, the two EQUIP lines, the drone's three tutorial toasts, "Hit the chorus." before the rehearsal and in it, and the freefall's X: SKIP. Characters' lines never do, even when they teach something (Phoenix's "Your color's doing a thing." stays white). See `docs/GAGS_FOURTH_WALL.md`.
 
 ### Text
 Typewriter 1 char / 30 ms (fast 15, slow 60, instant 0; the player's choice in `smfos.settings`). `text_blip` on every second printable char, pitched per speaker: Lucky C6, Phoenix G5, Brian E5 (50% duty), Dad A3 (12.5% duty buzz), narrator silent, Ryan's captions silent. Punctuation pauses: comma 80 ms, period/!/? 180 ms, ellipsis 300 ms. `confirm` finishes the page, then advances; an 8×8 bouncing triangle (`arrow_more`) at (238, 206) marks "more". Markup per §5.1: `{shake}` jitters each glyph ±1 px every 4 frames; `{color:pink}` etc. use the theme palette; **[EXT]** `{var:name}`.

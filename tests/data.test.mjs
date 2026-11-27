@@ -322,6 +322,8 @@ group('encounters', (check) => {
 group('scripts', (check) => {
   const WHO_OK = new Set(['narrator', 'ryan_caption', 'player', ...Object.keys(characters.characters), ...Object.keys(npcs)]);
   const CAPTION_STYLES = new Set(['plain', 'tape', 'flyer']);
+  const SAY_WINDOWS = new Set(['ff', 'flat', 'window', 'caption', 'tip']);
+  const tipLines = [];
   const walk = (cmds, sid, labels) => {
     check(Array.isArray(cmds), `script ${sid}: commands array`);
     for (const cmd of cmds || []) {
@@ -329,9 +331,12 @@ group('scripts', (check) => {
       check(keys.length === 1, `script ${sid}: command ${JSON.stringify(cmd)} has exactly one known command key (found ${keys.join(',')})`);
       const k = keys[0];
       if (k === 'say' && cmd.who) check(WHO_OK.has(cmd.who), `script ${sid}: say who "${cmd.who}" unknown`);
+      if (k === 'say' && cmd.window !== undefined) check(SAY_WINDOWS.has(cmd.window), `script ${sid}: say window "${cmd.window}" is ${[...SAY_WINDOWS].join('|')}`);
+      if (k === 'say' && cmd.window === 'tip') tipLines.push(cmd.say);
       if (k === 'choice') for (const opt of cmd.choice) { check(typeof opt.text === 'string', `script ${sid}: choice text`); walk(opt.then || [], sid, labels); }
       if (k === 'if') { try { tokenize(cmd.if); } catch (err) { check(false, `script ${sid}: if parse: ${err.message}`); } walk(cmd.then || [], sid, labels); walk(cmd.else || [], sid, labels); }
       if (k === 'give' || k === 'take') { if (cmd[k].item) check(!!items[cmd[k].item] || !!equipment[cmd[k].item], `script ${sid}: ${k} item "${cmd[k].item}" exists`); }
+      if (k === 'give' && cmd.give.tip !== undefined) { check(typeof cmd.give.tip === 'string' && cmd.give.tip.length > 0, `script ${sid}: give tip is text`); tipLines.push(cmd.give.tip); }
       if (k === 'party' && cmd.party.add) check(!!characters.characters[cmd.party.add], `script ${sid}: party.add "${cmd.party.add}" exists`);
       if (k === 'move') check(/^[UDLR.]+$/.test(cmd.move.path || ''), `script ${sid}: move path "${cmd.move.path}"`);
       if (k === 'teleport') check(!!maps[cmd.teleport.map], `script ${sid}: teleport map "${cmd.teleport.map}" exists`);
@@ -380,6 +385,20 @@ group('scripts', (check) => {
   };
   for (const [sid, cmds] of Object.entries(scripts)) captions(cmds, sid);
   for (const [id, m] of Object.entries(maps)) for (const e of m.entities || []) if (e.type === 'save' && typeof e.prompt === 'string') check(wrapWords(e.prompt, PROMPT_COLS).length <= 2, `map ${id}/${e.id}: save prompt needs more than two rows`);
+  // Onboarding (docs/GAGS_FOURTH_WALL.md): the pod-bay tip and the two EQUIP help lines are beige, and
+  // no help line is left in parentheses inside narration or an item toast.
+  check(tipLines.some((t) => t.startsWith('TIP: Face the speaker')), 'the pod-bay slap tip is a tip window');
+  check(tipLines.length >= 3, `three or more beige help lines in Chapter 1 (found ${tipLines.length})`);
+  const helpInParens = /\((EQUIP|RIFF|STRUM|SYNC)[^)]*\)/;
+  const scan = (cmds, sid) => {
+    for (const cmd of cmds || []) {
+      if (typeof cmd.say === 'string' && cmd.window !== 'tip') check(!helpInParens.test(cmd.say), `script ${sid}: help line in parentheses: ${cmd.say}`);
+      if (cmd.give && typeof cmd.give.toast === 'string') check(!helpInParens.test(cmd.give.toast), `script ${sid}: help line in a toast: ${cmd.give.toast}`);
+      for (const key of ['then', 'else', 'onWin', 'onLose']) if (Array.isArray(cmd[key])) scan(cmd[key], sid);
+      if (Array.isArray(cmd.choice)) for (const opt of cmd.choice) scan(opt.then, sid);
+    }
+  };
+  for (const [sid, cmds] of Object.entries(scripts)) scan(cmds, sid);
 });
 
 // ---------------------------------------------------------------------------------------------

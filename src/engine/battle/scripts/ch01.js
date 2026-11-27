@@ -8,6 +8,8 @@
 // Pure module: no Phaser.
 
 const CAP = (m, text) => m.caption(text);
+/** Tutorial and help toasts are onboarding: beige (docs/GAGS_FOURTH_WALL.md). */
+const TIP = { tip: true };
 
 /** B-1 `alley_drone` — tutorial. Lucky alone; Phoenix joins on round 2. */
 function ep0_drone() {
@@ -16,7 +18,7 @@ function ep0_drone() {
     hpBelow: [{ who: 'drone', pct: 50 }],
     onStart(m) {
       m.text('A Vanguard Retrieval Drone followed the pod.');
-      m.toast('STRUM to attack. Hits put AMP in the tank.');
+      m.toast('STRUM to attack. Hits put AMP in the tank.', TIP);
       m.allowCommands(['strum', 'tune']);
     },
     onRound(m, n) {
@@ -24,7 +26,7 @@ function ep0_drone() {
       m.allowCommands(null);
       if (!m.find('phoenix')) m.join(m.data.makeSeed('phoenix'));
       m.text('Phoenix swings the trash bag.');
-      m.toast('RIFF spends AMP. Power Chord costs 3. Shared Aura is a SYNC.');
+      m.toast('RIFF spends AMP. Power Chord costs 3. Shared Aura is a SYNC.', TIP);
     },
     onTurnStart(m, actor) {
       const lucky = m.find('lucky');
@@ -36,7 +38,7 @@ function ep0_drone() {
     onHpBelow(m, who) {
       if (who !== 'drone') return;
       m.text('RETRIEVAL TARGET IS NONCOMPLIANT.');
-      m.toast('The TOON meter is filling. At 25 you can make NOISE.');
+      m.toast('The TOON meter is filling. At 25 you can make NOISE.', TIP);
     },
     onDefeat(m, who) {
       if (who !== 'drone') return;
@@ -112,7 +114,7 @@ function ep0_rehearsal() {
   return {
     onStart(m) {
       m.transform('ryan', { form: 'possessed' });
-      m.toast('Hit the chorus. Get to Toon 2.');
+      m.toast('Hit the chorus. Get to Toon 2.', TIP);
     },
     onAction(m, actor, action) {
       if (action.cmd === 'noise' && action.word === 'kraaang') finale(m);
