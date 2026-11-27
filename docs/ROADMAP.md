@@ -19,7 +19,7 @@ gets built, what each chapter needs from the engine, and what has to be remember
 | 1 | Coagulation | Episode 0 | 70 min | Lucky, Phoenix, Brian, Ryan | The Set at Palmer's | shipped |
 | 2 | Gig in the Potato Belt | Issue 1 | 1.5 h | Lucky, Phoenix, Diego, Warner | Riot Drones, "The Riot Solo" | M |
 | 3 | The Merch Table Incident / Eat the Rich | Issues 2 and 3 | 2 h | + Sticky, minus Warner | The Great Tuber; the Reinforced Dome | XL |
-| 4 | Battle of the Bands | Issue 4 | 1.5 h | Lucky, Phoenix, Diego, Sticky; Bajonka playable | Alibi's band, then the Judges' Table | L |
+| 4 | Battle of the Bands | Issue 4 + new | 1.75 h | Lucky, Phoenix, Diego, Sticky; Bajonka playable | The poopoopeepee man; Alibi's band, then the Judges' Table | L |
 | 5 | The Acoustic Embargo | Issues 5 and 6 | 1.5 h | same; Phoenix solo; Sticky solo | Kevin (The Audit); the Osmium Dozen | XL |
 | 6 | Planets Collide | Planets Collide | 1 h | Lucky, Phoenix, Diego, Sticky | Kurt (unwinnable) | M |
 | 7 | The Luthier of Debris | Grand Finale + new | 1.5 h | Lucky with no guitar; Shannon guest | Repo-Mech and Salvage Swarm | L |
@@ -69,11 +69,14 @@ Build a system in the chapter that first needs it, and build it to be reused. Do
 | Field statuses from the map (MELTING) | Ch 2 | Ch 5 puddle form |
 | A deadline on the HUD (eviction clock) | Ch 2, shown; Ch 3, live | Ch 4, Ch 5 |
 | A map-wide NOISE meter that punishes loud actions | Ch 3, the Library | Ch 5, the Panopticon; Ch 5 Osmium Dozen |
-| TALK (Diego's command; a dialogue tree as an attack) | Ch 3 | Ch 8 COMMUNE; gone in Ch 11 |
+| TALK (Diego's command; a dialogue tree as an attack) | Ch 3 | Ch 4 "Which greats?"; Ch 8 COMMUNE; gone in Ch 11 |
 | Enemy that grows when attacked | Ch 3, the Great Tuber | |
 | The 13-step grid (Sticky's turns on an odd meter) | Ch 3 | Ch 4, Ch 10, Ch 11 (STICKY-R), Ch 12 |
 | A timer bar racing a shield bar | Ch 3, the Dome | Ch 5 embargo clock |
 | Solo-character chapters with their own verbs | Ch 4, Bajonka | Ch 5 Phoenix and Sticky; Ch 11 Bajonka |
+| A swung timing window (the hit sits late, on the back third of the beat) | Ch 4, the poopoopeepee man | Ch 10, Alibi plays late |
+| A threat bar in place of enemy HP (IMMINENT) | Ch 4, the poopoopeepee man | |
+| A list the player can keep asking for or cut off | Ch 4, the poopoopeepee man | |
 | A boss with no HP (a meter you fill by playing wrong) | Ch 4, THE FINGER | Ch 8 |
 | Locked commands (RIFF greyed out) | Ch 4 stinger | Ch 5, Ch 7, Ch 9 beam |
 | Form toggle (Cyan Phoenix) | Ch 5 | Disc 2 |
@@ -115,12 +118,19 @@ Brief: `docs/chapters/CH02_BRIEF.md`.
 
 ### Chapter 4: Battle of the Bands
 
-- **New:** playable Bajonka, silent, with traps (a sequence scripted to fail); dueling sets where the enemy is on
-  a 4/4 grid and the party is on 13/8; THE FINGER, a meter with no enemy HP that fills on messy inputs.
+- **New:** playable Bajonka, silent, with traps (a sequence scripted to fail); the opening round against the
+  poopoopeepee man (see `docs/BOSS_POOPOOPEEPEE_MAN.md`): the IMMINENT bar, scat syllables as thrown objects, a
+  swung timing window, and the list under TALK with [Keep asking] / [That's enough]; dueling sets where the enemy
+  is on a 4/4 grid and the party is on 13/8; THE FINGER, a meter with no enemy HP that fills on messy inputs.
+- **Reads:** beat-timed input from Chapter 2; TALK and the 13-step grid from Chapter 3.
 - **Plants, all required:** Greg and "I play the root notes." Greg's bass is breathing and nobody mentions it.
   Phoenix: "My brain thinks that's a nicer bass than mine." The XXX-666 under a dust cover on Alibi's riser. The
-  bracket board: KURT BREEZESTEIN, DISQUALIFIED (EXCESSIVE TONNAGE). Bajonka's claymore fails here so it can
-  work in Chapter 11.
+  bracket board: KURT BREEZESTEIN, DISQUALIFIED (EXCESSIVE TONNAGE), then THE POOPOOPEEPEE MAN, DISQUALIFIED
+  (SANITATION). Bajonka's claymore fails here so it can work in Chapter 11. Earl Man on bass and the two session
+  players in clean shirts who walk off: Chapter 10 needs all three sprites.
+- **Rule:** the bar is the only filthy thing in the fight. Nothing gross is ever shown.
+- **Watch:** the opening round adds about fifteen minutes and a third fight. It is a mid-boss, so it is cut
+  before any plant is.
 - **Ends:** RIFF greys out. DAY 1 / 30.
 
 ### Chapter 5: The Acoustic Embargo
@@ -170,7 +180,10 @@ Brief: `docs/chapters/CH02_BRIEF.md`.
   The fence. Then the rider: see `docs/SUBPLOT_BAJONKA_RIDER.md` for both branches, the ceremony, the fight
   Lucky cannot win, and the summon.
 - **Reads:** the Tinny Ride Cymbal (it leaves the inventory here). The denim heckle and Zerkel Pit from Chapter
-  1: "because they suck" is on the gift-shop mug.
+  1: "because they suck" is on the gift-shop mug. The poopoopeepee man from Chapter 4: he is the house act at
+  Palmer's II with Earl and two new players, the old session players work the gift shop, and on the way back
+  from the woods the new players are gone too. No fight; two NPC states of one room and a flyer.
+- **Never cut:** the second lineup and the HELP WANTED flyer. The gag is the reason he comes back.
 - **Lucky decides:** bible open questions 1, 2 and 5, and the four open questions in the rider doc.
 - **Gate:** the ceremony needs a read from someone who grew up with Thai weddings before it is built.
 
@@ -209,6 +222,9 @@ What one chapter writes and a later one reads. Add a row whenever a chapter crea
 | Contract signed unread | Ch 3 | Ch 7 (Lucky reads every page) | |
 | The XXX-666 | Ch 4 seen, Ch 5 slip, Ch 10 burnt out | Ch 11 STICKY-R | thirteenth of a baker's dozen |
 | Greg's bass | Ch 4 | Ch 12 | it is a rascal |
+| How far down the list the player got (0 to 7) | Ch 4, the opening round | Ch 10 ("You asked." / "All seven.") | all seven also awards the ONE OF THE GREATS sticker |
+| The poopoopeepee man's first band (two session players) | Ch 4 | Ch 10 (the gift-shop register) | same Earl, new band |
+| PONCHO (WEAR) | Ch 4 | any | never needed |
 | Phoenix's four notes | Ch 7 | Ch 12 | |
 | The zine quote | Ch 8 | Ch 9 | Phoenix hid it |
 | The beam core | Ch 9 (Bajonka keeps it) | Ch 11 (set by the amp), Ch 12 (the nuclear amplifier) | |
