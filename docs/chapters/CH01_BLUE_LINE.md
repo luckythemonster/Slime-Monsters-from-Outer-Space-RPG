@@ -177,17 +177,23 @@ with a snow shovel and a skateboard (6,10): "The city plows the street. I plow t
 The store is a collective. Its volunteer runs the shop. There is no manager, there is a binder, and the binder
 is the good kind of paperwork. Lucky does not slap it.
 
-**Layout.** Door (10,13). Counter west (1..4, 3..5), the volunteer behind it (2,4), the binder on it (3,3). Four
-rows of record bins (x 6..16 on rows 5, 7, 9, 11, solid), labeled on their end caps: PUNK A TO Z, HARDCORE, LOCAL,
-SKA, and the DOLLAR BIN at the end of row 11. Zine rack on the north wall (7..9, 1). Flyer wall (12..17, 1).
-Listening station (17,4). A back-room door (18,2). Spawn (10,12) facing up.
+**The look.** High contrast. The records and the T-shirts are black and white, and so is most of the room. The
+color is the flyers: a wall of them, every color, layered. Everything else is punk stuff: buttons, patches, a
+studded belt. On screen the store should read as a black-and-white room with one loud wall.
+
+**Layout.** Door (10,13). Counter west (1..4, 3..5), the volunteer behind it (2,4), the binder on it (3,3). A
+T-shirt wall above and behind the counter (1..5, 1..2): black shirts, white prints. Four rows of record bins (x
+6..16 on rows 5, 7, 9, 11, solid), labeled on their end caps: PUNK A TO Z, HARDCORE, LOCAL, SKA, and the DOLLAR
+BIN at the end of row 11. Zine rack on the north wall (7..9, 1). Flyer wall (11..17, 1..2), the only color in the
+room. Listening station (17,4). A back-room door (18,2). A rack of buttons and patches on the east wall (19,6..8).
+Spawn (10,12) facing up.
 
 **NPCs.**
 
 - **Volunteer** (2,4): "Welcome to Extreme Noise. There's no manager. There's a binder." → `shop extreme_noise`.
   Second talk: [Can I volunteer?] → "Meetings are Tuesdays. It's Thursday." *(new)* The volunteer is an original
   character, not anyone who works there.
-- **The Completist** (11,7), at the PUNK bin, window A or C until cleared. See CS-R6.
+- **The Completist** (11,6), in the aisle at the PUNK bin, window A or C until cleared. See CS-R6.
 - **Bajonka** (15,8), window C, `type: save`, `condition: flags.hasBajonka && flags.hasPalmersFlyer`. Narrator,
   first press: "A dog at the local bin. She is consigning something." *(new)* Then the save prompt.
 - **No, the cat** (16,11), in the dollar bin. The hydrant flyer on Cedar has said LOST: CAT. ANSWERS TO 'NO.' since
@@ -211,6 +217,9 @@ Listening station (17,4). A back-room door (18,2). Spawn (10,12) facing up.
 - **Flyer wall**, window A: "ZERKEL PIT PUNX FEST. THIS SUMMER. BANDS WANTED. ALL AGES. ALL WEATHER." Phoenix: "My
   brain thinks we should apply." Lucky: "We should play it." *(new; a plant for THAT SUMMER)* Window C: "GIG TONIGHT:
   PALMER'S BAR. NO GUITAR SOLO NECESSARY." Phoenix: "My brain thinks she got here first." *(new)*
+- **T-shirt wall:** "Black shirts. White ink. Every band name is illegible on purpose." Phoenix: "My brain thinks
+  that's the point." *(new)*
+- **Buttons and patches:** "Buttons, patches and one studded belt nobody in this band is cool enough for." *(new)*
 - **Listening station:** "Headphones. One ear works." With the tape, see CS-R7. *(new)*
 - **Back-room door:** "VOLUNTEERS ONLY. Everyone is a volunteer. Still no." *(new)*
 - **Hours sign** on the door's inside: "OPEN TIL 9. IT IS 8:51." Window C: "OPEN TIL 9. IT IS 8:51. AGAIN." *(new)*
@@ -417,8 +426,10 @@ gangway accordion (2), ad panel frame, operator door, bike hook, `dark` (shared)
 **`minneapolis` additions (about 12).** Extreme Noise facade (sign 4 tiles, door, window), mural wall (3), shuttered
 storefront (2), laundromat front (2), taqueria front (2). The bus shelter, snow, sidewalk and street are reused.
 
-**`interiors` additions (about 10).** Record bin (2), bin end cap, zine rack (2), flyer wall (2), counter (reuse
-the café's), listening station, checkerboard floor.
+**`interiors` additions (about 15).** Record bin (2), bin end cap, zine rack (2), T-shirt wall (3), flyer wall (3),
+button and patch rack (2), counter (reuse the café's), listening station, checkerboard floor. The bins, shirts,
+racks and floor use only black, white and grays. The flyer wall carries the color, as many hues as the 16-color
+sheet allows, so the eye goes there first.
 
 **Overworld sprites (16×24 unless noted).** `fare_map`, `fare_senior_map` (palette variant), `fare_trainee_map`,
 `pigeon_map` (16×16), `bag_map` (16×16 object), `phone_map` (16×16 object), `completist`, `npc_volunteer`,
@@ -491,13 +502,11 @@ the Fare Citation and the Zerkel Pit Tape (written in Chapter 1, read by nothing
 - **Ryan gets captions on the train, not lines.** His stage fright gets two more beats before Palmer's, both small.
 - **The tape is Zerkel Pit.** Bajonka taped the set and consigned it. It is never explained.
 
-## Questions for Lucky
+## Lucky's answers
 
-1. **Does the store read right?** You know Extreme Noise and I know it from a distance: a punk record store on Lake
-   Street, run as a volunteer collective. If the layout, the counter, the bins or anything else should match the
-   real room, tell me what it looks like and I will draw that.
-2. **The fare.** $2 a rider in the game. Paying it costs the band the same as a pizza slice and a coffee. If the
-   gag should land on a different number, say so.
+- **The store's look** is high-contrast black-and-white records and T-shirts, colorful flyers and other punk stuff.
+  The `extreme_noise` map and its art are drawn to that.
+- **The fare is $2 a rider.**
 
 ## Risks & cuts
 
