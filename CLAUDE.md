@@ -12,7 +12,8 @@ rest of the game, one chapter at a time. Lucky calls you Clode.
 5. The brief for the chapter you are on, under `docs/chapters/`.
 
 Then, as needed: `docs/PROGRESSION.md` (levels, skill trees and equipment for the whole game),
-`docs/SUBPLOT_BAJONKA_RIDER.md` (Chapter 10), `docs/SIDEQUEST_MIC_CHECK.md` (Chapter 11),
+`docs/BOSS_POOPOOPEEPEE_MAN.md` (Chapters 4 and 10), `docs/SUBPLOT_BAJONKA_RIDER.md` (Chapter 10),
+`docs/SIDEQUEST_MIC_CHECK.md` (Chapter 11),
 `docs/comic-outlines/` (the source comics), `docs/PHASER_API_DIGEST.md` (Phaser 4 signatures).
 
 ## Commands
@@ -85,6 +86,9 @@ These are Lucky's decisions. They hold in dialogue, narration, item text, menus 
 - **No real people.** No real musician, politician or public figure appears as a character or gets invented
   dialogue. The game uses original stand-ins, already written in the bible. Do not add a name or a likeness that
   points at a real person.
+  One exception, and it is Lucky's: the poopoopeepee man's list (Chapter 4) says the names of real singers out
+  loud. They are names he says. None of them appears, none gets a line, and his own sprite is an original
+  design. Use the list as the bible has it and do not add to it.
 - **Original designs only.** The Soy Boys are types, not copies of anyone else's characters. The same goes for
   every sprite.
 - **Lines from the comics are verbatim.** A line the bible quotes without a *(new)* tag comes from
