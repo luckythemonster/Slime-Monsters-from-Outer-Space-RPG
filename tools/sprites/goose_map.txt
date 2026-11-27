@@ -22,6 +22,8 @@ anim: idle  frames: 0 1  fps: 3
 anim: hiss  frames: 6 7  fps: 8
 variant: goose  swap: k=#141018
 
+variant: pigeon_map  swap: n=#5c6068,b=#9aa0a8,c=#c8ccd4,w=#40e0f0,o=#ff9ae6
+
 frame 0: front a
 ......kkkk......
 .....knnnnk.....

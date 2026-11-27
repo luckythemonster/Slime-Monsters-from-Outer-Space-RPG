@@ -203,6 +203,9 @@ What one chapter writes and a later one reads. Add a row whenever a chapter crea
 | `vars.zerkelChoice`, `flags.zerkelLetGo` | Ch 1 | Ch 10 (optional) | Lucky let it go either way |
 | `vars.billboardsTagged` | Ch 1 freefall | Ch 9 (optional) | |
 | Pothole Invoice (key item) | Ch 1, the alley | every chapter; Ch 8 adds LATE FEE; post-credits adds a surcharge | never payable, never leaves |
+| Fare Citation (key item, optional) | Ch 1, the Blue Line (taking the ticket) | nothing yet | never payable, never leaves; a second ticket is `flags.fareTicket_c`, not a second item |
+| Zerkel Pit Tape (key item, optional) | Ch 1, Extreme Noise on the gig night | nothing yet | the band's own live tape, bought for $3 |
+| Mystery 7-inch (key item, optional) | Ch 1, the Completist | nothing yet | |
 | Tinny Ride Cymbal | Ch 1 | Ch 6 (saved), Ch 10 (hung on the wire) | never pays off mechanically, on purpose |
 | `vars.crowdBank` | every gig: Ch 1 banks 80 (Zerkel Pit 40, Palmer's 40) | Ch 12 Phase 3 | |
 | Little Guy | Ch 3 | cup holder to the end; Ch 11 goes with Diego | |

@@ -1,0 +1,31 @@
+# A light-rail door, open: the leaves slid aside, the platform and snow outside. Sits on a door_closed tile. 16x16.
+name: obj_door_open
+frame: 16x16
+palette:
+  . = transparent
+  k = #141018     # outline
+  d = #5c6068     # door frame
+  L = #c8ccd4     # door leaves
+  y = #f8d820     # threshold stripe
+  m = #9aa0a8     # platform
+  n = #e8f0ff     # snow
+  N = #bcd0ec     # snow shade
+anim: idle  frames: 0  fps: 1
+
+frame 0: open
+kkkkkkkkkkkkkkkk
+ddddddddddddddkd
+dLLknnnnnnnnkLdd
+dLLknnNnnnnnkLdd
+dLLknnnnnnNnkLdd
+dLLkmmmmmmmmkLdd
+dLLkmmmmmmmmkLdd
+dLLkmmmmmmmmkLdd
+dLLkmmmmmmmmkLdd
+dLLkmmmmmmmmkLdd
+dLLkyyyyyyyykLdd
+dLLkkkkkkkkkkLdd
+dddddddddddddddd
+kkkkkkkkkkkkkkkk
+................
+................

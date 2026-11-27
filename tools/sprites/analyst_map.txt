@@ -27,6 +27,10 @@ anim: idle_right frames: 6  fps: 1  flipX: true
 anim: idle  frames: 0 3  fps: 2
 variant: analyst  swap: k=#141018
 
+variant: fare_map  swap: g=#142050,G=#24386c,p=#30303c,P=#1c0c2c,c=#5c6068,B=#30303c
+variant: fare_senior_map  swap: g=#24386c,G=#142050,p=#30303c,P=#1c0c2c,h=#9aa0a8,H=#c8ccd4,c=#5c6068,B=#30303c
+variant: fare_trainee_map  swap: g=#3c5c9c,G=#24386c,p=#9aa0a8,P=#5c6068,h=#e88830,H=#f8d820,c=#5c6068,B=#30303c
+
 frame 0: down stand
 ................
 .....kkkkkk.....

@@ -95,5 +95,43 @@
     "type": "key",
     "price": 0,
     "desc": "CITY OF MINNEAPOLIS: POTHOLE, 1 (one). $1,400. It cannot be paid."
+  },
+  "zine": {
+    "name": "Zine",
+    "type": "consumable",
+    "effect": {
+      "cure": [
+        "OUT_OF_TUNE"
+      ]
+    },
+    "price": 2,
+    "desc": "HOW TO TUNE BY EAR. Cures OUT OF TUNE."
+  },
+  "mixtape": {
+    "name": "Mixtape (C60)",
+    "type": "consumable",
+    "effect": {
+      "amp": 10
+    },
+    "price": 6,
+    "desc": "Side B is the good side. +10 AMP."
+  },
+  "fare_citation": {
+    "name": "Fare Citation",
+    "type": "key",
+    "price": 0,
+    "desc": "FARE CITATION: $35. It cannot be paid either."
+  },
+  "mystery_7inch": {
+    "name": "Mystery 7-inch",
+    "type": "key",
+    "price": 0,
+    "desc": "No label. No sleeve. Plays at a speed nobody owns."
+  },
+  "zerkel_tape": {
+    "name": "Zerkel Pit Tape",
+    "type": "key",
+    "price": 0,
+    "desc": "SLIME MONSTERS FROM OUTER SPACE: LIVE AT ZERKEL PIT. Hand-dubbed. You paid for it."
   }
 }

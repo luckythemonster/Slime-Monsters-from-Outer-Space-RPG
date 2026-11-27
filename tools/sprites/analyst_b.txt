@@ -19,6 +19,10 @@ anim: attack  frames: 2 3  fps: 8  repeat: 0
 anim: hurt  frames: 4  fps: 1  repeat: 0
 anim: ko  frames: 5  fps: 1  repeat: 0
 
+variant: fare_b  swap: g=#142050,G=#24386c,c=#5c6068,B=#30303c
+variant: fare_senior_b  swap: g=#24386c,G=#142050,h=#9aa0a8,c=#5c6068,B=#30303c
+variant: fare_trainee_b  swap: g=#3c5c9c,G=#24386c,h=#e88830,c=#5c6068,B=#30303c
+
 frame 0: idle a
 ................................................
 ....................kkkkkkkkk...................

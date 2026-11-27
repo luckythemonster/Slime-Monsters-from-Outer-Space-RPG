@@ -26,6 +26,8 @@ anim: idle_up     frames: 2 3  fps: 2
 anim: idle_left   frames: 4 5  fps: 2
 anim: idle_right  frames: 4 5  fps: 2  flipX: true
 
+variant: npc_skater  swap: r=#39ff8a,R=#1c8c48,p=#30303c,P=#1c0c2c
+
 frame 0: down a (shovel resting)
 ......kk........
 .....kwwk.......

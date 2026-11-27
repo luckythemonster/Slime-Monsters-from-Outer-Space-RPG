@@ -1,0 +1,85 @@
+# A light-rail window at night, drawn over the car_window tile: streetlights and snow slide past. 16x16, 4 frames.
+name: obj_train_window
+frame: 16x16
+palette:
+  . = transparent
+  a = #142050     # night glass
+  J = #24386c     # glass shadow
+  y = #f8d820     # streetlight
+  o = #e88830     # light falloff
+  d = #5c6068     # light pole
+  w = #f8f8f8     # snow
+anim: idle  frames: 0 1 2 3  fps: 6
+
+frame 0: light 11
+................
+................
+..aaaaaaaaaooa..
+..aaaaaaaaayya..
+..awaaaaaaadaa..
+..aaaaaaaaadwa..
+..aaaaaaaaadaa..
+..aaaaaaawadaa..
+..aaaaaaaaadaw..
+..aaawaaaaadaa..
+..aaaaawaaadaa..
+..JJJJJJJJJJJJ..
+................
+................
+................
+................
+
+frame 1: light 8
+................
+................
+..aaaaaaooaaaa..
+..aaaaaayyaaaa..
+..aaaaaadaaaaw..
+..aaaaaadawaaa..
+..aaaaaadaaaaa..
+..aaaaawdaaaaa..
+..aaaaaadaawaa..
+..awaaaadaaaaa..
+..aaawaadaaaaa..
+..JJJJJJJJJJJJ..
+................
+................
+................
+................
+
+frame 2: light 5
+................
+................
+..aaaooaaaaaaa..
+..aaayyaaaaaaa..
+..aaadaaaaawaa..
+..aaadaawaaaaa..
+..aaadaaaaaaaa..
+..aaadaaaaaaaa..
+..aaadaaawaaaa..
+..aaadaaaaaaaw..
+..awadaaaaaaaa..
+..JJJJJJJJJJJJ..
+................
+................
+................
+................
+
+frame 3: light 2
+................
+................
+..ooaaaaaaaaaa..
+..yyaaaaaaaaaa..
+..daaaaaawaaaa..
+..daaawaaaaaaa..
+..daaaaaaaaaaa..
+..dwaaaaaaaaaa..
+..daaaawaaaaaa..
+..daaaaaaaawaa..
+..daaaaaaaaaaw..
+..JJJJJJJJJJJJ..
+................
+................
+................
+................
+

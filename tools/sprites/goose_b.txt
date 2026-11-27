@@ -17,6 +17,8 @@ anim: attack  frames: 2 3  fps: 8  repeat: 0
 anim: hurt  frames: 4  fps: 1  repeat: 0
 anim: ko  frames: 5  fps: 1  repeat: 0
 
+variant: pigeon_b  swap: n=#5c6068,b=#9aa0a8,B=#5c6068,c=#c8ccd4,o=#ff9ae6
+
 frame 0: idle a
 ................................
 ................................

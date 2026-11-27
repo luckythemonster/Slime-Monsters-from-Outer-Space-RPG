@@ -23,6 +23,8 @@ anim: idle_up     frames: 2 3  fps: 2
 anim: idle_left   frames: 4 5  fps: 2
 anim: idle_right  frames: 4 5  fps: 2  flipX: true
 
+variant: npc_train_busker  swap: g=#d83030,t=#7c4c2c,T=#48281c
+
 frame 0: down a (strum up)
 ................
 .....kkkkkk.....

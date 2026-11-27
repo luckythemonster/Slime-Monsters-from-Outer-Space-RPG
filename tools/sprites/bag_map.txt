@@ -1,0 +1,52 @@
+# The Unattended Bag on a light-rail seat: a gray duffel with one antenna and a red recording light. 16x16.
+name: bag_map
+frame: 16x16
+palette:
+  . = transparent
+  k = #141018     # outline
+  g = #9aa0a8     # duffel
+  G = #5c6068     # duffel shade
+  L = #c8ccd4     # highlight / zipper
+  r = #d83030     # recording light
+  R = #6c2828     # light off
+anim: idle  frames: 0 1  fps: 2
+anim: idle_down  frames: 0 1  fps: 2
+anim: idle_up  frames: 0 1  fps: 2
+anim: idle_left  frames: 0 1  fps: 2
+anim: idle_right  frames: 0 1  fps: 2
+
+frame 0: light on
+...........k....
+..........kr....
+..........k.....
+..........k.....
+....kkkkkkkkk...
+...kLLLLLLLLgk..
+..kgLkkkkkkkLgk.
+..kgggggggggggk.
+.kggLggggggggGGk
+.kgggggggggggGGk
+.kgggggggggGGGGk
+.kGgggggggGGGGGk
+..kGGGGGGGGGGGk.
+...kkkkkkkkkkk..
+................
+................
+
+frame 1: light off
+...........k....
+..........kR....
+..........k.....
+..........k.....
+....kkkkkkkkk...
+...kLLLLLLLLgk..
+..kgLkkkkkkkLgk.
+..kgggggggggggk.
+.kggLggggggggGGk
+.kgggggggggggGGk
+.kgggggggggGGGGk
+.kGgggggggGGGGGk
+..kGGGGGGGGGGGk.
+...kkkkkkkkkkk..
+................
+................

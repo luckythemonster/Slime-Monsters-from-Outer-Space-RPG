@@ -13,7 +13,8 @@
 // the child's JSON is merged at the end. WRONG_SKIP_REAL=1 runs S0-S12 here alone.
 //
 // Part of tests/run.mjs (after chapter1.mjs). Knobs: PLAYWRIGHT_MODULE, SMOKE_CHROME, EXPLORE_KEEP_DIST=1,
-// WRONG_SKIP_REAL=1 (skip the real-speed segment), WRONG_REAL_ONLY=1 (only it). Screenshots:
+// WRONG_SKIP_REAL=1 (skip the real-speed segment), WRONG_REAL_ONLY=1 (only it), WRONG_ONLY="S14 the Blue Line,..."
+// (only the named sections, in one process). Screenshots:
 // tests/screenshots/wrong_*.png.
 
 import { spawn, spawnSync } from 'node:child_process';
@@ -48,6 +49,8 @@ const MAPS = Object.fromEntries(readdirSync(path.join(ROOT, 'src', 'data', 'maps
 /** DESIGN.md: critical-path XP (drone 8, slush 8, scooters 4+3+3, AUDITION 50, the Chorus 30, THE SET 100). */
 const CRITICAL_XP = 206;
 const REAL_ONLY = process.env.WRONG_REAL_ONLY === '1';
+// WRONG_ONLY="S14 the Blue Line,S10 interactions" runs only the named sections (and hygiene) in this one process.
+const ONLY = process.env.WRONG_ONLY ? new Set(process.env.WRONG_ONLY.split(',').map((s) => s.trim())) : null;
 const SKIP_REAL = process.env.WRONG_SKIP_REAL === '1';
 /** Sections the child process owns (the parent keeps S0-S9; both run 'hygiene'). */
 const PART_B = new Set(['S10 interactions', 'S11 edges and exits', 'S12 toggles', 'S13 real speed']);
@@ -381,7 +384,7 @@ async function main() {
 
   // The real-speed segment in a sibling process: dist/ is only read, each process serves its own copy.
   let realChild = null;
-  if (!REAL_ONLY && !SKIP_REAL) {
+  if (!REAL_ONLY && !SKIP_REAL && !ONLY) {
     const child = spawn(process.execPath, [fileURLToPath(import.meta.url)], { cwd: ROOT, env: { ...process.env, WRONG_REAL_ONLY: '1', EXPLORE_KEEP_DIST: '1' }, stdio: ['ignore', 'pipe', 'pipe'] });
     let out = '';
     child.stdout.on('data', (d) => { out += d; });
@@ -464,6 +467,15 @@ async function main() {
       if (l0 === 'BUY') return labels.indexOf('LEAVE');
       if (l0 === 'Items' && labels.includes('Quit')) return 'cancel';
       if (l0 === 'Quit to title') return 1;
+      // the Blue Line, Lake Street and Extreme Noise: stay put and decline, unless a section's uiPlan says otherwise
+      if (l0 === 'Pay $4' || l0 === 'Take the ticket') return 0;
+      if (/^Get off at /.test(l0)) return 1; // Stay on
+      if (l0 === 'Ride it') return labels.length - 1; // Not yet
+      if (l0 === 'Toward City Sound' || l0 === 'Toward Cedar-Riverside') return labels.length - 1; // Not yet
+      if (l0 === 'Knock') return 0;
+      if (l0 === 'Fight it' || l0 === 'Answer it' || l0 === 'Fight about it') return 1; // leave it / walk away
+      if (l0 === 'Shop') return labels.length - 1; // Bye
+      if (/^Buy it/.test(l0)) return 1; // Leave it
       notes.push(`menu with no policy: ${JSON.stringify(labels)}; cancelled`);
       return 'cancel';
     };
@@ -678,6 +690,7 @@ async function main() {
     const SPINE_NIGHT = [...SPINE_MONTH, 'monthLaterRan', 'pedalboardFried', 'kraaangFired', 'brianQuit', 'hasPalmersFlyer', 'gigFlyer'];
     const mine = (name) => {
       if (name === 'hygiene') return true;
+      if (ONLY) return ONLY.has(name);
       if (name === 'S13 real speed') return REAL_ONLY;
       if (REAL_ONLY) return PART_B.has(name);
       if (!realChild) return true; // no child (WRONG_SKIP_REAL=1): every fast section runs here
@@ -1211,6 +1224,8 @@ async function main() {
       // an insert with a caption stacks its narrator box on top: the insert shows up in `kinds`, not as `top`
       await menuDuring('an insert window', (q) => !!(q.ui && q.ui.kinds && q.ui.kinds.includes('insert') && (say(q).state === 'complete' || (q.ui.top && q.ui.top.type === 'insert' && q.ui.top.state === 'open'))));
       await driveIdle('flyer read');
+      // the first ride's THAT NIGHT card plays before the hall has been visited (the Blue Line, CS-R1)
+      await flags({ visited_city_sound_hall: false, rodeRail: false });
       await warp('street_cedar', 22, 15, 'down');
       await press('down');
       // the card lasts 100 ms under ?fast=1: catch it in-page and press the menu key on that very frame
@@ -1218,9 +1233,10 @@ async function main() {
       await ev(() => window.__slime.steps(2));
       let q = await probe();
       await check('menu key during a caption card opens nothing (card seen)', capHit === true && !q.menuActive, { capHit, menuActive: q.menuActive, scene: q.scene });
-      await driveIdle('rail → hall');
+      await driveIdle('rail → the train');
       let p = await probe();
-      await check('the rail still landed in the hall after the stray menu press', p.snap.map === 'city_sound_hall', pos(p));
+      await check('the rail still boarded the train after the stray menu press', p.snap.map === 'rail_car' && at(p, 3, 7), pos(p));
+      await flags({ visited_city_sound_hall: true });
       choice.yesNo = 1;
       // battle count-in
       await setup({ flags: SPINE_HUB, party: ['phoenix'], level: XP_TABLE[4], map: 'street_cedar', x: 15, y: 12, facing: 'right' });
@@ -1268,6 +1284,189 @@ async function main() {
         await check(`${map}: the pause menu closed; game idle, Explore active`, p.idle && !p.menuActive && p.exploreState === 'active' && p.lastErrors === 0, { idle: p.idle, menuActive: p.menuActive, exploreState: p.exploreState, errors: p.lastErrors });
         uiPlan.length = 0;
       }
+    });
+
+    // ==== S14: the Blue Line, Lake Street and Extreme Noise: every branch =========================================
+    await section('S14 the Blue Line', async () => {
+      const saidSince = (from, text) => seen.slice(from).some((t) => t.text.includes(text));
+      const seenLine = (who, text) => seen.some((t) => t.who === who && t.text.includes(text));
+      const pick = (match, n) => uiPlan.push({ match, pick: n });
+      const go = async (label, { lose = false } = {}) => {
+        const go0 = (await probe()).gameOverSeen;
+        choice.title = 1;
+        const p = await drive(label, (q) => q.scene !== 'Battle' && idleOnMap(q) && (!lose || q.gameOverSeen > go0), { allowGameOver: lose, timeout: 120_000 });
+        battlePlan = winPlan;
+        return { p, gameOver: p.gameOverSeen > go0 };
+      };
+      const fareMenu = (l) => l[0] === 'Pay $4' || l[0] === 'Take the ticket';
+      // ---- THAT NIGHT: Brian in the band, $10, a CONTINUE page on the platform
+      let p = await setup({ flags: SPINE_CAFE, party: ['phoenix', 'brian'], level: XP_TABLE[2], items: { pizza_slice: 3 }, money: 10, map: 'street_cedar', x: 22, y: 15, facing: 'down' });
+      await ev(() => window.__slime.save(1));
+      let s0 = seen.length;
+      await press('down');
+      p = await driveIdle('the first ride');
+      await check('first boarding: car 1 (3,7), outbound, stop 0; Brian stands for the board', p.snap.map === 'rail_car' && at(p, 3, 7) && p.snap.vars.railDir === 1 && p.snap.vars.railStop === 0 && saidSince(s0, 'The board needs to stay level'), { pos: pos(p), vars: p.snap.vars });
+      const roster = p.entities.map((e) => e.id);
+      await check('THAT NIGHT roster: fare, bag, pigeons; no gig-night fights', ['fare', 'bag', 'pigeons'].every((id) => roster.includes(id)) && !roster.some((id) => ['fare_senior', 'all_hands'].includes(id)), roster);
+      // doors: car 1 is open at the stop you boarded at, car 2 is not
+      await place(4, 8, 'down');
+      pick((l) => /^Get off at Cedar/.test(l[0]), 1);
+      let r = await interact('car 1 door, Stay on');
+      await check('car 1 door at stop 0 is open; Stay on keeps you aboard', r.p.snap.map === 'rail_car' && r.texts.some((t) => t.text.includes('CEDAR-RIVERSIDE. The doors are open.')), r.texts.map((t) => t.text));
+      await place(24, 8, 'down');
+      r = await interact('car 2 door, closed');
+      await check('car 2 door is closed at stop 0', r.texts.some((t) => t.text.includes('municipal')), r.texts.map((t) => t.text));
+      // gangway A forward, back, forward: the stop moves once
+      await place(17, 7, 'right');
+      s0 = seen.length;
+      p = await walk('RRR LLL RRR', 'gangway A back and forth');
+      const lakeCalls = seen.slice(s0).filter((t) => t.text.includes('NOW ARRIVING: LAKE ST')).length;
+      await check('gangway A: stop 1, announced once; walking back through changes nothing', p.snap.vars.railStop === 1 && lakeCalls === 1, { vars: p.snap.vars, lakeCalls });
+      // the fare, every branch
+      pick(fareMenu, 0);
+      await runScript('ep0_rail_fare');
+      p = await driveIdle('fare: pay');
+      await check('fare: Brian shows a pass; paying takes $4 and clears him', p.snap.money === 6 && p.snap.flags.farePaid_a === true && p.snap.flags.cleared_fare === true && !has(p.snap, 'fare_citation') && seenLine('fare', 'Have a normal night, sir.'), { money: p.snap.money, flags: p.snap.flags });
+      await flags({ cleared_fare: false, farePaid_a: false });
+      pick(fareMenu, 1);
+      await runScript('ep0_rail_fare');
+      p = await driveIdle('fare: ticket');
+      await check('fare: the ticket is a $35 key item that costs nothing today', has(p.snap, 'fare_citation') && p.snap.money === 6 && p.snap.flags.cleared_fare === true, { money: p.snap.money, inv: p.snap.inventory });
+      await flags({ cleared_fare: false });
+      await ev(() => window.__slime.setMoney(2));
+      s0 = seen.length;
+      pick((l) => l[0] === 'Take the ticket' && l.length === 2, 0);
+      await runScript('ep0_rail_fare');
+      p = await driveIdle('fare: under $4');
+      await check('fare under $4: no Pay row, Phoenix says so, the ticket again', saidSince(s0, "don't have four dollars") && p.snap.flags.cleared_fare === true && p.snap.money === 2, { money: p.snap.money });
+      await flags({ cleared_fare: false });
+      const xp0 = member(p.snap, 'lucky').xp;
+      pick(fareMenu, (l) => l.indexOf('Refuse'));
+      battlePlan = winPlan;
+      await runScript('ep0_rail_fare');
+      r = await go('fare: refuse and win');
+      await check('fare refused and beaten on the train: cleared, +10 XP, no money', r.p.snap.flags.cleared_fare === true && member(r.p.snap, 'lucky').xp === xp0 + 10 && r.p.snap.money === 2 && seenLine('lucky', "We're not paying to be watched."), { xp: member(r.p.snap, 'lucky').xp, money: r.p.snap.money });
+      await flags({ cleared_fare: false });
+      await ev(() => { for (const m of window.__slime.state.party.members) m.hp = 1; return true; });
+      pick(fareMenu, (l) => l.indexOf('Refuse'));
+      battlePlan = losePlan;
+      await runScript('ep0_rail_fare');
+      r = await go('fare: refuse and lose', { lose: true });
+      await check('fare refused and lost: Game Over → CONTINUE on the platform page', r.gameOver && r.p.snap.map === 'street_cedar' && at(r.p, 22, 15), pos(r.p));
+      // the bag and the pigeons
+      p = await setup({ flags: SPINE_CAFE, party: ['phoenix', 'brian'], level: XP_TABLE[4], items: { pizza_slice: 3 }, money: 10, map: 'rail_car', x: 30, y: 6, facing: 'up' });
+      pick((l) => l[0] === 'Fight it', 0);
+      await press('confirm');
+      r = await go('the bag');
+      await check('the bag: fought, cleared, gone', r.p.snap.flags.cleared_bag === true && !ent(r.p, 'bag'), r.p.snap.flags);
+      await runScript('ep0_rail_pigeons');
+      r = await go('the pigeons');
+      await check('the pigeons: fought, cleared, gone', r.p.snap.flags.cleared_pigeons === true && !ent(r.p, 'pigeons'), r.p.snap.flags);
+      // Lake St, outbound: car 2's doors at stop 1, the TWO MILES card, the store
+      await flags({ 'vars.railDir': 1, 'vars.railStop': 1 });
+      await warp('rail_car', 24, 8, 'down');
+      pick((l) => /^Get off at Lake/.test(l[0]), 0);
+      r = await interact('get off at Lake St');
+      await check('car 2 at stop 1 → lake_street (38,10); rodeRail', r.p.snap.map === 'lake_street' && at(r.p, 38, 10) && r.p.snap.flags.rodeRail === true, pos(r.p));
+      await warp('lake_street', 12, 9, 'up');
+      s0 = seen.length;
+      await press('up');
+      p = await driveIdle('into Extreme Noise');
+      await check('Extreme Noise THAT NIGHT: the volunteer, Brian asks for normal music, the dollar bin', p.snap.map === 'extreme_noise' && saidSince(s0, "That's the dollar bin.") && p.snap.flags.enIntroA === true, { pos: pos(p) });
+      await place(5, 4, 'left');
+      r = await interact('the counter');
+      await check('the counter is the volunteer: no manager, a binder, the shop', r.texts.some((t) => t.text.includes("There's no manager. There's a binder.")), r.texts.map((t) => t.text));
+      await place(16, 10, 'down');
+      r = await interact('No');
+      await check('No, found in the dollar bin', r.p.snap.flags.foundNo === true && r.texts.some((t) => t.text.includes('does not want to be')), r.texts.map((t) => t.text));
+      // the Completist: lost, then won
+      await ev(() => window.__slime.save(1));
+      await place(10, 6, 'right');
+      await ev(() => { for (const m of window.__slime.state.party.members) m.hp = 1; return true; });
+      pick((l) => l[0] === 'Fight about it', 0);
+      battlePlan = losePlan;
+      await press('confirm');
+      r = await go('the Completist, lost', { lose: true });
+      await check('the Completist lost: Game Over → CONTINUE in the store, him still at the bin', r.gameOver && r.p.snap.map === 'extreme_noise' && !!ent(r.p, 'completist'), pos(r.p));
+      await place(10, 6, 'right');
+      pick((l) => l[0] === 'Fight about it', 0);
+      const m0 = (await probe()).snap.money;
+      await press('confirm');
+      r = await go('the Completist, won');
+      await check('the Completist: taken outside to Lake Street, beaten: +$5, the Mystery 7-inch, cleared', r.p.snap.map === 'lake_street' && r.p.snap.flags.cleared_completist === true && has(r.p.snap, 'mystery_7inch') && r.p.snap.money === m0 + 5 && seenLine('volunteer', 'Not in the store. Outside.'), { pos: pos(r.p), money: r.p.snap.money });
+      // the hydrant knows where No is
+      await warp('street_cedar', 10, 14, 'down');
+      r = await interact('the hydrant after No');
+      await check("the hydrant flyer: SHE'S AT EXTREME NOISE. SHE'S FINE.", r.texts.some((t) => t.text.includes("SHE'S AT EXTREME NOISE")), r.texts.map((t) => t.text));
+      // Lake St platform, toward City Sound: car 2, gangway B, car 3, the FORTY MINUTES card
+      await flags({ visited_city_sound_hall: false });
+      await warp('lake_street', 38, 10, 'right');
+      pick((l) => l[0] === 'Toward City Sound', 0);
+      pick((l) => l[0] === 'Ride it', 0);
+      await press('right');
+      p = await driveIdle('Lake St → toward City Sound');
+      await check('Lake St toward City Sound: car 2 (29,7), outbound, stop 1', p.snap.map === 'rail_car' && at(p, 29, 7) && p.snap.vars.railDir === 1 && p.snap.vars.railStop === 1, { pos: pos(p), vars: p.snap.vars });
+      p = await walk('RRRRRRRRRRRRRRR D', 'to car 3');
+      await check('gangway B: stop 2', p.snap.vars.railStop === 2, p.snap.vars);
+      await place(44, 8, 'down');
+      pick((l) => /^Get off at City Sound/.test(l[0]), 0);
+      r = await interact('get off at City Sound');
+      await check('City Sound after the record store → hall (3,6)', r.p.snap.map === 'city_sound_hall' && at(r.p, 3, 6), pos(r.p));
+      // Lake St platform, toward Cedar-Riverside: inbound through gangway A
+      await warp('lake_street', 38, 10, 'right');
+      pick((l) => l[0] === 'Toward City Sound', 1);
+      pick((l) => l[0] === 'Ride it', 0);
+      await press('right');
+      p = await driveIdle('Lake St → toward Cedar');
+      await check('Lake St toward Cedar-Riverside: car 2 (29,7), inbound, stop 1', p.snap.map === 'rail_car' && at(p, 29, 7) && p.snap.vars.railDir === 2 && p.snap.vars.railStop === 1, { pos: pos(p), vars: p.snap.vars });
+      p = await walk('L'.repeat(24), 'to car 1');
+      await check('gangway A inbound: stop 0', p.snap.vars.railStop === 0 && at(p, 5, 7), { pos: pos(p), vars: p.snap.vars });
+      await place(5, 8, 'down');
+      pick((l) => /^Get off at Cedar/.test(l[0]), 0);
+      r = await interact('get off at Cedar');
+      await check('Cedar-Riverside → street (22,15)', r.p.snap.map === 'street_cedar' && at(r.p, 22, 15), pos(r.p));
+      // the platform after the first ride: Not yet, then the skip to Lake St
+      pick((l) => l[0] === 'Ride it', 3);
+      await press('down');
+      p = await driveIdle('platform: Not yet');
+      await check('platform menu, Not yet: still on Cedar, one step back', p.snap.map === 'street_cedar' && at(p, 22, 15), pos(p));
+      pick((l) => l[0] === 'Ride it', 2);
+      await press('down');
+      p = await driveIdle('platform: skip to Lake St');
+      await check('platform menu, Lake St: the skip lands on Lake Street (38,10)', p.snap.map === 'lake_street' && at(p, 38, 10), pos(p));
+      // ---- the gig night: Ryan in the band, the tape, Senior Fare Compliance, The All-Hands
+      p = await setup({ flags: SPINE_NIGHT, party: ['phoenix', 'ryan'], level: XP_TABLE[5], items: { pizza_slice: 3, fare_citation: 1 }, money: 12, map: 'extreme_noise', x: 8, y: 10, facing: 'up' });
+      await check('gig night in the store: Bajonka at the local bin, the volunteer knows the tape', !!ent(p, 'bajonka') && seenLine('volunteer', "Oh. You're the tape."), p.entities.map((e) => e.id));
+      pick((l) => /^Buy it/.test(l[0]), 0);
+      r = await interact('the local bin, the tape');
+      await check('the tape: LIVE AT ZERKEL PIT, consigned by a paw print; bought for $3', has(r.p.snap, 'zerkel_tape') && r.p.snap.money === 9 && r.texts.some((t) => t.text.includes('LIVE AT ZERKEL PIT')) && r.texts.some((t) => t.who === 'ryan_caption' && t.text.includes('Anyone could buy it')), { money: r.p.snap.money, texts: r.texts.map((t) => t.text) });
+      await place(17, 5, 'up');
+      r = await interact('the listening station: play');
+      await check('the listening station plays the tape (band_hunger); Ryan hears himself', r.p.snap.flags.tapePlaying === true && r.texts.some((t) => t.text.includes('I can hear myself')), r.texts.map((t) => t.text));
+      r = await interact('the listening station: stop');
+      await check('pressed again, the store stereo comes back', r.p.snap.flags.tapePlaying === false, r.p.snap.flags);
+      await flags({ rodeGig: false, rodeRail: true });
+      await warp('city_sound_hall', 3, 6, 'left');
+      await press('left');
+      p = await driveIdle('the last ride');
+      await check('gig night from the hall: CS-R3 is walked even with the skip open', p.snap.map === 'rail_car' && at(p, 54, 7) && p.snap.flags.rodeGig === true && seenLine('ryan_caption', "That's the best thing about trains."), pos(p));
+      pick(fareMenu, 1);
+      await runScript('ep0_rail_fare_senior');
+      p = await driveIdle('senior fare: second notice');
+      await check('Senior Fare Compliance: the citation has been accruing; a second ticket is a SECOND NOTICE, not a second item', p.snap.flags.fareTicket_c === true && qty(p.snap, 'fare_citation') === 1 && seenLine('fare_senior', "It's been accruing.") && seenLine('narrator', 'exact change'), { inv: p.snap.inventory });
+      await flags({ cleared_fare_senior: false });
+      pick(fareMenu, (l) => l.indexOf('Refuse'));
+      await runScript('ep0_rail_fare_senior');
+      r = await go('senior fare: refuse and win');
+      await check('Senior Fare Compliance and the trainee, refused and beaten', r.p.snap.flags.cleared_fare_senior === true && !ent(r.p, 'fare_senior'), r.p.snap.flags);
+      pick((l) => l[0] === 'Answer it', 0);
+      await runScript('ep0_rail_all_hands');
+      r = await go('The All-Hands');
+      await check('The All-Hands: answered, cleared (it leaves the call by round 6 at the latest)', r.p.snap.flags.cleared_all_hands === true, r.p.snap.flags);
+      await place(56, 7, 'right');
+      pick((l) => l[0] === 'Knock', 0);
+      r = await interact('the operator door');
+      await check('the operator knocks back in 7/8, and Ryan counts it', r.p.snap.flags.knockedOperator === true && r.texts.some((t) => t.text.includes("It's 7/8.")), r.texts.map((t) => t.text));
     });
 
     // ==== S10: every NPC and object on every map, two presses each ==============================================
@@ -1370,6 +1569,13 @@ async function main() {
       await sweep('room4', [4, 9, 'right'], ['auditionDone', 'ryanJoined', 'monthLater', 'monthLaterRan'], { tag: 'ONE MONTH LATER' });
       await ev(() => window.__slime.removeParty('brian'));
       await sweep('room4', [4, 9, 'right'], ['pedalboardFried', 'brianQuit'], { skip: ['gig_flyer'], tag: 'after Brian' });
+      // the Blue Line, Lake Street and Extreme Noise: THAT NIGHT (before the audition), then the gig night.
+      // The fare officers start a fight on touch (S14 plays every branch); every door is closed (no stop set).
+      await sweep('rail_car', [3, 7, 'right'], ['ryanCalled'], { off: ['auditionDone', 'hasPalmersFlyer', 'gigFlyer'], skip: ['fare', 'pigeons'], tag: 'the first train' });
+      await sweep('lake_street', [38, 10, 'left'], [], { tag: 'Lake Street' });
+      await sweep('extreme_noise', [10, 12, 'up'], [], { tag: 'Extreme Noise, THAT NIGHT' });
+      await sweep('rail_car', [54, 7, 'left'], ['auditionDone', 'hasPalmersFlyer', 'gigFlyer'], { skip: ['fare_senior'], tag: 'the last train' });
+      await sweep('extreme_noise', [10, 12, 'up'], ['hasBajonka'], { skip: ['bajonka'], tag: 'Extreme Noise, the gig night: the tape' });
       // Palmer's and the rubble
       await flags({ hasPalmersFlyer: true, gigFlyer: true });
       await sweep('palmers', [8, 12, 'up'], [], { skip: ['bajonka'], tag: 'the crowd' });
@@ -1382,7 +1588,7 @@ async function main() {
     // ==== S11: map edges and solids; every exit from both sides ===================================================
     await section('S11 edges and exits', async () => {
       await setup({ flags: [...SPINE_HALL, 'visited_room4', 'visited_palmers', 'visited_garage_north', 'visited_rooftops', 'visited_coffee_shop'], party: ['phoenix', 'brian'] });
-      const edgeMaps = [['pod_bay', 7, 10, 'up'], ['alley', 9, 9, 'down'], ['street_cedar', 12, 9, 'down'], ['apartment', 12, 11, 'up'], ['coffee_shop', 10, 11, 'up'], ['rooftops', 2, 7, 'right'], ['garage_north', 8, 9, 'up'], ['city_sound_hall', 3, 7, 'right'], ['room4', 4, 9, 'right'], ['palmers', 8, 12, 'up'], ['palmers_rubble', 16, 9, 'right']];
+      const edgeMaps = [['pod_bay', 7, 10, 'up'], ['alley', 9, 9, 'down'], ['street_cedar', 12, 9, 'down'], ['apartment', 12, 11, 'up'], ['coffee_shop', 10, 11, 'up'], ['rooftops', 2, 7, 'right'], ['garage_north', 8, 9, 'up'], ['city_sound_hall', 3, 7, 'right'], ['room4', 4, 9, 'right'], ['palmers', 8, 12, 'up'], ['palmers_rubble', 16, 9, 'right'], ['rail_car', 3, 7, 'right'], ['lake_street', 38, 10, 'left'], ['extreme_noise', 10, 12, 'up']];
       const inZone = (z, x, y) => x >= z.x && x < z.x + z.w && y >= z.y && y < z.y + z.h;
       for (const [map, x, y, facing] of edgeMaps) {
         await warp(map, x, y, facing, `edges ${map}`);
@@ -1420,9 +1626,16 @@ async function main() {
       await hop("Palmer's door", 'up', { map: 'palmers', x: 8, y: 12 });
       await hop("Palmer's door back", 'down', { map: 'street_cedar', x: 6, y: 9 });
       await flags({ gigFlyer: false, hasPalmersFlyer: false });
+      // the stairs and the platform board the Blue Line; after the first ride both offer the skip (S14 rides it)
+      await flags({ rodeRail: true });
       await warp('city_sound_hall', 3, 6, 'left');
-      await hop('hall stairs', 'left', { map: 'street_cedar', x: 22, y: 15 });
-      await hop('the rail back', 'down', { map: 'city_sound_hall', x: 3, y: 6 });
+      uiPlan.push({ match: (l) => l[0] === 'Ride it' && l[1] === 'Cedar-Riverside', pick: 1 });
+      await hop('hall stairs, skip to Cedar-Riverside', 'left', { map: 'street_cedar', x: 22, y: 15 });
+      uiPlan.push({ match: (l) => l[0] === 'Ride it' && l[1] === 'City Sound', pick: 1 });
+      await hop('the platform, skip to City Sound', 'down', { map: 'city_sound_hall', x: 3, y: 6 });
+      await warp('lake_street', 12, 9, 'up');
+      await hop('Extreme Noise door', 'up', { map: 'extreme_noise', x: 10, y: 12 });
+      await hop('Extreme Noise door back', 'down', { map: 'lake_street', x: 12, y: 9 });
       await warp('city_sound_hall', 20, 6, 'up');
       await hop('Room 4 door', 'up', { map: 'room4', x: 3, y: 9 });
       await hop('Room 4 door back', 'down', { map: 'city_sound_hall', x: 20, y: 6 });

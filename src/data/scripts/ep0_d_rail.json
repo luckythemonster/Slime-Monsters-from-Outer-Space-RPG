@@ -1,0 +1,639 @@
+{
+  "ep0_rail_board_first": [
+    { "sfx": "door" },
+    { "camera": { "fade": "out", "ms": 300 } },
+    { "if": "!flags.visited_city_sound_hall", "then": [
+      { "caption": "THAT NIGHT", "ms": 1500 }
+    ] },
+    { "set": { "vars.railDir": 1, "vars.railStop": 0, "flags.railIntro": true } },
+    { "teleport": { "map": "rail_car", "x": 3, "y": 7, "facing": "right" } },
+    { "camera": { "fade": "in", "ms": 300 } },
+    { "sfx": "rail_chime" },
+    { "say": "THE BLUE LINE. Doors closing.{pause:400}\nThe doors close on Brian's pedalboard. Twice.", "who": "narrator" },
+    { "if": "party.has('brian')", "then": [
+      { "say": "{speed:fast}I'll stand. The board needs to stay level.", "who": "brian" }
+    ] },
+    { "say": "My brain thinks the seats are a trap anyway.", "who": "phoenix" },
+    { "sfx": "pa_ding" },
+    { "say": "NEXT STOP: LAKE ST / MIDTOWN. Then CITY SOUND.{pause:300}\n(It is not called that. Everyone calls it that.)", "who": "narrator" },
+    { "if": "party.has('brian')", "then": [
+      { "say": "Light rail is the most accurate way to travel. It's on a rail.", "who": "brian" }
+    ] }
+  ],
+
+  "ep0_rail_board_out": [
+    { "sfx": "door" },
+    { "set": { "vars.railDir": 1, "vars.railStop": 0 } },
+    { "teleport": { "map": "rail_car", "x": 3, "y": 7, "facing": "right" } }
+  ],
+
+  "ep0_rail_board_in": [
+    { "sfx": "door" },
+    { "set": { "vars.railDir": 2, "vars.railStop": 2 } },
+    { "teleport": { "map": "rail_car", "x": 54, "y": 7, "facing": "left" } }
+  ],
+
+  "ep0_rail_menu_cedar": [
+    { "say": "CEDAR-RIVERSIDE. A train is boarding.", "who": "narrator" },
+    { "choice": [
+      { "text": "Ride it", "then": [ { "run": "ep0_rail_board_out" } ] },
+      { "text": "City Sound", "then": [ { "run": "ep0_rail_skip_city" } ] },
+      { "text": "Lake St", "then": [ { "run": "ep0_rail_skip_lake" } ] },
+      { "text": "Not yet", "then": [ { "move": { "who": "player", "path": "U", "wait": true } } ] }
+    ], "cancelIndex": 3 }
+  ],
+
+  "ep0_rail_menu_city": [
+    { "say": "CITY SOUND. A train is boarding.", "who": "narrator" },
+    { "choice": [
+      { "text": "Ride it", "then": [ { "run": "ep0_rail_board_in" } ] },
+      { "text": "Cedar-Riverside", "then": [ { "run": "ep0_rail_skip_cedar" } ] },
+      { "text": "Lake St", "then": [ { "run": "ep0_rail_skip_lake" } ] },
+      { "text": "Not yet", "then": [ { "move": { "who": "player", "path": "R", "wait": true } } ] }
+    ], "cancelIndex": 3 }
+  ],
+
+  "ep0_rail_skip_city": [
+    { "camera": { "fade": "out", "ms": 300 } },
+    { "caption": "TWENTY MINUTES OF\nLIGHT RAIL LATER", "ms": 1500 },
+    { "teleport": { "map": "city_sound_hall", "x": 3, "y": 6, "facing": "right" } },
+    { "camera": { "fade": "in", "ms": 300 } }
+  ],
+
+  "ep0_rail_skip_cedar": [
+    { "camera": { "fade": "out", "ms": 300 } },
+    { "caption": "TWENTY MINUTES OF\nLIGHT RAIL LATER", "ms": 1500 },
+    { "teleport": { "map": "street_cedar", "x": 22, "y": 15, "facing": "down" } },
+    { "camera": { "fade": "in", "ms": 300 } }
+  ],
+
+  "ep0_rail_skip_lake": [
+    { "camera": { "fade": "out", "ms": 300 } },
+    { "caption": "TWO MILES OF\nLAKE STREET LATER", "ms": 1500 },
+    { "teleport": { "map": "lake_street", "x": 38, "y": 10, "facing": "left" } },
+    { "camera": { "fade": "in", "ms": 300 } }
+  ],
+
+  "ep0_rail_board_city": [
+    { "if": "flags.hasPalmersFlyer && !flags.rodeGig", "then": [
+      { "run": "ep0_rail_gig" }
+    ], "else": [
+      { "if": "flags.rodeRail", "then": [
+        { "run": "ep0_rail_menu_city" }
+      ], "else": [
+        { "run": "ep0_rail_board_in" }
+      ] }
+    ] }
+  ],
+
+  "ep0_rail_gig": [
+    { "sfx": "door" },
+    { "set": { "flags.rodeGig": true, "vars.railDir": 2, "vars.railStop": 2 } },
+    { "teleport": { "map": "rail_car", "x": 54, "y": 7, "facing": "left" } },
+    { "say": "The night before the Potato Belt tour. The train is full.", "who": "narrator" },
+    { "say": "[Nobody on a train looks at anybody.]", "who": "ryan_caption" },
+    { "say": "[That's the best thing about trains.]", "who": "ryan_caption" },
+    { "say": "My brain thinks Palmer's holds forty.", "who": "phoenix" },
+    { "say": "[Forty.]", "who": "ryan_caption" },
+    { "say": "Forty is a crowd. Forty is a riot if you do it right.", "who": "lucky" },
+    { "emote": { "who": "ryan", "type": "…" } }
+  ],
+
+  "ep0_rail_gangway_a": [
+    { "if": "vars.railDir == 1 && vars.railStop < 1", "then": [
+      { "set": { "vars.railStop": 1 } },
+      { "sfx": "pa_ding" },
+      { "say": "NOW ARRIVING: LAKE ST / MIDTOWN.\nDoors open on the right.", "who": "narrator" },
+      { "sfx": "rail_chime" }
+    ] },
+    { "if": "vars.railDir == 2 && vars.railStop > 0", "then": [
+      { "set": { "vars.railStop": 0 } },
+      { "sfx": "pa_ding" },
+      { "say": "NOW ARRIVING: CEDAR-RIVERSIDE.\nDoors open on the left.", "who": "narrator" },
+      { "sfx": "rail_chime" }
+    ] }
+  ],
+
+  "ep0_rail_gangway_b": [
+    { "if": "vars.railDir == 1 && vars.railStop < 2", "then": [
+      { "set": { "vars.railStop": 2 } },
+      { "sfx": "pa_ding" },
+      { "say": "NOW ARRIVING: CITY SOUND.\nDoors open on the right.", "who": "narrator" },
+      { "sfx": "rail_chime" }
+    ] },
+    { "if": "vars.railDir == 2 && vars.railStop > 1", "then": [
+      { "set": { "vars.railStop": 1 } },
+      { "sfx": "pa_ding" },
+      { "say": "NOW ARRIVING: LAKE ST / MIDTOWN.\nDoors open on the left.", "who": "narrator" },
+      { "sfx": "rail_chime" }
+    ] }
+  ],
+
+  "ep0_rail_doors_closed": [
+    { "say": "Closed. Minneapolis goes by at a speed you would describe as 'municipal.'", "who": "narrator" }
+  ],
+
+  "ep0_rail_door_1": [
+    { "if": "vars.railStop == 0", "then": [
+      { "say": "CEDAR-RIVERSIDE. The doors are open.", "who": "narrator" },
+      { "choice": [
+        { "text": "Get off at Cedar-Riverside", "then": [ { "run": "ep0_rail_off_cedar" } ] },
+        { "text": "Stay on", "then": [] }
+      ], "cancelIndex": 1 }
+    ], "else": [ { "run": "ep0_rail_doors_closed" } ] }
+  ],
+
+  "ep0_rail_door_2": [
+    { "if": "vars.railStop == 1", "then": [
+      { "say": "LAKE ST / MIDTOWN. The doors are open.", "who": "narrator" },
+      { "choice": [
+        { "text": "Get off at Lake St", "then": [ { "run": "ep0_rail_off_lake" } ] },
+        { "text": "Stay on", "then": [] }
+      ], "cancelIndex": 1 }
+    ], "else": [ { "run": "ep0_rail_doors_closed" } ] }
+  ],
+
+  "ep0_rail_door_3": [
+    { "if": "vars.railStop == 2", "then": [
+      { "say": "CITY SOUND. The doors are open.", "who": "narrator" },
+      { "choice": [
+        { "text": "Get off at City Sound", "then": [ { "run": "ep0_rail_arrive_city" } ] },
+        { "text": "Stay on", "then": [] }
+      ], "cancelIndex": 1 }
+    ], "else": [ { "run": "ep0_rail_doors_closed" } ] }
+  ],
+
+  "ep0_rail_off_cedar": [
+    { "sfx": "rail_chime" },
+    { "camera": { "fade": "out", "ms": 300 } },
+    { "set": { "flags.rodeRail": true } },
+    { "teleport": { "map": "street_cedar", "x": 22, "y": 15, "facing": "down" } },
+    { "camera": { "fade": "in", "ms": 300 } }
+  ],
+
+  "ep0_rail_off_lake": [
+    { "sfx": "rail_chime" },
+    { "camera": { "fade": "out", "ms": 300 } },
+    { "if": "!flags.visited_lake_street", "then": [
+      { "caption": "TWO MILES OF\nLAKE STREET LATER", "ms": 1800 }
+    ] },
+    { "set": { "flags.rodeRail": true } },
+    { "teleport": { "map": "lake_street", "x": 38, "y": 10, "facing": "left" } },
+    { "camera": { "fade": "in", "ms": 300 } }
+  ],
+
+  "ep0_rail_arrive_city": [
+    { "sfx": "rail_chime" },
+    { "camera": { "fade": "out", "ms": 300 } },
+    { "if": "!flags.visited_city_sound_hall", "then": [
+      { "if": "flags.visited_lake_street", "then": [
+        { "caption": "FORTY MINUTES OF LIGHT RAIL\nAND ONE RECORD STORE LATER", "ms": 1800 }
+      ], "else": [
+        { "caption": "TWENTY MINUTES OF\nLIGHT RAIL LATER", "ms": 1800 }
+      ] }
+    ] },
+    { "set": { "flags.rodeRail": true } },
+    { "teleport": { "map": "city_sound_hall", "x": 3, "y": 6, "facing": "right" } },
+    { "camera": { "fade": "in", "ms": 300 } }
+  ],
+
+  "ep0_rail_fare": [
+    { "say": "Fare Compliance. A Vanguard partner. Proof of payment, please.", "who": "fare" },
+    { "if": "party.has('brian')", "then": [
+      { "say": "{speed:fast}Monthly pass. I'm a completely normal commuter.", "who": "brian" },
+      { "say": "Valid. Have a normal night, sir.", "who": "fare" }
+    ] },
+    { "say": "Two dollars each. That's four.", "who": "fare" },
+    { "run": "ep0_rail_fare_choice" }
+  ],
+
+  "ep0_rail_fare_choice": [
+    { "if": "money >= 4", "then": [
+      { "choice": [
+        { "text": "Pay $4", "then": [
+          { "take": { "money": 4 } },
+          { "say": "My brain thinks that was dinner.", "who": "phoenix" },
+          { "set": { "flags.farePaid_a": true, "flags.cleared_fare": true } }
+        ] },
+        { "text": "Take the ticket", "then": [ { "run": "ep0_rail_fare_ticket" } ] },
+        { "text": "Refuse", "then": [ { "run": "ep0_rail_fare_refuse" } ] }
+      ] }
+    ], "else": [
+      { "say": "My brain thinks we don't have four dollars.", "who": "phoenix" },
+      { "choice": [
+        { "text": "Take the ticket", "then": [ { "run": "ep0_rail_fare_ticket" } ] },
+        { "text": "Refuse", "then": [ { "run": "ep0_rail_fare_refuse" } ] }
+      ] }
+    ] }
+  ],
+
+  "ep0_rail_fare_ticket": [
+    { "give": { "item": "fare_citation", "qty": 1 } },
+    { "say": "FARE CITATION: $35.", "who": "narrator" },
+    { "say": "My brain thinks we should frame that one too.", "who": "phoenix" },
+    { "set": { "flags.cleared_fare": true } }
+  ],
+
+  "ep0_rail_fare_refuse": [
+    { "say": "We're not paying to be watched.", "who": "lucky" },
+    { "battle": "rail_fare", "onWin": [
+      { "set": { "flags.cleared_fare": true } },
+      { "say": "He writes himself a citation for losing. It cannot be paid either.", "who": "narrator" }
+    ], "onLose": "gameover" }
+  ],
+
+  "ep0_rail_fare_senior": [
+    { "say": "Fare Compliance. I've been promoted. This is my trainee. He's shadowing.", "who": "fare_senior" },
+    { "if": "inventory.has('fare_citation')", "then": [
+      { "say": "You have an outstanding citation.", "who": "fare_senior" },
+      { "say": "My brain thinks it's been almost a year.", "who": "phoenix" },
+      { "say": "It's been accruing.", "who": "fare_senior" }
+    ] },
+    { "if": "party.has('ryan')", "then": [
+      { "say": "[He's looking at me.]", "who": "ryan_caption" },
+      { "say": "[He's looking at everybody. It's his job.]", "who": "ryan_caption" },
+      { "say": "Ryan holds out exact change. He has always had exact change.", "who": "narrator" }
+    ] },
+    { "say": "Two dollars each. That's four.", "who": "fare_senior" },
+    { "if": "money >= 4", "then": [
+      { "choice": [
+        { "text": "Pay $4", "then": [
+          { "take": { "money": 4 } },
+          { "say": "My brain thinks that was dinner again.", "who": "phoenix" },
+          { "set": { "flags.farePaid_c": true, "flags.cleared_fare_senior": true } }
+        ] },
+        { "text": "Take the ticket", "then": [ { "run": "ep0_rail_fare_senior_ticket" } ] },
+        { "text": "Refuse", "then": [ { "run": "ep0_rail_fare_senior_refuse" } ] }
+      ] }
+    ], "else": [
+      { "say": "My brain thinks we don't have four dollars. Again.", "who": "phoenix" },
+      { "choice": [
+        { "text": "Take the ticket", "then": [ { "run": "ep0_rail_fare_senior_ticket" } ] },
+        { "text": "Refuse", "then": [ { "run": "ep0_rail_fare_senior_refuse" } ] }
+      ] }
+    ] }
+  ],
+
+  "ep0_rail_fare_senior_ticket": [
+    { "if": "inventory.has('fare_citation')", "then": [
+      { "say": "FARE CITATION: SECOND NOTICE.", "who": "narrator" },
+      { "set": { "flags.fareTicket_c": true } }
+    ], "else": [
+      { "give": { "item": "fare_citation", "qty": 1 } },
+      { "say": "FARE CITATION: $35.", "who": "narrator" }
+    ] },
+    { "set": { "flags.cleared_fare_senior": true } }
+  ],
+
+  "ep0_rail_fare_senior_refuse": [
+    { "say": "We're not paying to be watched.", "who": "lucky" },
+    { "battle": "rail_fare_senior", "onWin": [
+      { "set": { "flags.cleared_fare_senior": true } },
+      { "say": "The trainee writes it all down. He'll get there.", "who": "narrator" }
+    ], "onLose": "gameover" }
+  ],
+
+  "ep0_rail_bag": [
+    { "say": "An unattended bag.\nIF YOU SEE SOMETHING, SAY SOMETHING.", "who": "narrator" },
+    { "say": "The bag is saying something.", "who": "narrator" },
+    { "choice": [
+      { "text": "Fight it", "then": [
+        { "battle": "rail_bag", "onWin": [
+          { "set": { "flags.cleared_bag": true } },
+          { "say": "It stops recording. Somewhere, a server is disappointed.", "who": "narrator" }
+        ], "onLose": "gameover" }
+      ] },
+      { "text": "Leave it", "then": [
+        { "say": "It keeps recording. It has all night.", "who": "narrator" }
+      ] }
+    ], "cancelIndex": 1 }
+  ],
+
+  "ep0_rail_pigeons": [
+    { "say": "Two pigeons. They got on at Franklin. They will get off at Franklin.", "who": "narrator" },
+    { "battle": "rail_pigeons", "onWin": [ { "set": { "flags.cleared_pigeons": true } } ], "onLose": "gameover" }
+  ],
+
+  "ep0_rail_all_hands": [
+    { "say": "A phone on a seat, on speaker. A Vanguard all-hands.\nFour hundred people are on mute.", "who": "narrator" },
+    { "say": "Can everyone see my screen?", "who": "all_hands" },
+    { "choice": [
+      { "text": "Answer it", "then": [
+        { "battle": "rail_all_hands", "onWin": [
+          { "set": { "flags.cleared_all_hands": true } },
+          { "say": "The call drops. Nobody on it notices.", "who": "narrator" }
+        ], "onLose": "gameover" }
+      ] },
+      { "text": "Leave it", "then": [
+        { "say": "Let's take this offline.", "who": "all_hands" }
+      ] }
+    ], "cancelIndex": 1 }
+  ],
+
+  "npc_rail_sleeper": [
+    { "if": "flags.hasPalmersFlyer", "then": [
+      { "say": "Still asleep. It has been almost a year.\nThey still know their stop.", "who": "narrator" }
+    ], "else": [
+      { "say": "Asleep against the window. Do not wake them.\nThey know their stop.", "who": "narrator" }
+    ] }
+  ],
+
+  "npc_rail_busker": [
+    { "say": "Every car is a venue if you don't ask.", "who": "train_busker" },
+    { "if": "party.has('ryan')", "then": [
+      { "say": "[He plays every night. In front of people.]", "who": "ryan_caption" },
+      { "say": "[How.]", "who": "ryan_caption" }
+    ] }
+  ],
+
+  "npc_rail_grocery": [
+    { "say": "The store was out of everything but bags.", "who": "grocery_rider" }
+  ],
+
+  "npc_rail_jersey": [
+    { "say": "A hockey jersey. The team isn't playing tonight. Or this year.", "who": "narrator" },
+    { "say": "You gotta believe in something.", "who": "jersey_guy" }
+  ],
+
+  "npc_rail_ad_1": [ { "say": "WORK IS LOVE.", "who": "narrator" } ],
+  "npc_rail_ad_2": [ { "say": "DENTAL PLAN? ASK ME HOW.", "who": "narrator" } ],
+  "npc_rail_ad_3": [ { "say": "IF YOU SEE SOMETHING, SAY SOMETHING.\nTHEN SAY IT AGAIN, INTO THIS APP.", "who": "narrator" } ],
+
+  "npc_rail_bike": [ { "say": "A bike hangs from the ceiling hook.\nIt looks like it is being punished.", "who": "narrator" } ],
+
+  "npc_rail_slush": [ { "say": "Slush tracked in from four stations.\nIt is not an enemy. Yet.", "who": "narrator" } ],
+
+  "npc_rail_operator": [
+    { "say": "OPERATOR ONLY.", "who": "narrator" },
+    { "say": "My brain thinks nobody is driving.", "who": "phoenix" },
+    { "choice": [
+      { "text": "Knock", "then": [
+        { "sfx": "door" },
+        { "say": "Someone knocks back. In 7/8.", "who": "narrator" },
+        { "set": { "flags.knockedOperator": true } },
+        { "if": "party.has('ryan')", "then": [
+          { "say": "[That's not 7/8.]", "who": "ryan_caption" },
+          { "wait": 600 },
+          { "say": "[It's 7/8.]", "who": "ryan_caption" }
+        ] }
+      ] },
+      { "text": "Don't", "then": [] }
+    ], "cancelIndex": 1 }
+  ],
+
+  "ep0_lake_platform": [
+    { "say": "LAKE ST / MIDTOWN. The platform is back up the street.", "who": "narrator" },
+    { "if": "flags.hasPalmersFlyer", "then": [
+      { "choice": [
+        { "text": "Toward Cedar-Riverside", "then": [ { "run": "ep0_lake_toward_cedar" } ] },
+        { "text": "Toward City Sound", "then": [ { "run": "ep0_lake_toward_city" } ] },
+        { "text": "Not yet", "then": [ { "move": { "who": "player", "path": "L", "wait": true } } ] }
+      ], "cancelIndex": 2 }
+    ], "else": [
+      { "choice": [
+        { "text": "Toward City Sound", "then": [ { "run": "ep0_lake_toward_city" } ] },
+        { "text": "Toward Cedar-Riverside", "then": [ { "run": "ep0_lake_toward_cedar" } ] },
+        { "text": "Not yet", "then": [ { "move": { "who": "player", "path": "L", "wait": true } } ] }
+      ], "cancelIndex": 2 }
+    ] }
+  ],
+
+  "ep0_lake_toward_city": [
+    { "choice": [
+      { "text": "Ride it", "then": [
+        { "sfx": "door" },
+        { "set": { "vars.railDir": 1, "vars.railStop": 1 } },
+        { "teleport": { "map": "rail_car", "x": 29, "y": 7, "facing": "right" } }
+      ] },
+      { "text": "Skip to City Sound", "then": [ { "run": "ep0_rail_skip_city" } ] }
+    ], "cancelIndex": 0 }
+  ],
+
+  "ep0_lake_toward_cedar": [
+    { "choice": [
+      { "text": "Ride it", "then": [
+        { "sfx": "door" },
+        { "set": { "vars.railDir": 2, "vars.railStop": 1 } },
+        { "teleport": { "map": "rail_car", "x": 29, "y": 7, "facing": "left" } }
+      ] },
+      { "text": "Skip to Cedar-Riverside", "then": [ { "run": "ep0_rail_skip_cedar" } ] }
+    ], "cancelIndex": 0 }
+  ],
+
+  "npc_lake_bus_rider": [ { "say": "The 21 comes every ten minutes. I've been here forty.", "who": "bus_rider" } ],
+  "npc_lake_skater": [ { "say": "The city plows the street. I plow the ledge.", "who": "skater" } ],
+  "npc_lake_mural": [ { "say": "A mural: the whole city holding hands.\nSomeone has painted in a slime. It is pink and green.", "who": "narrator" } ],
+  "npc_lake_en_window": [ { "say": "EXTREME NOISE. In the window: black shirts, white ink,\nand a flyer for every show in town.", "who": "narrator" } ],
+  "npc_lake_shutter": [ { "say": "LAKE STREET PAWN & LOAN.\nMOVED TO CEDAR. KEPT THE NAME.", "who": "narrator" } ],
+  "npc_lake_laundromat": [ { "say": "SPIN CYCLE: 25 MIN. ALSO: RENT.", "who": "narrator" } ],
+  "npc_lake_taqueria": [ { "say": "CLOSED. BACK AT 11 AM.\nIt is 8:51 PM.", "who": "narrator" } ],
+  "npc_lake_shelter": [ { "say": "WORK IS LOVE.\n(smaller:) NOW SERVING LAKE STREET.", "who": "narrator" } ],
+
+  "ep0_extreme_enter": [
+    { "if": "flags.hasPalmersFlyer && !flags.enIntroC", "then": [
+      { "set": { "flags.enIntroC": true } },
+      { "say": "Hey. We close at nine.", "who": "volunteer" },
+      { "say": "Oh. You're the tape.", "who": "volunteer" },
+      { "if": "party.has('ryan')", "then": [ { "say": "[We're the tape.]", "who": "ryan_caption" } ] }
+    ], "else": [
+      { "if": "party.has('brian') && !flags.enIntroA", "then": [
+        { "set": { "flags.enIntroA": true } },
+        { "say": "Hey. We close at nine.", "who": "volunteer" },
+        { "say": "Is there a section for normal music?", "who": "brian" },
+        { "say": "That's the dollar bin.", "who": "volunteer" },
+        { "say": "{speed:fast}…Fair.", "who": "brian" }
+      ] }
+    ] }
+  ],
+
+  "npc_en_volunteer": [
+    { "if": "!flags.metVolunteer", "then": [
+      { "set": { "flags.metVolunteer": true } },
+      { "say": "Welcome to Extreme Noise. There's no manager. There's a binder.", "who": "volunteer" },
+      { "shop": "extreme_noise" }
+    ], "else": [
+      { "say": "Need anything? The binder says I have to ask.", "who": "volunteer" },
+      { "if": "inventory.has('half_ounce')", "then": [
+        { "choice": [
+          { "text": "Shop", "then": [ { "shop": "extreme_noise" } ] },
+          { "text": "Can I volunteer?", "then": [ { "say": "Meetings are Tuesdays. It's Thursday.", "who": "volunteer" } ] },
+          { "text": "Sell the weed", "then": [
+            { "say": "My brain thinks they don't buy that.", "who": "phoenix" },
+            { "say": "We're a collective, not a dispensary.", "who": "volunteer" }
+          ] },
+          { "text": "Bye", "then": [] }
+        ], "cancelIndex": 3 }
+      ], "else": [
+        { "choice": [
+          { "text": "Shop", "then": [ { "shop": "extreme_noise" } ] },
+          { "text": "Can I volunteer?", "then": [ { "say": "Meetings are Tuesdays. It's Thursday.", "who": "volunteer" } ] },
+          { "text": "Bye", "then": [] }
+        ], "cancelIndex": 2 }
+      ] }
+    ] }
+  ],
+
+  "npc_en_binder": [
+    { "say": "MEETING MINUTES. ITEM 1: Who keeps filing ska in the punk bins.\nITEM 2: (illegible). CONSENSUS: REACHED.", "who": "narrator" },
+    { "say": "My brain thinks it's a clipboard that went to college.", "who": "phoenix" }
+  ],
+
+  "npc_en_shirts": [
+    { "say": "Black shirts. White ink.\nEvery band name is illegible on purpose.", "who": "narrator" },
+    { "say": "My brain thinks that's the point.", "who": "phoenix" }
+  ],
+
+  "npc_en_buttons": [
+    { "say": "Buttons, patches and one studded belt\nnobody in this band is cool enough for.", "who": "narrator" }
+  ],
+
+  "npc_en_zines": [
+    { "if": "!vars.zineLine", "then": [ { "set": { "vars.zineLine": 0 } } ] },
+    { "if": "vars.zineLine == 0", "then": [
+      { "say": "HOW TO PATCH A JACKET WITH DENTAL FLOSS\n(the dental plan you can afford).", "who": "narrator" }
+    ] },
+    { "if": "vars.zineLine == 1", "then": [
+      { "say": "NOISE IS A LOVE LANGUAGE, #3.", "who": "narrator" }
+    ] },
+    { "if": "vars.zineLine == 2", "then": [
+      { "say": "MINNEAPOLIS IN WINTER: a zine with no pages, only snow.", "who": "narrator" }
+    ] },
+    { "inc": { "vars.zineLine": 1 } },
+    { "if": "vars.zineLine > 2", "then": [ { "set": { "vars.zineLine": 0 } } ] }
+  ],
+
+  "npc_en_flyers": [
+    { "if": "flags.hasPalmersFlyer", "then": [
+      { "say": "GIG TONIGHT: PALMER'S BAR.\nNO GUITAR SOLO NECESSARY.", "who": "narrator" },
+      { "say": "My brain thinks she got here first.", "who": "phoenix" }
+    ], "else": [
+      { "say": "ZERKEL PIT PUNX FEST. THIS SUMMER. BANDS WANTED.\nALL AGES. ALL WEATHER.", "who": "narrator" },
+      { "say": "My brain thinks we should apply.", "who": "phoenix" },
+      { "say": "We should play it.", "who": "lucky" }
+    ] }
+  ],
+
+  "npc_en_back_room": [ { "say": "VOLUNTEERS ONLY. Everyone is a volunteer. Still no.", "who": "narrator" } ],
+
+  "npc_en_hours": [
+    { "if": "flags.hasPalmersFlyer", "then": [
+      { "say": "OPEN TIL 9. IT IS 8:51. AGAIN.", "who": "narrator" }
+    ], "else": [
+      { "say": "OPEN TIL 9. IT IS 8:51.", "who": "narrator" }
+    ] }
+  ],
+
+  "npc_en_bin_punk": [ { "say": "PUNK A TO Z. Every band you have heard of, and four you haven't,\nfiled under the one you have.", "who": "narrator" } ],
+  "npc_en_bin_hardcore": [ { "say": "HARDCORE. Alphabetized by how fast. Nobody agrees.", "who": "narrator" } ],
+  "npc_en_bin_ska": [ { "say": "SKA. Someone has written: IT'S COMING BACK.\nSomeone else: IT NEVER CAME.", "who": "narrator" } ],
+  "npc_en_dollar_bin": [ { "say": "DOLLAR BIN. THE DENIM BOYS: A NIGHT OF DENIM.\nStill sealed. It will be sealed forever.", "who": "narrator" } ],
+
+  "npc_en_bin_local": [
+    { "if": "flags.hasPalmersFlyer", "then": [
+      { "run": "ep0_extreme_tape" }
+    ], "else": [
+      { "say": "LOCAL. RAT FIGHT: DULUTH DEMOS. Five copies.\nAll five consigned back by Rat Fight.", "who": "narrator" }
+    ] }
+  ],
+
+  "ep0_extreme_tape": [
+    { "if": "flags.boughtTape", "then": [
+      { "say": "LOCAL. RAT FIGHT: DULUTH DEMOS. Five copies.\nThe tape is gone. You have it.", "who": "narrator" },
+      { "end": true }
+    ] },
+    { "if": "!flags.sawTape", "then": [
+      { "set": { "flags.sawTape": true } },
+      { "say": "LOCAL. RAT FIGHT: DULUTH DEMOS. Five copies.{pause:300}\nAnd a cassette, hand-dubbed:", "who": "narrator" },
+      { "say": "SLIME MONSTERS FROM OUTER SPACE. LIVE AT ZERKEL PIT.\n$3. CONSIGNED BY: (a paw print).", "who": "narrator" },
+      { "say": "My brain thinks we didn't make a tape.", "who": "phoenix" },
+      { "say": "We didn't.", "who": "lucky" },
+      { "if": "party.has('ryan')", "then": [
+        { "say": "[Someone recorded us.]", "who": "ryan_caption" },
+        { "say": "[Anyone could buy it.]", "who": "ryan_caption" }
+      ] }
+    ], "else": [
+      { "say": "SLIME MONSTERS FROM OUTER SPACE. LIVE AT ZERKEL PIT. $3.", "who": "narrator" }
+    ] },
+    { "if": "money >= 3", "then": [
+      { "choice": [
+        { "text": "Buy it ($3)", "then": [
+          { "take": { "money": 3 } },
+          { "give": { "item": "zerkel_tape", "qty": 1 } },
+          { "say": "Lucky buys their own tape.\nBajonka will be paid on Tuesday.", "who": "narrator" },
+          { "set": { "flags.boughtTape": true } }
+        ] },
+        { "text": "Leave it", "then": [] }
+      ], "cancelIndex": 1 }
+    ] }
+  ],
+
+  "npc_en_listening": [
+    { "if": "flags.hasPalmersFlyer && (flags.boughtTape || flags.sawTape)", "then": [
+      { "if": "flags.tapePlaying", "then": [
+        { "set": { "flags.tapePlaying": false } },
+        { "music": "dollar_bin" },
+        { "say": "Side A ends. The store stereo comes back.", "who": "narrator" }
+      ], "else": [
+        { "if": "!flags.boughtTape", "then": [
+          { "say": "We can put it on. Store copy.", "who": "volunteer" }
+        ] },
+        { "set": { "flags.tapePlaying": true, "flags.playedTape": true } },
+        { "say": "Side A. A parking lot, a flatbed and a sky.", "who": "narrator" },
+        { "music": "band_hunger" },
+        { "if": "party.has('ryan')", "then": [
+          { "say": "[I can hear myself.]", "who": "ryan_caption" },
+          { "say": "[I sound like I was there.]", "who": "ryan_caption" }
+        ] }
+      ] }
+    ], "else": [
+      { "say": "Headphones. One ear works.", "who": "narrator" }
+    ] }
+  ],
+
+  "npc_en_cat": [
+    { "if": "!flags.foundNo", "then": [
+      { "say": "A cat in the dollar bin. You say 'No.' It looks up.", "who": "narrator" },
+      { "wait": 500 },
+      { "say": "It has been found. It does not want to be.", "who": "narrator" },
+      { "say": "My brain thinks it lives here now.", "who": "phoenix" },
+      { "set": { "flags.foundNo": true } }
+    ], "else": [
+      { "say": "No is asleep on THE DENIM BOYS.\nIt is the best use that record has had.", "who": "narrator" }
+    ] }
+  ],
+
+  "ep0_extreme_completist": [
+    { "say": "You're holding that wrong. That's a repress.", "who": "completist" },
+    { "say": "My brain thinks we're not holding anything.", "who": "phoenix" },
+    { "say": "You'd know if you'd heard the original pressing.", "who": "completist" },
+    { "if": "party.has('brian')", "then": [
+      { "say": "Is it accurate? That's all I'm asking.", "who": "brian" },
+      { "say": "It's original.", "who": "completist" },
+      { "say": "That's not what I asked.", "who": "brian" }
+    ] },
+    { "choice": [
+      { "text": "Fight about it", "then": [
+        { "say": "Not in the store. Outside.", "who": "volunteer" },
+        { "camera": { "fade": "out", "ms": 300 } },
+        { "set": { "flags.completistOutside": true } },
+        { "teleport": { "map": "lake_street", "x": 12, "y": 9, "facing": "down" } },
+        { "spawn": { "id": "completist_out", "sprite": "completist", "x": 12, "y": 10, "facing": "up" } },
+        { "camera": { "fade": "in", "ms": 300 } },
+        { "say": "Fine. Out here, nobody can hear the B-side.", "who": "completist" },
+        { "battle": "lake_completist", "onWin": [
+          { "say": "Fine. You've heard of them now.", "who": "completist" },
+          { "give": { "item": "mystery_7inch", "qty": 1 } },
+          { "set": { "flags.cleared_completist": true } },
+          { "despawn": "completist_out" }
+        ], "onLose": "gameover" },
+        { "if": "!flags.cleared_completist", "then": [
+          { "say": "Typical.", "who": "completist" },
+          { "despawn": "completist_out" }
+        ] }
+      ] },
+      { "text": "Walk away", "then": [
+        { "say": "Typical.", "who": "completist" }
+      ] }
+    ], "cancelIndex": 1 }
+  ]
+}

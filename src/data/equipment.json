@@ -14,5 +14,6 @@
   "price_tag_jacket": { "name": "Price-Tag Leather Jacket", "slot": "wear", "bonus": { "def": 4 }, "price": 0, "sell": 20, "desc": "Tag still on. DEF +4. Sells for $20." },
   "flannel": { "name": "Flannel", "slot": "wear", "who": ["ryan"], "bonus": { "def": 3 }, "locked": true, "price": 0, "desc": "DEF +3." },
   "pedalboard_2000": { "name": "$2,000 Pedalboard", "slot": "rig", "who": ["brian"], "bonus": {}, "hit100": true, "noCrit": true, "locked": true, "price": 0, "desc": "Hit 100. Crit 0." },
-  "fried_pedalboard": { "name": "Fried Pedalboard", "slot": "rig", "bonus": { "atk": 4 }, "selfOutOfTune": 15, "price": 0, "sell": 11, "desc": "ATK +4. 15% self OUT OF TUNE per RIFF. Sells for $11." }
+  "fried_pedalboard": { "name": "Fried Pedalboard", "slot": "rig", "bonus": { "atk": 4 }, "selfOutOfTune": 15, "price": 0, "sell": 11, "desc": "ATK +4. 15% self OUT OF TUNE per RIFF. Sells for $11." },
+  "denim_vest": { "name": "Denim Vest", "slot": "wear", "bonus": { "def": 2 }, "price": 12, "desc": "One patch. DEF +2. Phoenix calls it a gateway to double denim." }
 }

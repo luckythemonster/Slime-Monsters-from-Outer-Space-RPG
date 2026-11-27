@@ -125,6 +125,26 @@ const PATTERNS = {
       px(ctx, ox + x + 3, y + 3 + (phase % 2), PAL.chrome, 1, 2);
     }
   },
+  /** The Blue Line at night: a window band of streetlights and snow sliding past, seat fabric below, a grab pole. */
+  train(ctx, phase, ox) {
+    const r = prng(41);
+    px(ctx, ox, 0, '#30303c', TILE, 14);                        // ceiling
+    px(ctx, ox, 14, PAL.outline, TILE, 2);                       // window frame top
+    px(ctx, ox, 16, '#142050', TILE, 26);                        // night glass
+    for (let i = 0; i < 2; i++) {                                // streetlights, 32 px apart, 4 px a phase
+      const x = (i * 32 + TILE - phase * 4) % TILE;
+      px(ctx, ox + x, 20, '#f8d820', 3, 2);
+      px(ctx, ox + x + 1, 22, '#5c6068', 1, 18);
+    }
+    for (let i = 0; i < 14; i++) {                               // snow drifting the same way
+      const x = (Math.floor(r() * TILE) + TILE - phase * 6) % TILE;
+      px(ctx, ox + x, 17 + Math.floor(r() * 24), PAL.white);
+    }
+    px(ctx, ox, 42, PAL.outline, TILE, 2);                       // window frame bottom
+    for (let y = 44; y < TILE; y++) px(ctx, ox, y, y % 6 === 0 ? '#24386c' : '#3c5c9c', TILE, 1); // seat fabric
+    px(ctx, ox + 46, 0, PAL.chrome, 2, TILE);                    // grab pole
+    px(ctx, ox + 48, 0, '#9aa0a8', 1, TILE);
+  },
   palmers_roof_peel(ctx, phase, ox) {
     const r = prng(31 + phase);
     for (let y = 0; y < TILE; y++) px(ctx, ox, y, PAL.sky[Math.min(2, Math.floor(y / 24))], TILE, 1);
@@ -137,7 +157,7 @@ const PATTERNS = {
 };
 
 const ALIASES = { room4: 'sticker_wall', palmers: 'palmers_neon', citysound: 'sticker_wall', street_snow: 'street', apartment: 'apartment_posters', default: 'street' };
-const FPS = { zerkel: 6, street: 8, alley: 8, apartment_posters: 8, sticker_wall: 10, palmers_neon: 8, black_hole: 12, rupture: 15, vanguard_grid: 8, palmers_roof_peel: 10 };
+const FPS = { zerkel: 6, street: 8, alley: 8, apartment_posters: 8, sticker_wall: 10, palmers_neon: 8, black_hole: 12, rupture: 15, vanguard_grid: 8, palmers_roof_peel: 10, train: 8 };
 
 export const BACKGROUND_IDS = Object.keys(PATTERNS);
 

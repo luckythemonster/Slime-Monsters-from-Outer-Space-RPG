@@ -25,6 +25,8 @@ anim: idle_up     frames: 2 3  fps: 4
 anim: idle_left   frames: 4 5  fps: 4
 anim: idle_right  frames: 4 5  fps: 4  flipX: true
 
+variant: npc_volunteer  swap: s=#f8f8f8,r=#f8f8f8,g=#c8ccd4,y=#f8f8f8,p=#30303c
+
 frame 0: down a
 ................
 .....kkkkkk.....

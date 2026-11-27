@@ -1406,3 +1406,252 @@ kkkkkkkkkkkkkkk.
 .............d..
 .............d..
 .............d..
+
+# Lake Street block (Chapter 1, the Blue Line): Extreme Noise, the mural, the shuttered pawn, the laundromat, the taqueria.
+tile en_sign_1:
+solid: true
+BBBBBBBBBBBBBBBB
+Bwwwwwwwwwwwwwww
+Bweeeeeeeeeeeeee
+Bweeeeeeeeeeeeee
+Bweeeeeeeeeeeeee
+Bweeeewwweweweww
+Bweeeeweeeweweew
+Bweeeewweeeweeew
+Bweeeeweeeweweew
+Bweeeewwweweweew
+Bweeeeeeeeeeeeee
+Bweeepeeepeeepee
+Bweeeeeeeeeeeeee
+Bweeeeeeeeeeeeee
+Bwwwwwwwwwwwwwww
+BBBBBBBBBBBBBBBB
+
+tile en_sign_2:
+solid: true
+BBBBBBBBBBBBBBBB
+wwwwwwwwwwwwwwww
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+wewweewwweweweww
+eeweweweeewwwewe
+eewweewweewwweww
+eeweweweeewewewe
+eewewewwweweweww
+eeeeeeeeeeeeeeee
+epeeepeeepeeepee
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+wwwwwwwwwwwwwwww
+BBBBBBBBBBBBBBBB
+
+tile en_sign_3:
+solid: true
+BBBBBBBBBBBBBBBB
+wwwwwwwwwwwwwwww
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+weeeeewweewwweww
+eeeeeeweweweweew
+eeeeeeweweweweew
+eeeeeeweweweweew
+weeeeewewewwweww
+eeeeeeeeeeeeeeee
+epeeepeeepeeepee
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+wwwwwwwwwwwwwwww
+BBBBBBBBBBBBBBBB
+
+tile en_sign_4:
+solid: true
+BBBBBBBBBBBBBBBB
+wwwwwwwwwwwwwwwB
+eeeeeeeeeeeeeewB
+eeeeeeeeeeeeeewB
+eeeeeeeeeeeeeewB
+wewwwewwweeeeewB
+eeweeeweeeeeeewB
+eewwwewweeeeeewB
+eeeeweweeeeeeewB
+wewwwewwweeeeewB
+eeeeeeeeeeeeeewB
+epeeepeeepeeeewB
+eeeeeeeeeeeeeewB
+eeeeeeeeeeeeeewB
+wwwwwwwwwwwwwwwB
+BBBBBBBBBBBBBBBB
+
+tile en_window:
+solid: true
+BBBBBBBBBBBBBBBB
+BkkkkkkkkkkkkkkB
+BkaaaaaaaaaaaakB
+BkawwwwwakkkkakB
+BkawkkkwakkkkakB
+BkawkwkwawwwwakB
+BkawkkkwakkkkakB
+BkawwwwwakkkkakB
+BkaaaaaaaaaaaakB
+BkapypyawwwwwakB
+BkaypypawkkkwakB
+BkapypyawwwwwakB
+BkaypypawwwwwakB
+BkaaaaaaaaaaaakB
+BkkkkkkkkkkkkkkB
+BBBBBBBBBBBBBBBB
+
+tile mural_a:
+solid: true
+NNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNN
+CCCCCCCCCCCCCCCC
+CCCHHHCCCCCHHHCC
+CCCHHHCCCCCHHHCC
+CCCHHHCCCCCHHHCC
+CCrrrrrCCCjjjjjC
+CCrrrrrCCCjjjjjC
+kkrrrrrkkkjjjjjk
+CCrrrrrCCCjjjjjC
+CCrrrrrCCCjjjjjC
+CCrrrrrCCCjjjjjC
+CCCkCkCCCCCkCkCC
+CCCkCkCCCCCkCkCC
+CCCkCkCCCCCkCkCC
+uuuuuuuuuuuuuuuu
+
+tile mural_b:
+solid: true
+NNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNN
+CCCCCCCCCCCCCCCC
+CCCHHHCCCCCHHHCC
+CCCHHHCCCCCHHHCC
+CCCHHHCCCCCHHHCC
+CCvvvvvCCCoooooC
+CCvvvvvCCCoooooC
+kkvvvvvkkkoooook
+CCvvvvvCCCoooooC
+CCvvvvvCCCoooooC
+CCvvvvvCCCoooooC
+CCCkCkCCCCCkCkCC
+CCCkCkCCCCCkCkCC
+CCCkCkCCCCCkCkCC
+uuuuuuuuuuuuuuuu
+
+tile mural_c:
+solid: true
+NNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNN
+CCCCCCCCCCCCCCCC
+CCCpPpCCCCCHHHCC
+CCCkpkCCCCCHHHCC
+CCCpppCCCCCHHHCC
+CCgppppCCCgggggC
+CCgppppCCCgggggC
+kkgppppkkkgggggk
+CCgppppCCCgggggC
+CCgppppCCCgggggC
+CCgppppCCCgggggC
+CCCkCkCCCCCkCkCC
+CCCkCkCCCCCkCkCC
+CCCkCkCCCCCkCkCC
+uuuuuuuuuuuuuuuu
+
+tile shutter:
+solid: true
+dddddddddddddddd
+LLLLLLLLLLLLLLLL
+mmmmmmmmmmmmmmmm
+dddddddddddddddd
+LLLLLLLLLLLLLLLL
+mmmmmmmmmmmmmmmm
+dddddddddddddddd
+LLLLLLLLLLLLLLLL
+mmmmmmmmmmmmmmmm
+dddddddddddddddd
+LLLLLLLLLLLLLLLL
+mmmmmmmmmmmmmmmm
+dddddddddddddddd
+LLLLLLLkkLLLLLLL
+mmmmmmmmmmmmmmmm
+kkkkkkkkkkkkkkkk
+
+tile laundry_l:
+solid: true
+BBBBBBBBBBBBBBBB
+kkkkkkkkkkkkkkkk
+oooooooooooooooo
+yyyyyyyyyyyyyyyy
+yyyyyyyyyyyyyyyy
+yyywwwwwwwwwwyyy
+yyywwwkkkkwwwyyy
+yyywwkcjjjkwwyyy
+yyywwkjjjjkwwyyy
+yyywwkjjjjkwwyyy
+yyywwkjjjjkwwyyy
+yyywwwkkkkwwwyyy
+yyywwwwwwwwwwyyy
+yyyyyyyyyyyyyyyy
+kkkkkkkkkkkkkkkk
+BBBBBBBBBBBBBBBB
+
+tile laundry_r:
+solid: true
+BBBBBBBBBBBBBBBB
+kkkkkkkkkkkkkkkk
+oooooooooooooooo
+yyyyyyyyyyyyyyyy
+yyyyyyyyyyyyyyyy
+yyywwwwwwwwwwyyy
+yyywwwkkkkwwwyyy
+yyywwkjjjjkwwyyy
+yyywwkjjjjkwwyyy
+yyywwkjjcjkwwyyy
+yyywwkjjjjkwwyyy
+yyywwwkkkkwwwyyy
+yyywwwwwwwwwwyyy
+yyyyyyyyyyyyyyyy
+kkkkkkkkkkkkkkkk
+BBBBBBBBBBBBBBBB
+
+tile taqueria_l:
+solid: true
+rryyrryyrryyrryy
+rryyrryyrryyrryy
+rryyrryyrryyrryy
+rryyrryyrryyrryy
+kkkkkkkkkkkkkkkk
+BkaaaaaaaaaaaakB
+BkaaaaaaaaaaaakB
+BkaaaaaaaaaaaakB
+BkaaaaaeeaaaaakB
+BkaaaaaeeaaaaakB
+BkaaaaaeeyaaaakB
+BkaaaaaeeaaaaakB
+BkaaaaaeeaaaaakB
+BkaaaaaeeaaaaakB
+BkkkkkkkkkkkkkkB
+BBBBBBBBBBBBBBBB
+
+tile taqueria_r:
+solid: true
+rryyrryyrryyrryy
+rryyrryyrryyrryy
+rryyrryyrryyrryy
+rryyrryyrryyrryy
+kkkkkkkkkkkkkkkk
+BkaaaaaaaaaaaakB
+BkaaaaaaaaaaaakB
+BkaawwwwwwwwaakB
+BkaawrrrrrrwaakB
+BkaawwwwwwwwaakB
+BkaawwwwwwwwaakB
+BkaaaaaaaaaaaakB
+BkaaaaaaaaaaaakB
+BkaaaaaaaaaaaakB
+BkkkkkkkkkkkkkkB
+BBBBBBBBBBBBBBBB
+

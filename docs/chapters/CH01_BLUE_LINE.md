@@ -1,8 +1,7 @@
 # Chapter 1 addition: the Blue Line and Lake Street
 
-A spec for more Minneapolis in Chapter 1. It is written in the shape of `docs/DESIGN.md` and adds to it. When it
-is built, its maps, cutscenes, enemies and items move into `docs/DESIGN.md` and this file is deleted, so the
-Chapter 1 spec stays one document.
+The Chapter 1 design for the Blue Line, Lake Street and Extreme Noise. It is a companion to `docs/DESIGN.md`, in the
+same shape, and covers the three maps, their cutscenes, enemies, items, art and tests.
 
 Three things are added:
 
@@ -52,10 +51,10 @@ board at the front (car 3) and walk west. The same map serves both rides.
 
 | Var | Values |
 |---|---|
-| `vars.railDir` | `1` outbound (toward City Sound), `-1` inbound (toward Cedar-Riverside) |
+| `vars.railDir` | `1` outbound (toward City Sound), `2` inbound (toward Cedar-Riverside) |
 | `vars.railStop` | `0` Cedar-Riverside, `1` Lake St / Midtown, `2` City Sound |
 
-| Gangway | Outbound (`railDir == 1`) | Inbound (`railDir == -1`) |
+| Gangway | Outbound (`railDir == 1`) | Inbound (`railDir == 2`) |
 |---|---|---|
 | A, x 18..19 | if `railStop < 1`: set 1, NOW ARRIVING: LAKE ST / MIDTOWN | if `railStop > 0`: set 0, NOW ARRIVING: CEDAR-RIVERSIDE |
 | B, x 38..39 | if `railStop < 2`: set 2, NOW ARRIVING: CITY SOUND | if `railStop > 1`: set 1, NOW ARRIVING: LAKE ST / MIDTOWN |
@@ -74,10 +73,10 @@ caption over black and lands you on the platform. [Ride it] puts you in the trai
 ## Flag spine additions
 
 ```
-street rail (ryanCalled) ─first time─▶ ep0_rail_board (THAT NIGHT) ─▶ rail_car, railDir 1, railStop 0
+street rail (ryanCalled) ─first time─▶ ep0_rail_board_first (THAT NIGHT) ─▶ rail_car, railDir 1, railStop 0
   gangway A ─▶ railStop 1 (car 2 doors) ─[get off]─▶ ep0_rail_off_lake ─▶ lake_street ─▶ extreme_noise
   gangway B ─▶ railStop 2 (car 3 doors) ─[get off]─▶ ep0_rail_arrive_city ─▶ city_sound_hall (3,6), rodeRail
-city_sound_hall stairs ─▶ ep0_rail_board_city ─▶ rail_car, railDir -1, railStop 2 (car 3)
+city_sound_hall stairs ─▶ ep0_rail_board_city ─▶ rail_car, railDir 2, railStop 2 (car 3)
   gangway B ─▶ railStop 1 ─▶ … ; gangway A ─▶ railStop 0 (car 1 doors) ─[get off]─▶ street_cedar (22,15)
 lake_street east edge ─▶ ep0_lake_platform [Toward City Sound] / [Toward Cedar-Riverside] ─▶ rail_car car 2
 Side flags (never gate the spine): rodeRail, farePaid_a, farePaid_c, fareTicket_c, cleared_fare, cleared_bag,
@@ -114,17 +113,17 @@ row 9   #===DD======DD===#   door wall: D doors (closed tile; open is an object)
 ```
 
 Doors per car are at x +4..5 and +12..13 of the car, on row 9. The operator's door is car 3's east wall (57,6..7).
-Windows are objects with a four-frame `_idle` loop: streetlights and snow going by. Inbound, the loop is mirrored
-(`flipX`), so the city moves the other way. That is the only visual difference between directions.
+Five windows per car (car-relative x 2, 4, 10, 12, 15) are `obj_train_window` objects with a four-frame `_idle` loop:
+streetlights and snow going by. They are decoration, with no script. Both directions use the same loop.
 
 **Spawns.** Outbound from Cedar: (3,7) facing right. Inbound from City Sound: (54,7) facing left. From Lake St:
 (29,7), facing the way the train is going.
 
 **NPCs.** All are present in both windows unless a window is named.
 
-- Car 1, Sleeping Commuter (2,5), against the window. A: narrator "Asleep against the window. Do not wake him. He
-  knows his stop." C: "Still asleep. It has been almost a year. He still knows his stop." *(new)*
-- Car 2, Train Busker (26,8), accordion. "Every car is a venue if you don't ask." *(new)* C, Ryan:
+- Car 1, Sleeping Commuter (2,5), against the window. A: narrator "Asleep against the window. Do not wake them.
+  They know their stop." C: "Still asleep. It has been almost a year. They still know their stop." *(new)*
+- Car 2, Train Busker (26,8), a guitar. "Every car is a venue if you don't ask." *(new)* C, Ryan:
   [He plays every night. In front of people.] [How.] *(new)*
 - Car 3, Grocery Rider (44,5), eleven bags. "The store was out of everything but bags." *(new)*
 - Car 3, Jersey Guy (49,8). Narrator "A hockey jersey. The team isn't playing tonight. Or this year." / "You gotta
@@ -132,7 +131,7 @@ Windows are objects with a four-frame `_idle` loop: streetlights and snow going 
 
 **Interactables.**
 
-- Ads, one per car. Car 1: "WORK IS LOVE." Car 2: "DENTAL PLAN? ASK ME HOW." Car 3: "IF YOU SEE SOMETHING, SAY
+- Ads, one per car, at car-relative x 9 (x 9, 29, 49). Car 1: "WORK IS LOVE." Car 2: "DENTAL PLAN? ASK ME HOW." Car 3: "IF YOU SEE SOMETHING, SAY
   SOMETHING. THEN SAY IT AGAIN, INTO THIS APP." *(new)*
 - Bike hook, car 2 (34,5): "A bike hangs from the ceiling hook. It looks like it is being punished." *(new)*
 - Slush, car 1 floor (8,7), not solid: "Slush tracked in from four stations. It is not an enemy. Yet." *(new)*
@@ -147,8 +146,9 @@ from the boarding scripts that teleport into it.
 
 **Enemies.** See Battles. Window A, boarding at car 1: `fare` patrols car 1's aisle (`patrol`, `RRRRRRRRLLLLLLLL`
 on row 6 from x 8), so he is the first thing the player meets; `bag` is `static` on a car 2 seat (30,5); `pigeons`
-`wander` radius 2 in car 3 at (46,7). Window C, boarding at car 3: `all_hands` is `static` on a car 3 seat (52,8);
-`fare_senior` patrols car 2's aisle (`LLLLLLLLRRRRRRRR` on row 7 from x 34).
+stand still (`idle`) in car 3 at (50,6). Window C, boarding at car 3: `all_hands` is an object on a car 3 seat (51,8);
+`fare_senior` patrols car 2's aisle (`LLLLLLLLRRRRRRRR` on row 6 from x 34). Every patrol keeps to row 6, so row 7 is
+always a free lane: a fare is never a fight the player walked into without choosing.
 
 ### `lake_street` (40×16)
 
@@ -158,7 +158,7 @@ a fade.
 
 **Layout, west to east, north sidewalk.** A mural wall (2..7): "The whole city holding hands. Someone has painted
 in a slime. It is pink and green." *(new)* Extreme Noise
-(sign 4 tiles on the `over` layer at 10..13, door (12,8), window (14,8)). A shuttered storefront (20..22): "LAKE
+(sign 4 tiles on row 7 at 10..13, door (12,8), windows (10,8), (11,8), (13,8), (14,8)). A shuttered storefront (20..22): "LAKE
 STREET PAWN & LOAN. MOVED TO CEDAR. KEPT THE NAME." *(new)* A laundromat (26..29): "SPIN CYCLE: 25 MIN. ALSO:
 RENT." *(new)* A taqueria (32..35), closed: "BACK AT 11 AM. IT IS 8:51 PM." *(new)* A bus shelter (37,9), reusing
 the Cedar tiles: "WORK IS LOVE. (smaller:) NOW SERVING LAKE STREET." *(new)* Cedar's Lake-Street-named pawnshop
@@ -181,7 +181,9 @@ is the good kind of paperwork. Lucky does not slap it.
 color is the flyers: a wall of them, every color, layered. Everything else is punk stuff: buttons, patches, a
 studded belt. On screen the store should read as a black-and-white room with one loud wall.
 
-**Layout.** Door (10,13). Counter west (1..4, 3..5), the volunteer behind it (2,4), the binder on it (3,3). A
+**Layout.** Door (10,13). Counter west (1..4, 3..5), the volunteer behind it (2,4), the binder on its corner (4,3).
+The volunteer is talked to across the counter: an object on the counter tile (4,4) runs the script, like the café's
+barista. A
 T-shirt wall above and behind the counter (1..5, 1..2): black shirts, white prints. Four rows of record bins (x
 6..16 on rows 5, 7, 9, 11, solid), labeled on their end caps: PUNK A TO Z, HARDCORE, LOCAL, SKA, and the DOLLAR
 BIN at the end of row 11. Zine rack on the north wall (7..9, 1). Flyer wall (11..17, 1..2), the only color in the
@@ -194,8 +196,8 @@ Spawn (10,12) facing up.
   Second talk: [Can I volunteer?] → "Meetings are Tuesdays. It's Thursday." *(new)* The volunteer is an original
   character, not anyone who works there.
 - **The Completist** (11,6), in the aisle at the PUNK bin, window A or C until cleared. See CS-R6.
-- **Bajonka** (15,8), window C, `type: save`, `condition: flags.hasBajonka && flags.hasPalmersFlyer`. Narrator,
-  first press: "A dog at the local bin. She is consigning something." *(new)* Then the save prompt.
+- **Bajonka** (15,8), window C, `type: save`, `condition: flags.hasBajonka && flags.hasPalmersFlyer`. She is next to the
+  tape she consigned. Nobody mentions it.
 - **No, the cat** (16,11), in the dollar bin. The hydrant flyer on Cedar has said LOST: CAT. ANSWERS TO 'NO.' since
   the slice. Narrator: "A cat in the dollar bin. You say 'No.' It looks up." {pause:500} "It has been found. It does
   not want to be." Phoenix: "My brain thinks it lives here now." (`flags.foundNo`) *(new)* Afterward, the hydrant
@@ -229,7 +231,7 @@ Spawn (10,12) facing up.
 Shorthand as in `docs/DESIGN.md`. Every line here is *(new)*. Nothing is quoted from the comics, so all of it can
 be improved.
 
-### CS-R1 `ep0_rail_board`: the first ride (window A, street `rail` trigger, first time), Toon 0
+### CS-R1 `ep0_rail_board_first`: the first ride (window A, street `rail` trigger, first time), Toon 0
 
 1. `sfx door`; `camera fade out 300`; `if !flags.visited_city_sound_hall: caption "THAT NIGHT" 1500` (moved here
    from `ep0_street_rail`, unchanged).
@@ -262,7 +264,7 @@ narrator` "NOW ARRIVING: <STOP>. Doors open on the <right|left>."; `sfx rail_chi
 Runs from `ep0_rail_board_city` when `flags.hasPalmersFlyer && !flags.rodeGig`, and sets `flags.rodeGig`. It is
 walked even if fast travel is open. Boarding from the hall in window A is a plain inbound ride with no scene.
 
-1. `set vars.railDir -1, vars.railStop 2`; `teleport rail_car 54 7 left`; `music blue_line`.
+1. `set vars.railDir 2, vars.railStop 2`; `teleport rail_car 54 7 left`; `music blue_line`.
 2. `say narrator` "The night before the Potato Belt tour. The train is full."
 3. `say ryan_caption` "[Nobody on a train looks at anybody.]"
 4. `say ryan_caption` "[That's the best thing about trains.]"
@@ -403,7 +405,7 @@ L4 before the AUDITION instead of L3.
 | Denim Vest | wear, any | 12 | DEF +2. Desc: "One patch. Phoenix calls it a gateway to double denim." | Extreme Noise |
 | Earplugs | wear, any | 10 | Immune DEAF (existing item; a second place to buy it before the All-Hands). | Extreme Noise |
 | Fare Citation | key | 0 | "FARE CITATION: $35. It cannot be paid either." Never leaves, like the Pothole Invoice. | the fare choice |
-| Mystery 7-inch | key, sellable | 0 | "No label. No sleeve. Plays at a speed nobody owns." The pawn pays $1. | the Completist |
+| Mystery 7-inch | key | 0 | "No label. No sleeve. Plays at a speed nobody owns." | the Completist |
 | Zerkel Pit Tape | key | 3 | "SLIME MONSTERS FROM OUTER SPACE: LIVE AT ZERKEL PIT. Hand-dubbed. You paid for it." | the local bin, window C |
 
 **Shop `extreme_noise`.** Keeper: the volunteer. Greeting: "There's no manager. There's a binder." Sells the
@@ -419,32 +421,36 @@ Paying both fares and buying the tape takes it to $97. The chapter still ends br
 
 Original designs, on the shared palette, 16 colors or fewer per sheet.
 
-**Tileset `transit` (new, about 18 tiles).** Car wall top, car wall, window frame, seat (2 variants, blue fabric
-with a gum stain), floor, floor with slush, grab pole, door closed (2), door open (2, as object frames), door wall,
-gangway accordion (2), ad panel frame, operator door, bike hook, `dark` (shared).
+**Tileset `transit` (new, 17 tiles).** `dark`, `car_roof`, `car_wall`, `car_window`, `car_ad`, `car_end`, `seat`,
+`seat_gum`, `floor`, `floor_slush`, `pole`, `door_wall`, `door_closed`, `gangway`, `gangway_floor`, `operator_door`,
+`bike_hook`. The open door is the object `obj_door_open`.
 
-**`minneapolis` additions (about 12).** Extreme Noise facade (sign 4 tiles, door, window), mural wall (3), shuttered
-storefront (2), laundromat front (2), taqueria front (2). The bus shelter, snow, sidewalk and street are reused.
+**`minneapolis` additions (13).** `en_sign_1..4` (EXTREME NOISE in white 3x5 letters on near-black, pink tape tabs),
+`en_window`, `mural_a..c` (the city holding hands; `mural_c` has the slime), `shutter`, `laundry_l/r`, `taqueria_l/r`.
+The door is `door_shop`; the bus shelter, lamps, snow, sidewalk and street are reused.
 
-**`interiors` additions (about 15).** Record bin (2), bin end cap, zine rack (2), T-shirt wall (3), flyer wall (3),
-button and patch rack (2), counter (reuse the café's), listening station, checkerboard floor. The bins, shirts,
+**`interiors` additions (15).** `wall_black_top`, `wall_black`, `shirt_wall_a/b`, `flyer_wall_a..c`, `zine_rack_a/b`,
+`record_bin_a/b`, `record_bin_cap`, `button_rack`, `listening_station`, `checker_floor`. The counter is the café's. The bins, shirts,
 racks and floor use only black, white and grays. The flyer wall carries the color, as many hues as the 16-color
 sheet allows, so the eye goes there first.
 
-**Overworld sprites (16×24 unless noted).** `fare_map`, `fare_senior_map` (palette variant), `fare_trainee_map`,
-`pigeon_map` (16×16), `bag_map` (16×16 object), `phone_map` (16×16 object), `completist`, `npc_volunteer`,
-`npc_sleeper` (seated), `npc_train_busker`, `npc_grocery`, `npc_jersey`, `npc_skater`, `npc_bus_rider`, `cat_no`
-(16×16, 2-frame idle), objects `obj_train_window` (4-frame idle), `obj_door_open`, `obj_tape`, `obj_7inch`. Where
-an existing NPC base fits, the new one is a variant of it.
+**Overworld sprites.** New drawings: `completist` (16x24), `bag_map`, `phone_map`, `cat_no` (16x16, 2-frame idle),
+`obj_train_window` (16x16, 4-frame idle), `obj_door_open`. Variants (palette swaps): `fare_map`, `fare_senior_map`,
+`fare_trainee_map` of `analyst_map`; `pigeon_map` of `goose_map`; `npc_sleeper` of `npc_nurse`, `npc_train_busker` of
+`npc_busker`, `npc_grocery` of `npc_regular`, `npc_jersey` of `npc_cyclist`, `npc_skater` of `npc_shoveler`,
+`npc_bus_rider` of `npc_smoker`, `npc_volunteer` of `npc_crustpunk` (black and white, like the store).
 
-**Battle sprites.** `fare_b` (48), `fare_senior_b` (palette variant of `fare_b`), `fare_trainee_b` (32),
-`bag_b` (32), `pigeon_b` (32), `all_hands_b` (48), `completist_b` (48).
+**Battle sprites.** `fare_b`, `fare_senior_b`, `fare_trainee_b` (48, variants of `analyst_b`), `pigeon_b` (32, a variant
+of `goose_b`), `bag_b` (32, `bag_map` at 2x), `completist_b` (48, the map sprite at 2x, facing right), `all_hands_b`
+(48, a phone on speaker with a faceless beige exec on the screen and waves rolling toward the band). Each has a 2-frame
+`idle`; hurt and KO use the battle scene's defaults.
 
-**Battle background `train`.** A window strip of streetlights and snow scrolling past, a grab pole in the
-foreground, the ad panel's WORK IS LOVE cycling. 8 fps, like `street`.
+**Battle background `train`.** A window strip of streetlights and snow scrolling past, seat fabric below, a grab pole
+in front. 8 fps, like `street`.
 
-**Music (2 new).** `blue_line`: the ride, a four-on-the-floor shuffle that locks to the rail clack, two minutes,
-loops. `dollar_bin`: the store stereo, a lo-fi punk loop played back through one blown speaker. Lake Street uses
+**Music (2 new).** `blue_line`: the ride, 124 BPM in E minor, a "da-dum" kick like wheels over a joint under an
+eighth-note bass and a streetlight arpeggio, 8 bars, loops. `dollar_bin`: the store stereo, 172 BPM in A, a three-chord punk loop with buzzing 12.5% power
+chords, as if through one blown speaker. Lake Street uses
 `snow`. The tape plays `band_hunger`.
 
 **SFX (3 new).** `rail_chime` (the two-tone door chime), `pa_ding` (one tone before an announcement), `rail_clack`
@@ -464,27 +470,22 @@ Everything else uses what the engine has: the corridor of stops is triggers, `va
 ## Tests
 
 - `tests/data.test.mjs` covers every new id without changes.
-- `tests/chapter1.mjs` (the honest playthrough) rides the first train: boards at Cedar, crosses both gangways,
-  and gets off at City Sound. On the gig night it rides back inbound and gets off at Cedar. It pays both fares if
-  it has the money and takes the ticket if not.
-- `tests/chapter1_wrong.mjs` gets a new section: every fare branch in both windows (pay, ticket, refuse and win,
+- `tests/chapter1.mjs` (the honest playthrough) rides the first train: boards at Cedar, walks row 7 past the fare
+  officer through both gangways, and gets off at City Sound. On the gig night it rides back inbound and gets off at
+  Cedar. It fights nothing on the train, so the critical path's XP is unchanged.
+- `tests/chapter1_wrong.mjs` section S14 plays every fare branch in both windows (pay, ticket, refuse and win,
   refuse and lose, the under-$4 menu); walking backward through each gangway changes nothing; every door in every
   car, open and closed; getting off at Lake St in both directions; every fast-travel option; every NPC and object on
-  the three new maps; the Completist fought, walked away from, and lost to; the tape bought, not bought and played;
-  No found and the hydrant flyer after; every map edge.
+  the three new maps (S10, both windows); the Completist fought, walked away from, and lost to; the tape bought, not
+  bought and played; No found and the hydrant flyer after; every map edge (S11). `WRONG_ONLY="S14 the Blue Line"` runs
+  one section.
 - Foundations: an end-of-Chapter-1 save made before this work still loads, and `tests/fixtures/ch02_start.json`
   stays valid. A Chapter 2 start that carries a Fare Citation or a Zerkel Pit Tape still boots.
-- The roaming enemies on the train can catch the wrong-path sweep, the way the hub's did in S10. The sweep parks
-  every train enemy it skips.
+- The fare officers patrol row 6 and the pigeons stand still, so the honest run and the sweeps never walk into a
+  fight by accident.
 
-## Story bible changes the build makes
 
-In the same pull request as the build: Chapter 1's location line adds "the Blue Line (light rail) · Lake Street ·
-Extreme Noise". Beat 11's "THAT NIGHT, twenty minutes of light rail later" becomes a played ride. The Fare
-Citation joins the Pothole Invoice under "Every chapter ends broke". The roadmap's carry-over ledger gets a row for
-the Fare Citation and the Zerkel Pit Tape (written in Chapter 1, read by nothing, never leave).
-
-## Calls I made
+## Decisions
 
 - **Extreme Noise is on Lake Street, reached from the Lake St / Midtown stop, and the game admits the walk.** The
   card says TWO MILES OF LAKE STREET LATER instead of pretending the store is at the station.
@@ -501,12 +502,14 @@ the Fare Citation and the Zerkel Pit Tape (written in Chapter 1, read by nothing
   real band, musician or employee appears. Extreme Noise is named, as Palmer's and Pizza Luce are.
 - **Ryan gets captions on the train, not lines.** His stage fright gets two more beats before Palmer's, both small.
 - **The tape is Zerkel Pit.** Bajonka taped the set and consigned it. It is never explained.
-
-## Lucky's answers
-
-- **The store's look** is high-contrast black-and-white records and T-shirts, colorful flyers and other punk stuff.
-  The `extreme_noise` map and its art are drawn to that.
-- **The fare is $2 a rider.**
+- **The store's look is Lucky's:** high-contrast black-and-white records and T-shirts, colorful flyers and other punk
+  stuff. The `extreme_noise` map and its art are drawn to that. *(canon, Lucky)*
+- **The fare is $2 a rider.** *(canon, Lucky)*
+- **New faces reuse old bodies where they can.** The fare officers are recolors of the Demographic Analyst, the
+  pigeons of the goose, and the train and street NPCs of the Cedar Avenue regulars. The bag, the phone, the
+  Completist, No and the train window are new drawings; the bag and the Completist are their map art at 2x in battle.
+- **The Hard Luck Cafe's shop is named for the cafe.** The pawnshop keeps "Lake Street Pawn & Loan", and the
+  shuttered storefront on Lake Street (MOVED TO CEDAR. KEPT THE NAME.) is why.
 
 ## Risks & cuts
 
@@ -522,16 +525,10 @@ Never cut: the first ride walked car to car, the fare choice, Brian's and Ryan's
 opening in the right car, Extreme Noise with its volunteer and binder, the local bin and the tape on the gig night,
 and the TWENTY MINUTES card, which is canon.
 
-## Found while reading
 
-- `src/data/shops.json` names the café "Grounds for Dismissal" and the pawnshop "Lake Street Pawn & Loan". Decision
-  19 in `docs/DESIGN.md` picked "Hard Luck Café" and "Cedar Pawn & Loan", and the maps use those. The shop windows
-  show the old names. The build renames the café's shop to Hard Luck Café. The pawnshop keeps its name, and the
-  shuttered storefront on Lake Street explains it.
+## Not in Chapter 1 yet
 
-## Proposed for later, not in this spec
-
-Other Minneapolis that would fit, each its own spec if you want it:
+Other Minneapolis that would fit, each its own spec:
 
 - **Zerkel Pit, walkable.** Bible open question 9 asks whether the lot becomes walkable. The map and its interact
   lines already exist.

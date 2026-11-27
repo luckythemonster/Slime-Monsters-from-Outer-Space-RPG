@@ -1,6 +1,6 @@
 {
   "cafe": {
-    "name": "Grounds for Dismissal",
+    "name": "Hard Luck Cafe",
     "keeper": "barista",
     "greeting": "What can I get you.",
     "items": [
@@ -14,6 +14,18 @@
         "hotdish"
       ]
     },
+    "buys": false
+  },
+  "extreme_noise": {
+    "name": "Extreme Noise",
+    "keeper": "volunteer",
+    "greeting": "There's no manager. There's a binder.",
+    "items": [
+      "zine",
+      "mixtape",
+      "denim_vest",
+      "earplugs"
+    ],
     "buys": false
   },
   "pawnshop": {

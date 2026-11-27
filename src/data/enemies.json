@@ -683,5 +683,169 @@
       }
     ],
     "drops": []
+  },
+  "fare": {
+    "name": "Fare Compliance",
+    "fullName": "Fare Compliance Associate",
+    "sprite": "fare_map",
+    "battleSprite": "fare_b",
+    "size": 48,
+    "stats": { "hp": 90, "atk": 9, "def": 5, "spd": 6 },
+    "xp": 10,
+    "money": 0,
+    "weak": ["LOW"],
+    "resist": ["HIGH"],
+    "scan": "My brain thinks he gets a commission.",
+    "skills": {
+      "proof_of_payment": { "name": "Proof of Payment", "freq": "NOISE", "pow": 60, "status": { "id": "TEMPO_DOWN", "chance": 40, "turns": 3 } },
+      "citation": { "name": "Citation", "freq": "PHYS", "pow": 100, "text": "He writes it very hard." },
+      "validate": { "name": "Validate", "target": "self", "heal": 15 }
+    },
+    "ai": [
+      { "if": "hpPct < 50", "do": "validate", "target": "self", "weight": 4, "once": true },
+      { "do": "proof_of_payment", "target": "random", "weight": 3 },
+      { "do": "citation", "target": "random", "weight": 3 }
+    ],
+    "drops": []
+  },
+  "unattended_bag": {
+    "name": "Unattended Bag",
+    "sprite": "bag_map",
+    "battleSprite": "bag_b",
+    "size": 32,
+    "stats": { "hp": 60, "atk": 6, "def": 8, "spd": 1 },
+    "xp": 8,
+    "money": 2,
+    "weak": ["NOISE"],
+    "weakMult": 2,
+    "resist": ["PHYS"],
+    "scan": "My brain thinks it's saying something.",
+    "skills": {
+      "record": { "name": "Record", "target": "self", "text": "It is recording." },
+      "upload": { "name": "Upload", "freq": "NOISE", "pow": 50, "target": "all" }
+    },
+    "ai": [
+      { "if": "every(3)", "do": "upload", "target": "all", "weight": 10 },
+      { "do": "record", "target": "self", "weight": 1 }
+    ],
+    "drops": [ { "item": "pizza_slice", "chance": 0.5 } ]
+  },
+  "pigeon": {
+    "name": "Transit Pigeon",
+    "sprite": "pigeon_map",
+    "battleSprite": "pigeon_b",
+    "size": 32,
+    "stats": { "hp": 30, "atk": 7, "def": 2, "spd": 11 },
+    "xp": 4,
+    "money": 1,
+    "weak": ["HIGH"],
+    "resist": [],
+    "scan": "My brain thinks they have monthly passes.",
+    "skills": {
+      "peck": { "name": "Peck", "freq": "PHYS", "pow": 90 },
+      "coo": { "name": "Coo", "freq": "NOISE", "pow": 40, "status": { "id": "DAZED", "chance": 20, "turns": 1 } }
+    },
+    "ai": [
+      { "if": "hpPct < 30 && allies == 0", "do": "flee", "weight": 3 },
+      { "do": "peck", "target": "random", "weight": 3 },
+      { "do": "coo", "target": "random", "weight": 2 }
+    ],
+    "drops": []
+  },
+  "fare_senior": {
+    "name": "Fare Compliance",
+    "fullName": "Senior Fare Compliance",
+    "sprite": "fare_senior_map",
+    "battleSprite": "fare_senior_b",
+    "size": 48,
+    "stats": { "hp": 160, "atk": 12, "def": 8, "spd": 7 },
+    "xp": 18,
+    "money": 0,
+    "weak": ["LOW"],
+    "resist": ["HIGH"],
+    "scan": "My brain thinks he got promoted for this.",
+    "skills": {
+      "proof_of_payment": { "name": "Proof of Payment", "freq": "NOISE", "pow": 60, "status": { "id": "TEMPO_DOWN", "chance": 40, "turns": 3 } },
+      "citation": { "name": "Citation", "freq": "PHYS", "pow": 100, "text": "He writes it very hard." },
+      "validate": { "name": "Validate", "target": "self", "heal": 15 },
+      "escalate": { "name": "Escalate", "target": "all", "status": { "id": "OUT_OF_TUNE", "chance": 40, "turns": 3 }, "text": "He asks for your supervisor. He is the supervisor." }
+    },
+    "ai": [
+      { "if": "round == 3", "do": "escalate", "target": "all", "weight": 10, "once": true },
+      { "if": "hpPct < 50", "do": "validate", "target": "self", "weight": 4, "once": true },
+      { "do": "proof_of_payment", "target": "random", "weight": 3 },
+      { "do": "citation", "target": "random", "weight": 3 }
+    ],
+    "drops": []
+  },
+  "fare_trainee": {
+    "name": "Trainee",
+    "fullName": "Fare Compliance Trainee",
+    "sprite": "fare_trainee_map",
+    "battleSprite": "fare_trainee_b",
+    "size": 48,
+    "stats": { "hp": 60, "atk": 8, "def": 4, "spd": 8 },
+    "xp": 6,
+    "money": 0,
+    "weak": [],
+    "resist": [],
+    "scan": "My brain thinks it's his first day.",
+    "skills": {
+      "shadowing": { "name": "Shadowing", "target": "self", "text": "He is taking notes." },
+      "citation": { "name": "Citation", "freq": "PHYS", "pow": 80, "text": "He writes it carefully." }
+    },
+    "ai": [
+      { "if": "round == 1", "do": "shadowing", "target": "self", "weight": 10 },
+      { "if": "allies == 0", "do": "flee", "weight": 10 },
+      { "do": "citation", "target": "random", "weight": 1 }
+    ],
+    "drops": []
+  },
+  "all_hands": {
+    "name": "The All-Hands",
+    "sprite": "phone_map",
+    "battleSprite": "all_hands_b",
+    "size": 48,
+    "stats": { "hp": 120, "atk": 10, "def": 6, "spd": 9 },
+    "xp": 16,
+    "money": 3,
+    "weak": ["NOISE"],
+    "resist": ["LOW"],
+    "scan": "My brain thinks we're all on mute.",
+    "skills": {
+      "see_my_screen": { "name": "Can Everyone See My Screen", "freq": "NOISE", "pow": 60, "target": "all", "status": { "id": "DAZED", "chance": 30, "turns": 1 } },
+      "on_mute": { "name": "You're on Mute", "freq": "NOISE", "pow": 50, "status": { "id": "DEAF", "chance": 40, "turns": 3 } },
+      "circle_back": { "name": "Circle Back", "freq": "NOISE", "pow": 70, "text": "Let's circle back." }
+    },
+    "ai": [
+      { "if": "round >= 6", "do": "flee", "weight": 100 },
+      { "if": "every(2)", "do": "see_my_screen", "target": "all", "weight": 10 },
+      { "do": "on_mute", "target": "random", "weight": 2 },
+      { "do": "circle_back", "target": "random", "weight": 2 }
+    ],
+    "drops": [ { "item": "coffee", "chance": 0.3 } ]
+  },
+  "completist": {
+    "name": "The Completist",
+    "sprite": "completist",
+    "battleSprite": "completist_b",
+    "size": 48,
+    "stats": { "hp": 200, "atk": 11, "def": 6, "spd": 6 },
+    "xp": 24,
+    "money": 5,
+    "weak": ["NOISE"],
+    "resist": ["HIGH"],
+    "scan": "My brain thinks he's heard of us. My brain thinks he won't say so.",
+    "skills": {
+      "well_actually": { "name": "Well, Actually", "freq": "NOISE", "pow": 80, "status": { "id": "OUT_OF_TUNE", "chance": 50, "turns": 3 } },
+      "deep_cut": { "name": "Deep Cut", "freq": "PHYS", "pow": 110 },
+      "original_pressing": { "name": "Original Pressing", "target": "self", "selfStatus": { "id": "TEMPO_UP", "turns": 3 }, "text": "He reminds you it's the original pressing." }
+    },
+    "ai": [
+      { "if": "round == 2", "do": "original_pressing", "target": "self", "weight": 10, "once": true },
+      { "do": "well_actually", "target": "random", "weight": 4 },
+      { "do": "deep_cut", "target": "lowestHp", "weight": 3 }
+    ],
+    "drops": []
   }
 }

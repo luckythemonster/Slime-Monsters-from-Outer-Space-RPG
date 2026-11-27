@@ -1,0 +1,346 @@
+# The Blue Line at night: three light-rail cars and the gangways between them. 16x16.
+# Walls, windows, seats and doors are solid; floors are opaque and edge-free so they repeat.
+# The windows are static night glass; the moving streetlights are obj_train_window objects on top.
+name: transit
+tile: 16x16
+palette:
+  . = transparent
+  k = #141018     # outline
+  w = #f8f8f8     # white
+  L = #c8ccd4     # gray light (car wall)
+  m = #9aa0a8     # gray mid (floor)
+  d = #5c6068     # gray dark (floor speckle, trim)
+  s = #30303c     # shadow
+  e = #1c0c2c     # eternity (dark fill)
+  a = #142050     # navy (night glass)
+  j = #3c5c9c     # denim (seat fabric)
+  J = #24386c     # denim dark (seat shadow)
+  y = #f8d820     # yellow (door stripe, lights)
+  u = #6c7890     # slush
+  N = #bcd0ec     # snow
+  r = #d83030     # red (ad bar)
+  c = #f0dcb0     # cream (ad paper)
+  p = #ff5fd2     # pink (ad heart)
+
+tile dark:
+solid: true
+eeeeeeeeeeeeeeee
+eeeeseeeeeeeeeee
+eeeeeeeeeeeeseee
+eeeeeeeeeeeeeeee
+eseeeeeeeeeeeeee
+eeeeeeeeseeeeeee
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeese
+eeeeeeeeeeeeeeee
+eeeseeeeeeeeeeee
+eeeeeeeeeeseeeee
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+eeeeeeseeeeeeeee
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeesee
+
+tile car_roof:
+solid: true
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+kkkkkkkkkkkkkkkk
+dddddddddddddddd
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+mmmmmmmmmmmmmmmm
+yyyyyyyyyyyyyyyy
+yyyyyyyyyyyyyyyy
+dddddddddddddddd
+
+tile car_wall:
+solid: true
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+mmmmmmmmmmmmmmmm
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+mmmmmmmmmmmmmmmm
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+dddddddddddddddd
+kkkkkkkkkkkkkkkk
+
+tile car_window:
+solid: true
+LLLLLLLLLLLLLLLL
+Lkkkkkkkkkkkkkkd
+LkaaaaaaaaaaaakL
+Lkaaaaaaaaaaaakd
+LkaaaaaaaaaaaakL
+LkaaaaaaaaaaaakL
+LkaaaaaaaaaaaakL
+LkaaaaaaaaaaaakL
+LkaaaaaaaaaaaakL
+LkaaaaaaaaaaaakL
+LkaaaaaaaaaaaakL
+LkJJJJJJJJJJJJkL
+Lkkkkkkkkkkkkkkd
+LLLLLLLLLLLLLLLL
+dddddddddddddddd
+kkkkkkkkkkkkkkkk
+
+tile car_ad:
+solid: true
+LLLLLLLLLLLLLLLL
+Lkkkkkkkkkkkkkkd
+LkccccccccccccdL
+LkcrrrrrrrrrrcdL
+LkccccccccccccdL
+LkcskssskksskcdL
+LkccccccccccccdL
+LkcsskkskssskcdL
+LkcccccppcccccdL
+LkccccppppccccdL
+LkcccccppcccccdL
+LkddddddddddddkL
+LkkkkkkkkkkkkkkL
+LLLLLLLLLLLLLLLL
+dddddddddddddddd
+kkkkkkkkkkkkkkkk
+
+tile car_end:
+solid: true
+kdLLLLLLLLLLLLdk
+kdLLLLLLLLLLLLdk
+kdLmmmmmmmmmmLdk
+kdLmLLLLLLLLmLdk
+kdLmLLLLLLLLmLdk
+kdLmLLLLLLLLmLdk
+kdLmLLLLLLLLmLdk
+kdLmLLLLLLLLmLdk
+kdLmLLLLLLLLmLdk
+kdLmLLLLLLLLmLdk
+kdLmLLLLLLLLmLdk
+kdLmLLLLLLLLmLdk
+kdLmmmmmmmmmmLdk
+kdLLLLLLLLLLLLdk
+kdLLLLLLLLLLLLdk
+kddddddddddddddk
+
+tile seat:
+solid: true
+mmmmmmmmmmmmmmmm
+mkkkkkkkkkkkkkkm
+kjjjjjjjjjjjjjjk
+kjJjjJjjJjjJjjJk
+kjjjjjjjjjjjjjjk
+kjJjjJjjJjjJjjJk
+kjjjjjjjjjjjjjjk
+kJJJJJJJJJJJJJJk
+kkkkkkkkkkkkkkkk
+kjjjjjjjjjjjjjjk
+kjjjjjjjjjjjjjjk
+kJJJJJJJJJJJJJJk
+kkkkkkkkkkkkkkkk
+mdkmmmmmmmmmmkdm
+mdkmmmmmmmmmmkdm
+mmmmmmmmmmmmmmmm
+
+tile seat_gum:
+solid: true
+mmmmmmmmmmmmmmmm
+mkkkkkkkkkkkkkkm
+kjjjjjjjjjjjjjjk
+kjJjjJjjJjjJjjJk
+kjjjjjjjjjjjjjjk
+kjJjjJjjJjjJjjJk
+kjjjjjjjjjjjjjjk
+kJJJJJJJJJJJJJJk
+kkkkkkkkkkkkkkkk
+kjjjjjjjjjpjjjjk
+kjjjjjjjjppjjjjk
+kJJJJJJJJJJJJJJk
+kkkkkkkkkkkkkkkk
+mdkmmmmmmmmmmkdm
+mdkmmmmmmmmmmkdm
+mmmmmmmmmmmmmmmm
+
+tile floor:
+solid: false
+mmmmmmmmmmmmmmmm
+mmmmmmmmmdmmmmmm
+mmmmmmmmmmmmmmmm
+mmmdmmmmmmmmmmmm
+mmmmmmmmmmmmmdmm
+mmmmmmmmmmmmmmmm
+mmmmmmmdmmmmmmmm
+mmmmmmmmmmmmmmmm
+mmmmmmmmmmmmmmmm
+mdmmmmmmmmmmmmmm
+mmmmmmmmmmmdmmmm
+mmmmmmmmmmmmmmmm
+mmmmmdmmmmmmmmmm
+mmmmmmmmmmmmmmmm
+mmmmmmmmmmmmmmdm
+mmmmmmmmmmmmmmmm
+
+tile floor_slush:
+solid: false
+mmmmmmmmmmmmmmmm
+mmmmmmmmmdmmmmmm
+mmmmmmmuummmmmmm
+mmmduuuuuuuummmm
+mmmuuuNuuuuuummm
+mmuuuuuuuuNuuumm
+mmuuNuuuuuuuuumm
+mmmuuuuuuuuuummm
+mmmmuuuuuNuuummm
+mdmmmuuuuuummmmm
+mmmmmmmuummmmmmm
+mmmmmmmmmmmmmmmm
+mmmmmdmmmmmmmmmm
+mmmmmmmmmmmmmmmm
+mmmmmmmmmmmmmmdm
+mmmmmmmmmmmmmmmm
+
+tile pole:
+solid: true
+mmmmmmmkLwkmmmmm
+mmmmmmmkLwkmmmmm
+mmmmmmmkLwkmmmmm
+mmmmmmmkLwkmmmmm
+mmmmmmmkLwkmmmmm
+mmmmmmmkLwkmmmmm
+mmmmmmmkLwkmmmmm
+mmmmmmmkLwkmmmmm
+mmmmmmmkLwkmmmmm
+mmmmmmmkLwkmmmmm
+mmmmmmmkLwkmmmmm
+mmmmmmmkLwkmmmmm
+mmmmmmmkLwkmmmmm
+mmmmmmkkkkkkmmmm
+mmmmmmkddddkmmmm
+mmmmmmmmmmmmmmmm
+
+tile door_wall:
+solid: true
+kkkkkkkkkkkkkkkk
+dddddddddddddddd
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+mmmmmmmmmmmmmmmm
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+mmmmmmmmmmmmmmmm
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+dddddddddddddddd
+kkkkkkkkkkkkkkkk
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+
+tile door_closed:
+solid: true
+kkkkkkkkkkkkkkkk
+ddddddddddddddkd
+dLLLLLLLLLLLLdkd
+dLkkkkkkkkkkLdkd
+dLkaaaaaaaakLdkd
+dLkaaaaaaaakLdkd
+dLkaaaaaaaakLdkd
+dLkJJJJJJJJkLdkd
+dLkkkkkkkkkkLdkd
+dLLLLLLLLLLLLdkd
+dyyyyyyyyyyyydkd
+dLLLLLLLLLLLLdkd
+dddddddddddddddd
+kkkkkkkkkkkkkkkk
+eeeeeeeeeeeeeeee
+eeeeeeeeeeeeeeee
+
+tile gangway:
+solid: true
+kdLdkdLdkdLdkdLd
+kdLdkdLdkdLdkdLd
+kdLdkdLdkdLdkdLd
+kdLdkdLdkdLdkdLd
+kdLdkdLdkdLdkdLd
+kdLdkdLdkdLdkdLd
+kdLdkdLdkdLdkdLd
+kdLdkdLdkdLdkdLd
+kdLdkdLdkdLdkdLd
+kdLdkdLdkdLdkdLd
+kdLdkdLdkdLdkdLd
+kdLdkdLdkdLdkdLd
+kdLdkdLdkdLdkdLd
+kdLdkdLdkdLdkdLd
+kdLdkdLdkdLdkdLd
+kdLdkdLdkdLdkdLd
+
+tile gangway_floor:
+solid: false
+dmdmdmdmdmdmdmdm
+mdmdmdmdmdmdmdmd
+dmdmdmdmdmdmdmdm
+mdmdmdmdmdmdmdmd
+dmdmdmdmdmdmdmdm
+mdmdmdmdmdmdmdmd
+dmdmdmdmdmdmdmdm
+mdmdmdmdmdmdmdmd
+dmdmdmdmdmdmdmdm
+mdmdmdmdmdmdmdmd
+dmdmdmdmdmdmdmdm
+mdmdmdmdmdmdmdmd
+dmdmdmdmdmdmdmdm
+mdmdmdmdmdmdmdmd
+dmdmdmdmdmdmdmdm
+mdmdmdmdmdmdmdmd
+
+tile operator_door:
+solid: true
+kdLLLLLLLLLLLLdk
+kdLkkkkkkkkkkLdk
+kdLkaaaaaaaakLdk
+kdLkaaaaaaaakLdk
+kdLkaaaaaaaakLdk
+kdLkkkkkkkkkkLdk
+kdLLLLLLLLLLLLdk
+kdLrrrrrrrrrrLdk
+kdLrwwrwrwwwrLdk
+kdLrrrrrrrrrrLdk
+kdLLLLLLLLLLLLdk
+kdLLLLLLLLLLLLdk
+kdLLLLLLLdkLLLdk
+kdLLLLLLLLLLLLdk
+kdLLLLLLLLLLLLdk
+kddddddddddddddk
+
+tile bike_hook:
+solid: true
+mmmmmmmmmmmmmmmm
+mmmmmmmkkkmmmmmm
+mmmmmmmkLkmmmmmm
+mmmmmmmkLkmmmmmm
+mmmmkkkkkkkkkmmm
+mmmkdkmkLkmkdkmm
+mmkdmdkmkmkdmdkm
+mmkdmmdkkkdmmdkm
+mmkdmkkdkdkkmdkm
+mmkdmdkkLkkdmdkm
+mmmkdkmmLmmkdkmm
+mmmmkkkkLkkkkmmm
+mmmmmmmmLmmmmmmm
+mmmmmmmkkkmmmmmm
+mmmmmmmmmmmmmmmm
+mmmmmmmmmmmmmmmm

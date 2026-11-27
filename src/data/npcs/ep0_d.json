@@ -1,0 +1,13 @@
+{
+  "fare": { "name": "Fare Compliance", "blip": "D4" },
+  "fare_senior": { "name": "Fare Compliance", "blip": "C4" },
+  "fare_trainee": { "name": "Trainee", "blip": "F4" },
+  "train_busker": { "name": "Busker", "blip": "A4" },
+  "grocery_rider": { "name": "Rider", "blip": "E5" },
+  "jersey_guy": { "name": "Jersey Guy", "blip": "C4" },
+  "bus_rider": { "name": "Bus Rider", "blip": "D5" },
+  "skater": { "name": "Kid", "blip": "A5" },
+  "volunteer": { "name": "Volunteer", "blip": "F4" },
+  "completist": { "name": "Completist", "blip": "E3" },
+  "all_hands": { "name": "Speakerphone", "blip": "B4" }
+}

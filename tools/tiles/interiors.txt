@@ -1453,3 +1453,290 @@ eeeeeeeeeeeeeeee
 eeeeeeseeeeeeeee
 eeeeeeeeeeeeeeee
 eeeeeeeeeeeeesee
+
+# Extreme Noise (Chapter 1, the Blue Line): black-and-white records, shirts and floor; the flyer wall carries the color.
+tile wall_black_top:
+solid: true
+ssssssssssssssss
+ssssssssssssssss
+essssessssesssse
+ssssssssssssssss
+ssssssssssssssss
+ssssssssssssssss
+ssssssssssssssss
+ssssssssssssssss
+ssssssssssssssss
+ssssssssssssssss
+ssssssssssssssss
+ssssssssssssssss
+ssssssssssssssss
+eeeeeeeeeeeeeeee
+kkkkkkkkkkkkkkkk
+dddddddddddddddd
+
+tile wall_black:
+solid: true
+ssssssssssssssss
+sssssssssssessss
+ssssssssssssssss
+ssesssssssssssss
+ssssssssssssssss
+ssssssssssssssss
+sssssssssessssss
+ssssssssssssssss
+ssssssssssssssss
+sessssssssssssss
+ssssssssssssssss
+sssssessssssssss
+ssssssssssssssss
+sssssssssssssess
+ssssssssssssssss
+eeeeeeeeeeeeeeee
+
+tile shirt_wall_a:
+solid: true
+wwwwwwwwwwwwwwww
+wLwwwLwwwLwwwLww
+wwkkkkwwwwkkkkww
+wwkkkkkkkkkkkkww
+wwkkkkkkkkkkkkww
+wLkkkkkkkkkkkkww
+wwwwkkkkkkkkwwww
+wwwwkkwkwkkkwwww
+wwwwkkkwkwkkwwww
+wLwwkkwkwkkkwLww
+wwwwkkkwkwkkwwww
+wwwwkkkkkkkkwwww
+wwwwkkkkkkkkwwww
+wLwwkkkkkkkkwLww
+wwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwww
+
+tile shirt_wall_b:
+solid: true
+wwwwwwwwwwwwwwww
+wLwwwLwwwLwwwLww
+wwkkkkwwwwkkkkww
+wwkkkkkkkkkkkkww
+wwkkkkkkkkkkkkww
+wLkkkkkkkkkkkkww
+wwwwkkkkkkkkwwww
+wwwwkkwkkwkkwwww
+wwwwkkkkkkkkwwww
+wLwwkwkkkkwkwLww
+wwwwkkwwwwkkwwww
+wwwwkkkkkkkkwwww
+wwwwkkkkkkkkwwww
+wLwwkkkkkkkkwLww
+wwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwww
+
+tile flyer_wall_a:
+solid: true
+ssssssssssssssss
+sssssssssgggggss
+sCCCCCsssgggggss
+sCCCCCsssgkkkgss
+sCkkkCoosgggggss
+rCCCCCoosgkgggss
+rCkCCCPPPPPgggss
+rCCCCCPPPPPyyyys
+rrrrroPkkkPyyyys
+rkrrroPPPPPkkkys
+rrrrrsPkPPPyyyys
+pppppsPPPPPkyyys
+ssssssssssyyyyys
+ssssssssssssssss
+ssssssssssssssss
+ssssssssssssssss
+
+tile flyer_wall_b:
+solid: true
+ssrrrrvvvvvsssss
+sjjjjjvvvvvsssss
+sjjjjjvkkkvsssss
+sjkkkjvvvvvsssss
+sjjjjjvkvvvsssss
+sjkjjjvvvvvsssss
+sjjjjjPPPsssssss
+sssCPPPPPsssssss
+sssDDDDDPsssssss
+sssDDDDDPsssssss
+sssDkkkDPsssssss
+sssDDDDDPsssssss
+sssDkDDDssssssss
+sssDDDDDssssssss
+ssssssssssssssss
+ssssssssssssssss
+
+tile flyer_wall_c:
+solid: true
+yyyyysssssssssss
+yyyyyjjjssssssss
+ykkkyjjjssssssss
+yyyyykkjssssssss
+ykyyyjjjssssssss
+yyyyyjjjssssssss
+sssgggggssssssss
+sssgggggvDDDDDss
+sssgkkkgvDDDDDss
+sspgggggvDkkkDPs
+sspgkgggvDDDDDPs
+sspgggggvDkDDDPs
+sspppppsvDDDDDPs
+sspkpppsssPkPPPs
+sspppppsssPPPPPs
+ssssssssssssssss
+
+tile zine_rack_a:
+solid: true
+ssssssssssssssss
+ssssssssssssssss
+sLLLLLLLLLLLLLLs
+skkkswwwswwwsppp
+skwkswkwswkwspkp
+skkkswwwswwwsppp
+skkkswwwswwwsppp
+sLLLLLLLLLLLLLLs
+ssppswwswwskksss
+ssppswwswwskksss
+ssppswwswwskksss
+ssppswwswwskksss
+sLLLLLLLLLLLLLLs
+ssssssssssssssss
+ssssssssssssssss
+ssssssssssssssss
+
+tile zine_rack_b:
+solid: true
+ssssssssssssssss
+ssssssssssssssss
+sLLLLLLLLLLLLLLs
+swwwskkksyyyswww
+swkwskwksykyswkw
+swwwskkksyyyswww
+swwwskkksyyyswww
+sLLLLLLLLLLLLLLs
+sswwsyyskkswwsss
+sswwsyyskkswwsss
+sswwsyyskkswwsss
+sswwsyyskkswwsss
+sLLLLLLLLLLLLLLs
+ssssssssssssssss
+ssssssssssssssss
+ssssssssssssssss
+
+tile record_bin_a:
+solid: true
+kkkkkkkkkkkkkkkk
+kssssssssssssssk
+kssssssssssssssk
+kswwwwwwwwwwwwsk
+ksLLLLLLLLLLLLsk
+kswwwwwwwwwwwwsk
+ksLLLLLLLpLLLLsk
+kswwwwwwwwwwwwsk
+ksLLLLLLLLLLLLsk
+kswwwwwwwwwwwwsk
+ksLLLLLLLLLLLLsk
+kswwwwwwwwwwwwsk
+ksLLLLLLLLLLLLsk
+kssssssssssssssk
+kssssssssssssssk
+eeeeeeeeeeeeeeee
+
+tile record_bin_b:
+solid: true
+kkkkkkkkkkkkkkkk
+kssssssssssssssk
+kssssssssssssssk
+ksLLLLLLLLLLLLsk
+kswwwwwwwwwwwwsk
+ksLLLLLLLLLLLLsk
+kswwwwwwwwwwwwsk
+ksLLLLLLLLLLLLsk
+kswwwwwwwwwwwwsk
+ksLLyLLLLLLLLLsk
+kswwwwwwwwwwwwsk
+ksLLLLLLLLLLLLsk
+kswwwwwwwwwwwwsk
+kssssssssssssssk
+kssssssssssssssk
+eeeeeeeeeeeeeeee
+
+tile record_bin_cap:
+solid: true
+kkkkkkkkkkkkkkkk
+kssssssssssssssk
+kssssssssssssssk
+kssssssssssssssk
+ksswwwwwwwwwwssk
+ksswwwwwwwwwwssk
+ksswkkkkkkkkwssk
+ksswwwwwwwwwwssk
+ksswkkkkkwwwwssk
+ksswwwwwwwwwwssk
+ksswwwwwwwwwwssk
+kssssssssssssssk
+kssssssssssssssk
+kssssssssssssssk
+kssssssssssssssk
+eeeeeeeeeeeeeeee
+
+tile button_rack:
+solid: true
+wwwwwwwwwwwwwwww
+wLwwwLwwwLwwwLww
+wwkkkwwkkkwwwwww
+wwkwkwwkwkwkkkww
+wwkkkwwkkkwkwkww
+wLwwwLwwwLwkkkww
+wwwwwwwwwwwwwwww
+wwwkkkwwwkkkwwww
+wwwkrkwwwkwkwwww
+wLwkkkwwwkkkwLww
+wwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwww
+wkkLkkLkkLkkLkkw
+wkkkkkkkkkkkkkkw
+wwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwww
+
+tile listening_station:
+solid: true
+kkkkkkkkkkkkkkkk
+hhhhhhhhhhhhhhhh
+hhhhhhkkhhhhhhhh
+hhhhkkkkkkhhLLhh
+hhhkkskkkkkhhLhh
+hhhkkkkkkkkhhLhh
+hhkkkkrrkkkkhLhh
+hhkkkkrrkkkkhLhh
+hhhkkkkkskkhhLhh
+hhhkkkkkkkkhhLhh
+hhhhkkkkkkhhkkhh
+hhhhhhkkhhhhhhhh
+hhhhhhhhhhhhhhhh
+hhhhhhhhhhhhhhhh
+HHHHHHHHHHHHHHHH
+HHHHHHHHHHHHHHHH
+
+tile checker_floor:
+solid: false
+LLLLLLLLssssssss
+LLLLLLLLssssssss
+LLLLLLLLssssssss
+LLLLLLLLssssssss
+LLLLLLLLssssssss
+LLLLLLLLssssssss
+LLLLLLLLssssssss
+LLLLLLLLssssssss
+ssssssssLLLLLLLL
+ssssssssLLLLLLLL
+ssssssssLLLLLLLL
+ssssssssLLLLLLLL
+ssssssssLLLLLLLL
+ssssssssLLLLLLLL
+ssssssssLLLLLLLL
+ssssssssLLLLLLLL
+

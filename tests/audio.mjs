@@ -61,6 +61,11 @@ const CH1_SONGS = ['title', 'snow', 'battle', 'dental_plan', 'flying_squirrel', 
   'west_bank', 'normal_music', 'sticker_hallway', 'four_dollars', 'six_inch_stage', 'six_inch_stage_ext', 'pocket', 'rhythm_achieved',
   'plaster_dust', 'win_sting', 'level_up', 'game_over'];
 check('songs: every Chapter 1 cue is in songs/index.js', CH1_SONGS.every((id) => SONGS[id]), { missing: CH1_SONGS.filter((id) => !SONGS[id]) });
+// The Blue Line (Chapter 1): the ride, the record store stereo, the doors, the PA and the rail (the train's ambient loop).
+const BLUE_LINE_SONGS = ['blue_line', 'dollar_bin'];
+const BLUE_LINE_SFX = ['rail_chime', 'pa_ding', 'rail_clack'];
+check('the Blue Line: both songs are registered and every cue has a recipe in SFX_NAMES', BLUE_LINE_SONGS.every((id) => SONGS[id]) && BLUE_LINE_SFX.every((n) => typeof SFX[n] === 'function' && SFX_NAMES.includes(n)),
+  { songs: BLUE_LINE_SONGS.filter((id) => !SONGS[id]), sfx: BLUE_LINE_SFX.filter((n) => typeof SFX[n] !== 'function' || !SFX_NAMES.includes(n)) });
 const REQUIRED_ALIASES = {
   pod_bay: 'dental_plan', freefall: 'flying_squirrel', apartment: 'unpaid_bills', signal: 'ask_the_universe', garage: 'northern_garage',
   hub: 'west_bank', coffee: 'normal_music', rehearsal_brian: 'normal_music', citysound: 'sticker_hallway', audition: 'four_dollars',

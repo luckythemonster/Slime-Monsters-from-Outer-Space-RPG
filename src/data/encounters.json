@@ -105,6 +105,69 @@
     "canFlee": true,
     "script": null
   },
+  "rail_fare": {
+    "name": "Fare Compliance",
+    "enemies": [
+      "fare"
+    ],
+    "background": "train",
+    "music": "battle",
+    "canFlee": true,
+    "script": null
+  },
+  "rail_bag": {
+    "name": "Unattended Bag",
+    "enemies": [
+      "unattended_bag"
+    ],
+    "background": "train",
+    "music": "battle",
+    "canFlee": true,
+    "script": null
+  },
+  "rail_pigeons": {
+    "name": "Transit Pigeons",
+    "enemies": [
+      "pigeon",
+      "pigeon"
+    ],
+    "scan": "My brain thinks they have monthly passes.",
+    "background": "train",
+    "music": "battle",
+    "canFlee": true,
+    "script": null
+  },
+  "rail_fare_senior": {
+    "name": "Fare Compliance",
+    "enemies": [
+      "fare_senior",
+      "fare_trainee"
+    ],
+    "background": "train",
+    "music": "battle",
+    "canFlee": true,
+    "script": null
+  },
+  "rail_all_hands": {
+    "name": "The All-Hands",
+    "enemies": [
+      "all_hands"
+    ],
+    "background": "train",
+    "music": "battle",
+    "canFlee": true,
+    "script": null
+  },
+  "lake_completist": {
+    "name": "The Completist",
+    "enemies": [
+      "completist"
+    ],
+    "background": "street",
+    "music": "battle",
+    "canFlee": true,
+    "script": null
+  },
   "ep0_audition": {
     "name": "AUDITION",
     "enemies": [

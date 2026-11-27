@@ -21,6 +21,8 @@ anim: idle_up     frames: 2 3  fps: 2
 anim: idle_left   frames: 4 5  fps: 2
 anim: idle_right  frames: 4 5  fps: 2  flipX: true
 
+variant: npc_bus_rider  swap: m=#3c5c9c,M=#24386c
+
 frame 0: down a (ember off)
 ................
 .....kkkkkk.....

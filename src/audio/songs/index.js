@@ -34,6 +34,9 @@ import band_hunger from './band_hunger.js';
 import band_red_star_vanguard from './band_red_star_vanguard.js';
 import band_eclipse_of_liberation from './band_eclipse_of_liberation.js';
 import band_monsters from './band_monsters.js';
+// Chapter 1, the Blue Line: the train and the record store stereo
+import blue_line from './blue_line.js';
+import dollar_bin from './dollar_bin.js';
 
 export const SONGS = Object.freeze({
   title, snow, battle,
@@ -41,6 +44,7 @@ export const SONGS = Object.freeze({
   west_bank, normal_music, sticker_hallway, four_dollars, six_inch_stage, six_inch_stage_ext, pocket,
   rhythm_achieved, plaster_dust, win_sting, level_up, game_over,
   band_spud_nothin, band_they_came_from_the_sky, band_hunger, band_red_star_vanguard, band_eclipse_of_liberation, band_monsters,
+  blue_line, dollar_bin,
 });
 
 export const ALIASES = Object.freeze({

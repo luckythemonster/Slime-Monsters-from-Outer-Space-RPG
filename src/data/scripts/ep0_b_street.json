@@ -23,14 +23,11 @@
 
   "ep0_street_rail": [
     { "if": "flags.brianCalledRyan || flags.ryanCalled", "then": [
-      { "sfx": "door" },
-      { "camera": { "fade": "out", "ms": 300 } },
-      { "if": "!flags.visited_city_sound_hall", "then": [
-        { "caption": "THAT NIGHT", "ms": 1500 }
-      ] },
-      { "caption": "TWENTY MINUTES OF\nLIGHT RAIL LATER", "ms": 1800 },
-      { "teleport": { "map": "city_sound_hall", "x": 3, "y": 6, "facing": "right" } },
-      { "camera": { "fade": "in", "ms": 300 } }
+      { "if": "flags.rodeRail", "then": [
+        { "run": "ep0_rail_menu_cedar" }
+      ], "else": [
+        { "run": "ep0_rail_board_first" }
+      ] }
     ], "else": [
       { "say": "The train is here. The reason to take it isn't.", "who": "narrator" },
       { "move": { "who": "player", "path": "U", "wait": true } }
@@ -163,7 +160,11 @@
     { "if": "flags.eternityDone", "then": [
       { "say": "A new flyer on the hydrant.\nLOST: MOHAWK. SENTIMENTAL VALUE. NO QUESTIONS.", "who": "narrator" }
     ], "else": [
-      { "say": "A flyer taped to the hydrant.\nLOST: CAT. ANSWERS TO 'NO.'", "who": "narrator" }
+      { "if": "flags.foundNo", "then": [
+        { "say": "A flyer taped to the hydrant.\nLOST: CAT. ANSWERS TO 'NO.'\n(Underneath: SHE'S AT EXTREME NOISE. SHE'S FINE.)", "who": "narrator" }
+      ], "else": [
+        { "say": "A flyer taped to the hydrant.\nLOST: CAT. ANSWERS TO 'NO.'", "who": "narrator" }
+      ] }
     ] }
   ],
 

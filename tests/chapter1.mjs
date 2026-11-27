@@ -329,6 +329,7 @@ async function main() {
       if (l0 === '[Say something]') return 1; // [Let it go]: what Lucky did after Zerkel Pit
       if (l0 === 'RAGE') return 1; // PLEAD
       if (l0 === 'Yes' && labels[1] === 'No') return 1;
+      if (/^Get off at /.test(l0)) return 0; // the Blue Line's open doors
       notes.push(`menu with no policy: ${JSON.stringify(labels)}; picked 0`);
       return 0;
     };
@@ -695,7 +696,16 @@ async function main() {
       while (p.player.x < 22) p = await walk('R', 'to the platform stairs');
       while (p.player.x > 22) p = await walk('L', 'to the platform stairs');
       p = await walk('DDD', 'the rail');
-      check('S8 rail → city_sound_hall (3,6)', p.snap.map === 'city_sound_hall' && at(p, 3, 6), pos(p));
+      check('S8 rail → the Blue Line, car 1 (3,7), outbound from Cedar-Riverside', p.snap.map === 'rail_car' && at(p, 3, 7) && p.snap.vars.railDir === 1 && p.snap.vars.railStop === 0, { pos: pos(p), vars: p.snap.vars });
+      check('S8 CS-R1: THAT NIGHT, Brian stands for the board, the PA says City Sound is not called that', seenLine('brian', 'The board needs to stay level') && seenLine('narrator', 'It is not called that'), seen.slice(-8));
+      // the aisle's row 7 is the free lane: the fare officer patrols row 6, the pigeons stand still
+      p = await walk('R'.repeat(50), 'through the train');
+      check('S8 walked car 1 → car 3 (53,7); both gangways announced; the train is at City Sound', p.snap.map === 'rail_car' && at(p, 53, 7) && p.snap.vars.railStop === 2 && seenLine('narrator', 'NOW ARRIVING: LAKE ST / MIDTOWN') && seenLine('narrator', 'NOW ARRIVING: CITY SOUND'), { pos: pos(p), vars: p.snap.vars });
+      check('S8 no fight on the train: XP still 26, the fare not cleared, no ticket', member(p.snap, 'lucky').xp === 26 && !p.snap.flags.cleared_fare && !has(p.snap, 'fare_citation'), { lucky: member(p.snap, 'lucky'), flags: p.snap.flags });
+      p = await walk('D d', 'to the car 3 doors');
+      await press('confirm');
+      p = await driveIdle('get off at City Sound');
+      check('S8 TWENTY MINUTES OF LIGHT RAIL LATER (no record store) → city_sound_hall (3,6); rodeRail', p.snap.map === 'city_sound_hall' && at(p, 3, 6) && p.snap.flags.rodeRail === true, pos(p));
     });
     check('S8 autosave 3 on entering the hall', p.snap.vars.lastAutosave === 'city_sound_hall', p.snap.vars);
     check('S8 XP after the hub: Lucky 26 (L3), Phoenix 26 (L3), Brian fixed L3', (member(p.snap, 'lucky') || {}).xp === 26 && (member(p.snap, 'phoenix') || {}).level === 3 && (member(p.snap, 'brian') || {}).level === 3, p.snap.party);
@@ -766,10 +776,19 @@ async function main() {
     check('S10 CS-15: hasPalmersFlyer, gigFlyer, Palmer\'s Flyer in the bag, the paper gone', p.snap.flags.hasPalmersFlyer === true && p.snap.flags.gigFlyer === true && has(p.snap, 'palmers_flyer') && !ent(p, 'gig_flyer'), p.snap.inventory);
     p = await walk('LLL DD D', 'leave Room 4');
     check('S8 Room 4 door → hall (20,6)', p.snap.map === 'city_sound_hall' && at(p, 20, 6), pos(p));
-    p = await walk('L D LLLLLLLL U LLLLLLLL L', 'hall → stairs');
+    p = await walk('L D LLLLLLLL U LLLLLLLL', 'hall → the stairs');
     const npcRyan = (q) => (q.entities || []).find((e) => e.id === 'ryan' && e.type !== 'follower');
-    check('S11 the Room 3 trigger did not re-fire on the way out (no temporary Ryan / hardware stack)', !npcRyan(p) && !ent(p, 'hardware'), p.entities.map((e) => `${e.id}:${e.type}`));
-    check('S11 stairs → street at night (22,15)', p.snap.map === 'street_cedar' && at(p, 22, 15), pos(p));
+    check('S11 the Room 3 trigger did not re-fire on the way out (no temporary Ryan / hardware stack)', p.snap.map === 'city_sound_hall' && !npcRyan(p) && !ent(p, 'hardware'), p.entities.map((e) => `${e.id}:${e.type}`));
+    p = await walk('L', 'the stairs');
+    check('S11 CS-R3: the last train, inbound, car 3 (54,7); Ryan: nobody on a train looks at anybody', p.snap.map === 'rail_car' && at(p, 54, 7) && p.snap.vars.railDir === 2 && p.snap.flags.rodeGig === true && seenLine('ryan_caption', 'Nobody on a train looks at anybody'), { pos: pos(p), vars: p.snap.vars });
+    const gigIds = p.entities.map((e) => e.id);
+    check('S11 the gig-night roster on the train: Senior Fare Compliance and The All-Hands, no window-A fights', gigIds.includes('fare_senior') && gigIds.includes('all_hands') && !gigIds.some((id) => ['fare', 'bag', 'pigeons'].includes(id)), gigIds);
+    p = await walk('L'.repeat(49), 'back through the train');
+    check('S11 walked car 3 → car 1 (5,7); the train is at Cedar-Riverside', p.snap.map === 'rail_car' && at(p, 5, 7) && p.snap.vars.railStop === 0 && seenLine('narrator', 'NOW ARRIVING: CEDAR-RIVERSIDE'), { pos: pos(p), vars: p.snap.vars });
+    p = await walk('D d', 'to the car 1 doors');
+    await press('confirm');
+    p = await driveIdle('get off at Cedar-Riverside');
+    check('S11 Cedar-Riverside → street at night (22,15)', p.snap.map === 'street_cedar' && at(p, 22, 15), pos(p));
     const nightIds = p.entities.map((e) => e.id);
     check('S11 night roster + night enemies; day roster gone; overlay on', ['stranger_tall', 'smoker', 'bajonka', 'analyst_duo', 'goose_pair'].every((id) => nightIds.includes(id)) && !nightIds.some((id) => ['shoveler', 'cyclist', 'busker', 'slush', 'scooters', 'goose', 'analyst'].includes(id)) && p.overlay === true, { nightIds, overlay: p.overlay });
     await withRetries('ep0_palmers_set', async (attempt) => {

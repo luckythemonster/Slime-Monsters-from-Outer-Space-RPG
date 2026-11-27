@@ -541,6 +541,34 @@ SFX.wind = function wind(s, { when, volume, pitch, dest }) {
   return 1.6; // gate 1.2 s + 0.4 s release
 };
 
+/** Rail chime (the Blue Line's doors): the two-tone light-rail chime, E5 then C5, sine with a soft pulse under it. */
+SFX.rail_chime = function rail_chime(s, { when, volume, pitch, dest }) {
+  for (const [i, f] of [[0, 659.25], [1, 523.25]]) {
+    s.tone({ wave: 'sine', freq: f * pitch, when: when + i * 0.32, duration: 0.3, volume: 0.32 * volume, env: E(0.005, 0.25, 0.3, 0.05), dest });
+    s.tone({ wave: 'pulse', duty: 0.125, freq: f * pitch, when: when + i * 0.32, duration: 0.2, volume: 0.05 * volume, env: E(0.005, 0.15, 0.2, 0.05), dest });
+  }
+  return 0.7;
+};
+
+/** PA ding (before a light-rail announcement): one bright tone, G5, with a short decay. */
+SFX.pa_ding = function pa_ding(s, { when, volume, pitch, dest }) {
+  s.tone({ wave: 'sine', freq: 783.99 * pitch, when, duration: 0.45, volume: 0.3 * volume, env: E(0.003, 0.4, 0.2, 0.05), dest });
+  s.tone({ wave: 'triangle', freq: 1567.98 * pitch, when, duration: 0.15, volume: 0.08 * volume, env: E(0.003, 0.12, 0, 0.02), dest });
+  return 0.5;
+};
+
+/**
+ * Rail clack (the train's map `ambient`): wheels over joints, "da-dum" twice in 1 s, over a low rumble.
+ * ExploreScene re-fires it 300 ms before the reported end, so it loops.
+ */
+SFX.rail_clack = function rail_clack(s, { when, volume, pitch, dest }) {
+  s.noise({ when, duration: 1.3, volume: 0.05 * volume, filter: { type: 'lowpass', freq: 220 * pitch }, env: E(0.1, 0.2, 0.8, 0.2), dest });
+  for (const t of [0, 0.12, 0.5, 0.62]) {
+    s.noise({ when: when + t, duration: 0.05, volume: 0.16 * volume, filter: { type: 'bandpass', freq: 900 * pitch, Q: 1.2 }, env: E(0.002, 0.04, 0, 0.01), dest });
+  }
+  return 1.5; // gate 1.3 s + 0.2 s release
+};
+
 /** Every SFX name: ARCHITECTURE.md's twenty, then the Chapter 1 additions. */
 export const SFX_NAMES = Object.freeze([
   'cursor', 'confirm', 'cancel', 'text_blip', 'hit', 'crit', 'miss', 'squelch', 'slime_pop', 'kraaang',
@@ -549,6 +577,7 @@ export const SFX_NAMES = Object.freeze([
   'wall_blow', 'mohawk_pop', 'intercom_buzz', 'glitch', 'thud', 'door_slam', 'unplug', 'pop_x3', 'amp_hum', 'krathoom', 'doom', 'crack',
   'thud_word', 'thud_low', 'van_keys', 'tear', 'toon_up', 'gears', 'splash', 'phone_ring', 'click', 'drone_whine', 'power_chord', 'hair_back', 'rubble',
   'chair', 'jukebox_1', 'jukebox_2', 'jukebox_3', 'jukebox_4', 'wind',
+  'rail_chime', 'pa_ding', 'rail_clack',
 ]);
 
 export default SFX;

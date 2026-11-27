@@ -305,17 +305,17 @@ async function main() {
     s = await snap();
     check('café door → street (20,9)', s.map === 'street_cedar' && s.x === 20 && s.y === 9, { map: s.map, x: s.x, y: s.y });
 
-    // the rail now accepts (caption + teleport) when city_sound_hall exists
-    const hall = await hasMap('city_sound_hall');
-    if (hall) {
+    // the rail now accepts: the first ride boards the Blue Line (THAT NIGHT, car 1, outbound)
+    const train = await hasMap('rail_car');
+    if (train) {
       await warp('street_cedar', 22, 15, 'down');
       await waitIdle();
       await press('down');
-      await waitFn(() => window.__slime.snapshot().map === 'city_sound_hall' && window.__slime.idle(), null, 20_000);
+      await waitFn(() => window.__slime.snapshot().map === 'rail_car' && window.__slime.idle(), null, 20_000);
       s = await snap();
-      check('rail → city_sound_hall (3,6), inside the doorway', s.map === 'city_sound_hall' && s.x === 3 && s.y === 6, { map: s.map, x: s.x, y: s.y });
+      check('rail → the Blue Line, car 1 (3,7), outbound from Cedar-Riverside', s.map === 'rail_car' && s.x === 3 && s.y === 7 && s.vars.railDir === 1 && s.vars.railStop === 0, { map: s.map, x: s.x, y: s.y, vars: s.vars });
     } else {
-      notes.push('city_sound_hall map missing at test time: rail exit not exercised');
+      notes.push('rail_car map missing at test time: the rail was not exercised');
     }
 
     // --- S11: night pass ----------------------------------------------------------------------
