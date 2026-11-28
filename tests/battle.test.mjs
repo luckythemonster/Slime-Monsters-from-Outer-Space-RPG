@@ -654,7 +654,7 @@ group('rewards + level-up (setup bridge)', (check) => {
 group('script: alley_drone (tutorial)', (check) => {
   const m = model({ party: [seed('lucky', 1)], enemyIds: ['drone'], rng: makeRng(4), script: BATTLE_SCRIPTS.ep0_drone(), encounter: { canFlee: false, bailReason: 'Not yet.', script: 'ep0_drone' } });
   m.start();
-  check(m.events.some((e) => e.type === 'toast' && /STRUM/.test(e.text)), 'onStart toast');
+  check(m.events.some((e) => e.type === 'toast' && /STRUM/.test(e.text) && e.tip === true), 'onStart toast, as a beige tip');
   const cmds = m.commands('lucky');
   check(cmds.find((c) => c.id === 'riff').reason === 'Not yet.' && !cmds.find((c) => c.id === 'strum').disabled && !cmds.find((c) => c.id === 'tune').disabled, 'round 1: only STRUM and TUNE lit');
   const all = [];
@@ -665,6 +665,9 @@ group('script: alley_drone (tutorial)', (check) => {
   const joinRound = all.slice(0, all.indexOf(join)).filter((e) => e.type === 'round').pop();
   check(joinRound && joinRound.n === 2, `joins on round 2 (round ${joinRound && joinRound.n})`);
   check(all.some((e) => e.type === 'text' && /NONCOMPLIANT/.test(e.text)), 'onHpBelow 50 fired');
+  const toasts = all.filter((e) => e.type === 'toast');
+  check(toasts.some((e) => /RIFF spends/.test(e.text)) && toasts.filter((e) => /RIFF spends|TOON meter/.test(e.text)).every((e) => e.tip === true), 'the tutorial toasts are tips');
+  check(toasts.filter((e) => /^Phoenix:/.test(e.text)).every((e) => !e.tip), "Phoenix's line is not a tip");
   check(all.some((e) => e.type === 'text' && /severance/.test(e.text)), 'onDefeat line');
   check(m.result === 'win' && m.flags.tutorialDone === true && m.round <= 4, `win by round ${m.round}`);
   check(m.find('lucky').hp >= 10, `Lucky survives comfortably (${m.find('lucky').hp}/28)`);

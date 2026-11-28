@@ -11,6 +11,9 @@
 //             `squelch` once the last page has been read (E10)
 //   'caption' Ryan's inverted square box at x 8..136, y 28..52, 2 lines of 14 chars, INSTANT text
 //             with one `caption_tick`; `shake: true` jitters the whole box 1 px for its duration (E11)
+//   'tip'     onboarding (`window: "tip"`): the flat window with a beige inner rule and beige text,
+//             no name tag, no portrait, no blips. Every tutorial and help line in Disc 1 uses it
+//             (docs/GAGS_FOURTH_WALL.md, "Onboarding")
 import Phaser from 'phaser';
 import Window from './Window.js';
 import { services } from '../engine/services.js';
@@ -163,6 +166,7 @@ function resolvePortraitId(who, portrait) {
 /** Which window family a say uses. */
 export function resolveStyle(who, window) {
   if (window === 'caption' || who === 'ryan_caption') return 'caption';
+  if (window === 'tip') return 'tip';
   if (window === 'ff' || who === 'dad') return 'ff';
   if (window === 'flat' || window === 'window') return 'window';
   const def = speakerDef(who);
@@ -218,15 +222,16 @@ export default class DialogueBox {
       this.style = resolveStyle(who, window);
       this.who = who;
       const caption = this.style === 'caption';
-      this.textColor = caption ? COLORS.caption : COLORS.text;
-      this.name = caption ? '' : resolveName(who, name);
-      const pid = caption ? null : resolvePortraitId(who, portrait);
+      const tip = this.style === 'tip';
+      this.textColor = caption ? COLORS.caption : tip ? COLORS.tip : COLORS.text;
+      this.name = caption || tip ? '' : resolveName(who, name);
+      const pid = caption || tip ? null : resolvePortraitId(who, portrait);
       this.portraitId = hasPortrait(this.ui.textures, pid) ? pid : null;
       this.collapse = !!collapse && !caption;
       this.shakeBox = !!shake && caption;
       const def = speakerDef(who);
       this.blipPitch = noteRatio(blip ?? (def && def.blip) ?? 1);
-      this.silent = caption || who === 'narrator' || !who;
+      this.silent = caption || tip || who === 'narrator' || !who;
       if (caption) {
         this.geo = { ...CAPTION_BOX };
         this.cols = CAPTION_BOX.cols;
@@ -259,6 +264,7 @@ export default class DialogueBox {
       await this.win.open(instant);
       if (this.state !== 'opening') return; // closed while unfolding
       if (this.style === 'window') this._drawMoodRing();
+      else if (this.style === 'tip') this._drawMoodRing(COLORS.tip);
       if (this.name) {
         const w = this.name.length * CHAR_W + TAG.pad * 2;
         this.tagWin = new Window(ui, TAG.x, g.y - TAG.h, w, TAG.h, { depth: this.depth + 1, prefix });
@@ -277,9 +283,11 @@ export default class DialogueBox {
     this._typePage(0);
   }
 
-  /** 1 px mood-coloured ring inset 3 px inside the flat frame (only when the mood is not the default pink). */
-  _drawMoodRing() {
-    const color = moodColor();
+  /**
+   * 1 px mood-coloured ring inset 3 px inside the flat frame (only when the mood is not the default
+   * pink). The tip style passes its beige here instead of the mood.
+   */
+  _drawMoodRing(color = moodColor()) {
     if (!color) return;
     const g = this.geo;
     const c = Phaser.Display.Color.HexStringToColor(color).color;
@@ -586,6 +594,8 @@ export default class DialogueBox {
       name: this.name,
       style: this.style,
       who: this.who,
+      textColor: this.textColor,
+      ring: this.moodRing.length,
       collapse: this.collapse,
       shake: this.shakeBox,
       drawn: !!(this.win && this.win.drawn),

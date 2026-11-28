@@ -305,6 +305,18 @@ async function main() {
     p = await t.waitDone();
     t.check('narrator resolved', p.done && !p.error);
 
+    // Onboarding (docs/GAGS_FOURTH_WALL.md): the tip window is the flat window in beige, untagged.
+    await t.start('say', { who: 'narrator', window: 'tip', text: 'TIP: Face the speaker and press CONFIRM to engage.' });
+    await t.waitTop(() => __uih.state().top && __uih.state().top.state === 'typing');
+    await t.key('z', 150);
+    st = await t.state();
+    t.check('tip window: tip style, no tag, no portrait', st.top.style === 'tip' && st.top.name === '' && !st.top.portrait, JSON.stringify({ style: st.top.style, name: st.top.name, portrait: st.top.portrait }));
+    t.check('tip window: beige text and a beige inner rule', st.top.textColor === '#e8c890' && st.top.ring === 4, `color=${st.top.textColor} ring=${st.top.ring}`);
+    await t.shot('06b_say_tip');
+    await t.key('z', 250);
+    p = await t.waitDone();
+    t.check('tip resolved', p.done && !p.error);
+
     // ---- 4. choice ----
     await t.start('choice', ['Yes', 'No', 'Maybe'], { cancelIndex: 1 });
     await t.waitTop(() => __uih.state().top && __uih.state().top.state === 'open');
@@ -385,6 +397,13 @@ async function main() {
     await t.shot('11_toast');
     p = await t.waitDone(3000);
     t.check('toast resolves', p.done && !p.error);
+    await t.start('toast', 'EQUIP it on Phoenix from the menu.', 500, { tip: true });
+    await sleep(300);
+    st = await t.state();
+    t.check('tip toast is flagged as a tip', st.toast === true && st.toastTip === true);
+    await t.shot('11b_toast_tip');
+    p = await t.waitDone(3000);
+    t.check('tip toast resolves', p.done && !p.error);
 
     // ---- 8. fade / flash ----
     await t.start('fade', 'out', 250);

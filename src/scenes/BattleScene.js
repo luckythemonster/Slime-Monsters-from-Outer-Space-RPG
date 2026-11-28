@@ -478,7 +478,7 @@ export default class BattleScene extends Phaser.Scene {
         await this.ui.say({ who: 'ryan_caption', text: ev.text });
         break;
       case 'toast':
-        this.ui.toast(ev.text, scaleMs(1400));
+        this.ui.toast(ev.text, scaleMs(1400), { tip: !!ev.tip });
         break;
       case 'anim':
         await this.playAnim(ev.who, ev.key);

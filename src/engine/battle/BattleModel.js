@@ -326,7 +326,8 @@ export class BattleModel {
   text(text) { return this.emit({ type: 'text', text }); }
   say(who, text, extra = {}) { return this.emit({ type: 'say', who, text, ...extra }); }
   caption(text) { return this.emit({ type: 'caption', text }); }
-  toast(text) { return this.emit({ type: 'toast', text }); }
+  /** `{ tip: true }` renders the toast as onboarding (beige): tutorials and help lines. */
+  toast(text, { tip = false } = {}) { return this.emit({ type: 'toast', text, tip: !!tip }); }
 
   hook(name, ...args) {
     const fn = this.script && this.script[name];

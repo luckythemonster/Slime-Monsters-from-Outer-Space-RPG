@@ -18,7 +18,7 @@
   "ep0_apt_bass_stand": [
     { "say": "Beat-Up Bass. Four strings. Three work.", "who": "narrator" },
     { "if": "!flags.bassTaken", "then": [
-      { "give": { "item": "beatup_bass", "qty": 1, "toast": "Got Beat-Up Bass! (EQUIP it on Phoenix from the menu.)" } },
+      { "give": { "item": "beatup_bass", "qty": 1, "toast": "Got Beat-Up Bass!", "tip": "EQUIP it on Phoenix from the menu." } },
       { "say": "It's for the trash bag's replacement. The trash bag has opinions.", "who": "phoenix" },
       { "set": { "flags.bassTaken": true } }
     ], "else": [

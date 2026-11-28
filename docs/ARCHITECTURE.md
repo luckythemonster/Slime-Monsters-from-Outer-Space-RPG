@@ -209,12 +209,12 @@ one file: `{ "alley_phoenix": [ … ], "alley_sign": [ … ] }`. Script ids are 
 
 | Command | Meaning |
 |---|---|
-| `{"say": "text", "who": "phoenix", "portrait": "phoenix_tired"}` | Dialogue box. `who` = character id (name tag + default portrait) or `"narrator"` (caption-style box, no tag) or `"ryan_caption"` (Ryan's rigid square internal caption). `portrait` optional override. Text markup: `\n` newline, `{pause:300}`, `{speed:fast|slow|instant}`, `{color:pink}` … `{/color}`, `{shake}` … `{/shake}`. Box auto-paginates on overflow. |
+| `{"say": "text", "who": "phoenix", "portrait": "phoenix_tired"}` | Dialogue box. `who` = character id (name tag + default portrait) or `"narrator"` (caption-style box, no tag) or `"ryan_caption"` (Ryan's rigid square internal caption). `portrait` optional override. `"window": "tip"` is the onboarding window: beige rule and text, no tag, no portrait, no blips; every tutorial and how-to line uses it (`"ff"` and `"caption"` force the other two families). Text markup: `\n` newline, `{pause:300}`, `{speed:fast|slow|instant}`, `{color:pink}` … `{/color}`, `{shake}` … `{/shake}`. Box auto-paginates on overflow. |
 | `{"choice": [{"text": "Yes", "then": [ … ]}, {"text": "No", "then": [ … ]}]}` | Choice menu under the dialogue box. |
 | `{"if": "<condition>", "then": [ … ], "else": [ … ]}` | Branch (section 5.3). |
 | `{"set": {"flags.metPhoenix": true, "vars.coffeeCount": 2}}` | Assign into GameState. Dotted paths. |
 | `{"inc": {"vars.coffeeCount": 1}}` | Increment. |
-| `{"give": {"item": "pizza_slice", "qty": 1}}` / `{"give": {"money": 4}}` / `{"take": …}` | Inventory & money. |
+| `{"give": {"item": "pizza_slice", "qty": 1}}` / `{"give": {"money": 4}}` / `{"take": …}` | Inventory & money. `"toast"` overrides the "Got …!" toast; `"tip"` adds a how-to line after it, as a beige tip toast. |
 | `{"party": {"add": "phoenix"}}` / `{"party": {"remove": "brian"}}` / `{"party": {"heal": true}}` | Party roster. |
 | `{"move": {"who": "phoenix", "path": "LLUU", "wait": true, "speed": "walk|run"}}` | Walk an entity (`"player"` allowed). `path` chars `U D L R` and `.` (pause one step). |
 | `{"face": {"who": "lucky", "dir": "up"}}` / `{"face": {"who":"ryan","toward":"player"}}` | Facing. |
@@ -408,12 +408,12 @@ All methods return Promises that resolve when the interaction finishes. UIScene 
 Explore/Battle/Menu (`scene.launch('UI')` once in Boot; `bringToTop('UI')` after launching any scene).
 
 ```js
-ui.say({ text, who, portrait, name })      // dialogue box; who → characters.json (name tag + default portrait);
+ui.say({ text, who, portrait, name, window }) // dialogue box; who → characters.json (name tag + default portrait); window 'tip' = onboarding;
                                            // who 'narrator' = plain box; who 'ryan_caption' = square caption style; portrait key optional
 ui.choice(options /* string[] */, { cancelIndex = -1, x, y })  // → index (or cancelIndex on cancel)
 ui.menu(items /* {label, disabled?, hint?}[] */, { x, y, width, columns = 1, cancelable = true, selected = 0 }) // → index | -1
 ui.caption(text, ms = 1500)                // centered title card over black
-ui.toast(text, ms = 1200)                  // small top notification ("Got Pizza Slice!")
+ui.toast(text, ms = 1200, { tip })         // small top notification ("Got Pizza Slice!"); tip: true = onboarding beige
 ui.fade('out' | 'in', ms = 400, color = 0x000000)
 ui.flash(ms = 150, color = 0xffffff)
 ui.setTextInstant(bool); ui.setAutoAdvance(bool); ui.chooseIndex = 0   // test hooks (Debug API forwards to these)

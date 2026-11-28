@@ -158,7 +158,7 @@
     { "setEntity": { "id": "phoenix", "x": 4, "y": 7, "facing": "right" } },
     { "camera": { "fade": "in", "ms": 300 } },
     { "say": "Almost a year in Room 4. Brian has asked for one rehearsal where nothing manifests. He has asked eleven times.", "who": "narrator" },
-    { "say": "Hit the chorus. Get the band to Toon 2.", "who": "narrator" },
+    { "say": "Hit the chorus. Get the band to Toon 2.", "who": "narrator", "window": "tip" },
     { "battle": "ep0_rehearsal",
       "onWin": [ { "run": "ep0_ultimatum" } ],
       "onLose": [ { "run": "ep0_ultimatum" } ] }

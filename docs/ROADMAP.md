@@ -55,6 +55,9 @@ What every chapter after the first stands on. Details are in `docs/ARCHITECTURE.
 10. **Progression groundwork.** From `docs/PROGRESSION.md`: the level 5 riff is Headache, `xpTable` runs to 50,
     stats grow past level 8 on the late rates, members carry `chops`, `nodes` and `breath`, the state carries
     `words`, `stickers` and `scrap`, and equipment has INSTRUMENT, RIG, WEAR and a sticker slot.
+11. **Onboarding.** The beige onboarding window: `window: "tip"` on a `say`, `tip` on a `give`, and
+    `toast(text, { tip: true })` in a battle script. Every tutorial and how-to line uses it until the Chapter 12
+    load-in. Characters' lines never do. See `docs/GAGS_FOURTH_WALL.md`.
 
 ## Systems, and the chapter that first needs each
 
@@ -95,6 +98,10 @@ Build a system in the chapter that first needs it, and build it to be reused. Do
 | Postcards at save points | Ch 11 | |
 | Optional side quest with its own hub | Ch 11, MIC CHECK | |
 | A boss phase solved in the options menu or by a drag | Ch 12 | |
+| The onboarding window (beige tips) | Ch 1 (built) | every chapter's tutorials; Ch 9 Dad's balloons; Ch 12 David's tips |
+| Win sting variants (4/4, 13/8 once, slap to cancel, 13/8 for good, none) | Ch 2 | Ch 3, Ch 5, Ch 10, Ch 12 |
+| A first line on load after a game over | Ch 2 | Ch 11 (Phoenix says it) |
+| A key item named from a battle number (312 (DAMAGE)) | Ch 2 | Ch 3 rent, Ch 12 fuel |
 
 ## The chapters
 
@@ -103,7 +110,9 @@ Lucky still has to decide. The beats themselves are in the bible and are not rep
 
 ### Chapter 2: Gig in the Potato Belt
 
-Brief: `docs/chapters/CH02_BRIEF.md`.
+Brief: `docs/chapters/CH02_BRIEF.md`. Fourth-wall gags for the chapter (THE NEXT MORNING, Diego's cropped portrait,
+the win sting, the Toll Booth, the skip button, nothing respawns, 312 (DAMAGE), the band broke up) are in
+`docs/GAGS_FOURTH_WALL.md`; the spec places them.
 
 ### Chapter 3: The Merch Table Incident / Eat the Rich
 
@@ -197,7 +206,8 @@ Brief: `docs/chapters/CH02_BRIEF.md`.
 
 ### Chapter 12: The Elephant in the Room
 
-- **New:** five people on stage (decide in the spec how the fifth slot works; David is a guest). The Paywall.
+- **New:** five people on stage. David is a guest and plays from the sound booth, which is where the camera is:
+  his row sits below the battle frame, on the player's side (see `docs/GAGS_FOURTH_WALL.md`). The Paywall.
   The Golden Throne. The fourth-wall break. The ending is V1, "Roll Him Up", with V3's banked crowd underneath:
   `vars.crowdBank` is the Phase 3 damage. The collage behind the elephant deliberately breaks the palette rule.
 - **Reads:** everything. MIGRAINE if MIC CHECK was done. Where Bajonka sits depends on the rider.
@@ -236,6 +246,10 @@ What one chapter writes and a later one reads. Add a row whenever a chapter crea
 | Lucky's GUITAR nodes | Ch 2 to 10 | Ch 12 (David's kit) | chops refunded the morning Lucky goes clear |
 | Phoenix's BASS nodes | Ch 2 on | Ch 12 (the rascal) | transposed to the synth in between |
 | Postcards read | Ch 11 | Ch 12 (Diego's chops at the airlock) | |
+| `vars.bestSwing`, key item 312 (DAMAGE) | Ch 2, the Riot Solo | Ch 3 (rent), Ch 12 (fuel) | named for the player's real number |
+| `vars.breakups` (game overs) | any | Lucky's first line on load; Ch 11 (Phoenix) | |
+| `flags.sting138` | Ch 10, the Retention Unit | every win after | the win sting in 13/8 for good |
+| The cartridge clause in the word bank | Ch 7 | Ch 12 (NOT COINCIDENTAL) | |
 
 ## Decisions Lucky owes, and by when
 

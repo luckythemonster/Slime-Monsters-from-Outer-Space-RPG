@@ -13,7 +13,7 @@ rest of the game, one chapter at a time. Lucky calls you Clode.
 
 Then, as needed: `docs/PROGRESSION.md` (levels, skill trees and equipment for the whole game),
 `docs/BOSS_POOPOOPEEPEE_MAN.md` (Chapters 4 and 10), `docs/SUBPLOT_BAJONKA_RIDER.md` (Chapter 10),
-`docs/SIDEQUEST_MIC_CHECK.md` (Chapter 11),
+`docs/SIDEQUEST_MIC_CHECK.md` (Chapter 11), `docs/GAGS_FOURTH_WALL.md` (Lucky and the fourth wall, every chapter),
 `docs/comic-outlines/` (the source comics), `docs/PHASER_API_DIGEST.md` (Phaser 4 signatures).
 
 ## Commands

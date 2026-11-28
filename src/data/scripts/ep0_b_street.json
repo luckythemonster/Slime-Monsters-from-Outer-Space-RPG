@@ -30,7 +30,11 @@
       ] },
       { "caption": "TWENTY MINUTES OF\nLIGHT RAIL LATER", "ms": 1800 },
       { "teleport": { "map": "city_sound_hall", "x": 3, "y": 6, "facing": "right" } },
-      { "camera": { "fade": "in", "ms": 300 } }
+      { "camera": { "fade": "in", "ms": 300 } },
+      { "if": "!flags.railCardCorrected", "then": [
+        { "say": "Twenty-six. There was a goose.", "who": "lucky" },
+        { "set": { "flags.railCardCorrected": true } }
+      ] }
     ], "else": [
       { "say": "The train is here. The reason to take it isn't.", "who": "narrator" },
       { "move": { "who": "player", "path": "U", "wait": true } }

@@ -17,6 +17,7 @@ import Phaser from 'phaser';
 import { services } from '../engine/services.js';
 import { audioCall } from '../engine/Audio.js';
 import { WIDTH, HEIGHT, PIXEL_FONT, PARAMS } from '../config.js';
+import { COLORS } from '../ui/theme.js';
 
 const SKY_KEY = '__ff_sky';
 const BOARD_KEY = '__ff_board';
@@ -72,7 +73,7 @@ export default class FreefallScene extends Phaser.Scene {
       this.playFall('glide');
     }
     this.skyline = this.add.image(0, HEIGHT, SKYLINE_KEY).setOrigin(0, 0).setDepth(4);
-    this.hint = this.add.text(WIDTH / 2, HEIGHT - 14, '', { fontFamily: PIXEL_FONT, fontSize: '8px', color: '#8c8ca0', resolution: 1 }).setOrigin(0.5, 0).setDepth(20);
+    this.hint = this.add.text(WIDTH / 2, HEIGHT - 14, '', { fontFamily: PIXEL_FONT, fontSize: '8px', color: COLORS.tip, resolution: 1 }).setOrigin(0.5, 0).setDepth(20); // onboarding beige
     audioCall('playMusic', 'flying_squirrel', { fade: 0.2 });
     services.ui.fade('in', this.fast ? 60 : 300);
     this.scene.bringToTop('UI');

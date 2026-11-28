@@ -188,8 +188,8 @@ export class EventRunner {
 
   text(s) { return expandVars(s, this.state); }
 
-  async toast(text) {
-    if (this.ui && typeof this.ui.toast === 'function') await this.ui.toast(this.text(text));
+  async toast(text, opts) {
+    if (this.ui && typeof this.ui.toast === 'function') await this.ui.toast(this.text(text), undefined, opts);
   }
 
   sfx(name) {
@@ -242,11 +242,13 @@ export class EventRunner {
     for (const [path, by] of Object.entries(assignments)) this.state.inc(path, Number(resolveValue(by, this.state)) || 1);
   }
 
+  /** {"give": {"item"|"money", "qty", "toast", "tip"}}: `tip` is a help line shown after the toast, in beige. */
   async cmd_give(arg) {
     if (arg.item) {
       const qty = arg.qty || 1;
       this.state.inventory.add(arg.item, qty);
       await this.toast(arg.toast || `Got ${this.itemName(arg.item)}${qty > 1 ? ` x${qty}` : ''}!`);
+      if (arg.tip) await this.toast(arg.tip, { tip: true });
     }
     if (arg.money) {
       this.state.addMoney(arg.money);
